@@ -5,19 +5,21 @@ import {
   View,
 } from 'react-native';
 
-export default function RankingsScreen({ myRankings }) {
+export default function RankingsScreen({
+  myRankings,
+}) {
 
-  const categories = [
-    'Legendary',
-    'Elite',
-    'Very Good',
-    'Good',
-    'OK',
-    'Bad',
-  ];
+  const sortedPlayers = [
+    ...myRankings,
+  ].sort(
+    (a, b) => b.rating - a.rating
+  );
 
   return (
-    <ScrollView style={styles.container}>
+
+    <ScrollView
+      style={styles.container}
+    >
 
       <Text style={styles.title}>
         MY RANKINGS
@@ -27,7 +29,7 @@ export default function RankingsScreen({ myRankings }) {
         Your personal footballer rankings
       </Text>
 
-      {myRankings.length === 0 ? (
+      {sortedPlayers.length === 0 ? (
 
         <View style={styles.emptyBox}>
 
@@ -36,87 +38,68 @@ export default function RankingsScreen({ myRankings }) {
           </Text>
 
           <Text style={styles.emptySubtext}>
-            Go back and start ranking players!
+            Choose a player and start comparing!
           </Text>
 
         </View>
 
       ) : (
 
-        categories.map(category => {
-
-          const categoryPlayers = myRankings
-            .filter(player => player.rating === category)
-            .sort((a, b) => b.score - a.score);
-
-          if (categoryPlayers.length === 0) {
-            return null;
-          }
-
-          return (
+        sortedPlayers.map(
+          (player, index) => (
 
             <View
-              key={category}
-              style={styles.categorySection}
+              key={player.id}
+              style={styles.playerBox}
             >
 
-              <Text style={styles.categoryTitle}>
-                {category}
-              </Text>
+              <View style={styles.rankCircle}>
 
-              {categoryPlayers.map((player, index) => (
+                <Text style={styles.rankNumber}>
+                  {index + 1}
+                </Text>
 
-                <View
-                  key={player.playerId}
-                  style={styles.playerBox}
-                >
+              </View>
 
-                  <View style={styles.rankCircle}>
+              <View style={styles.playerDetails}>
 
-                    <Text style={styles.rankNumber}>
-                      {index + 1}
-                    </Text>
+                <Text style={styles.playerName}>
+                  {player.name}
+                </Text>
 
-                  </View>
+                <Text style={styles.info}>
+                  {player.nation} • {player.position}
+                </Text>
 
-                  <View style={styles.playerDetails}>
+                <Text style={styles.category}>
+                  {player.category}
+                </Text>
 
-                    <Text style={styles.playerName}>
-                      {player.name}
-                    </Text>
+              </View>
 
-                    <Text style={styles.info}>
-                      {player.nation} • {player.position}
-                    </Text>
+              <View style={styles.scoreBox}>
 
-                  </View>
+                <Text style={styles.score}>
+                  {player.score.toFixed(2)}
+                </Text>
 
-                  <View style={styles.scoreBox}>
+                <Text style={styles.outOf}>
+                  / 10
+                </Text>
 
-                    <Text style={styles.score}>
-                      {player.score.toFixed(2)}
-                    </Text>
-
-                    <Text style={styles.outOf}>
-                      / 10
-                    </Text>
-
-                  </View>
-
-                </View>
-
-              ))}
+              </View>
 
             </View>
 
-          );
-
-        })
+          )
+        )
 
       )}
 
     </ScrollView>
+
   );
+
 }
 
 const styles = StyleSheet.create({
@@ -141,18 +124,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 8,
     marginBottom: 30,
-    textAlign: 'center',
-  },
-
-  categorySection: {
-    marginBottom: 30,
-  },
-
-  categoryTitle: {
-    color: '#00ff66',
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginBottom: 12,
   },
 
   playerBox: {
@@ -196,6 +167,13 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 
+  category: {
+    color: '#00ff66',
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginTop: 5,
+  },
+
   scoreBox: {
     alignItems: 'flex-end',
     marginLeft: 10,
@@ -235,7 +213,3 @@ const styles = StyleSheet.create({
   },
 
 });
-
-
-
-

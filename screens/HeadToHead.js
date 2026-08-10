@@ -1,14 +1,19 @@
 import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+
+import { findBestOpponent } from '../engine/rankingEngine';
+import players from '../players';
 
 export default function HeadToHead({
   route,
   navigation,
   onResult,
+  myRankings,
+  comparisonHistory,
 }) {
 
   const {
@@ -21,12 +26,103 @@ export default function HeadToHead({
   // TEMPORARY COMPARISON PLAYER
   // --------------------------------------------------
 
-  const comparisonPlayer = {
-    id: 2,
-    name: 'Cristiano Ronaldo',
-    nation: 'Portugal',
-    position: 'Attack',
+const rankedPlayers = players.map(p => {
+
+  const existingRanking = myRankings?.find(
+    ranking =>
+      ranking.id === p.id ||
+      ranking.playerId === p.id
+  );
+
+  return {
+    ...p,
+
+    rating:
+      existingRanking?.rating ??
+      existingRanking?.internalRating ??
+      2000,
+
+    uncertainty:
+      existingRanking?.uncertainty ??
+      350,
+
+    comparisons:
+      existingRanking?.comparisons ??
+      0,
+
+    wins:
+      existingRanking?.wins ??
+      0,
+
+    losses:
+      existingRanking?.losses ??
+      0,
+
+    draws:
+      existingRanking?.draws ??
+      0,
   };
+
+});
+
+const targetPlayer = {
+  ...player,
+
+  rating:
+    myRankings?.find(
+      ranking =>
+        ranking.id === player.id ||
+        ranking.playerId === player.id
+    )?.rating ??
+    myRankings?.find(
+      ranking =>
+        ranking.id === player.id ||
+        ranking.playerId === player.id
+    )?.internalRating ??
+    2000,
+
+  uncertainty:
+    350,
+
+  comparisons:
+    0,
+
+  wins:
+    0,
+
+  losses:
+    0,
+
+  draws:
+    0,
+};
+
+
+const availableOpponents = rankedPlayers.filter(
+  rankedPlayer =>
+    rankedPlayer.id !== player.id
+);
+
+const comparisonPlayer = findBestOpponent(
+  targetPlayer,
+  availableOpponents,
+  comparisonHistory
+);
+console.log(
+  'HEAD TO HEAD DEBUG:',
+  {
+    selected: {
+      id: player.id,
+      name: player.name,
+    },
+    opponent: comparisonPlayer
+      ? {
+          id: comparisonPlayer.id,
+          name: comparisonPlayer.name,
+        }
+      : null,
+  }
+);
 
 
   // --------------------------------------------------
@@ -88,16 +184,13 @@ export default function HeadToHead({
 
         <View style={styles.playerSide}>
 
-          <Text style={styles.flag}>
-            🇦🇷
-          </Text>
 
           <Text style={styles.playerName}>
-            {player.name}
+            {comparisonPlayer?.name}
           </Text>
 
           <Text style={styles.info}>
-            {player.nation}
+            {comparisonPlayer?.nation}
           </Text>
 
         </View>
@@ -108,31 +201,25 @@ export default function HeadToHead({
         </Text>
 
 
-        {/* COMPARISON PLAYER */}
+{/* COMPARISON PLAYER */}
 
-        <View style={styles.playerSide}>
+<View style={styles.playerSide}>
 
-          <Text style={styles.flag}>
-            🇵🇹
-          </Text>
+  <Text style={styles.playerName}>
+    {comparisonPlayer?.name ?? 'No opponent'}
+  </Text>
 
-          <Text style={styles.playerName}>
-            {comparisonPlayer.name}
-          </Text>
+  <Text style={styles.info}>
+    {comparisonPlayer?.nation ?? ''}
+  </Text>
 
-          <Text style={styles.info}>
-            {comparisonPlayer.nation}
-          </Text>
+</View>
 
-        </View>
+</View>
 
-      </View>
-
-
-      <Text style={styles.question}>
-        Who is better?
-      </Text>
-
+<Text style={styles.question}>
+  Who is better?
+</Text>
 
       {/* PLAYER WINS */}
 

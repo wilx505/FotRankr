@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 
 import { findBestOpponent } from '../engine/rankingEngine';
-import players from '../players';
 
 export default function HeadToHead({
   route,
@@ -22,123 +21,104 @@ export default function HeadToHead({
   } = route.params || {};
 
   // --------------------------------------------------
-  // BUILD PLAYERS WITH THEIR CURRENT RANKINGS
+  // BUILD THE SELECTED PLAYER
   // --------------------------------------------------
 
-  const rankedPlayers = players.map((p) => {
-
-    const existingRanking = myRankings?.find(
-      ranking =>
-        ranking.id === p.id ||
-        ranking.playerId === p.id
-    );
-
-    return {
-      ...p,
-
-      rating:
-        existingRanking?.rating ??
-        existingRanking?.internalRating ??
-        2000,
-
-      uncertainty:
-        existingRanking?.uncertainty ??
-        350,
-
-      comparisons:
-        existingRanking?.comparisons ??
-        0,
-
-      wins:
-        existingRanking?.wins ??
-        0,
-
-      losses:
-        existingRanking?.losses ??
-        0,
-
-      draws:
-        existingRanking?.draws ??
-        0,
-    };
-
-  });
-
-
-  // --------------------------------------------------
-  // SELECTED PLAYER
-  // --------------------------------------------------
-
-  const targetRanking = myRankings?.find(
+  const existingTarget = myRankings?.find(
     ranking =>
       ranking.id === player?.id ||
       ranking.playerId === player?.id
   );
 
-
   const targetPlayer = {
-
     ...player,
 
     rating:
-      targetRanking?.rating ??
-      targetRanking?.internalRating ??
+      existingTarget?.rating ??
+      existingTarget?.internalRating ??
       2000,
 
     uncertainty:
-      targetRanking?.uncertainty ??
+      existingTarget?.uncertainty ??
       350,
 
     comparisons:
-      targetRanking?.comparisons ??
+      existingTarget?.comparisons ??
       0,
 
     wins:
-      targetRanking?.wins ??
+      existingTarget?.wins ??
       0,
 
     losses:
-      targetRanking?.losses ??
+      existingTarget?.losses ??
       0,
 
     draws:
-      targetRanking?.draws ??
+      existingTarget?.draws ??
       0,
-
   };
 
+  // --------------------------------------------------
+  // IMPORTANT:
+  // ONLY USE PLAYERS ALREADY IN MY RANKINGS
+  // --------------------------------------------------
+
+  const rankedOpponents = (myRankings || [])
+    .filter(
+      ranking =>
+        ranking.id !== targetPlayer.id &&
+        ranking.playerId !== targetPlayer.id
+    )
+    .map(ranking => ({
+      ...ranking,
+
+      rating:
+        ranking.rating ??
+        ranking.internalRating ??
+        2000,
+
+      uncertainty:
+        ranking.uncertainty ??
+        350,
+
+      comparisons:
+        ranking.comparisons ??
+        0,
+
+      wins:
+        ranking.wins ??
+        0,
+
+      losses:
+        ranking.losses ??
+        0,
+
+      draws:
+        ranking.draws ??
+        0,
+    }));
 
   // --------------------------------------------------
-  // REMOVE THE SELECTED PLAYER FROM OPPONENTS
-  // --------------------------------------------------
-
-  const availableOpponents = rankedPlayers.filter(
-    rankedPlayer =>
-      rankedPlayer.id !== targetPlayer.id
-  );
-
-
-  // --------------------------------------------------
-  // FIND OPPONENT
+  // FIND BEST OPPONENT
   // --------------------------------------------------
 
   const comparisonPlayer = findBestOpponent(
     targetPlayer,
-    availableOpponents,
+    rankedOpponents,
     comparisonHistory || []
   );
-
 
   console.log(
     'FOTRANKR H2H:',
     'Selected =',
     targetPlayer?.name,
     targetPlayer?.id,
+    '| Ranked opponents =',
+    rankedOpponents.length,
     '| Opponent =',
-    comparisonPlayer?.name ?? 'NONE',
-    comparisonPlayer?.id ?? 'NONE'
+    comparisonPlayer?.name ?? 'NONE'
   );
-
 
   // --------------------------------------------------
   // HANDLE RESULT
@@ -149,13 +129,11 @@ export default function HeadToHead({
     if (!comparisonPlayer) {
 
       console.log(
-        'FOTRANKR H2H: Cannot submit result because there is no opponent.'
+        'FOTRANKR H2H: No ranked opponent available.'
       );
 
       return;
-
     }
-
 
     console.log(
       'FOTRANKR H2H RESULT:',
@@ -167,24 +145,15 @@ export default function HeadToHead({
       }
     );
 
-
     onResult({
-
       player: targetPlayer,
-
       comparisonPlayer,
-
       category,
-
       result,
-
     });
 
-
     navigation.navigate('Rankings');
-
   };
-
 
   // --------------------------------------------------
   // SCREEN
@@ -198,119 +167,136 @@ export default function HeadToHead({
         HEAD TO HEAD
       </Text>
 
-
       <Text style={styles.category}>
         {category}
       </Text>
 
+      {comparisonPlayer ? (
 
-      <View style={styles.comparisonBox}>
+        <>
 
+          <View style={styles.comparisonBox}>
 
-        {/* SELECTED PLAYER */}
+            {/* SELECTED PLAYER */}
 
-        <View style={styles.playerSide}>
+            <View style={styles.playerSide}>
 
-          <Text style={styles.playerName}>
-            {targetPlayer?.name ?? 'Unknown player'}
+              <Text style={styles.playerName}>
+                {targetPlayer.name}
+              </Text>
+
+              <Text style={styles.info}>
+                {targetPlayer.nation}
+              </Text>
+
+            </View>
+
+            <Text style={styles.vs}>
+              VS
+            </Text>
+
+            {/* RANKED OPPONENT */}
+
+            <View style={styles.playerSide}>
+
+              <Text style={styles.playerName}>
+                {comparisonPlayer.name}
+              </Text>
+
+              <Text style={styles.info}>
+                {comparisonPlayer.nation}
+              </Text>
+
+            </View>
+
+          </View>
+
+          <Text style={styles.question}>
+            Who is the better footballer?
           </Text>
 
-          <Text style={styles.info}>
-            {targetPlayer?.nation ?? ''}
+          <TouchableOpacity
+            style={styles.playerButton}
+            onPress={() =>
+              updateScores('player')
+            }
+          >
+
+            <Text style={styles.buttonText}>
+              {targetPlayer.name}
+            </Text>
+
+            <Text style={styles.buttonSubtext}>
+              is better
+            </Text>
+
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.drawButton}
+            onPress={() =>
+              updateScores('equal')
+            }
+          >
+
+            <Text style={styles.drawText}>
+              They are equal
+            </Text>
+
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.playerButton}
+            onPress={() =>
+              updateScores('comparison')
+            }
+          >
+
+            <Text style={styles.buttonText}>
+              {comparisonPlayer.name}
+            </Text>
+
+            <Text style={styles.buttonSubtext}>
+              is better
+            </Text>
+
+          </TouchableOpacity>
+
+        </>
+
+      ) : (
+
+        <View style={styles.noOpponentBox}>
+
+          <Text style={styles.noOpponentTitle}>
+            No ranked opponent available
           </Text>
+
+          <Text style={styles.noOpponentText}>
+            This player needs to be compared against someone already in your rankings.
+          </Text>
+
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() =>
+              navigation.navigate('Rankings')
+            }
+          >
+
+            <Text style={styles.backButtonText}>
+              BACK TO MY RANKINGS
+            </Text>
+
+          </TouchableOpacity>
 
         </View>
 
-
-        <Text style={styles.vs}>
-          VS
-        </Text>
-
-
-        {/* COMPARISON PLAYER */}
-
-        <View style={styles.playerSide}>
-
-          <Text style={styles.playerName}>
-            {comparisonPlayer?.name ?? 'No opponent'}
-          </Text>
-
-          <Text style={styles.info}>
-            {comparisonPlayer?.nation ?? ''}
-          </Text>
-
-        </View>
-
-
-      </View>
-
-
-      <Text style={styles.question}>
-        Who is better?
-      </Text>
-
-
-      {/* SELECTED PLAYER WINS */}
-
-      <TouchableOpacity
-        style={styles.greenButton}
-        onPress={() =>
-          updateScores('player')
-        }
-        disabled={!comparisonPlayer}
-      >
-
-        <Text style={styles.buttonText}>
-          {targetPlayer?.name ?? 'Player'} is better
-        </Text>
-
-      </TouchableOpacity>
-
-
-      {/* DRAW */}
-
-      <TouchableOpacity
-        style={styles.greyButton}
-        onPress={() =>
-          updateScores('equal')
-        }
-        disabled={!comparisonPlayer}
-      >
-
-        <Text style={styles.buttonText}>
-          They are equally good
-        </Text>
-
-      </TouchableOpacity>
-
-
-      {/* COMPARISON PLAYER WINS */}
-
-      <TouchableOpacity
-        style={styles.redButton}
-        onPress={() =>
-          updateScores('comparison')
-        }
-        disabled={!comparisonPlayer}
-      >
-
-        <Text style={styles.buttonText}>
-          {comparisonPlayer?.name ?? 'Opponent'} is better
-        </Text>
-
-      </TouchableOpacity>
-
+      )}
 
     </View>
 
   );
-
 }
-
-
-// ============================================================
-// STYLES
-// ============================================================
 
 const styles = StyleSheet.create({
 
@@ -318,105 +304,141 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#050505',
     padding: 20,
-    justifyContent: 'center',
   },
-
 
   title: {
     color: '#00ff66',
     fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 10,
+    marginTop: 30,
   },
-
 
   category: {
     color: '#aaaaaa',
     fontSize: 18,
     textAlign: 'center',
-    marginBottom: 35,
+    marginTop: 10,
+    marginBottom: 30,
   },
-
 
   comparisonBox: {
     backgroundColor: '#111111',
-    borderRadius: 18,
-    padding: 25,
+    borderRadius: 15,
+    padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
 
-
   playerSide: {
-    width: '38%',
+    flex: 1,
     alignItems: 'center',
   },
 
-
   playerName: {
-    color: '#ffffff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 8,
-  },
-
-
-  info: {
-    color: '#aaaaaa',
-    fontSize: 15,
-    textAlign: 'center',
-  },
-
-
-  vs: {
     color: '#00ff66',
     fontSize: 22,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 
+  info: {
+    color: '#aaaaaa',
+    fontSize: 14,
+    marginTop: 7,
+    textAlign: 'center',
+  },
+
+  vs: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginHorizontal: 15,
+  },
 
   question: {
-    color: '#ffffff',
-    fontSize: 22,
+    color: 'white',
+    fontSize: 21,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 35,
     marginBottom: 20,
   },
 
-
-  greenButton: {
-    backgroundColor: '#00a84f',
-    padding: 17,
-    borderRadius: 12,
-    marginBottom: 12,
+  playerButton: {
+    backgroundColor: '#111111',
+    borderWidth: 2,
+    borderColor: '#00ff66',
+    borderRadius: 15,
+    padding: 20,
+    marginBottom: 15,
+    alignItems: 'center',
   },
-
-
-  greyButton: {
-    backgroundColor: '#555555',
-    padding: 17,
-    borderRadius: 12,
-    marginBottom: 12,
-  },
-
-
-  redButton: {
-    backgroundColor: '#c0392b',
-    padding: 17,
-    borderRadius: 12,
-    marginBottom: 12,
-  },
-
 
   buttonText: {
-    color: '#ffffff',
-    fontSize: 17,
+    color: '#00ff66',
+    fontSize: 23,
+    fontWeight: 'bold',
+  },
+
+  buttonSubtext: {
+    color: '#888888',
+    fontSize: 14,
+    marginTop: 5,
+  },
+
+  drawButton: {
+    backgroundColor: '#111111',
+    borderWidth: 2,
+    borderColor: '#777777',
+    borderRadius: 15,
+    padding: 18,
+    marginBottom: 15,
+    alignItems: 'center',
+  },
+
+  drawText: {
+    color: '#dddddd',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
+  noOpponentBox: {
+    backgroundColor: '#111111',
+    borderRadius: 15,
+    padding: 25,
+    marginTop: 30,
+    alignItems: 'center',
+  },
+
+  noOpponentTitle: {
+    color: '#00ff66',
+    fontSize: 21,
     fontWeight: 'bold',
     textAlign: 'center',
   },
 
+  noOpponentText: {
+    color: '#999999',
+    fontSize: 15,
+    textAlign: 'center',
+    marginTop: 12,
+    lineHeight: 22,
+  },
+
+  backButton: {
+    backgroundColor: '#00ff66',
+    borderRadius: 12,
+    padding: 15,
+    marginTop: 25,
+  },
+
+  backButtonText: {
+    color: '#000000',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+
 });
+

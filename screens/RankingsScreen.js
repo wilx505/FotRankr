@@ -1,3 +1,4 @@
+import { useState } from 'react';
 
 import {
   ScrollView,
@@ -12,46 +13,48 @@ export default function RankingsScreen({
   myRankings,
 }) {
 
-  const showPosition =
-    navigation
-      .getState()
-      ?.routes
-      ?.find(
-        route =>
-          route.name === 'Rankings'
-      )
-      ?.params
-      ?.position || 'All';
+  const [showPosition, setShowPosition] =
+    useState('All');
+
 
   const filteredPlayers =
     showPosition === 'All'
       ? myRankings
       : myRankings.filter(
           player =>
-            player.position?.toLowerCase() ===
+            player.position
+              ?.toLowerCase() ===
             showPosition.toLowerCase()
         );
+
 
   const sortedPlayers = [
     ...filteredPlayers,
   ].sort(
-    (a, b) => b.rating - a.rating
+    (a, b) =>
+      b.rating - a.rating
   );
 
-  const goToPosition = (position) => {
 
-    navigation.setParams({
-      position,
-    });
+  const goToPosition = (
+    position
+  ) => {
+
+    setShowPosition(position);
 
   };
+
 
   return (
 
     <ScrollView
       style={styles.container}
-      contentContainerStyle={styles.content}
+      contentContainerStyle={
+        styles.content
+      }
     >
+
+      {/* HEADER */}
 
       <Text style={styles.title}>
         MY RANKINGS
@@ -61,24 +64,30 @@ export default function RankingsScreen({
         Your personal footballer rankings
       </Text>
 
+
       {/* RANK MORE PLAYERS */}
 
       <TouchableOpacity
         style={styles.rankMoreButton}
         onPress={() =>
-          navigation.navigate('Home')
+          navigation.navigate('Search')
         }
       >
 
-        <Text style={styles.rankMoreButtonText}>
+        <Text
+          style={styles.rankMoreButtonText}
+        >
           + RANK MORE PLAYERS
         </Text>
 
       </TouchableOpacity>
 
+
       {/* POSITION FILTERS */}
 
-      <View style={styles.filterContainer}>
+      <View
+        style={styles.filterContainer}
+      >
 
         <TouchableOpacity
           style={[
@@ -90,6 +99,7 @@ export default function RankingsScreen({
             goToPosition('All')
           }
         >
+
           <Text
             style={[
               styles.filterText,
@@ -99,7 +109,9 @@ export default function RankingsScreen({
           >
             ALL PLAYERS
           </Text>
+
         </TouchableOpacity>
+
 
         <TouchableOpacity
           style={[
@@ -111,6 +123,7 @@ export default function RankingsScreen({
             goToPosition('Attack')
           }
         >
+
           <Text
             style={[
               styles.filterText,
@@ -120,7 +133,9 @@ export default function RankingsScreen({
           >
             ATTACKERS
           </Text>
+
         </TouchableOpacity>
+
 
         <TouchableOpacity
           style={[
@@ -132,6 +147,7 @@ export default function RankingsScreen({
             goToPosition('Midfielder')
           }
         >
+
           <Text
             style={[
               styles.filterText,
@@ -141,7 +157,9 @@ export default function RankingsScreen({
           >
             MIDFIELDERS
           </Text>
+
         </TouchableOpacity>
+
 
         <TouchableOpacity
           style={[
@@ -153,6 +171,7 @@ export default function RankingsScreen({
             goToPosition('Defender')
           }
         >
+
           <Text
             style={[
               styles.filterText,
@@ -162,7 +181,9 @@ export default function RankingsScreen({
           >
             DEFENDERS
           </Text>
+
         </TouchableOpacity>
+
 
         <TouchableOpacity
           style={[
@@ -174,6 +195,7 @@ export default function RankingsScreen({
             goToPosition('Goalkeeper')
           }
         >
+
           <Text
             style={[
               styles.filterText,
@@ -183,11 +205,13 @@ export default function RankingsScreen({
           >
             GOALKEEPERS
           </Text>
+
         </TouchableOpacity>
 
       </View>
 
-      {/* PLAYERS */}
+
+      {/* PLAYER LIST */}
 
       {sortedPlayers.length === 0 ? (
 
@@ -197,8 +221,11 @@ export default function RankingsScreen({
             No players ranked yet.
           </Text>
 
-          <Text style={styles.emptySubtext}>
-            Rank a player in this position to see them here.
+          <Text
+            style={styles.emptySubtext}
+          >
+            Rank a player in this
+            position to see them here.
           </Text>
 
         </View>
@@ -215,46 +242,77 @@ export default function RankingsScreen({
                 navigation.navigate(
                   'Challenge',
                   {
-                  player,
-                  positionFilter: showPosition,
+                    player,
+                    positionFilter:
+                      showPosition,
                   }
                 )
               }
+              activeOpacity={0.75}
             >
 
-              <View style={styles.rankCircle}>
+              {/* RANK */}
 
-                <Text style={styles.rankNumber}>
+              <View
+                style={styles.rankCircle}
+              >
+
+                <Text
+                  style={styles.rankNumber}
+                >
                   {index + 1}
                 </Text>
 
               </View>
 
-              <View style={styles.playerDetails}>
 
-                <Text style={styles.playerName}>
+              {/* PLAYER */}
+
+              <View
+                style={styles.playerDetails}
+              >
+
+                <Text
+                  style={styles.playerName}
+                >
                   {player.name}
                 </Text>
 
-                <Text style={styles.info}>
-                  {player.nation} • {player.position}
+                <Text
+                  style={styles.info}
+                >
+                  {player.nation}
+                  {' • '}
+                  {player.position}
                 </Text>
 
-                <Text style={styles.category}>
+                <Text
+                  style={styles.category}
+                >
                   {player.category}
                 </Text>
 
               </View>
 
-              <View style={styles.scoreBox}>
 
-                <Text style={styles.score}>
-                  {typeof player.score === 'number'
+              {/* SCORE */}
+
+              <View
+                style={styles.scoreBox}
+              >
+
+                <Text
+                  style={styles.score}
+                >
+                  {typeof player.score ===
+                  'number'
                     ? player.score.toFixed(2)
                     : '—'}
                 </Text>
 
-                <Text style={styles.outOf}>
+                <Text
+                  style={styles.outOf}
+                >
                   / 10
                 </Text>
 
@@ -273,31 +331,30 @@ export default function RankingsScreen({
 
 }
 
+
 const styles = StyleSheet.create({
 
   container: {
     flex: 1,
     backgroundColor: '#050505',
-    padding: 20,
   },
 
   content: {
-    paddingBottom: 40,
+    padding: 20,
+    paddingBottom: 50,
   },
 
   title: {
     color: '#00ff66',
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 30,
+    fontSize: 34,
+    fontWeight: '900',
+    marginTop: 25,
   },
 
   subtitle: {
-    color: '#aaaaaa',
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 8,
+    color: '#888888',
+    fontSize: 15,
+    marginTop: 6,
     marginBottom: 20,
   },
 
@@ -305,28 +362,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#00ff66',
     borderRadius: 12,
     paddingVertical: 15,
-    alignItems: 'center',
     marginBottom: 20,
   },
 
   rankMoreButtonText: {
     color: '#000000',
-    fontSize: 17,
-    fontWeight: 'bold',
+    fontSize: 15,
+    fontWeight: '900',
+    textAlign: 'center',
+    letterSpacing: 0.5,
   },
 
   filterContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
     marginBottom: 20,
   },
 
   filterButton: {
     backgroundColor: '#111111',
-    borderRadius: 10,
-    paddingVertical: 13,
-    paddingHorizontal: 15,
-    marginBottom: 8,
     borderWidth: 1,
     borderColor: '#222222',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
   },
 
   filterButtonActive: {
@@ -335,10 +395,9 @@ const styles = StyleSheet.create({
   },
 
   filterText: {
-    color: '#aaaaaa',
-    fontSize: 15,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#777777',
+    fontSize: 11,
+    fontWeight: '900',
   },
 
   filterTextActive: {
@@ -347,11 +406,13 @@ const styles = StyleSheet.create({
 
   playerBox: {
     backgroundColor: '#111111',
-    borderRadius: 15,
-    padding: 18,
+    borderRadius: 14,
+    padding: 16,
     marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
   },
 
   rankCircle: {
@@ -366,8 +427,8 @@ const styles = StyleSheet.create({
 
   rankNumber: {
     color: '#000000',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 17,
+    fontWeight: '900',
   },
 
   playerDetails: {
@@ -375,21 +436,21 @@ const styles = StyleSheet.create({
   },
 
   playerName: {
-    color: 'white',
-    fontSize: 19,
-    fontWeight: 'bold',
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '800',
   },
 
   info: {
-    color: '#aaaaaa',
-    fontSize: 14,
+    color: '#777777',
+    fontSize: 13,
     marginTop: 5,
   },
 
   category: {
     color: '#00ff66',
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 12,
+    fontWeight: '800',
     marginTop: 5,
   },
 
@@ -399,36 +460,35 @@ const styles = StyleSheet.create({
   },
 
   score: {
-    color: 'white',
-    fontSize: 23,
-    fontWeight: 'bold',
+    color: '#ffffff',
+    fontSize: 22,
+    fontWeight: '900',
   },
 
   outOf: {
-    color: '#777777',
-    fontSize: 12,
+    color: '#555555',
+    fontSize: 11,
   },
 
   emptyBox: {
-    backgroundColor: '#111111',
+    backgroundColor: '#0d0d0d',
+    borderRadius: 14,
     padding: 25,
-    borderRadius: 15,
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 5,
   },
 
   emptyText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#00ff66',
+    fontSize: 15,
+    fontWeight: '800',
   },
 
   emptySubtext: {
-    color: '#888888',
-    fontSize: 15,
-    marginTop: 10,
+    color: '#666666',
+    fontSize: 13,
     textAlign: 'center',
+    marginTop: 8,
   },
 
 });

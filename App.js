@@ -1,24 +1,36 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   NavigationContainer,
 } from '@react-navigation/native';
+
 import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
-import { useEffect, useState } from 'react';
+
+import {
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
+
+import {
+  useEffect,
+  useState,
+} from 'react';
+
 
 import ChallengeScreen from './screens/ChallengeScreen';
 import CompareScreen from './screens/CompareScreen';
 import HeadToHead from './screens/HeadToHead';
 import HomeScreen from './screens/HomeScreen';
 import RankingsScreen from './screens/RankingsScreen';
+import SearchScreen from './screens/SearchScreen';
 
-import {
-  comparePlayers,
-  createPlayer,
-} from './engine/rankingEngine.js';
 
-const Stack = createNativeStackNavigator();
+const Stack =
+  createNativeStackNavigator();
+
+const Tab =
+  createBottomTabNavigator();
 
 const DATA_VERSION = '11';
 
@@ -379,12 +391,9 @@ return [
 
 };
 
-
-
 // =====================================================
 // NAVIGATION
 // =====================================================
-
 
 return (
 
@@ -392,97 +401,199 @@ return (
 
     <Stack.Navigator>
 
+      {/* =================================================
+          MAIN APP TABS
+          ================================================= */}
+
       <Stack.Screen
-        name="Home"
+        name="MainTabs"
         options={{
-          title: 'FotRankr',
+          headerShown: false,
         }}
       >
+
         {({ navigation }) => (
-          <HomeScreen
-            navigation={navigation}
-            isFirstPlayer={myRankings.length === 0}
-          />
+
+          <Tab.Navigator
+            screenOptions={{
+              headerShown: false,
+              tabBarStyle: {
+                backgroundColor: '#050505',
+                borderTopColor: '#1a1a1a',
+                height: 68,
+                paddingBottom: 8,
+                paddingTop: 8,
+              },
+              tabBarActiveTintColor: '#00ff66',
+              tabBarInactiveTintColor: '#666666',
+              tabBarLabelStyle: {
+                fontSize: 11,
+                fontWeight: '800',
+              },
+            }}
+          >
+
+            {/* HOME */}
+
+            <Tab.Screen
+              name="Home"
+              options={{
+                tabBarLabel: 'HOME',
+                tabBarIcon: () => null,
+              }}
+            >
+
+              {({ navigation }) => (
+
+                <HomeScreen
+                  navigation={navigation}
+                  isFirstPlayer={
+                    myRankings.length === 0
+                  }
+                />
+
+              )}
+
+            </Tab.Screen>
+
+
+            {/* SEARCH */}
+
+            <Tab.Screen
+              name="Search"
+              options={{
+                tabBarLabel: 'SEARCH',
+                tabBarIcon: () => null,
+              }}
+            >
+
+              {({ navigation }) => (
+
+                <SearchScreen
+                  navigation={navigation}
+                />
+
+              )}
+
+            </Tab.Screen>
+
+
+            {/* MY RANKS */}
+
+            <Tab.Screen
+              name="MyRanks"
+              options={{
+                tabBarLabel: 'MY RANKS',
+                tabBarIcon: () => null,
+              }}
+            >
+
+              {({ navigation }) => (
+
+                <RankingsScreen
+                  navigation={navigation}
+                  myRankings={myRankings}
+                />
+
+              )}
+
+            </Tab.Screen>
+
+          </Tab.Navigator>
+
         )}
+
       </Stack.Screen>
 
 
-    <Stack.Screen
-  name="Rankings"
-  options={{
-    title: 'My Rankings',
-  }}
->
-  {({ navigation }) => (
-    <RankingsScreen
-      navigation={navigation}
-      myRankings={myRankings}
-    />
-  )}
-</Stack.Screen>
+      {/* =================================================
+          RANKING PROCESS
+          ================================================= */}
 
-<Stack.Screen
-  name="Challenge"
-  options={{
-    title: 'Challenge',
-  }}
->
-  {({ navigation, route }) => (
-    <ChallengeScreen
-      navigation={navigation}
-      route={route}
-      myRankings={myRankings}
-    />
-  )}
-</Stack.Screen>
+      <Stack.Screen
+        name="Challenge"
+        options={{
+          title: 'Challenge',
+        }}
+      >
+
+        {({ navigation, route }) => (
+
+          <ChallengeScreen
+            navigation={navigation}
+            route={route}
+            myRankings={myRankings}
+          />
+
+        )}
+
+      </Stack.Screen>
 
 
-<Stack.Screen
-  name="Compare"
->
-  {({ navigation, route }) => {
+      <Stack.Screen
+        name="Compare"
+        options={{
+          title: 'Rank Player',
+        }}
+      >
 
-    const selectedPlayer =
-      route.params?.player;
+        {({ navigation, route }) => {
 
-    const isPlayerRanked =
-      myRankings.some(
-        ranking =>
-          ranking.id ===
-          selectedPlayer?.id
-      );
+          const selectedPlayer =
+            route.params?.player;
 
-    return (
-      <CompareScreen
-        navigation={navigation}
-        route={route}
-        isFirstPlayer={
-          myRankings.length === 0
-        }
-        isPlayerRanked={
-          isPlayerRanked
-        }
-        onAnchorSelected={
-          handleAnchorSelected
-        }
-      />
-    );
-  }}
-</Stack.Screen>
+          const isPlayerRanked =
+            myRankings.some(
+              ranking =>
+                ranking.id ===
+                selectedPlayer?.id
+            );
+
+          return (
+
+            <CompareScreen
+              navigation={navigation}
+              route={route}
+              isFirstPlayer={
+                myRankings.length === 0
+              }
+              isPlayerRanked={
+                isPlayerRanked
+              }
+              onAnchorSelected={
+                handleAnchorSelected
+              }
+            />
+
+          );
+
+        }}
+
+      </Stack.Screen>
 
 
       <Stack.Screen
         name="HeadToHead"
       >
+
         {({ navigation, route }) => (
+
           <HeadToHead
             navigation={navigation}
             route={route}
-            onResult={handleHeadToHeadResult}
-            myRankings={myRankings}
-            comparisonHistory={comparisonHistory}
+            onResult={
+              handleHeadToHeadResult
+            }
+            myRankings={
+              myRankings
+            }
+            comparisonHistory={
+              comparisonHistory
+            }
           />
+
         )}
+
       </Stack.Screen>
 
     </Stack.Navigator>
@@ -492,3 +603,4 @@ return (
 );
 
 }
+

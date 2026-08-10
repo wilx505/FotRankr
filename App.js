@@ -183,22 +183,38 @@ const handleAnchorSelected = ({
   category,
 }) => {
 
-  const anchorRatings = {
-    Legendary: 2980,
-    Elite: 2880,
-    'Very Good': 2700,
-    Good: 2400,
-    OK: 2000,
-    Bad: 1400,
+const handleAnchorSelected = ({
+  player,
+  category,
+}) => {
+
+  // Convert the chosen category into a starting score.
+  const categoryScores = {
+    Legendary: 9.90,
+    Elite: 9.40,
+    'Very Good': 8.50,
+    Good: 7.00,
+    OK: 5.00,
+    Bad: 1.00,
   };
 
+  const anchorScore =
+    categoryScores[category];
+
+  // Convert the display score into the
+  // hidden internal rating.
   const anchorRating =
-    anchorRatings[category] ?? 2000;
+    2000 + ((anchorScore - 5) * 200);
 
   const anchorPlayer = {
-    ...createPlayer(player),
+    id: player.id,
+    name: player.name,
+    nation: player.nation || '',
+    position: player.position || '',
 
     rating: anchorRating,
+    score: anchorScore,
+    category: category,
 
     uncertainty: 200,
 
@@ -209,7 +225,9 @@ const handleAnchorSelected = ({
     draws: 0,
   };
 
-  setMyRankings([anchorPlayer]);
+  setMyRankings([
+    anchorPlayer
+  ]);
 
   setComparisonHistory([]);
 };

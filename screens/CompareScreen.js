@@ -6,7 +6,12 @@ import {
   View,
 } from 'react-native';
 
-export default function CompareScreen({ route, navigation, isFirstPlayer, onAnchorSelected }) {
+export default function CompareScreen({
+  route,
+  navigation,
+  isFirstPlayer,
+  onAnchorSelected,
+}) {
 
   const { player } = route.params;
 
@@ -43,26 +48,27 @@ export default function CompareScreen({ route, navigation, isFirstPlayer, onAnch
     },
   ];
 
- const chooseCategory = (category) => {
+  const chooseCategory = (category) => {
 
-  if (isFirstPlayer) {
+    // FIRST PLAYER
+    if (isFirstPlayer) {
 
-    onAnchorSelected({
+      onAnchorSelected({
+        player,
+        category: category.name,
+      });
+
+      navigation.navigate('Rankings');
+
+      return;
+    }
+
+    // ALL FUTURE PLAYERS
+    navigation.navigate('HeadToHead', {
       player,
       category: category.name,
     });
-
-    navigation.navigate('Rankings');
-
-    return;
-  }
-
-  navigation.navigate('HeadToHead', {
-    player,
-    category: category.name,
-  });
-
-};
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -93,7 +99,9 @@ export default function CompareScreen({ route, navigation, isFirstPlayer, onAnch
           key={category.name}
           style={[
             styles.categoryBox,
-            { borderColor: category.colour },
+            {
+              borderColor: category.colour,
+            },
           ]}
           onPress={() => chooseCategory(category)}
         >
@@ -101,7 +109,9 @@ export default function CompareScreen({ route, navigation, isFirstPlayer, onAnch
           <Text
             style={[
               styles.categoryName,
-              { color: category.colour },
+              {
+                color: category.colour,
+              },
             ]}
           >
             {category.name}

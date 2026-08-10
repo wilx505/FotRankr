@@ -9,7 +9,10 @@ import {
 
 import players from '../players';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({
+  navigation,
+  isFirstPlayer,
+}) {
 
   const [search, setSearch] = useState('');
 
@@ -51,10 +54,11 @@ export default function HomeScreen({ navigation }) {
           key={player.id}
           style={styles.playerBox}
           onPress={() =>
-            navigation.navigate('Compare', {
-              player: player,
-            })
+           navigation.navigate('Compare', {
+          player: player,
+          })
           }
+          
         >
 
           <Text style={styles.player}>

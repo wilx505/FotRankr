@@ -19,7 +19,7 @@ import {
 
 const Stack = createNativeStackNavigator();
 
-const DATA_VERSION = '5';
+const DATA_VERSION = '6';
 
 export default function App() {
 
@@ -183,11 +183,6 @@ const handleAnchorSelected = ({
   category,
 }) => {
 
-const handleAnchorSelected = ({
-  player,
-  category,
-}) => {
-
   // Convert the chosen category into a starting score.
   const categoryScores = {
     Legendary: 9.90,
@@ -215,6 +210,7 @@ const handleAnchorSelected = ({
     rating: anchorRating,
     score: anchorScore,
     category: category,
+    isAnchor: true,
 
     uncertainty: 200,
 
@@ -232,170 +228,258 @@ const handleAnchorSelected = ({
   setComparisonHistory([]);
 };
 
-  // =====================================================
-  // HEAD-TO-HEAD RESULT
-  // =====================================================
+// =====================================================
+// HEAD-TO-HEAD RESULT
+// =====================================================
 
-  const handleHeadToHeadResult = ({
-    player,
-    comparisonPlayer,
-    result,
-  }) => {
+const handleHeadToHeadResult = ({
+  player,
+  comparisonPlayer,
+  result,
+}) => {
 
-    console.log(
-      'FOTRANKR COMPARISON:',
-      player.name,
-      'vs',
-      comparisonPlayer.name,
-      result
-    );
+  console.log(
+    'FOTRANKR COMPARISON:',
+    player.name,
+    'vs',
+    comparisonPlayer.name,
+    result
+  );
 
-    setMyRankings(previousRankings => {
+  setMyRankings(previousRankings => {
 
-      // -----------------------------------------------
-      // Convert saved ranking data back into
-      // ranking-engine players
-      // -----------------------------------------------
+    // -----------------------------------------------
+    // Find existing players
+    // -----------------------------------------------
 
-      const findExistingPlayer = (sourcePlayer) => {
+    const findExistingPlayer = (sourcePlayer) => {
 
-        return previousRankings.find(
-          rankedPlayer =>
-            rankedPlayer.id === sourcePlayer.id
-        );
+      return previousRankings.find(
+        rankedPlayer =>
+          rankedPlayer.id === sourcePlayer.id
+      );
 
-      };
+    };
 
-      let playerA =
-        findExistingPlayer(player);
+    let playerA =
+      findExistingPlayer(player);
 
-      let playerB =
-        findExistingPlayer(comparisonPlayer);
+    let playerB =
+      findExistingPlayer(comparisonPlayer);
 
-      // -----------------------------------------------
-      // Create player if they don't exist yet
-      // -----------------------------------------------
 
-      if (!playerA) {
+    // -----------------------------------------------
+    // Create players if they don't exist
+    // -----------------------------------------------
 
-        playerA =
-          createPlayer(player);
+    if (!playerA) {
+
+      playerA =
+        createPlayer(player);
+
+    }
+
+    if (!playerB) {
+
+      playerB =
+        createPlayer(comparisonPlayer);
+
+    }
+
+
+    // -----------------------------------------------
+    // FIRST COMPARISON AGAINST ANCHOR
+    // -----------------------------------------------
+
+    const isPlayerANew =
+      playerA.comparisons === 0 &&
+      !playerA.isAnchor;
+
+    const isPlayerBNew =
+      playerB.comparisons === 0 &&
+      !playerB.isAnchor;
+
+    const playerAIsAnchor =
+      playerA.isAnchor === true;
+
+    const playerBIsAnchor =
+      playerB.isAnchor === true;
+
+
+    // -----------------------------------------------
+    // New Player A vs Anchor Player B
+    // -----------------------------------------------
+
+    if (
+      isPlayerANew &&
+      playerBIsAnchor
+    ) {
+
+      if (result === 'player') {
+
+        playerA.rating =
+          playerB.rating + 80;
 
       }
 
-      if (!playerB) {
+      else if (result === 'comparison') {
 
-        playerB =
-          createPlayer(comparisonPlayer);
+        playerA.rating =
+          playerB.rating - 80;
 
       }
 
-      // -----------------------------------------------
-      // Run the actual ranking engine
-      // -----------------------------------------------
+      else {
 
-      const resultData =
-        comparePlayers(
-          playerA,
-          playerB,
-          result
-        );
+        playerA.rating =
+          playerB.rating;
 
-      const updatedA =
-        resultData.playerA;
+      }
 
-      const updatedB =
-        resultData.playerB;
+    }
 
-      // -----------------------------------------------
-      // Remove old versions of these players
-      // -----------------------------------------------
 
-      const otherPlayers =
-        previousRankings.filter(
-          rankedPlayer =>
-            rankedPlayer.id !== player.id &&
-            rankedPlayer.id !== comparisonPlayer.id
-        );
+    // -----------------------------------------------
+    // New Player B vs Anchor Player A
+    // -----------------------------------------------
 
-      // -----------------------------------------------
-      // Save the new engine results
-      // -----------------------------------------------
+    else if (
+      isPlayerBNew &&
+      playerAIsAnchor
+    ) {
 
-      return [
-        ...otherPlayers,
-        updatedA,
-        updatedB,
-      ];
+      if (result === 'comparison') {
 
-    });
+        playerB.rating =
+          playerA.rating + 80;
 
-    // =================================================
-    // SAVE HISTORY
-    // =================================================
+      }
 
-    setComparisonHistory(
-      previousHistory => [
+      else if (result === 'player') {
 
-        ...previousHistory,
+        playerB.rating =
+          playerA.rating - 80;
 
-        {
-          playerA: player.id,
-          playerB: comparisonPlayer.id,
-          result,
-          date: new Date().toISOString(),
-        },
+      }
 
-      ]
-    );
+      else {
 
-  };
+        playerB.rating =
+          playerA.rating;
 
-  // =====================================================
-  // NAVIGATION
-  // =====================================================
+      }
 
-  return (
+    }
 
-    <NavigationContainer>
 
-      <Stack.Navigator>
+    // -----------------------------------------------
+    // Run ranking engine
+    // -----------------------------------------------
 
-        <Stack.Screen
-          name="Home"
-          options={{
-            title: 'FotRankr',
-          }}
-        >
+    const resultData =
+      comparePlayers(
+        playerA,
+        playerB,
+        result
+      );
 
-          {({ navigation }) => (
 
-            <HomeScreen
-              navigation={navigation}
-            />
+    const updatedA =
+      resultData.playerA;
 
-          )}
+    const updatedB =
+      resultData.playerB;
 
-        </Stack.Screen>
 
-        <Stack.Screen
-          name="Rankings"
-          options={{
-            title: 'My Rankings',
-          }}
-        >
+    // -----------------------------------------------
+    // Remove old versions
+    // -----------------------------------------------
 
-          {() => (
+    const otherPlayers =
+      previousRankings.filter(
+        rankedPlayer =>
+          rankedPlayer.id !== player.id &&
+          rankedPlayer.id !== comparisonPlayer.id
+      );
 
-            <RankingsScreen
-              myRankings={myRankings}
-            />
 
-          )}
+    // -----------------------------------------------
+    // Save updated players
+    // -----------------------------------------------
 
-        </Stack.Screen>
+    return [
+      ...otherPlayers,
+      updatedA,
+      updatedB,
+    ];
 
-       <Stack.Screen
+  });
+
+
+  // -----------------------------------------------
+  // SAVE HISTORY
+  // -----------------------------------------------
+
+  setComparisonHistory(
+    previousHistory => [
+
+      ...previousHistory,
+
+      {
+        playerA: player.id,
+        playerB: comparisonPlayer.id,
+        result,
+        date: new Date().toISOString(),
+      },
+
+    ]
+  );
+
+};
+
+
+
+// =====================================================
+// NAVIGATION
+// =====================================================
+
+
+return (
+
+  <NavigationContainer>
+
+    <Stack.Navigator>
+
+      <Stack.Screen
+        name="Home"
+        options={{
+          title: 'FotRankr',
+        }}
+      >
+        {({ navigation }) => (
+          <HomeScreen
+            navigation={navigation}
+            isFirstPlayer={myRankings.length === 0}
+          />
+        )}
+      </Stack.Screen>
+
+
+      <Stack.Screen
+        name="Rankings"
+        options={{
+          title: 'My Rankings',
+        }}
+      >
+        {() => (
+          <RankingsScreen
+            myRankings={myRankings}
+          />
+        )}
+      </Stack.Screen>
+
+
+    <Stack.Screen
   name="Compare"
 >
   {({ navigation, route }) => (
@@ -408,28 +492,25 @@ const handleAnchorSelected = ({
   )}
 </Stack.Screen>
 
-        <Stack.Screen
-          name="HeadToHead"
-        >
 
-          {({ navigation, route }) => (
+      <Stack.Screen
+        name="HeadToHead"
+      >
+        {({ navigation, route }) => (
+          <HeadToHead
+            navigation={navigation}
+            route={route}
+            onResult={handleHeadToHeadResult}
+            myRankings={myRankings}
+            comparisonHistory={comparisonHistory}
+          />
+        )}
+      </Stack.Screen>
 
-            <HeadToHead
-              navigation={navigation}
-              route={route}
-              onResult={handleHeadToHeadResult}
-              myRankings={myRankings}
-              comparisonHistory={comparisonHistory}
-            />
+    </Stack.Navigator>
 
-          )}
+  </NavigationContainer>
 
-        </Stack.Screen>
-
-      </Stack.Navigator>
-
-    </NavigationContainer>
-
-  );
+);
 
 }

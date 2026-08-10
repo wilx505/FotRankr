@@ -1,3 +1,4 @@
+
 import {
   ScrollView,
   StyleSheet,
@@ -11,17 +12,45 @@ export default function RankingsScreen({
   myRankings,
 }) {
 
+  const showPosition =
+    navigation
+      .getState()
+      ?.routes
+      ?.find(
+        route =>
+          route.name === 'Rankings'
+      )
+      ?.params
+      ?.position || 'All';
+
+  const filteredPlayers =
+    showPosition === 'All'
+      ? myRankings
+      : myRankings.filter(
+          player =>
+            player.position?.toLowerCase() ===
+            showPosition.toLowerCase()
+        );
+
   const sortedPlayers = [
-    ...myRankings,
+    ...filteredPlayers,
   ].sort(
-    (a, b) =>
-      b.rating - a.rating
+    (a, b) => b.rating - a.rating
   );
+
+  const goToPosition = (position) => {
+
+    navigation.setParams({
+      position,
+    });
+
+  };
 
   return (
 
     <ScrollView
       style={styles.container}
+      contentContainerStyle={styles.content}
     >
 
       <Text style={styles.title}>
@@ -32,16 +61,144 @@ export default function RankingsScreen({
         Your personal footballer rankings
       </Text>
 
+      {/* RANK MORE PLAYERS */}
+
+      <TouchableOpacity
+        style={styles.rankMoreButton}
+        onPress={() =>
+          navigation.navigate('Home')
+        }
+      >
+
+        <Text style={styles.rankMoreButtonText}>
+          + RANK MORE PLAYERS
+        </Text>
+
+      </TouchableOpacity>
+
+      {/* POSITION FILTERS */}
+
+      <View style={styles.filterContainer}>
+
+        <TouchableOpacity
+          style={[
+            styles.filterButton,
+            showPosition === 'All' &&
+              styles.filterButtonActive,
+          ]}
+          onPress={() =>
+            goToPosition('All')
+          }
+        >
+          <Text
+            style={[
+              styles.filterText,
+              showPosition === 'All' &&
+                styles.filterTextActive,
+            ]}
+          >
+            ALL PLAYERS
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.filterButton,
+            showPosition === 'Attack' &&
+              styles.filterButtonActive,
+          ]}
+          onPress={() =>
+            goToPosition('Attack')
+          }
+        >
+          <Text
+            style={[
+              styles.filterText,
+              showPosition === 'Attack' &&
+                styles.filterTextActive,
+            ]}
+          >
+            ATTACKERS
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.filterButton,
+            showPosition === 'Midfielder' &&
+              styles.filterButtonActive,
+          ]}
+          onPress={() =>
+            goToPosition('Midfielder')
+          }
+        >
+          <Text
+            style={[
+              styles.filterText,
+              showPosition === 'Midfielder' &&
+                styles.filterTextActive,
+            ]}
+          >
+            MIDFIELDERS
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.filterButton,
+            showPosition === 'Defender' &&
+              styles.filterButtonActive,
+          ]}
+          onPress={() =>
+            goToPosition('Defender')
+          }
+        >
+          <Text
+            style={[
+              styles.filterText,
+              showPosition === 'Defender' &&
+                styles.filterTextActive,
+            ]}
+          >
+            DEFENDERS
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.filterButton,
+            showPosition === 'Goalkeeper' &&
+              styles.filterButtonActive,
+          ]}
+          onPress={() =>
+            goToPosition('Goalkeeper')
+          }
+        >
+          <Text
+            style={[
+              styles.filterText,
+              showPosition === 'Goalkeeper' &&
+                styles.filterTextActive,
+            ]}
+          >
+            GOALKEEPERS
+          </Text>
+        </TouchableOpacity>
+
+      </View>
+
+      {/* PLAYERS */}
+
       {sortedPlayers.length === 0 ? (
 
         <View style={styles.emptyBox}>
 
           <Text style={styles.emptyText}>
-            You haven't ranked anyone yet.
+            No players ranked yet.
           </Text>
 
           <Text style={styles.emptySubtext}>
-            Choose a player and start comparing!
+            Rank a player in this position to see them here.
           </Text>
 
         </View>
@@ -58,7 +215,8 @@ export default function RankingsScreen({
                 navigation.navigate(
                   'Challenge',
                   {
-                    player,
+                  player,
+                  positionFilter: showPosition,
                   }
                 )
               }
@@ -123,6 +281,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
+  content: {
+    paddingBottom: 40,
+  },
+
   title: {
     color: '#00ff66',
     fontSize: 32,
@@ -136,7 +298,51 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     marginTop: 8,
-    marginBottom: 30,
+    marginBottom: 20,
+  },
+
+  rankMoreButton: {
+    backgroundColor: '#00ff66',
+    borderRadius: 12,
+    paddingVertical: 15,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+
+  rankMoreButtonText: {
+    color: '#000000',
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+
+  filterContainer: {
+    marginBottom: 20,
+  },
+
+  filterButton: {
+    backgroundColor: '#111111',
+    borderRadius: 10,
+    paddingVertical: 13,
+    paddingHorizontal: 15,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#222222',
+  },
+
+  filterButtonActive: {
+    backgroundColor: '#00ff66',
+    borderColor: '#00ff66',
+  },
+
+  filterText: {
+    color: '#aaaaaa',
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  filterTextActive: {
+    color: '#000000',
   },
 
   playerBox: {
@@ -208,7 +414,7 @@ const styles = StyleSheet.create({
     padding: 25,
     borderRadius: 15,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
   },
 
   emptyText: {

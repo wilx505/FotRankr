@@ -12,17 +12,47 @@ export default function ChallengeScreen({
   myRankings,
 }) {
 
-  const { player } = route.params;
+  const {
+    player,
+    positionFilter = 'All',
+  } = route.params || {};
+  console.log(
+  'FOTRANKR POSITION FILTER:',
+  positionFilter
+);
+
+  // --------------------------------------------------
+  // BUILD OPPONENT LIST
+  // --------------------------------------------------
 
   const opponents = [...myRankings]
     .filter(
       ranking =>
         ranking.id !== player.id
     )
+    .filter(
+      ranking => {
+
+        // ALL PLAYERS = everyone
+        if (positionFilter === 'All') {
+          return true;
+        }
+
+        // POSITION VIEW = same position only
+        return (
+          ranking.position?.toLowerCase() ===
+          positionFilter.toLowerCase()
+        );
+      }
+    )
     .sort(
       (a, b) =>
         b.rating - a.rating
     );
+
+  // --------------------------------------------------
+  // SELECT OPPONENT
+  // --------------------------------------------------
 
   const selectOpponent = (
     opponent
@@ -42,10 +72,15 @@ export default function ChallengeScreen({
 
   };
 
+  // --------------------------------------------------
+  // SCREEN
+  // --------------------------------------------------
+
   return (
 
     <ScrollView
       style={styles.container}
+      contentContainerStyle={styles.content}
     >
 
       <Text style={styles.title}>
@@ -56,6 +91,24 @@ export default function ChallengeScreen({
         Who do you want {player.name}
         {' '}to challenge?
       </Text>
+
+      {/* POSITION CONTEXT */}
+
+      <Text style={styles.positionLabel}>
+        {positionFilter === 'All'
+          ? 'ALL PLAYERS'
+          : positionFilter === 'Attack'
+          ? 'ATTACKERS'
+          : positionFilter === 'Midfielder'
+          ? 'MIDFIELDERS'
+          : positionFilter === 'Defender'
+          ? 'DEFENDERS'
+          : positionFilter === 'Goalkeeper'
+          ? 'GOALKEEPERS'
+          : 'ALL PLAYERS'}
+      </Text>
+
+      {/* SELECTED PLAYER */}
 
       <View style={styles.selectedBox}>
 
@@ -76,95 +129,150 @@ export default function ChallengeScreen({
 
       </View>
 
-      {opponents.map(
-        (opponent) => (
+      {/* OPPONENTS */}
+
+      {opponents.length === 0 ? (
+
+        <View style={styles.emptyBox}>
+
+          <Text style={styles.emptyTitle}>
+            NO OPPONENTS AVAILABLE
+          </Text>
+
+          <Text style={styles.emptyText}>
+            You need to rank another player in
+            this position before {player.name}
+            can challenge them.
+          </Text>
 
           <TouchableOpacity
-            key={opponent.id}
-            style={styles.playerBox}
+            style={styles.backButton}
             onPress={() =>
-              selectOpponent(
-                opponent
-              )
+              navigation.goBack()
             }
           >
 
-            <View
-              style={styles.rankCircle}
-            >
-
-              <Text
-                style={styles.rankNumber}
-              >
-                {myRankings
-                  .sort(
-                    (a, b) =>
-                      b.rating -
-                      a.rating
-                  )
-                  .findIndex(
-                    ranking =>
-                      ranking.id ===
-                      opponent.id
-                  ) + 1}
-              </Text>
-
-            </View>
-
-            <View
-              style={styles.playerDetails}
-            >
-
-              <Text
-                style={styles.playerName}
-              >
-                {opponent.name}
-              </Text>
-
-              <Text
-                style={styles.info}
-              >
-                {opponent.nation}
-                {' '}•{' '}
-                {opponent.position}
-              </Text>
-
-              <Text
-                style={styles.category}
-              >
-                {opponent.category}
-              </Text>
-
-            </View>
-
-            <View
-              style={styles.scoreBox}
-            >
-
-              <Text
-                style={styles.score}
-              >
-                {typeof opponent.score ===
-                'number'
-                  ? opponent.score.toFixed(2)
-                  : '—'}
-              </Text>
-
-              <Text
-                style={styles.outOf}
-              >
-                / 10
-              </Text>
-
-            </View>
+            <Text style={styles.backButtonText}>
+              GO BACK
+            </Text>
 
           </TouchableOpacity>
 
+        </View>
+
+      ) : (
+
+        opponents.map(
+          (opponent) => (
+
+            <TouchableOpacity
+              key={opponent.id}
+              style={styles.playerBox}
+              onPress={() =>
+                selectOpponent(
+                  opponent
+                )
+              }
+            >
+
+              <View
+                style={styles.rankCircle}
+              >
+
+                <Text
+                  style={styles.rankNumber}
+                >
+                  {myRankings
+                    .filter(
+                      ranking => {
+
+                        if (
+                          positionFilter ===
+                          'All'
+                        ) {
+                          return true;
+                        }
+
+                        return (
+                          ranking.position
+                            ?.toLowerCase() ===
+                          positionFilter
+                            .toLowerCase()
+                        );
+                      }
+                    )
+                    .sort(
+                      (a, b) =>
+                        b.rating -
+                        a.rating
+                    )
+                    .findIndex(
+                      ranking =>
+                        ranking.id ===
+                        opponent.id
+                    ) + 1}
+                </Text>
+
+              </View>
+
+              <View
+                style={styles.playerDetails}
+              >
+
+                <Text
+                  style={styles.playerName}
+                >
+                  {opponent.name}
+                </Text>
+
+                <Text
+                  style={styles.info}
+                >
+                  {opponent.nation}
+                  {' '}•{' '}
+                  {opponent.position}
+                </Text>
+
+                <Text
+                  style={styles.category}
+                >
+                  {opponent.category}
+                </Text>
+
+              </View>
+
+              <View
+                style={styles.scoreBox}
+              >
+
+                <Text
+                  style={styles.score}
+                >
+                  {typeof opponent.score ===
+                  'number'
+                    ? opponent.score.toFixed(2)
+                    : '—'}
+                </Text>
+
+                <Text
+                  style={styles.outOf}
+                >
+                  / 10
+                </Text>
+
+              </View>
+
+            </TouchableOpacity>
+
+          )
         )
+
       )}
 
     </ScrollView>
+
   );
+
 }
 
 const styles = StyleSheet.create({
@@ -173,6 +281,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#050505',
     padding: 20,
+  },
+
+  content: {
+    paddingBottom: 40,
   },
 
   title: {
@@ -188,8 +300,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     marginTop: 8,
-    marginBottom: 25,
+    marginBottom: 10,
     textAlign: 'center',
+  },
+
+  positionLabel: {
+    color: '#00ff66',
+    fontSize: 13,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
   },
 
   selectedBox: {
@@ -283,4 +403,42 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
+  emptyBox: {
+    backgroundColor: '#111111',
+    borderRadius: 15,
+    padding: 25,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+
+  emptyTitle: {
+    color: '#00ff66',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  emptyText: {
+    color: '#aaaaaa',
+    fontSize: 15,
+    textAlign: 'center',
+    lineHeight: 22,
+    marginTop: 10,
+  },
+
+  backButton: {
+    backgroundColor: '#00ff66',
+    borderRadius: 10,
+    paddingVertical: 13,
+    paddingHorizontal: 25,
+    marginTop: 20,
+  },
+
+  backButtonText: {
+    color: '#000000',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+
 });
+

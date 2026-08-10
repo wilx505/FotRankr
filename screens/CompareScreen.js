@@ -11,6 +11,7 @@ export default function CompareScreen({
   navigation,
   isFirstPlayer,
   onAnchorSelected,
+   isPlayerRanked,
 }) {
 
   const { player } = route.params;
@@ -48,28 +49,30 @@ export default function CompareScreen({
     },
   ];
 
-  const chooseCategory = (category) => {
+ const chooseCategory = (category) => {
 
-    // FIRST PLAYER
-    if (isFirstPlayer) {
+  // A completely new player gets their
+  // category as their starting point.
+  if (!isPlayerRanked) {
 
-      onAnchorSelected({
-        player,
-        category: category.name,
-      });
-
-      navigation.navigate('Rankings');
-
-      return;
-    }
-
-    // ALL FUTURE PLAYERS
-    navigation.navigate('HeadToHead', {
+    onAnchorSelected({
       player,
       category: category.name,
     });
-  };
 
+    navigation.navigate('Rankings');
+
+    return;
+  }
+
+  // An already-ranked player keeps their
+  // existing rating and goes straight into
+  // another head-to-head.
+  navigation.navigate('HeadToHead', {
+    player,
+    category: category.name,
+  });
+};
   return (
     <ScrollView style={styles.container}>
 

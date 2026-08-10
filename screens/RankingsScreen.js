@@ -80,7 +80,9 @@ export default function RankingsScreen({
               <View style={styles.scoreBox}>
 
                 <Text style={styles.score}>
-                  {player.score.toFixed(2)}
+                 {typeof player.score === 'number'
+                 ? player.score.toFixed(2)
+                 : '—'}
                 </Text>
 
                 <Text style={styles.outOf}>

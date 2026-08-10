@@ -19,7 +19,7 @@ import {
 
 const Stack = createNativeStackNavigator();
 
-const DATA_VERSION = '4';
+const DATA_VERSION = '5';
 
 export default function App() {
 

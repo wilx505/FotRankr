@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 
-export default function CompareScreen({ route, navigation }) {
+export default function CompareScreen({ route, navigation, isFirstPlayer, onAnchorSelected }) {
 
   const { player } = route.params;
 
@@ -43,14 +43,26 @@ export default function CompareScreen({ route, navigation }) {
     },
   ];
 
-  const chooseCategory = (category) => {
+ const chooseCategory = (category) => {
 
-    navigation.navigate('HeadToHead', {
+  if (isFirstPlayer) {
+
+    onAnchorSelected({
       player,
       category: category.name,
     });
 
-  };
+    navigation.navigate('Rankings');
+
+    return;
+  }
+
+  navigation.navigate('HeadToHead', {
+    player,
+    category: category.name,
+  });
+
+};
 
   return (
     <ScrollView style={styles.container}>

@@ -174,6 +174,46 @@ export default function App() {
     dataLoaded,
   ]);
 
+// =====================================================
+// FIRST PLAYER ANCHOR
+// =====================================================
+
+const handleAnchorSelected = ({
+  player,
+  category,
+}) => {
+
+  const anchorRatings = {
+    Legendary: 2980,
+    Elite: 2880,
+    'Very Good': 2700,
+    Good: 2400,
+    OK: 2000,
+    Bad: 1400,
+  };
+
+  const anchorRating =
+    anchorRatings[category] ?? 2000;
+
+  const anchorPlayer = {
+    ...createPlayer(player),
+
+    rating: anchorRating,
+
+    uncertainty: 200,
+
+    comparisons: 0,
+
+    wins: 0,
+    losses: 0,
+    draws: 0,
+  };
+
+  setMyRankings([anchorPlayer]);
+
+  setComparisonHistory([]);
+};
+
   // =====================================================
   // HEAD-TO-HEAD RESULT
   // =====================================================
@@ -337,10 +377,18 @@ export default function App() {
 
         </Stack.Screen>
 
-        <Stack.Screen
-          name="Compare"
-          component={CompareScreen}
-        />
+       <Stack.Screen
+  name="Compare"
+>
+  {({ navigation, route }) => (
+    <CompareScreen
+      navigation={navigation}
+      route={route}
+      isFirstPlayer={myRankings.length === 0}
+      onAnchorSelected={handleAnchorSelected}
+    />
+  )}
+</Stack.Screen>
 
         <Stack.Screen
           name="HeadToHead"

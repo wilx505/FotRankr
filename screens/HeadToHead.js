@@ -19,110 +19,125 @@ export default function HeadToHead({
   const {
     player,
     category,
-  } = route.params;
+  } = route.params || {};
+
+  // --------------------------------------------------
+  // BUILD PLAYERS WITH THEIR CURRENT RANKINGS
+  // --------------------------------------------------
+
+  const rankedPlayers = players.map((p) => {
+
+    const existingRanking = myRankings?.find(
+      ranking =>
+        ranking.id === p.id ||
+        ranking.playerId === p.id
+    );
+
+    return {
+      ...p,
+
+      rating:
+        existingRanking?.rating ??
+        existingRanking?.internalRating ??
+        2000,
+
+      uncertainty:
+        existingRanking?.uncertainty ??
+        350,
+
+      comparisons:
+        existingRanking?.comparisons ??
+        0,
+
+      wins:
+        existingRanking?.wins ??
+        0,
+
+      losses:
+        existingRanking?.losses ??
+        0,
+
+      draws:
+        existingRanking?.draws ??
+        0,
+    };
+
+  });
 
 
   // --------------------------------------------------
-  // TEMPORARY COMPARISON PLAYER
+  // SELECTED PLAYER
   // --------------------------------------------------
 
-const rankedPlayers = players.map(p => {
-
-  const existingRanking = myRankings?.find(
+  const targetRanking = myRankings?.find(
     ranking =>
-      ranking.id === p.id ||
-      ranking.playerId === p.id
+      ranking.id === player?.id ||
+      ranking.playerId === player?.id
   );
 
-  return {
-    ...p,
+
+  const targetPlayer = {
+
+    ...player,
 
     rating:
-      existingRanking?.rating ??
-      existingRanking?.internalRating ??
+      targetRanking?.rating ??
+      targetRanking?.internalRating ??
       2000,
 
     uncertainty:
-      existingRanking?.uncertainty ??
+      targetRanking?.uncertainty ??
       350,
 
     comparisons:
-      existingRanking?.comparisons ??
+      targetRanking?.comparisons ??
       0,
 
     wins:
-      existingRanking?.wins ??
+      targetRanking?.wins ??
       0,
 
     losses:
-      existingRanking?.losses ??
+      targetRanking?.losses ??
       0,
 
     draws:
-      existingRanking?.draws ??
+      targetRanking?.draws ??
       0,
+
   };
 
-});
 
-const targetPlayer = {
-  ...player,
+  // --------------------------------------------------
+  // REMOVE THE SELECTED PLAYER FROM OPPONENTS
+  // --------------------------------------------------
 
-  rating:
-    myRankings?.find(
-      ranking =>
-        ranking.id === player.id ||
-        ranking.playerId === player.id
-    )?.rating ??
-    myRankings?.find(
-      ranking =>
-        ranking.id === player.id ||
-        ranking.playerId === player.id
-    )?.internalRating ??
-    2000,
-
-  uncertainty:
-    350,
-
-  comparisons:
-    0,
-
-  wins:
-    0,
-
-  losses:
-    0,
-
-  draws:
-    0,
-};
+  const availableOpponents = rankedPlayers.filter(
+    rankedPlayer =>
+      rankedPlayer.id !== targetPlayer.id
+  );
 
 
-const availableOpponents = rankedPlayers.filter(
-  rankedPlayer =>
-    rankedPlayer.id !== player.id
-);
+  // --------------------------------------------------
+  // FIND OPPONENT
+  // --------------------------------------------------
 
-const comparisonPlayer = findBestOpponent(
-  targetPlayer,
-  availableOpponents,
-  comparisonHistory
-);
-console.log(
-  'HEAD TO HEAD DEBUG:',
-  {
-    selected: {
-      id: player.id,
-      name: player.name,
-    },
-    opponent: comparisonPlayer
-      ? {
-          id: comparisonPlayer.id,
-          name: comparisonPlayer.name,
-        }
-      : null,
-  }
-);
+  const comparisonPlayer = findBestOpponent(
+    targetPlayer,
+    availableOpponents,
+    comparisonHistory || []
+  );
+
+
+  console.log(
+    'FOTRANKR H2H:',
+    'Selected =',
+    targetPlayer?.name,
+    targetPlayer?.id,
+    '| Opponent =',
+    comparisonPlayer?.name ?? 'NONE',
+    comparisonPlayer?.id ?? 'NONE'
+  );
 
 
   // --------------------------------------------------
@@ -131,24 +146,34 @@ console.log(
 
   const updateScores = (result) => {
 
+    if (!comparisonPlayer) {
+
+      console.log(
+        'FOTRANKR H2H: Cannot submit result because there is no opponent.'
+      );
+
+      return;
+
+    }
+
+
     console.log(
-      'SENDING HEAD TO HEAD:',
+      'FOTRANKR H2H RESULT:',
       {
-        player: player.name,
+        player: targetPlayer.name,
         comparisonPlayer: comparisonPlayer.name,
-        category: category,
-        result: result,
+        category,
+        result,
       }
     );
 
 
     onResult({
 
-      player,
+      player: targetPlayer,
 
       comparisonPlayer,
 
-      // THIS WAS MISSING BEFORE
       category,
 
       result,
@@ -156,12 +181,14 @@ console.log(
     });
 
 
-    navigation.navigate(
-      'Rankings'
-    );
+    navigation.navigate('Rankings');
 
   };
 
+
+  // --------------------------------------------------
+  // SCREEN
+  // --------------------------------------------------
 
   return (
 
@@ -180,17 +207,16 @@ console.log(
       <View style={styles.comparisonBox}>
 
 
-        {/* PLAYER */}
+        {/* SELECTED PLAYER */}
 
         <View style={styles.playerSide}>
 
-
           <Text style={styles.playerName}>
-            {comparisonPlayer?.name}
+            {targetPlayer?.name ?? 'Unknown player'}
           </Text>
 
           <Text style={styles.info}>
-            {comparisonPlayer?.nation}
+            {targetPlayer?.nation ?? ''}
           </Text>
 
         </View>
@@ -201,37 +227,41 @@ console.log(
         </Text>
 
 
-{/* COMPARISON PLAYER */}
+        {/* COMPARISON PLAYER */}
 
-<View style={styles.playerSide}>
+        <View style={styles.playerSide}>
 
-  <Text style={styles.playerName}>
-    {comparisonPlayer?.name ?? 'No opponent'}
-  </Text>
+          <Text style={styles.playerName}>
+            {comparisonPlayer?.name ?? 'No opponent'}
+          </Text>
 
-  <Text style={styles.info}>
-    {comparisonPlayer?.nation ?? ''}
-  </Text>
+          <Text style={styles.info}>
+            {comparisonPlayer?.nation ?? ''}
+          </Text>
 
-</View>
+        </View>
 
-</View>
 
-<Text style={styles.question}>
-  Who is better?
-</Text>
+      </View>
 
-      {/* PLAYER WINS */}
+
+      <Text style={styles.question}>
+        Who is better?
+      </Text>
+
+
+      {/* SELECTED PLAYER WINS */}
 
       <TouchableOpacity
         style={styles.greenButton}
         onPress={() =>
           updateScores('player')
         }
+        disabled={!comparisonPlayer}
       >
 
         <Text style={styles.buttonText}>
-          {player.name} is better
+          {targetPlayer?.name ?? 'Player'} is better
         </Text>
 
       </TouchableOpacity>
@@ -244,6 +274,7 @@ console.log(
         onPress={() =>
           updateScores('equal')
         }
+        disabled={!comparisonPlayer}
       >
 
         <Text style={styles.buttonText}>
@@ -260,13 +291,15 @@ console.log(
         onPress={() =>
           updateScores('comparison')
         }
+        disabled={!comparisonPlayer}
       >
 
         <Text style={styles.buttonText}>
-          {comparisonPlayer.name} is better
+          {comparisonPlayer?.name ?? 'Opponent'} is better
         </Text>
 
       </TouchableOpacity>
+
 
     </View>
 
@@ -274,6 +307,10 @@ console.log(
 
 }
 
+
+// ============================================================
+// STYLES
+// ============================================================
 
 const styles = StyleSheet.create({
 
@@ -284,6 +321,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+
   title: {
     color: '#00ff66',
     fontSize: 32,
@@ -292,12 +330,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
+
   category: {
     color: '#aaaaaa',
     fontSize: 18,
     textAlign: 'center',
     marginBottom: 35,
   },
+
 
   comparisonBox: {
     backgroundColor: '#111111',
@@ -308,28 +348,28 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
+
   playerSide: {
     width: '38%',
     alignItems: 'center',
   },
 
-  flag: {
-    fontSize: 35,
-    marginBottom: 10,
-  },
 
   playerName: {
-    color: 'white',
+    color: '#ffffff',
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginBottom: 8,
   },
 
+
   info: {
-    color: '#888888',
-    fontSize: 14,
-    marginTop: 5,
+    color: '#aaaaaa',
+    fontSize: 15,
+    textAlign: 'center',
   },
+
 
   vs: {
     color: '#00ff66',
@@ -337,8 +377,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
+
   question: {
-    color: 'white',
+    color: '#ffffff',
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -346,32 +387,36 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
+
   greenButton: {
-    backgroundColor: '#00ff66',
-    padding: 16,
+    backgroundColor: '#00a84f',
+    padding: 17,
     borderRadius: 12,
     marginBottom: 12,
   },
+
 
   greyButton: {
-    backgroundColor: '#333333',
-    padding: 16,
+    backgroundColor: '#555555',
+    padding: 17,
     borderRadius: 12,
     marginBottom: 12,
   },
 
+
   redButton: {
-    backgroundColor: '#e74c3c',
-    padding: 16,
+    backgroundColor: '#c0392b',
+    padding: 17,
     borderRadius: 12,
+    marginBottom: 12,
   },
 
+
   buttonText: {
-    color: 'black',
-    fontSize: 16,
+    color: '#ffffff',
+    fontSize: 17,
     fontWeight: 'bold',
     textAlign: 'center',
   },
 
 });
-

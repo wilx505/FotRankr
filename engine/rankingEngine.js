@@ -43,7 +43,7 @@ const SETTINGS = {
   minimumUncertainty: 45,
 
   // Maximum rating.
-  maxRating: 2200,
+  maxRating: 3000,
 
   // Minimum rating.
   minRating: 0,
@@ -65,27 +65,27 @@ const CATEGORY_BOUNDARIES = [
 
   {
     name: 'Legendary',
-    minimumScore: 9.50,
+    minimumScore: 9.80,
   },
 
   {
     name: 'Elite',
-    minimumScore: 8.00,
+    minimumScore: 9.00,
   },
 
   {
     name: 'Very Good',
-    minimumScore: 6.00,
+    minimumScore: 8.00,
   },
 
   {
     name: 'Good',
-    minimumScore: 4.00,
+    minimumScore: 6.00,
   },
 
   {
     name: 'OK',
-    minimumScore: 2.00,
+    minimumScore: 4.00,
   },
 
   {
@@ -94,7 +94,6 @@ const CATEGORY_BOUNDARIES = [
   },
 
 ];
-
 
 // ============================================================
 // INTERNAL RATING → DISPLAY SCORE

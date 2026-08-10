@@ -11,7 +11,6 @@ import players from '../players';
 
 export default function HomeScreen({
   navigation,
-  isFirstPlayer,
 }) {
 
   const [search, setSearch] = useState('');
@@ -54,11 +53,11 @@ export default function HomeScreen({
           key={player.id}
           style={styles.playerBox}
           onPress={() =>
-           navigation.navigate('Compare', {
-          player: player,
-          })
+            navigation.navigate('Compare', {
+              player: player,
+              isFirstPlayer: true,
+            })
           }
-          
         >
 
           <Text style={styles.player}>
@@ -138,8 +137,8 @@ const styles = StyleSheet.create({
 
   info: {
     color: '#cccccc',
-    fontSize: 16,
-    marginTop: 6,
+    fontSize: 14,
+    marginTop: 5,
   },
 
 });

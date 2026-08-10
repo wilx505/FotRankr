@@ -20,7 +20,7 @@ import {
 
 const Stack = createNativeStackNavigator();
 
-const DATA_VERSION = '9';
+const DATA_VERSION = '11';
 
 export default function App() {
 
@@ -316,115 +316,45 @@ const playerAIsAnchor =
 const playerBIsAnchor =
   playerB.isAnchor === true;
 
-
+  // -----------------------------------------------
+// Run ranking engine
 // -----------------------------------------------
-// New Player A vs Anchor Player B
-// -----------------------------------------------
 
-if (
-  isPlayerANew &&
-  playerBIsAnchor
-) {
+const resultData =
+  comparePlayers(
+    playerA,
+    playerB,
+    result
+  );
 
-  if (result === 'player') {
+const updatedA =
+  resultData.playerA;
 
-    playerA.rating =
-      playerB.rating + 80;
-
-  }
-
-  else if (result === 'comparison') {
-
-    playerA.rating =
-      playerB.rating - 80;
-
-  }
-
-  else {
-
-    playerA.rating =
-      playerB.rating;
-
-  }
-
-}
+const updatedB =
+  resultData.playerB;
 
 
 // -----------------------------------------------
-// New Player B vs Anchor Player A
+// Remove old versions
 // -----------------------------------------------
 
-else if (
-  isPlayerBNew &&
-  playerAIsAnchor
-) {
-
-  if (result === 'comparison') {
-
-    playerB.rating =
-      playerA.rating + 80;
-
-  }
-
-  else if (result === 'player') {
-
-    playerB.rating =
-      playerA.rating - 80;
-
-  }
-
-  else {
-
-    playerB.rating =
-      playerA.rating;
-
-  }
-
-}
-  
+const otherPlayers =
+  previousRankings.filter(
+    rankedPlayer =>
+      rankedPlayer.id !== player.id &&
+      rankedPlayer.id !== comparisonPlayer.id
+  );
 
 
-    // -----------------------------------------------
-    // Run ranking engine
-    // -----------------------------------------------
+// -----------------------------------------------
+// Save updated players
+// -----------------------------------------------
 
-    const resultData =
-      comparePlayers(
-        playerA,
-        playerB,
-        result
-      );
-
-
-    const updatedA =
-      resultData.playerA;
-
-    const updatedB =
-      resultData.playerB;
-
-
-    // -----------------------------------------------
-    // Remove old versions
-    // -----------------------------------------------
-
-    const otherPlayers =
-      previousRankings.filter(
-        rankedPlayer =>
-          rankedPlayer.id !== player.id &&
-          rankedPlayer.id !== comparisonPlayer.id
-      );
-
-
-    // -----------------------------------------------
-    // Save updated players
-    // -----------------------------------------------
-
-    return [
-      ...otherPlayers,
-      updatedA,
-      updatedB,
-    ];
-
+return [
+  ...otherPlayers,
+  updatedA,
+  updatedB,
+];
   });
 
 

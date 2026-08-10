@@ -38,9 +38,9 @@ const SETTINGS = {
   Established players move less because their position is
   becoming more certain.
   */
-  newPlayerK: 40,
-  developingPlayerK: 28,
-  establishedPlayerK: 18,
+ newPlayerK: 70,
+ developingPlayerK: 45,
+ establishedPlayerK: 25,
 };
 
 // ============================================================
@@ -81,19 +81,23 @@ const CATEGORY_BOUNDARIES = [
 ];
 
 // ============================================================
-// CATEGORY → STARTING RATING
+// CATEGORY → SOFT STARTING RATING
 // ============================================================
 
+const CATEGORY_STARTING_RATINGS = {
+  Legendary: 2980,
+  Elite: 2840,
+  'Very Good': 2640,
+  Good: 2340,
+  OK: 2000,
+  Bad: 1600,
+};
+
 function categoryToStartingRating(category) {
-  const categoryData = CATEGORY_BOUNDARIES.find(
-    item => item.name === category
+  return (
+    CATEGORY_STARTING_RATINGS[category] ??
+    SETTINGS.startingRating
   );
-
-  if (!categoryData) {
-    return SETTINGS.startingRating;
-  }
-
-  return categoryData.minimumRating;
 }
 
 // ============================================================

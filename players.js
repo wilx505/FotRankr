@@ -109,7 +109,12 @@ const players = [
   position: 'Midfielder',
 },
 
-
+{
+  id: 'hakimi',
+  name: 'Achraf Hakimi',
+  nation: 'Morocco',
+  position: 'Defender',
+},
 
 
 ];

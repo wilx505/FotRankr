@@ -18,6 +18,8 @@ export default function HeadToHead({
   const {
     player,
     category,
+    comparisonPlayer: manualOpponent,
+    manualChallenge,
   } = route.params || {};
 
   // --------------------------------------------------
@@ -30,13 +32,28 @@ export default function HeadToHead({
       ranking.playerId === player?.id
   );
 
-  const targetPlayer = {
-    ...player,
+const targetPlayer = {
+  ...player,
 
-    rating:
-      existingTarget?.rating ??
-      existingTarget?.internalRating ??
-      2000,
+  category,
+
+  rating:
+    existingTarget?.rating ??
+    existingTarget?.internalRating ??
+    (
+      category === 'Legendary'
+        ? 2960
+        : category === 'Elite'
+        ? 2800
+        : category === 'Very Good'
+        ? 2600
+        : category === 'Good'
+        ? 2200
+        : category === 'OK'
+        ? 1800
+        : 1000
+    ),
+
 
     uncertainty:
       existingTarget?.uncertainty ??
@@ -103,12 +120,15 @@ export default function HeadToHead({
   // FIND BEST OPPONENT
   // --------------------------------------------------
 
-  const comparisonPlayer = findBestOpponent(
-    targetPlayer,
-    rankedOpponents,
-    comparisonHistory || []
-  );
-
+ const comparisonPlayer =
+  manualChallenge && manualOpponent
+    ? manualOpponent
+    : findBestOpponent(
+        targetPlayer,
+        rankedOpponents,
+        comparisonHistory || []
+      );
+      
   console.log(
     'FOTRANKR H2H:',
     'Selected =',

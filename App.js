@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
 
+import ChallengeScreen from './screens/ChallengeScreen';
 import CompareScreen from './screens/CompareScreen';
 import HeadToHead from './screens/HeadToHead';
 import HomeScreen from './screens/HomeScreen';
@@ -19,7 +20,7 @@ import {
 
 const Stack = createNativeStackNavigator();
 
-const DATA_VERSION = '6';
+const DATA_VERSION = '9';
 
 export default function App() {
 
@@ -183,51 +184,55 @@ const handleAnchorSelected = ({
   category,
 }) => {
 
-  // Convert the chosen category into a starting score.
-  const categoryScores = {
-    Legendary: 9.90,
-    Elite: 9.40,
-    'Very Good': 8.50,
-    Good: 7.00,
-    OK: 5.00,
-    Bad: 1.00,
-  };
+  // Let the ranking engine determine the
+  // correct starting rating for the category.
+  const anchorPlayer =
+    createPlayer(
+      player,
+      category
+    );
+console.log(
+  'FOTRANKR NEW PLAYER:',
+  player.name,
+  category,
+  anchorPlayer.rating,
+  anchorPlayer.score
+);
 
-  const anchorScore =
-    categoryScores[category];
+  // Add display information immediately.
+  const score =
+    5 +
+    (anchorPlayer.rating - 2000) / 200;
 
-  // Convert the display score into the
-  // hidden internal rating.
-  const anchorRating =
-    2000 + ((anchorScore - 5) * 200);
+  const limitedScore =
+    Math.max(
+      0,
+      Math.min(
+        10,
+        score
+      )
+    );
 
-  const anchorPlayer = {
-    id: player.id,
-    name: player.name,
-    nation: player.nation || '',
-    position: player.position || '',
+  const playerWithDisplay =
+    {
+      ...anchorPlayer,
 
-    rating: anchorRating,
-    score: anchorScore,
-    category: category,
-    isAnchor: true,
+      score:
+        Number(
+          limitedScore.toFixed(2)
+        ),
 
-    uncertainty: 200,
+      category,
 
-    comparisons: 0,
-
-    wins: 0,
-    losses: 0,
-    draws: 0,
-  };
+      isAnchor: true,
+    };
 
   setMyRankings([
-    anchorPlayer
+    playerWithDisplay
   ]);
 
   setComparisonHistory([]);
 };
-
 // =====================================================
 // HEAD-TO-HEAD RESULT
 // =====================================================
@@ -235,6 +240,7 @@ const handleAnchorSelected = ({
 const handleHeadToHeadResult = ({
   player,
   comparisonPlayer,
+  category,
   result,
 }) => {
 
@@ -268,108 +274,114 @@ const handleHeadToHeadResult = ({
       findExistingPlayer(comparisonPlayer);
 
 
-    // -----------------------------------------------
-    // Create players if they don't exist
-    // -----------------------------------------------
+   // -----------------------------------------------
+// Create players if they don't exist
+// -----------------------------------------------
 
-    if (!playerA) {
+if (!playerA) {
 
-      playerA =
-        createPlayer(player);
+  playerA =
+    createPlayer(
+      player,
+      category
+    );
 
-    }
+}
 
-    if (!playerB) {
+if (!playerB) {
 
-      playerB =
-        createPlayer(comparisonPlayer);
+  playerB =
+    createPlayer(
+      comparisonPlayer,
+      comparisonPlayer.category
+    );
 
-    }
+}
 
+// -----------------------------------------------
+// FIRST COMPARISON AGAINST ANCHOR
+// -----------------------------------------------
 
-    // -----------------------------------------------
-    // FIRST COMPARISON AGAINST ANCHOR
-    // -----------------------------------------------
+const isPlayerANew =
+  playerA.comparisons === 0 &&
+  !playerA.isAnchor;
 
-    const isPlayerANew =
-      playerA.comparisons === 0 &&
-      !playerA.isAnchor;
+const isPlayerBNew =
+  playerB.comparisons === 0 &&
+  !playerB.isAnchor;
 
-    const isPlayerBNew =
-      playerB.comparisons === 0 &&
-      !playerB.isAnchor;
+const playerAIsAnchor =
+  playerA.isAnchor === true;
 
-    const playerAIsAnchor =
-      playerA.isAnchor === true;
-
-    const playerBIsAnchor =
-      playerB.isAnchor === true;
-
-
-    // -----------------------------------------------
-    // New Player A vs Anchor Player B
-    // -----------------------------------------------
-
-    if (
-      isPlayerANew &&
-      playerBIsAnchor
-    ) {
-
-      if (result === 'player') {
-
-        playerA.rating =
-          playerB.rating + 80;
-
-      }
-
-      else if (result === 'comparison') {
-
-        playerA.rating =
-          playerB.rating - 80;
-
-      }
-
-      else {
-
-        playerA.rating =
-          playerB.rating;
-
-      }
-
-    }
+const playerBIsAnchor =
+  playerB.isAnchor === true;
 
 
-    // -----------------------------------------------
-    // New Player B vs Anchor Player A
-    // -----------------------------------------------
+// -----------------------------------------------
+// New Player A vs Anchor Player B
+// -----------------------------------------------
 
-    else if (
-      isPlayerBNew &&
-      playerAIsAnchor
-    ) {
+if (
+  isPlayerANew &&
+  playerBIsAnchor
+) {
 
-      if (result === 'comparison') {
+  if (result === 'player') {
 
-        playerB.rating =
-          playerA.rating + 80;
+    playerA.rating =
+      playerB.rating + 80;
 
-      }
+  }
 
-      else if (result === 'player') {
+  else if (result === 'comparison') {
 
-        playerB.rating =
-          playerA.rating - 80;
+    playerA.rating =
+      playerB.rating - 80;
 
-      }
+  }
 
-      else {
+  else {
 
-        playerB.rating =
-          playerA.rating;
+    playerA.rating =
+      playerB.rating;
 
-      }
+  }
 
-    }
+}
+
+
+// -----------------------------------------------
+// New Player B vs Anchor Player A
+// -----------------------------------------------
+
+else if (
+  isPlayerBNew &&
+  playerAIsAnchor
+) {
+
+  if (result === 'comparison') {
+
+    playerB.rating =
+      playerA.rating + 80;
+
+  }
+
+  else if (result === 'player') {
+
+    playerB.rating =
+      playerA.rating - 80;
+
+  }
+
+  else {
+
+    playerB.rating =
+      playerA.rating;
+
+  }
+
+}
+  
 
 
     // -----------------------------------------------
@@ -465,31 +477,67 @@ return (
       </Stack.Screen>
 
 
-      <Stack.Screen
-        name="Rankings"
-        options={{
-          title: 'My Rankings',
-        }}
-      >
-        {() => (
-          <RankingsScreen
-            myRankings={myRankings}
-          />
-        )}
-      </Stack.Screen>
-
-
     <Stack.Screen
-  name="Compare"
+  name="Rankings"
+  options={{
+    title: 'My Rankings',
+  }}
 >
-  {({ navigation, route }) => (
-    <CompareScreen
+  {({ navigation }) => (
+    <RankingsScreen
       navigation={navigation}
-      route={route}
-      isFirstPlayer={myRankings.length === 0}
-      onAnchorSelected={handleAnchorSelected}
+      myRankings={myRankings}
     />
   )}
+</Stack.Screen>
+
+<Stack.Screen
+  name="Challenge"
+  options={{
+    title: 'Challenge',
+  }}
+>
+  {({ navigation, route }) => (
+    <ChallengeScreen
+      navigation={navigation}
+      route={route}
+      myRankings={myRankings}
+    />
+  )}
+</Stack.Screen>
+
+
+<Stack.Screen
+  name="Compare"
+>
+  {({ navigation, route }) => {
+
+    const selectedPlayer =
+      route.params?.player;
+
+    const isPlayerRanked =
+      myRankings.some(
+        ranking =>
+          ranking.id ===
+          selectedPlayer?.id
+      );
+
+    return (
+      <CompareScreen
+        navigation={navigation}
+        route={route}
+        isFirstPlayer={
+          myRankings.length === 0
+        }
+        isPlayerRanked={
+          isPlayerRanked
+        }
+        onAnchorSelected={
+          handleAnchorSelected
+        }
+      />
+    );
+  }}
 </Stack.Screen>
 
 

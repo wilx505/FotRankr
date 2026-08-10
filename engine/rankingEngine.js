@@ -1,184 +1,184 @@
-
 /*
- * ============================================================
- * FOTRANKR RANKING ENGINE
- * ============================================================
- *
- * This file contains the mathematical ranking system.
- *
- * IMPORTANT:
- * The app should never directly change a player's score.
- *
- * The user only gives us a comparison:
- *
- *   PLAYER A is better
- *   EQUAL
- *   PLAYER B is better
- *
- * The engine then calculates the new ratings.
- *
- * ============================================================
- */
+============================================================
+FOTRANKR RANKING ENGINE
+============================================================
 
+The user provides opinions through:
+
+1. An initial category
+2. Head-to-head comparisons
+
+The category establishes a starting point.
+
+Head-to-head comparisons then refine the player's
+position within and around that category.
+
+============================================================
+*/
 
 // ============================================================
 // SETTINGS
 // ============================================================
 
 const SETTINGS = {
-
-  // Starting rating for a completely new player.
   startingRating: 2000,
 
-  // Starting uncertainty.
-  //
-  // A new player has a large amount of uncertainty because
-  // we don't know where they belong yet.
   startingUncertainty: 350,
 
-  // Minimum uncertainty.
-  //
-  // A player who has been compared many times should still
-  // retain a small amount of flexibility.
   minimumUncertainty: 45,
 
-  // Maximum rating.
   maxRating: 3000,
 
-  // Minimum rating.
   minRating: 0,
 
-};
+  /*
+  How strongly a new comparison should move a player.
 
+  New players move more because we know less about them.
+  Established players move less because their position is
+  becoming more certain.
+  */
+  newPlayerK: 40,
+  developingPlayerK: 28,
+  establishedPlayerK: 18,
+};
 
 // ============================================================
 // CATEGORY BOUNDARIES
 // ============================================================
-//
-// These are DISPLAY categories.
-// They are not separate ranking systems.
-//
-// There is one continuous rating underneath.
-//
 
 const CATEGORY_BOUNDARIES = [
-
   {
     name: 'Legendary',
     minimumScore: 9.80,
+    minimumRating: 2960,
   },
-
   {
     name: 'Elite',
     minimumScore: 9.00,
+    minimumRating: 2800,
   },
-
   {
     name: 'Very Good',
     minimumScore: 8.00,
+    minimumRating: 2600,
   },
-
   {
     name: 'Good',
     minimumScore: 6.00,
+    minimumRating: 2200,
   },
-
   {
     name: 'OK',
     minimumScore: 4.00,
+    minimumRating: 1800,
   },
-
   {
     name: 'Bad',
     minimumScore: 0.00,
+    minimumRating: 1000,
   },
-
 ];
 
 // ============================================================
-// INTERNAL RATING → DISPLAY SCORE
+// CATEGORY → STARTING RATING
 // ============================================================
-//
-// 2000 = 9.80
-//
-// The hidden rating is continuous and precise.
-// The displayed score is deliberately rounded to TWO decimals.
-//
+
+function categoryToStartingRating(category) {
+  const categoryData = CATEGORY_BOUNDARIES.find(
+    item => item.name === category
+  );
+
+  if (!categoryData) {
+    return SETTINGS.startingRating;
+  }
+
+  return categoryData.minimumRating;
+}
+
+// ============================================================
+// RATING → DISPLAY SCORE
+// ============================================================
 
 function ratingToScore(rating) {
+  /*
+  2000 = 5.00
+  2200 = 6.00
+  2600 = 8.00
+  2800 = 9.00
+  2960 = 9.80
+  3000 = 10.00
+  */
 
   const rawScore =
-    5.00 +
+    5 +
     (rating - 2000) / 200;
 
-  const limitedScore =
-    Math.max(
-      0,
-      Math.min(
-        10,
-        rawScore
-      )
-    );
+  const limitedScore = Math.max(
+    0,
+    Math.min(10, rawScore)
+  );
 
   return Number(
     limitedScore.toFixed(2)
   );
-
 }
 
 // ============================================================
-// DISPLAY SCORE → CATEGORY
+// SCORE → CATEGORY
 // ============================================================
 
 function scoreToCategory(score) {
-
-  for (
-    const category of CATEGORY_BOUNDARIES
-  ) {
-
-    if (
-      score >=
-      category.minimumScore
-    ) {
-
+  for (const category of CATEGORY_BOUNDARIES) {
+    if (score >= category.minimumScore) {
       return category.name;
-
     }
-
   }
 
   return 'Bad';
-
 }
 
+// ============================================================
+// ADD DISPLAY INFORMATION
+// ============================================================
+
+function addDisplayInformation(player) {
+  const score = ratingToScore(player.rating);
+
+  const category = scoreToCategory(score);
+
+  return {
+    ...player,
+    score,
+    category,
+  };
+}
 
 // ============================================================
 // CREATE PLAYER
 // ============================================================
-//
-// We keep the internal rating separate from the displayed
-// score.
-//
 
-function createPlayer(player) {
+function createPlayer(player, startingCategory = null) {
+  const startingRating =
+    startingCategory
+      ? categoryToStartingRating(startingCategory)
+      : SETTINGS.startingRating;
 
   return {
-
     id: player.id,
 
     name: player.name,
 
-    nation:
-      player.nation || '',
+    nation: player.nation || '',
 
-    position:
-      player.position || '',
+    position: player.position || '',
 
-    rating:
-      SETTINGS.startingRating,
+    rating: startingRating,
 
     uncertainty:
-      SETTINGS.startingUncertainty,
+      startingCategory
+        ? SETTINGS.startingUncertainty
+        : SETTINGS.startingUncertainty,
 
     comparisons: 0,
 
@@ -188,31 +188,19 @@ function createPlayer(player) {
 
     draws: 0,
 
+    initialCategory:
+      startingCategory || null,
   };
-
 }
-
 
 // ============================================================
 // EXPECTED RESULT
 // ============================================================
-//
-// Standard Elo expectation.
-//
-// If both players are 2000:
-//
-// Expected result = 0.50
-//
-// If Player A is much higher:
-//
-// Expected result approaches 1.00
-//
 
 function expectedResult(
   ratingA,
   ratingB
 ) {
-
   return (
     1 /
     (
@@ -223,85 +211,56 @@ function expectedResult(
       )
     )
   );
-
 }
-
 
 // ============================================================
 // ADAPTIVE K FACTOR
 // ============================================================
-//
-// New players need to move relatively quickly because
-// we know very little about them.
-//
-// Established players move more slowly.
-//
 
 function getKFactor(player) {
-
-  if (
-    player.comparisons < 5
-  ) {
-
-    return 40;
-
+  if (player.comparisons < 3) {
+    return SETTINGS.newPlayerK;
   }
 
-  if (
-    player.comparisons < 15
-  ) {
-
-    return 28;
-
+  if (player.comparisons < 7) {
+    return SETTINGS.developingPlayerK;
   }
 
-  return 18;
-
+  return SETTINGS.establishedPlayerK;
 }
-
 
 // ============================================================
 // UPDATE UNCERTAINTY
 // ============================================================
-//
-// Every comparison gives us more information.
-//
-// Therefore uncertainty falls.
-//
-// It never falls below the minimum.
-//
 
-function updateUncertainty(
-  player
-) {
+function updateUncertainty(player) {
+  const reduction =
+    player.comparisons < 3
+      ? 0.82
+      : player.comparisons < 7
+        ? 0.88
+        : 0.93;
 
   const newUncertainty =
-    player.uncertainty * 0.88;
+    player.uncertainty * reduction;
 
   return Math.max(
     SETTINGS.minimumUncertainty,
     newUncertainty
   );
-
 }
-
 
 // ============================================================
 // NORMALISE RESULT
 // ============================================================
 
-function normaliseResult(
-  result
-) {
-
+function normaliseResult(result) {
   if (
     result === 'player' ||
     result === 'A' ||
     result === 'a'
   ) {
-
     return 'A';
-
   }
 
   if (
@@ -309,9 +268,7 @@ function normaliseResult(
     result === 'B' ||
     result === 'b'
   ) {
-
     return 'B';
-
   }
 
   if (
@@ -319,62 +276,31 @@ function normaliseResult(
     result === 'draw' ||
     result === 'DRAW'
   ) {
-
     return 'DRAW';
-
   }
 
   throw new Error(
     `Unknown comparison result: ${result}`
   );
-
 }
 
-
 // ============================================================
-// UPDATE A HEAD-TO-HEAD
+// COMPARE PLAYERS
 // ============================================================
-//
-// This is the most important function in the engine.
-//
-// It takes:
-//
-//   Player A
-//   Player B
-//   Result
-//
-// and returns:
-//
-//   updated Player A
-//   updated Player B
-//
 
 function comparePlayers(
   playerA,
   playerB,
   result
 ) {
-
   const outcome =
-    normaliseResult(
-      result
-    );
-
-
-  // ----------------------------------------------------------
-  // Current ratings
-  // ----------------------------------------------------------
+    normaliseResult(result);
 
   const ratingA =
     playerA.rating;
 
   const ratingB =
     playerB.rating;
-
-
-  // ----------------------------------------------------------
-  // Expected results
-  // ----------------------------------------------------------
 
   const expectedA =
     expectedResult(
@@ -388,59 +314,33 @@ function comparePlayers(
       ratingA
     );
 
-
-  // ----------------------------------------------------------
-  // Actual results
-  // ----------------------------------------------------------
-
   let actualA;
   let actualB;
 
-
-  if (
-    outcome === 'A'
-  ) {
-
+  if (outcome === 'A') {
     actualA = 1;
     actualB = 0;
-
-  }
-
-  else if (
-    outcome === 'B'
-  ) {
-
+  } else if (outcome === 'B') {
     actualA = 0;
     actualB = 1;
-
-  }
-
-  else {
-
+  } else {
     actualA = 0.5;
     actualB = 0.5;
-
   }
 
-
-  // ----------------------------------------------------------
-  // K factors
-  // ----------------------------------------------------------
-
   const kA =
-    getKFactor(
-      playerA
-    );
+    getKFactor(playerA);
 
   const kB =
-    getKFactor(
-      playerB
-    );
+    getKFactor(playerB);
 
+  /*
+  Standard Elo movement.
 
-  // ----------------------------------------------------------
-  // Rating movement
-  // ----------------------------------------------------------
+  A player who beats someone much higher rated
+  moves more than a player who beats someone
+  they were already expected to beat.
+  */
 
   const changeA =
     kA *
@@ -455,11 +355,6 @@ function comparePlayers(
       actualB -
       expectedB
     );
-
-
-  // ----------------------------------------------------------
-  // New ratings
-  // ----------------------------------------------------------
 
   const newRatingA =
     Math.max(
@@ -479,13 +374,7 @@ function comparePlayers(
       )
     );
 
-
-  // ----------------------------------------------------------
-  // Update player statistics
-  // ----------------------------------------------------------
-
   const updatedA = {
-
     ...playerA,
 
     rating:
@@ -522,12 +411,9 @@ function comparePlayers(
           ? 1
           : 0
       ),
-
   };
 
-
   const updatedB = {
-
     ...playerB,
 
     rating:
@@ -564,16 +450,9 @@ function comparePlayers(
           ? 1
           : 0
       ),
-
   };
 
-
-  // ----------------------------------------------------------
-  // Return the updated players
-  // ----------------------------------------------------------
-
   return {
-
     playerA:
       addDisplayInformation(
         updatedA
@@ -591,238 +470,314 @@ function comparePlayers(
     changeA,
 
     changeB,
-
   };
-
 }
 
+// ============================================================
+// CATEGORY FOR RATING
+// ============================================================
+
+function getRatingCategory(rating) {
+  return scoreToCategory(
+    ratingToScore(rating)
+  );
+}
 
 // ============================================================
-// ADD DISPLAY INFORMATION
+// FIND BEST NEXT OPPONENT
 // ============================================================
-//
-// This does NOT affect the mathematical rating.
-//
-// It simply calculates what the user should see.
-//
 
-function addDisplayInformation(
+function findBestOpponent(
+  targetPlayer,
+  availablePlayers,
+  comparisonHistory = []
+) {
+  if (
+    !availablePlayers ||
+    availablePlayers.length === 0
+  ) {
+    return null;
+  }
+
+  const candidates =
+    availablePlayers.filter(
+      player => {
+
+        if (
+          player.id ===
+          targetPlayer.id
+        ) {
+          return false;
+        }
+
+        const hasCompared =
+          comparisonHistory.some(
+            comparison =>
+
+              (
+                comparison.playerA ===
+                targetPlayer.id &&
+                comparison.playerB ===
+                player.id
+              ) ||
+
+              (
+                comparison.playerB ===
+                targetPlayer.id &&
+                comparison.playerA ===
+                player.id
+              )
+          );
+
+        return !hasCompared;
+      }
+    );
+
+  if (
+    candidates.length === 0
+  ) {
+    return null;
+  }
+
+  const targetScore =
+    ratingToScore(
+      targetPlayer.rating
+    );
+
+  const targetCategory =
+    scoreToCategory(
+      targetScore
+    );
+
+  // ----------------------------------------------------------
+  // PRIMARY POOL
+  // Same category first.
+  // ----------------------------------------------------------
+
+  const sameCategory =
+    candidates.filter(
+      player =>
+        scoreToCategory(
+          ratingToScore(
+            player.rating
+          )
+        ) === targetCategory
+    );
+
+  /*
+  If we have same-category players,
+  use them.
+
+  Otherwise we use nearby players.
+  */
+
+  let pool =
+    sameCategory.length > 0
+      ? sameCategory
+      : candidates;
+
+  // ----------------------------------------------------------
+  // SAME POSITION PREFERENCE
+  // ----------------------------------------------------------
+
+  const samePosition =
+    pool.filter(
+      player =>
+        player.position &&
+        targetPlayer.position &&
+        player.position ===
+        targetPlayer.position
+    );
+
+  if (
+    samePosition.length > 0
+  ) {
+    pool = samePosition;
+  }
+
+  // ----------------------------------------------------------
+  // RATING DISTANCE
+  // ----------------------------------------------------------
+
+  pool.sort(
+    (a, b) => {
+
+      const distanceA =
+        Math.abs(
+          a.rating -
+          targetPlayer.rating
+        );
+
+      const distanceB =
+        Math.abs(
+          b.rating -
+          targetPlayer.rating
+        );
+
+      return (
+        distanceA -
+        distanceB
+      );
+    }
+  );
+
+  /*
+  Usually select the closest player.
+
+  However, occasionally allow a boundary
+  comparison so the system can discover whether
+  the player belongs above or below their current
+  category.
+  */
+
+  const categoryBoundary =
+    getCategoryBoundaryDistance(
+      targetPlayer
+    );
+
+  if (
+    categoryBoundary &&
+    candidates.length > 1
+  ) {
+    const boundaryPlayer =
+      candidates
+        .filter(
+          player =>
+            Math.abs(
+              player.rating -
+              targetPlayer.rating
+            ) <= 120
+        )
+        .sort(
+          (a, b) =>
+            Math.abs(
+              a.rating -
+              targetPlayer.rating
+            ) -
+            Math.abs(
+              b.rating -
+              targetPlayer.rating
+            )
+        )[0];
+
+    if (
+      boundaryPlayer
+    ) {
+      return boundaryPlayer;
+    }
+  }
+
+  return pool[0];
+}
+
+// ============================================================
+// CATEGORY BOUNDARY DISTANCE
+// ============================================================
+
+function getCategoryBoundaryDistance(
   player
 ) {
-
   const score =
     ratingToScore(
       player.rating
     );
-
 
   const category =
     scoreToCategory(
       score
     );
 
+  const currentIndex =
+    CATEGORY_BOUNDARIES.findIndex(
+      item =>
+        item.name === category
+    );
 
-  return {
+  if (
+    currentIndex === -1
+  ) {
+    return null;
+  }
 
-    ...player,
+  const categoryData =
+    CATEGORY_BOUNDARIES[
+      currentIndex
+    ];
 
-    score,
+  const nextCategory =
+    CATEGORY_BOUNDARIES[
+      currentIndex - 1
+    ];
 
-    category,
+  if (
+    !nextCategory
+  ) {
+    return null;
+  }
 
-  };
-
+  return (
+    nextCategory.minimumRating -
+    player.rating
+  );
 }
 
-
-// ============================================================
-// FIND BEST NEXT OPPONENT
-// ============================================================
-//
-// This is where FotRankr becomes smarter.
-//
-// We don't randomly choose an opponent.
-//
-// We want a player whose rating is close to the target player's
-// rating.
-//
-// The closer the ratings, the more useful the comparison tends
-// to be for establishing the player's position.
-//
-
-function findBestOpponent(
-targetPlayer,
-availablePlayers,
-comparisonHistory = []
-) {
-
-if (
-!availablePlayers ||
-availablePlayers.length === 0
-) {
-return null;
-}
-
-const candidates =
-availablePlayers.filter(
-player => {
-
-if (
-player.id === targetPlayer.id
-) {
-return false;
-}
-
-const hasCompared =
-comparisonHistory.some(
-comparison =>
-
-(
-comparison.playerA === targetPlayer.id &&
-comparison.playerB === player.id
-) ||
-
-(
-comparison.playerB === targetPlayer.id &&
-comparison.playerA === player.id
-)
-
-);
-
-return !hasCompared;
-
-}
-);
-
-
-
-if (candidates.length === 0) {
-return null;
-}
-
-// Prefer players in the same position.
-const samePosition =
-candidates.filter(
-player =>
-player.position ===
-targetPlayer.position
-);
-
-const pool =
-samePosition.length > 0
-? samePosition
-: candidates;
-
-// Find the player whose rating is closest.
-pool.sort(
-(a, b) => {
-
-const distanceA =
-Math.abs(
-a.rating -
-targetPlayer.rating
-);
-
-const distanceB =
-Math.abs(
-b.rating -
-targetPlayer.rating
-);
-
-return (
-distanceA -
-distanceB
-);
-
-}
-);
-
-return pool[0];
-
-}
-
-
-// ============================================================
-// SHOULD CONTINUE COMPARING?
-// ============================================================
-//
-// We don't want to ask endless questions.
-//
-// A player with lots of comparisons and low uncertainty can
-// normally stop.
-//
-// A new player should continue.
-//
-// For now this is intentionally conservative.
-//
 // ============================================================
 // CONFIDENCE
 // ============================================================
-//
-// Converts mathematical uncertainty into a simple label that
-// the app can show to the user.
-//
-// Lower uncertainty = higher confidence.
-//
 
 function getConfidence(player) {
+  const uncertainty =
+    player.uncertainty ??
+    SETTINGS.startingUncertainty;
 
-  if (player.uncertainty <= 100) {
+  const comparisons =
+    player.comparisons ?? 0;
+
+  /*
+  We want both things to matter:
+
+  - More comparisons = better confidence
+  - Lower uncertainty = better confidence
+  */
+
+  if (
+    comparisons >= 7 &&
+    uncertainty <= 100
+  ) {
     return 'High';
   }
 
-  if (player.uncertainty <= 200) {
+  if (
+    comparisons >= 3 &&
+    uncertainty <= 200
+  ) {
     return 'Medium';
   }
 
   return 'Low';
-
 }
+
+// ============================================================
+// SHOULD CONTINUE COMPARING
+// ============================================================
 
 function shouldContinueComparing(
   player
 ) {
+  const confidence =
+    getConfidence(
+      player
+    );
 
-  if (
-    player.comparisons < 3
-  ) {
-
-    return true;
-
-  }
-
-
-  if (
-    player.uncertainty > 150
-  ) {
-
-    return true;
-
-  }
-
-
-  return false;
-
+  return confidence !== 'High';
 }
 
-
 // ============================================================
-// PUBLIC API
+// EXPORTS
 // ============================================================
-//
-// These are the functions the React Native app will eventually
-// import.
-//
 
 export {
-  CATEGORY_BOUNDARIES,
-  comparePlayers,
-  createPlayer,
-  findBestOpponent,
-  getConfidence,
-  ratingToScore,
-  scoreToCategory,
-  SETTINGS,
-  shouldContinueComparing
+  categoryToStartingRating, comparePlayers, createPlayer, findBestOpponent,
+  getConfidence, ratingToScore,
+  scoreToCategory, shouldContinueComparing
 };
-

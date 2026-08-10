@@ -2,17 +2,20 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
 export default function RankingsScreen({
+  navigation,
   myRankings,
 }) {
 
   const sortedPlayers = [
     ...myRankings,
   ].sort(
-    (a, b) => b.rating - a.rating
+    (a, b) =>
+      b.rating - a.rating
   );
 
   return (
@@ -48,9 +51,17 @@ export default function RankingsScreen({
         sortedPlayers.map(
           (player, index) => (
 
-            <View
+            <TouchableOpacity
               key={player.id}
               style={styles.playerBox}
+              onPress={() =>
+                navigation.navigate(
+                  'Challenge',
+                  {
+                    player,
+                  }
+                )
+              }
             >
 
               <View style={styles.rankCircle}>
@@ -80,9 +91,9 @@ export default function RankingsScreen({
               <View style={styles.scoreBox}>
 
                 <Text style={styles.score}>
-                 {typeof player.score === 'number'
-                 ? player.score.toFixed(2)
-                 : '—'}
+                  {typeof player.score === 'number'
+                    ? player.score.toFixed(2)
+                    : '—'}
                 </Text>
 
                 <Text style={styles.outOf}>
@@ -91,7 +102,7 @@ export default function RankingsScreen({
 
               </View>
 
-            </View>
+            </TouchableOpacity>
 
           )
         )
@@ -215,3 +226,4 @@ const styles = StyleSheet.create({
   },
 
 });
+

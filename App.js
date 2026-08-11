@@ -35,7 +35,7 @@ const Stack =
 const Tab =
   createBottomTabNavigator();
 
-const DATA_VERSION = '13';
+const DATA_VERSION = '14';
 
 export default function App() {
 

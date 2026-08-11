@@ -53,7 +53,7 @@ export default function CompareScreen({
 
   // A completely new player gets their
   // category as their starting point.
-  if (!isPlayerRanked) {
+  if (isFirstPlayer) {
 
     onAnchorSelected({
       player,

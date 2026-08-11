@@ -21,20 +21,26 @@ export default function RankingsScreen({
 
 
 const filteredPlayers =
-showPosition === 'All'
-  ? myRankings
-  : showPosition === 'Attack'
-    ? myRankings.filter(
-        player =>
-          player.position?.toLowerCase() ===
-          'attack'
-      )
-    : myRankings.filter(
-        player =>
-          player.specificPosition
-            ?.toLowerCase() ===
-          showPosition.toLowerCase()
-      );
+  showPosition === 'All'
+    ? myRankings
+
+    : showPosition === 'Attack' ||
+      showPosition === 'Midfielder' ||
+      showPosition === 'Defender' ||
+      showPosition === 'Goalkeeper'
+
+      ? myRankings.filter(
+          player =>
+            player.position?.toLowerCase() ===
+            showPosition.toLowerCase()
+        )
+
+      : myRankings.filter(
+          player =>
+            player.specificPosition
+              ?.toLowerCase() ===
+              showPosition.toLowerCase()
+        );
 
 
   const sortedPlayers = [
@@ -200,17 +206,22 @@ showPosition === 'All'
 )}
 
 
-        <TouchableOpacity
+                  <TouchableOpacity
           style={[
             styles.filterButton,
             showPosition === 'Midfielder' &&
               styles.filterButtonActive,
           ]}
-          onPress={() =>
-            goToPosition('Midfielder')
-          }
-        >
+          onPress={() => {
+            setExpandedPosition(
+              expandedPosition === 'Midfielder'
+                ? null
+                : 'Midfielder'
+            );
 
+            goToPosition('Midfielder');
+          }}
+        >
           <Text
             style={[
               styles.filterText,
@@ -218,34 +229,137 @@ showPosition === 'All'
                 styles.filterTextActive,
             ]}
           >
-            MIDFIELDERS
+            MIDFIELDERS {expandedPosition === 'Midfielder' ? '▲' : '▼'}
           </Text>
-
         </TouchableOpacity>
 
+        {expandedPosition === 'Midfielder' && (
+          <View style={styles.subFilterContainer}>
 
-        <TouchableOpacity
-          style={[
-            styles.filterButton,
-            showPosition === 'Defender' &&
-              styles.filterButtonActive,
-          ]}
-          onPress={() =>
-            goToPosition('Defender')
-          }
-        >
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Midfielder')
+              }
+            >
+              <Text style={styles.subFilterText}>
+                ALL MIDFIELDERS
+              </Text>
+            </TouchableOpacity>
 
-          <Text
-            style={[
-              styles.filterText,
-              showPosition === 'Defender' &&
-                styles.filterTextActive,
-            ]}
-          >
-            DEFENDERS
-          </Text>
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Defensive Midfielder')
+              }
+            >
+              <Text style={styles.subFilterText}>
+                DEFENSIVE MIDFIELDERS
+              </Text>
+            </TouchableOpacity>
 
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Central Midfielder')
+              }
+            >
+              <Text style={styles.subFilterText}>
+                CENTRAL MIDFIELDERS
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Attacking Midfielder')
+              }
+            >
+              <Text style={styles.subFilterText}>
+                ATTACKING MIDFIELDERS
+              </Text>
+            </TouchableOpacity>
+
+          </View>
+        )}
+
+
+       <TouchableOpacity
+  style={[
+    styles.filterButton,
+    showPosition === 'Defender' &&
+      styles.filterButtonActive,
+  ]}
+  onPress={() => {
+    setExpandedPosition(
+      expandedPosition === 'Defender'
+        ? null
+        : 'Defender'
+    );
+
+    goToPosition('Defender');
+  }}
+>
+  <Text
+    style={[
+      styles.filterText,
+      showPosition === 'Defender' &&
+        styles.filterTextActive,
+    ]}
+  >
+    DEFENDERS {expandedPosition === 'Defender' ? '▲' : '▼'}
+  </Text>
+</TouchableOpacity>
+
+{expandedPosition === 'Defender' && (
+  <View style={styles.subFilterContainer}>
+
+    <TouchableOpacity
+      style={styles.subFilterButton}
+      onPress={() =>
+        goToPosition('Defender')
+      }
+    >
+      <Text style={styles.subFilterText}>
+        ALL DEFENDERS
+      </Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      style={styles.subFilterButton}
+      onPress={() =>
+        goToPosition('Centre-Back')
+      }
+    >
+      <Text style={styles.subFilterText}>
+        CENTRE-BACKS
+      </Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      style={styles.subFilterButton}
+      onPress={() =>
+        goToPosition('Right-Back')
+      }
+    >
+      <Text style={styles.subFilterText}>
+        RIGHT-BACKS
+      </Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      style={styles.subFilterButton}
+      onPress={() =>
+        goToPosition('Left-Back')
+      }
+    >
+      <Text style={styles.subFilterText}>
+        LEFT-BACKS
+      </Text>
+    </TouchableOpacity>
+
+  </View>
+)}
 
 
         <TouchableOpacity

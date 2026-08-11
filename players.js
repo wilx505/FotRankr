@@ -22,6 +22,7 @@ const players = [
     name: "Virgil van Dijk",
     nation: "Netherlands",
     position: "Defender",
+    specificPosition: "Centre-Back",
     club: "Liverpool",
   },
 
@@ -30,6 +31,7 @@ const players = [
     name: "Jude Bellingham",
     nation: "England",
     position: "Midfielder",
+    specificPosition: "Central Midfielder",
     club: "Real Madrid",
   },
 
@@ -61,7 +63,7 @@ const players = [
   id: 'de-bruyne',
   name: 'Kevin De Bruyne',
   nation: 'Belgium',
-  position: 'Midfielder',
+  position: 'Midfielder',  specificPosition: 'Central Midfielder',
 },
 
 {
@@ -69,6 +71,7 @@ const players = [
   name: 'Rodri',
   nation: 'Spain',
   position: 'Midfielder',
+  specificPosition: 'Defensive Midfielder',
 },
 
 {
@@ -76,6 +79,7 @@ const players = [
   name: 'William Saliba',
   nation: 'France',
   position: 'Defender',
+  specificPosition: 'Centre-Back',
 },
 
 {
@@ -107,6 +111,7 @@ const players = [
   name: 'Martin Odegaard',
   nation: 'Norway',
   position: 'Midfielder',
+  specificPosition: 'Central Midfielder',
 },
 
 {
@@ -114,6 +119,7 @@ const players = [
   name: 'Cole Palmer',
   nation: 'England',
   position: 'Midfielder',
+  specificPosition: 'Attacking Midfielder',
 },
 
 {
@@ -121,6 +127,7 @@ const players = [
   name: 'Achraf Hakimi',
   nation: 'Morocco',
   position: 'Defender',
+  specificPosition: 'Right-Back',
 },
 
 

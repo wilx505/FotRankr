@@ -172,7 +172,7 @@ const targetPlayer = {
       result,
     });
 
-    navigation.navigate('Rankings');
+    navigation.navigate('MainTabs', { screen: 'MyRanks' });
   };
 
   // --------------------------------------------------
@@ -299,7 +299,7 @@ const targetPlayer = {
           <TouchableOpacity
             style={styles.backButton}
             onPress={() =>
-              navigation.navigate('Rankings')
+              navigation.navigate('MainTabs', { screen: 'MyRanks' })
             }
           >
 

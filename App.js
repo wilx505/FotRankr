@@ -17,7 +17,6 @@ import {
   useState,
 } from 'react';
 
-
 import ChallengeScreen from './screens/ChallengeScreen';
 import CompareScreen from './screens/CompareScreen';
 import HeadToHead from './screens/HeadToHead';
@@ -25,6 +24,10 @@ import HomeScreen from './screens/HomeScreen';
 import RankingsScreen from './screens/RankingsScreen';
 import SearchScreen from './screens/SearchScreen';
 
+import {
+  comparePlayers,
+  createPlayer,
+} from './engine/rankingEngine.js';
 
 const Stack =
   createNativeStackNavigator();
@@ -32,7 +35,7 @@ const Stack =
 const Tab =
   createBottomTabNavigator();
 
-const DATA_VERSION = '11';
+const DATA_VERSION = '13';
 
 export default function App() {
 

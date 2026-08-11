@@ -14,18 +14,27 @@ export default function RankingsScreen({
 }) {
 
   const [showPosition, setShowPosition] =
-    useState('All');
+  useState('All');
+  
+  const [expandedPosition, setExpandedPosition] =
+  useState(null);
 
 
-  const filteredPlayers =
-    showPosition === 'All'
-      ? myRankings
-      : myRankings.filter(
-          player =>
-            player.position
-              ?.toLowerCase() ===
-            showPosition.toLowerCase()
-        );
+const filteredPlayers =
+showPosition === 'All'
+  ? myRankings
+  : showPosition === 'Attack'
+    ? myRankings.filter(
+        player =>
+          player.position?.toLowerCase() ===
+          'attack'
+      )
+    : myRankings.filter(
+        player =>
+          player.specificPosition
+            ?.toLowerCase() ===
+          showPosition.toLowerCase()
+      );
 
 
   const sortedPlayers = [
@@ -114,27 +123,81 @@ export default function RankingsScreen({
 
 
         <TouchableOpacity
-          style={[
-            styles.filterButton,
-            showPosition === 'Attack' &&
-              styles.filterButtonActive,
-          ]}
-          onPress={() =>
-            goToPosition('Attack')
-          }
-        >
+  style={[
+    styles.filterButton,
+    showPosition === 'Attack' &&
+      styles.filterButtonActive,
+  ]}
+  onPress={() => {
+    setExpandedPosition(
+      expandedPosition === 'Attack'
+        ? null
+        : 'Attack'
+    );
 
-          <Text
-            style={[
-              styles.filterText,
-              showPosition === 'Attack' &&
-                styles.filterTextActive,
-            ]}
-          >
-            ATTACKERS
-          </Text>
+    goToPosition('Attack');
+  }}
+>
+  <Text
+    style={[
+      styles.filterText,
+      showPosition === 'Attack' &&
+        styles.filterTextActive,
+    ]}
+  >
+    ATTACKERS {expandedPosition === 'Attack' ? '▲' : '▼'}
+  </Text>
+</TouchableOpacity>
 
-        </TouchableOpacity>
+{expandedPosition === 'Attack' && (
+  <View style={styles.subFilterContainer}>
+
+    <TouchableOpacity
+      style={styles.subFilterButton}
+      onPress={() =>
+        goToPosition('Attack')
+      }
+    >
+      <Text style={styles.subFilterText}>
+        ALL ATTACKERS
+      </Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      style={styles.subFilterButton}
+      onPress={() =>
+        goToPosition('Striker')
+      }
+    >
+      <Text style={styles.subFilterText}>
+        STRIKERS
+      </Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      style={styles.subFilterButton}
+      onPress={() =>
+        goToPosition('Left Winger')
+      }
+    >
+      <Text style={styles.subFilterText}>
+        LEFT WINGERS
+      </Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      style={styles.subFilterButton}
+      onPress={() =>
+        goToPosition('Right Winger')
+      }
+    >
+      <Text style={styles.subFilterText}>
+        RIGHT WINGERS
+      </Text>
+    </TouchableOpacity>
+
+  </View>
+)}
 
 
         <TouchableOpacity
@@ -374,20 +437,39 @@ const styles = StyleSheet.create({
   },
 
   filterContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-    marginBottom: 20,
-  },
+  marginBottom: 20,
+},
+  
+subFilterContainer: {
+  backgroundColor: '#0d0d0d',
+  borderRadius: 10,
+  padding: 6,
+  marginTop: -4,
+  marginBottom: 8,
+  borderWidth: 1,
+  borderColor: '#1d1d1d',
+},
 
-  filterButton: {
-    backgroundColor: '#111111',
-    borderWidth: 1,
-    borderColor: '#222222',
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-  },
+subFilterButton: {
+  paddingVertical: 11,
+  paddingHorizontal: 14,
+},
+
+subFilterText: {
+  color: '#aaaaaa',
+  fontSize: 12,
+  fontWeight: '800',
+},
+
+filterButton: {
+  backgroundColor: '#111111',
+  borderWidth: 1,
+  borderColor: '#222222',
+  borderRadius: 10,
+  paddingVertical: 13,
+  paddingHorizontal: 14,
+  marginBottom: 8,
+},
 
   filterButtonActive: {
     backgroundColor: '#00ff66',

@@ -60,7 +60,7 @@ export default function CompareScreen({
       category: category.name,
     });
 
-    navigation.navigate('Rankings');
+    navigation.navigate('MainTabs', { screen: 'MyRanks' });
 
     return;
   }

@@ -4,6 +4,7 @@ const players = [
     name: "Lionel Messi",
     nation: "Argentina",
     position: "Attack",
+    specificPosition: "Right Winger",
     club: "Inter Miami",
   },
 
@@ -12,6 +13,7 @@ const players = [
     name: "Cristiano Ronaldo",
     nation: "Portugal",
     position: "Attack",
+    specificPosition: "Left Winger",
     club: "Al Nassr",
   },
 
@@ -44,6 +46,7 @@ const players = [
   name: 'Mohamed Salah',
   nation: 'Egypt',
   position: 'Attack',
+  specificPosition: 'Right Winger',
 },
 
 {
@@ -51,6 +54,7 @@ const players = [
   name: 'Kylian Mbappe',
   nation: 'France',
   position: 'Attack',
+  specificPosition: 'Striker',
 },
 
 {
@@ -79,6 +83,7 @@ const players = [
   name: 'Harry Kane',
   nation: 'England',
   position: 'Attack',
+  specificPosition: 'Striker',
 },
 
 {
@@ -86,6 +91,7 @@ const players = [
   name: 'Lamine Yamal',
   nation: 'Spain',
   position: 'Attack',
+  specificPosition: 'Right Winger',
 },
 
 {
@@ -93,6 +99,7 @@ const players = [
   name: 'Bukayo Saka',
   nation: 'England',
   position: 'Attack',
+  specificPosition: 'Right Winger',
 },
 
 {

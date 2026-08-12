@@ -147,15 +147,55 @@ const rankedOpponents = players
       draws: 0,
     };
   });
+  console.log(
+  'ALGORITHM TEST COUNT:',
+  targetPlayer.name,
+  'H2Hs:',
+  (comparisonHistory || []).filter(
+    comparison =>
+      comparison.playerA === targetPlayer.id ||
+      comparison.playerB === targetPlayer.id
+  )
+);
 
- const comparisonPlayer =
+const automaticComparisonCount =
+  (comparisonHistory || []).filter(
+    comparison =>
+      comparison.playerA === targetPlayer.id ||
+      comparison.playerB === targetPlayer.id
+  ).length;
+
+const comparisonPlayer =
   manualChallenge && manualOpponent
     ? manualOpponent
+    : automaticComparisonCount >= 6
+    ? null
     : findBestOpponent(
         targetPlayer,
         rankedOpponents,
         comparisonHistory || []
       );
+      
+      console.log(
+  'FOTRANKR DEBUG:',
+  {
+    target: targetPlayer.name,
+    targetId: targetPlayer.id,
+    specificPosition: targetPlayer.specificPosition,
+    comparisons: targetPlayer.comparisons,
+    historyCount: comparisonHistory?.length,
+    history: comparisonHistory,
+    goalkeeperCount: rankedOpponents.filter(
+      p => p.specificPosition === targetPlayer.specificPosition
+    ).length,
+    goalkeeperNames: rankedOpponents
+      .filter(
+        p => p.specificPosition === targetPlayer.specificPosition
+      )
+      .map(p => p.name),
+    selectedOpponent: comparisonPlayer?.name ?? 'NONE',
+  }
+);
       
   console.log(
     'FOTRANKR H2H:',
@@ -200,7 +240,7 @@ const rankedOpponents = players
       result,
     });
 
-    navigation.navigate('MainTabs', { screen: 'MyRanks' });
+  
   };
 
   // --------------------------------------------------

@@ -500,6 +500,21 @@ function findBestOpponent(
   comparisonHistory = []
 ) {
 
+  // ==========================================================
+  // AUTOMATIC RANKING LIMIT
+  // ==========================================================
+
+  const comparisons =
+    targetPlayer.comparisons ?? 0;
+
+  // A player can have a maximum of 6
+  // automatic ranking comparisons.
+  //
+  // Challenge comparisons bypass this function
+  // and therefore remain unlimited.
+
+ 
+
   if (
     !availablePlayers ||
     availablePlayers.length === 0
@@ -518,7 +533,7 @@ function findBestOpponent(
     availablePlayers.filter(
       player => {
 
-        // Never compare a player against themselves
+        // Never compare a player against themselves.
         if (
           player.id ===
           targetPlayer.id
@@ -526,7 +541,12 @@ function findBestOpponent(
           return false;
         }
 
-        // Specific position is a HARD requirement
+        // Specific position is a hard requirement.
+        //
+        // Example:
+        // Alisson -> Goalkeeper
+        // Theo Hernandez -> Left-Back
+        // Rodri -> Defensive Midfielder
         if (
           targetSpecificPosition &&
           player.specificPosition !==
@@ -535,7 +555,7 @@ function findBestOpponent(
           return false;
         }
 
-        // Don't repeat an existing H2H
+        // Never repeat an automatic H2H.
         const hasCompared =
           comparisonHistory.some(
             comparison =>
@@ -559,113 +579,196 @@ function findBestOpponent(
       }
     );
 
-  // No eligible player in the exact
-  // specific-position pool
+  // No eligible opponent.
   if (
     candidates.length === 0
   ) {
     return null;
   }
 
-  const targetScore =
-    ratingToScore(
-      targetPlayer.rating
-    );
+  // ==========================================================
+  // CURRENT PLAYER INFORMATION
+  // ==========================================================
+
+  const targetRating =
+    targetPlayer.rating;
 
   const targetCategory =
-    scoreToCategory(
-      targetScore
+    getRatingCategory(
+      targetRating
     );
 
   // ==========================================================
-  // PRIMARY POOL
-  // Same category first
+  // SORT BY RATING DISTANCE
+  // ==========================================================
+
+  const closestPlayers =
+    [...candidates].sort(
+      (a, b) => {
+
+        const distanceA =
+          Math.abs(
+            a.rating -
+            targetRating
+          );
+
+        const distanceB =
+          Math.abs(
+            b.rating -
+            targetRating
+          );
+
+        return (
+          distanceA -
+          distanceB
+        );
+      }
+    );
+
+  // ==========================================================
+  // SAME CATEGORY
   // ==========================================================
 
   const sameCategory =
-    candidates.filter(
+    closestPlayers.filter(
       player =>
-        scoreToCategory(
-          ratingToScore(
-            player.rating
-          )
+        getRatingCategory(
+          player.rating
         ) === targetCategory
     );
 
-  let pool =
-    sameCategory.length > 0
-      ? sameCategory
-      : candidates;
-
   // ==========================================================
-  // RATING DISTANCE
+  // ABOVE / BELOW PLAYER
   // ==========================================================
 
-  pool.sort(
-    (a, b) => {
-
-      const distanceA =
-        Math.abs(
-          a.rating -
-          targetPlayer.rating
-        );
-
-      const distanceB =
-        Math.abs(
-          b.rating -
-          targetPlayer.rating
-        );
-
-      return (
-        distanceA -
-        distanceB
-      );
-    }
-  );
-
-  // ==========================================================
-  // CATEGORY BOUNDARY
-  // ==========================================================
-
-  const categoryBoundary =
-    getCategoryBoundaryDistance(
-      targetPlayer
+  const playersAbove =
+    closestPlayers.filter(
+      player =>
+        player.rating >
+        targetRating
     );
 
+  const playersBelow =
+    closestPlayers.filter(
+      player =>
+        player.rating <
+        targetRating
+    );
+
+  // ==========================================================
+  // SIX-STAGE AUTOMATIC RANKING
+  // ==========================================================
+
+  // ----------------------------------------------------------
+  // H2H 1
+  // Establish a rough position.
+  // Prefer someone in the same category.
+  // ----------------------------------------------------------
+
   if (
-    categoryBoundary &&
-    candidates.length > 1
+    comparisons === 0
   ) {
 
-    const boundaryPlayer =
-      candidates
-        .filter(
-          player =>
-            Math.abs(
-              player.rating -
-              targetPlayer.rating
-            ) <= 120
-        )
-        .sort(
-          (a, b) =>
-            Math.abs(
-              a.rating -
-              targetPlayer.rating
-            ) -
-            Math.abs(
-              b.rating -
-              targetPlayer.rating
-            )
-        )[0];
-
     if (
-      boundaryPlayer
+      sameCategory.length > 0
     ) {
-      return boundaryPlayer;
+      return sameCategory[0];
     }
+
+    return closestPlayers[0];
   }
 
-  return pool[0];
+  // ----------------------------------------------------------
+  // H2H 2
+  // Find another close opponent.
+  // ----------------------------------------------------------
+
+  if (
+    comparisons === 1
+  ) {
+
+    if (
+      sameCategory.length > 0
+    ) {
+      return sameCategory[0];
+    }
+
+    return closestPlayers[0];
+  }
+
+  // ----------------------------------------------------------
+  // H2H 3
+  // TEST ABOVE
+  //
+  // Deliberately challenge the player against someone
+  // rated higher than them.
+  // ----------------------------------------------------------
+
+  if (
+    comparisons === 2
+  ) {
+
+    if (
+      playersAbove.length > 0
+    ) {
+      return playersAbove[0];
+    }
+
+    return closestPlayers[0];
+  }
+
+  // ----------------------------------------------------------
+  // H2H 4
+  // TEST BELOW
+  //
+  // Deliberately challenge the player against someone
+  // rated lower than them.
+  // ----------------------------------------------------------
+
+  if (
+    comparisons === 3
+  ) {
+
+    if (
+      playersBelow.length > 0
+    ) {
+      return playersBelow[0];
+    }
+
+    return closestPlayers[0];
+  }
+
+  // ----------------------------------------------------------
+  // H2H 5
+  // REFINE
+  //
+  // At this point the rating should have moved based on
+  // the first four results.
+  //
+  // Find the closest remaining player to the new rating.
+  // ----------------------------------------------------------
+
+  if (
+    comparisons === 4
+  ) {
+    return closestPlayers[0];
+  }
+
+  // ----------------------------------------------------------
+  // H2H 6
+  // FINAL CONFIRMATION
+  //
+  // Again use the closest remaining player.
+  // ----------------------------------------------------------
+
+  if (
+    comparisons === 5
+  ) {
+    return closestPlayers[0];
+  }
+
+  // Safety fallback.
+  return closestPlayers[0];
 }
 
 // ============================================================

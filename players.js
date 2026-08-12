@@ -323,6 +323,31 @@ const players = [
 },
 
 
+
+{
+  id: 'oblak',
+  name: 'Jan Oblak',
+  nation: 'Slovenia',
+  position: 'Goalkeeper',
+  specificPosition: 'Goalkeeper',
+},
+
+{
+  id: 'martinez',
+  name: 'Emiliano Martinez',
+  nation: 'Argentina',
+  position: 'Goalkeeper',
+  specificPosition: 'Goalkeeper',
+},
+
+{
+  id: 'maignan',
+  name: 'Mike Maignan',
+  nation: 'France',
+  position: 'Goalkeeper',
+  specificPosition: 'Goalkeeper',
+},
+
 ];
 
 export default players;

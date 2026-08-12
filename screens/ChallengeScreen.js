@@ -16,10 +16,41 @@ export default function ChallengeScreen({
     player,
     positionFilter = 'All',
   } = route.params || {};
+
   console.log(
-  'FOTRANKR POSITION FILTER:',
-  positionFilter
-);
+    'FOTRANKR POSITION FILTER:',
+    positionFilter
+  );
+
+  // --------------------------------------------------
+  // POSITION MATCHING
+  // --------------------------------------------------
+
+  const matchesPosition = (ranking) => {
+
+    if (positionFilter === 'All') {
+      return true;
+    }
+
+    // Broad position filters
+    if (
+      positionFilter === 'Attack' ||
+      positionFilter === 'Midfielder' ||
+      positionFilter === 'Defender' ||
+      positionFilter === 'Goalkeeper'
+    ) {
+      return (
+        ranking.position?.toLowerCase() ===
+        positionFilter.toLowerCase()
+      );
+    }
+
+    // Specific position filters
+    return (
+      ranking.specificPosition?.toLowerCase() ===
+      positionFilter.toLowerCase()
+    );
+  };
 
   // --------------------------------------------------
   // BUILD OPPONENT LIST
@@ -30,25 +61,40 @@ export default function ChallengeScreen({
       ranking =>
         ranking.id !== player.id
     )
-    .filter(
-      ranking => {
-
-        // ALL PLAYERS = everyone
-        if (positionFilter === 'All') {
-          return true;
-        }
-
-        // POSITION VIEW = same position only
-        return (
-          ranking.position?.toLowerCase() ===
-          positionFilter.toLowerCase()
-        );
-      }
-    )
+    .filter(matchesPosition)
     .sort(
       (a, b) =>
         b.rating - a.rating
     );
+
+  // --------------------------------------------------
+  // POSITION LABEL
+  // --------------------------------------------------
+
+  const getPositionLabel = () => {
+
+    if (positionFilter === 'All') {
+      return 'ALL PLAYERS';
+    }
+
+    if (positionFilter === 'Attack') {
+      return 'ATTACKERS';
+    }
+
+    if (positionFilter === 'Midfielder') {
+      return 'MIDFIELDERS';
+    }
+
+    if (positionFilter === 'Defender') {
+      return 'DEFENDERS';
+    }
+
+    if (positionFilter === 'Goalkeeper') {
+      return 'GOALKEEPERS';
+    }
+
+    return positionFilter.toUpperCase();
+  };
 
   // --------------------------------------------------
   // SELECT OPPONENT
@@ -69,7 +115,17 @@ export default function ChallengeScreen({
         manualChallenge: true,
       }
     );
+  };
 
+  // --------------------------------------------------
+  // RANK ANOTHER PLAYER
+  // --------------------------------------------------
+
+  const rankAnotherPlayer = () => {
+
+    navigation.navigate(
+      'Search'
+    );
   };
 
   // --------------------------------------------------
@@ -95,17 +151,7 @@ export default function ChallengeScreen({
       {/* POSITION CONTEXT */}
 
       <Text style={styles.positionLabel}>
-        {positionFilter === 'All'
-          ? 'ALL PLAYERS'
-          : positionFilter === 'Attack'
-          ? 'ATTACKERS'
-          : positionFilter === 'Midfielder'
-          ? 'MIDFIELDERS'
-          : positionFilter === 'Defender'
-          ? 'DEFENDERS'
-          : positionFilter === 'Goalkeeper'
-          ? 'GOALKEEPERS'
-          : 'ALL PLAYERS'}
+        {getPositionLabel()}
       </Text>
 
       {/* SELECTED PLAYER */}
@@ -140,10 +186,23 @@ export default function ChallengeScreen({
           </Text>
 
           <Text style={styles.emptyText}>
-            You need to rank another player in
-            this position before {player.name}
-            can challenge them.
+            You need to rank another player
+            in this position before
+            {` ${player.name}`} can challenge them.
           </Text>
+
+          <TouchableOpacity
+            style={styles.rankButton}
+            onPress={
+              rankAnotherPlayer
+            }
+          >
+
+            <Text style={styles.rankButtonText}>
+              + RANK ANOTHER PLAYER
+            </Text>
+
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.backButton}
@@ -173,7 +232,10 @@ export default function ChallengeScreen({
                   opponent
                 )
               }
+              activeOpacity={0.75}
             >
+
+              {/* RANK */}
 
               <View
                 style={styles.rankCircle}
@@ -184,22 +246,12 @@ export default function ChallengeScreen({
                 >
                   {myRankings
                     .filter(
-                      ranking => {
-
-                        if (
-                          positionFilter ===
-                          'All'
-                        ) {
-                          return true;
-                        }
-
-                        return (
-                          ranking.position
-                            ?.toLowerCase() ===
-                          positionFilter
-                            .toLowerCase()
-                        );
-                      }
+                      ranking =>
+                        ranking.id !==
+                        player.id &&
+                        matchesPosition(
+                          ranking
+                        )
                     )
                     .sort(
                       (a, b) =>
@@ -214,6 +266,8 @@ export default function ChallengeScreen({
                 </Text>
 
               </View>
+
+              {/* PLAYER */}
 
               <View
                 style={styles.playerDetails}
@@ -230,7 +284,8 @@ export default function ChallengeScreen({
                 >
                   {opponent.nation}
                   {' '}•{' '}
-                  {opponent.position}
+                  {opponent.specificPosition ||
+                    opponent.position}
                 </Text>
 
                 <Text
@@ -240,6 +295,8 @@ export default function ChallengeScreen({
                 </Text>
 
               </View>
+
+              {/* SCORE */}
 
               <View
                 style={styles.scoreBox}
@@ -299,53 +356,58 @@ const styles = StyleSheet.create({
     color: '#aaaaaa',
     fontSize: 16,
     textAlign: 'center',
-    marginTop: 8,
-    marginBottom: 10,
-    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 20,
   },
 
   positionLabel: {
     color: '#00ff66',
     fontSize: 13,
-    fontWeight: 'bold',
+    fontWeight: '900',
     textAlign: 'center',
     marginBottom: 20,
+    letterSpacing: 1,
   },
 
   selectedBox: {
-    backgroundColor: '#00ff66',
+    backgroundColor: '#111111',
     borderRadius: 15,
     padding: 20,
-    marginBottom: 20,
     alignItems: 'center',
+    marginBottom: 25,
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
   },
 
   selectedLabel: {
-    color: '#000000',
-    fontSize: 12,
-    fontWeight: 'bold',
+    color: '#777777',
+    fontSize: 11,
+    fontWeight: '900',
+    marginBottom: 8,
   },
 
   selectedName: {
-    color: '#000000',
+    color: '#00ff66',
     fontSize: 25,
-    fontWeight: 'bold',
-    marginTop: 5,
+    fontWeight: '900',
   },
 
   selectedScore: {
-    color: '#000000',
-    fontSize: 17,
-    marginTop: 5,
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '800',
+    marginTop: 8,
   },
 
   playerBox: {
     backgroundColor: '#111111',
-    borderRadius: 15,
-    padding: 18,
+    borderRadius: 14,
+    padding: 16,
     marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
   },
 
   rankCircle: {
@@ -360,8 +422,8 @@ const styles = StyleSheet.create({
 
   rankNumber: {
     color: '#000000',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 17,
+    fontWeight: '900',
   },
 
   playerDetails: {
@@ -369,21 +431,21 @@ const styles = StyleSheet.create({
   },
 
   playerName: {
-    color: 'white',
-    fontSize: 19,
-    fontWeight: 'bold',
+    color: '#ffffff',
+    fontSize: 17,
+    fontWeight: '800',
   },
 
   info: {
-    color: '#aaaaaa',
-    fontSize: 14,
-    marginTop: 5,
+    color: '#777777',
+    fontSize: 12,
+    marginTop: 4,
   },
 
   category: {
     color: '#00ff66',
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 11,
+    fontWeight: '800',
     marginTop: 5,
   },
 
@@ -393,14 +455,14 @@ const styles = StyleSheet.create({
   },
 
   score: {
-    color: 'white',
-    fontSize: 23,
-    fontWeight: 'bold',
+    color: '#ffffff',
+    fontSize: 20,
+    fontWeight: '900',
   },
 
   outOf: {
-    color: '#777777',
-    fontSize: 12,
+    color: '#666666',
+    fontSize: 11,
   },
 
   emptyBox: {
@@ -408,37 +470,55 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 25,
     alignItems: 'center',
-    marginTop: 10,
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
   },
 
   emptyTitle: {
-    color: '#00ff66',
+    color: '#ffffff',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
     textAlign: 'center',
   },
 
   emptyText: {
-    color: '#aaaaaa',
-    fontSize: 15,
+    color: '#777777',
+    fontSize: 14,
+    lineHeight: 21,
     textAlign: 'center',
-    lineHeight: 22,
-    marginTop: 10,
+    marginTop: 12,
+    marginBottom: 20,
+  },
+
+  rankButton: {
+    backgroundColor: '#00ff66',
+    borderRadius: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    width: '100%',
+  },
+
+  rankButtonText: {
+    color: '#000000',
+    fontSize: 13,
+    fontWeight: '900',
+    textAlign: 'center',
   },
 
   backButton: {
-    backgroundColor: '#00ff66',
+    backgroundColor: '#1d1d1d',
     borderRadius: 10,
-    paddingVertical: 13,
-    paddingHorizontal: 25,
-    marginTop: 20,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    width: '100%',
+    marginTop: 10,
   },
 
   backButtonText: {
-    color: '#000000',
-    fontSize: 15,
-    fontWeight: 'bold',
+    color: '#aaaaaa',
+    fontSize: 13,
+    fontWeight: '900',
+    textAlign: 'center',
   },
 
 });
-

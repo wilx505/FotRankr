@@ -114,11 +114,15 @@ const PLAYERS = [
     position: 'Defence'
   },
   {
-    id: 20,
-    name: 'Alisson Becker',
-    nation: 'Brazil',
-    position: 'Goalkeeper'
-  }
+   
+  id: 5,
+  name: "Alisson Becker",
+  nation: "Brazil",
+  position: "Goalkeeper",
+  specificPosition: "Goalkeeper",
+  club: "Liverpool",
+},
+  
 ];
 
 export default PLAYERS;

@@ -6,6 +6,8 @@ import {
 } from 'react-native';
 
 import { findBestOpponent } from '../engine/rankingEngine';
+import players from '../players';
+
 
 export default function HeadToHead({
   route,
@@ -77,48 +79,74 @@ const targetPlayer = {
   };
 
   // --------------------------------------------------
-  // IMPORTANT:
-  // ONLY USE PLAYERS ALREADY IN MY RANKINGS
-  // --------------------------------------------------
+// BUILD OPPONENT POOL
+// --------------------------------------------------
+// Use the full player database.
+// Existing rankings are merged in so the ranking
+// engine still has the player's current rating.
 
-  const rankedOpponents = (myRankings || [])
-    .filter(
-      ranking =>
-        ranking.id !== targetPlayer.id &&
-        ranking.playerId !== targetPlayer.id
-    )
-    .map(ranking => ({
-      ...ranking,
+const rankedOpponents = players
+  .filter(
+    databasePlayer =>
+      databasePlayer.id !== targetPlayer.id
+  )
+  .map(databasePlayer => {
 
-      rating:
-        ranking.rating ??
-        ranking.internalRating ??
-        2000,
+    const existingRanking =
+      (myRankings || []).find(
+        ranking =>
+          ranking.id === databasePlayer.id ||
+          ranking.playerId === databasePlayer.id
+      );
 
-      uncertainty:
-        ranking.uncertainty ??
-        350,
+    if (existingRanking) {
+      return {
+        ...databasePlayer,
+        ...existingRanking,
 
-      comparisons:
-        ranking.comparisons ??
-        0,
+        rating:
+          existingRanking.rating ??
+          existingRanking.internalRating ??
+          2000,
 
-      wins:
-        ranking.wins ??
-        0,
+        uncertainty:
+          existingRanking.uncertainty ??
+          350,
 
-      losses:
-        ranking.losses ??
-        0,
+        comparisons:
+          existingRanking.comparisons ??
+          0,
 
-      draws:
-        ranking.draws ??
-        0,
-    }));
+        wins:
+          existingRanking.wins ??
+          0,
 
-  // --------------------------------------------------
-  // FIND BEST OPPONENT
-  // --------------------------------------------------
+        losses:
+          existingRanking.losses ??
+          0,
+
+        draws:
+          existingRanking.draws ??
+          0,
+      };
+    }
+
+    return {
+      ...databasePlayer,
+
+      rating: 2000,
+
+      uncertainty: 350,
+
+      comparisons: 0,
+
+      wins: 0,
+
+      losses: 0,
+
+      draws: 0,
+    };
+  });
 
  const comparisonPlayer =
   manualChallenge && manualOpponent

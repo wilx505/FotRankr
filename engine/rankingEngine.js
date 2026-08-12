@@ -499,6 +499,7 @@ function findBestOpponent(
   availablePlayers,
   comparisonHistory = []
 ) {
+
   if (
     !availablePlayers ||
     availablePlayers.length === 0
@@ -506,10 +507,18 @@ function findBestOpponent(
     return null;
   }
 
-  const candidates =
+  // ==========================================================
+  // EXACT SPECIFIC-POSITION POOL
+  // ==========================================================
+
+  const targetSpecificPosition =
+    targetPlayer.specificPosition;
+
+  let candidates =
     availablePlayers.filter(
       player => {
 
+        // Never compare a player against themselves
         if (
           player.id ===
           targetPlayer.id
@@ -517,22 +526,32 @@ function findBestOpponent(
           return false;
         }
 
+        // Specific position is a HARD requirement
+        if (
+          targetSpecificPosition &&
+          player.specificPosition !==
+            targetSpecificPosition
+        ) {
+          return false;
+        }
+
+        // Don't repeat an existing H2H
         const hasCompared =
           comparisonHistory.some(
             comparison =>
 
               (
                 comparison.playerA ===
-                targetPlayer.id &&
+                  targetPlayer.id &&
                 comparison.playerB ===
-                player.id
+                  player.id
               ) ||
 
               (
                 comparison.playerB ===
-                targetPlayer.id &&
+                  targetPlayer.id &&
                 comparison.playerA ===
-                player.id
+                  player.id
               )
           );
 
@@ -540,6 +559,8 @@ function findBestOpponent(
       }
     );
 
+  // No eligible player in the exact
+  // specific-position pool
   if (
     candidates.length === 0
   ) {
@@ -556,10 +577,10 @@ function findBestOpponent(
       targetScore
     );
 
-  // ----------------------------------------------------------
+  // ==========================================================
   // PRIMARY POOL
-  // Same category first.
-  // ----------------------------------------------------------
+  // Same category first
+  // ==========================================================
 
   const sameCategory =
     candidates.filter(
@@ -571,40 +592,14 @@ function findBestOpponent(
         ) === targetCategory
     );
 
-  /*
-  If we have same-category players,
-  use them.
-
-  Otherwise we use nearby players.
-  */
-
   let pool =
     sameCategory.length > 0
       ? sameCategory
       : candidates;
 
-  // ----------------------------------------------------------
-  // SAME POSITION PREFERENCE
-  // ----------------------------------------------------------
-
-  const samePosition =
-    pool.filter(
-      player =>
-        player.position &&
-        targetPlayer.position &&
-        player.position ===
-        targetPlayer.position
-    );
-
-  if (
-    samePosition.length > 0
-  ) {
-    pool = samePosition;
-  }
-
-  // ----------------------------------------------------------
+  // ==========================================================
   // RATING DISTANCE
-  // ----------------------------------------------------------
+  // ==========================================================
 
   pool.sort(
     (a, b) => {
@@ -628,14 +623,9 @@ function findBestOpponent(
     }
   );
 
-  /*
-  Usually select the closest player.
-
-  However, occasionally allow a boundary
-  comparison so the system can discover whether
-  the player belongs above or below their current
-  category.
-  */
+  // ==========================================================
+  // CATEGORY BOUNDARY
+  // ==========================================================
 
   const categoryBoundary =
     getCategoryBoundaryDistance(
@@ -646,6 +636,7 @@ function findBestOpponent(
     categoryBoundary &&
     candidates.length > 1
   ) {
+
     const boundaryPlayer =
       candidates
         .filter(

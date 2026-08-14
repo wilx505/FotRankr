@@ -348,6 +348,86 @@ const players = [
   specificPosition: 'Goalkeeper',
 },
 
+{
+  id: 'rodrygo',
+  name: 'Rodrygo',
+  nation: 'Brazil',
+  position: 'Attack',
+  specificPosition: 'Right Winger',
+},
+
+{
+  id: 'mahrez',
+  name: 'Riyad Mahrez',
+  nation: 'Algeria',
+  position: 'Attack',
+  specificPosition: 'Right Winger',
+},
+
+{
+  id: 'olise',
+  name: 'Michael Olise',
+  nation: 'France',
+  position: 'Attack',
+  specificPosition: 'Right Winger',
+},
+
+{
+  id: 'antony',
+  name: 'Antony',
+  nation: 'Brazil',
+  position: 'Attack',
+  specificPosition: 'Right Winger',
+},
+
+{
+  id: 'di-maria',
+  name: 'Angel Di Maria',
+  nation: 'Argentina',
+  position: 'Attack',
+  specificPosition: 'Right Winger',
+},
+
+{
+  id: 'robben',
+  name: 'Arjen Robben',
+  nation: 'Netherlands',
+  position: 'Attack',
+  specificPosition: 'Right Winger',
+},
+
+{
+  id: 'kulusevski',
+  name: 'Dejan Kulusevski',
+  nation: 'Sweden',
+  position: 'Attack',
+  specificPosition: 'Right Winger',
+},
+
+{
+  id: 'bale',
+  name: 'Gareth Bale',
+  nation: 'Wales',
+  position: 'Attack',
+  specificPosition: 'Right Winger',
+},
+
+{
+  id: 'mbuemo',
+  name: 'Bryan Mbeumo',
+  nation: 'Cameroon',
+  position: 'Attack',
+  specificPosition: 'Right Winger',
+},
+
+{
+  id: 'desire-doue',
+  name: 'Désiré Doué',
+  nation: 'France',
+  position: 'Attack',
+  specificPosition: 'Right Winger',
+},
+
 ];
 
 export default players;

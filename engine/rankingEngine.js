@@ -3,15 +3,27 @@
 FOTRANKR RANKING ENGINE
 ============================================================
 
-The user provides opinions through:
+PHILOSOPHY
+
+FotRankr does NOT have its own opinion about footballers.
+
+The user establishes rankings through:
 
 1. An initial category
 2. Head-to-head comparisons
 
-The category establishes a starting point.
+The first player can act as an ANCHOR.
 
-Head-to-head comparisons then refine the player's
-position within and around that category.
+Every later comparison creates a relationship:
+
+    A > B
+    A = B
+    B > A
+
+Those relationships are used to position players relative
+to one another.
+
+The system is NOT standard Elo.
 
 ============================================================
 */
@@ -21,26 +33,43 @@ position within and around that category.
 // ============================================================
 
 const SETTINGS = {
-  startingRating: 2000,
+
+  minRating: 0,
+
+  maxRating: 3000,
 
   startingUncertainty: 350,
 
   minimumUncertainty: 45,
 
-  maxRating: 3000,
-
-  minRating: 0,
-
   /*
-  How strongly a new comparison should move a player.
-
-  New players move more because we know less about them.
-  Established players move less because their position is
-  becoming more certain.
+  Maximum movement caused by one completed H2H set.
+  Keeping this controlled prevents players jumping straight
+  from Elite to Legendary after a handful of comparisons.
   */
- newPlayerK: 70,
- developingPlayerK: 45,
- establishedPlayerK: 25,
+
+  maxPositionMovement: 180,
+
+};
+
+// ============================================================
+// CATEGORY STARTING RATINGS
+// ============================================================
+
+const CATEGORY_STARTING_RATINGS = {
+
+  Legendary: 2980,
+
+  Elite: 2840,
+
+  'Very Good': 2640,
+
+  Good: 2340,
+
+  OK: 2000,
+
+  Bad: 1600,
+
 };
 
 // ============================================================
@@ -48,56 +77,50 @@ const SETTINGS = {
 // ============================================================
 
 const CATEGORY_BOUNDARIES = [
+
   {
     name: 'Legendary',
     minimumScore: 9.80,
-    minimumRating: 2960,
   },
+
   {
     name: 'Elite',
     minimumScore: 9.00,
-    minimumRating: 2800,
   },
+
   {
     name: 'Very Good',
     minimumScore: 8.00,
-    minimumRating: 2600,
   },
+
   {
     name: 'Good',
     minimumScore: 6.00,
-    minimumRating: 2200,
   },
+
   {
     name: 'OK',
     minimumScore: 4.00,
-    minimumRating: 1800,
   },
+
   {
     name: 'Bad',
     minimumScore: 0.00,
-    minimumRating: 1000,
   },
+
 ];
 
 // ============================================================
-// CATEGORY → SOFT STARTING RATING
+// CATEGORY → STARTING RATING
 // ============================================================
 
-const CATEGORY_STARTING_RATINGS = {
-  Legendary: 2980,
-  Elite: 2840,
-  'Very Good': 2640,
-  Good: 2340,
-  OK: 2000,
-  Bad: 1600,
-};
-
 function categoryToStartingRating(category) {
+
   return (
     CATEGORY_STARTING_RATINGS[category] ??
-    SETTINGS.startingRating
+    2000
   );
+
 }
 
 // ============================================================
@@ -105,27 +128,39 @@ function categoryToStartingRating(category) {
 // ============================================================
 
 function ratingToScore(rating) {
+
   /*
+  Rating scale:
+
+  1000 = 0.00
+  1600 = 3.00
+  1800 = 4.00
   2000 = 5.00
   2200 = 6.00
+  2340 = 6.70
   2600 = 8.00
   2800 = 9.00
-  2960 = 9.80
+  2980 = 9.90
   3000 = 10.00
   */
 
   const rawScore =
     5 +
-    (rating - 2000) / 200;
+    ((rating - 2000) / 200);
 
-  const limitedScore = Math.max(
-    0,
-    Math.min(10, rawScore)
-  );
+  const limitedScore =
+    Math.max(
+      0,
+      Math.min(
+        10,
+        rawScore
+      )
+    );
 
   return Number(
     limitedScore.toFixed(2)
   );
+
 }
 
 // ============================================================
@@ -133,13 +168,24 @@ function ratingToScore(rating) {
 // ============================================================
 
 function scoreToCategory(score) {
-  for (const category of CATEGORY_BOUNDARIES) {
-    if (score >= category.minimumScore) {
+
+  for (
+    const category
+    of CATEGORY_BOUNDARIES
+  ) {
+
+    if (
+      score >= category.minimumScore
+    ) {
+
       return category.name;
+
     }
+
   }
 
   return 'Bad';
+
 }
 
 // ============================================================
@@ -147,45 +193,65 @@ function scoreToCategory(score) {
 // ============================================================
 
 function addDisplayInformation(player) {
-  const score = ratingToScore(player.rating);
 
-  const category = scoreToCategory(score);
+  const score =
+    ratingToScore(
+      player.rating
+    );
+
+  const category =
+    scoreToCategory(
+      score
+    );
 
   return {
+
     ...player,
+
     score,
+
     category,
+
   };
+
 }
 
 // ============================================================
 // CREATE PLAYER
 // ============================================================
 
-function createPlayer(player, startingCategory = null) {
+function createPlayer(
+  player,
+  startingCategory = null
+) {
+
   const startingRating =
     startingCategory
-      ? categoryToStartingRating(startingCategory)
-      : SETTINGS.startingRating;
+      ? categoryToStartingRating(
+          startingCategory
+        )
+      : 2000;
 
-  return {
+  const newPlayer = {
+
     id: player.id,
 
     name: player.name,
 
-    nation: player.nation || '',
+    nation:
+      player.nation || '',
 
-    position: player.position || '',
-   
+    position:
+      player.position || '',
+
     specificPosition:
       player.specificPosition || '',
 
-    rating: startingRating,
+    rating:
+      startingRating,
 
     uncertainty:
-      startingCategory
-        ? SETTINGS.startingUncertainty
-        : SETTINGS.startingUncertainty,
+      SETTINGS.startingUncertainty,
 
     comparisons: 0,
 
@@ -197,64 +263,20 @@ function createPlayer(player, startingCategory = null) {
 
     initialCategory:
       startingCategory || null,
+
+    /*
+    Anchor players establish the initial ranking
+    and do not need six comparisons.
+    */
+
+    isAnchor: false,
+
   };
-}
 
-// ============================================================
-// EXPECTED RESULT
-// ============================================================
-
-function expectedResult(
-  ratingA,
-  ratingB
-) {
-  return (
-    1 /
-    (
-      1 +
-      Math.pow(
-        10,
-        (ratingB - ratingA) / 400
-      )
-    )
+  return addDisplayInformation(
+    newPlayer
   );
-}
 
-// ============================================================
-// ADAPTIVE K FACTOR
-// ============================================================
-
-function getKFactor(player) {
-  if (player.comparisons < 3) {
-    return SETTINGS.newPlayerK;
-  }
-
-  if (player.comparisons < 7) {
-    return SETTINGS.developingPlayerK;
-  }
-
-  return SETTINGS.establishedPlayerK;
-}
-
-// ============================================================
-// UPDATE UNCERTAINTY
-// ============================================================
-
-function updateUncertainty(player) {
-  const reduction =
-    player.comparisons < 3
-      ? 0.82
-      : player.comparisons < 7
-        ? 0.88
-        : 0.93;
-
-  const newUncertainty =
-    player.uncertainty * reduction;
-
-  return Math.max(
-    SETTINGS.minimumUncertainty,
-    newUncertainty
-  );
 }
 
 // ============================================================
@@ -262,12 +284,15 @@ function updateUncertainty(player) {
 // ============================================================
 
 function normaliseResult(result) {
+
   if (
     result === 'player' ||
     result === 'A' ||
     result === 'a'
   ) {
+
     return 'A';
+
   }
 
   if (
@@ -275,7 +300,9 @@ function normaliseResult(result) {
     result === 'B' ||
     result === 'b'
   ) {
+
     return 'B';
+
   }
 
   if (
@@ -283,12 +310,327 @@ function normaliseResult(result) {
     result === 'draw' ||
     result === 'DRAW'
   ) {
+
     return 'DRAW';
+
   }
 
   throw new Error(
     `Unknown comparison result: ${result}`
   );
+
+}
+
+// ============================================================
+// FIND BEST OPPONENT
+// ============================================================
+
+function findBestOpponent(
+  targetPlayer,
+  opponents,
+  comparisonHistory = []
+) {
+
+  if (
+    !targetPlayer ||
+    !opponents ||
+    opponents.length === 0
+  ) {
+
+    return null;
+
+  }
+
+  /*
+  Only use players who are already genuinely ranked.
+
+  This is extremely important.
+
+  We do NOT want a temporary 2000-rated player
+  becoming an accidental ranking anchor.
+  */
+
+  const rankedOpponents =
+    opponents.filter(
+      opponent =>
+        opponent.isRanked === true ||
+        opponent.isAnchor === true ||
+        opponent.comparisons > 0
+    );
+
+  if (
+    rankedOpponents.length === 0
+  ) {
+
+    return null;
+
+  }
+
+  /*
+  Don't repeatedly ask the same H2H.
+  */
+
+  const alreadyCompared =
+    new Set();
+
+  comparisonHistory.forEach(
+    comparison => {
+
+      if (
+        String(comparison.playerA) ===
+          String(targetPlayer.id)
+      ) {
+
+        alreadyCompared.add(
+          String(comparison.playerB)
+        );
+
+      }
+
+      if (
+        String(comparison.playerB) ===
+          String(targetPlayer.id)
+      ) {
+
+        alreadyCompared.add(
+          String(comparison.playerA)
+        );
+
+      }
+
+    }
+  );
+
+  const availableOpponents =
+    rankedOpponents.filter(
+      opponent =>
+        !alreadyCompared.has(
+          String(opponent.id)
+        )
+    );
+
+  if (
+    availableOpponents.length === 0
+  ) {
+
+    return null;
+
+  }
+
+  /*
+  Choose the player whose rating is closest.
+
+  This gives the most useful comparison because
+  the user is deciding between relatively similar
+  footballers.
+  */
+
+  availableOpponents.sort(
+    (a, b) => {
+
+      const differenceA =
+        Math.abs(
+          a.rating -
+          targetPlayer.rating
+        );
+
+      const differenceB =
+        Math.abs(
+          b.rating -
+          targetPlayer.rating
+        );
+
+      return (
+        differenceA -
+        differenceB
+      );
+
+    }
+  );
+
+  return availableOpponents[0];
+
+}
+
+// ============================================================
+// RELATIVE POSITION SCORE
+// ============================================================
+
+function getRelativeMovement(
+  playerA,
+  playerB,
+  outcome
+) {
+
+  const ratingA =
+    playerA.rating;
+
+  const ratingB =
+    playerB.rating;
+
+  const difference =
+    ratingA -
+    ratingB;
+
+  const absoluteDifference =
+    Math.abs(
+      difference
+    );
+
+  /*
+  Players close together:
+
+  A H2H is very informative.
+  */
+
+  if (
+    absoluteDifference <= 100
+  ) {
+
+    if (
+      outcome === 'A'
+    ) {
+
+      return 70;
+
+    }
+
+    if (
+      outcome === 'B'
+    ) {
+
+      return -70;
+
+    }
+
+    return 0;
+
+  }
+
+  /*
+  Moderate difference.
+  */
+
+  if (
+    absoluteDifference <= 250
+  ) {
+
+    if (
+      outcome === 'A'
+    ) {
+
+      return 50;
+
+    }
+
+    if (
+      outcome === 'B'
+    ) {
+
+      return -50;
+
+    }
+
+    return 0;
+
+  }
+
+  /*
+  Large difference.
+
+  Still meaningful, but less influential.
+  */
+
+  if (
+    absoluteDifference <= 500
+  ) {
+
+    if (
+      outcome === 'A'
+    ) {
+
+      return 30;
+
+    }
+
+    if (
+      outcome === 'B'
+    ) {
+
+      return -30;
+
+    }
+
+    return 0;
+
+  }
+
+  /*
+  Huge difference.
+
+  The result still matters, but only slightly.
+  */
+
+  if (
+    outcome === 'A'
+  ) {
+
+    return 15;
+
+  }
+
+  if (
+    outcome === 'B'
+  ) {
+
+    return -15;
+
+  }
+
+  return 0;
+
+}
+
+// ============================================================
+// UPDATE UNCERTAINTY
+// ============================================================
+
+function updateUncertainty(
+  player
+) {
+
+  const comparisons =
+    player.comparisons ?? 0;
+
+  let reduction;
+
+  if (
+    comparisons < 3
+  ) {
+
+    reduction = 0.82;
+
+  } else if (
+    comparisons < 6
+  ) {
+
+    reduction = 0.88;
+
+  } else {
+
+    reduction = 0.93;
+
+  }
+
+  const newUncertainty =
+    player.uncertainty *
+    reduction;
+
+  return Math.max(
+    SETTINGS.minimumUncertainty,
+    newUncertainty
+  );
+
 }
 
 // ============================================================
@@ -300,67 +642,188 @@ function comparePlayers(
   playerB,
   result
 ) {
+
   const outcome =
-    normaliseResult(result);
-
-  const ratingA =
-    playerA.rating;
-
-  const ratingB =
-    playerB.rating;
-
-  const expectedA =
-    expectedResult(
-      ratingA,
-      ratingB
+    normaliseResult(
+      result
     );
-
-  const expectedB =
-    expectedResult(
-      ratingB,
-      ratingA
-    );
-
-  let actualA;
-  let actualB;
-
-  if (outcome === 'A') {
-    actualA = 1;
-    actualB = 0;
-  } else if (outcome === 'B') {
-    actualA = 0;
-    actualB = 1;
-  } else {
-    actualA = 0.5;
-    actualB = 0.5;
-  }
-
-  const kA =
-    getKFactor(playerA);
-
-  const kB =
-    getKFactor(playerB);
 
   /*
-  Standard Elo movement.
+  IMPORTANT:
 
-  A player who beats someone much higher rated
-  moves more than a player who beats someone
-  they were already expected to beat.
+  This function calculates a relationship.
+
+  It does NOT assume that player B should become
+  a permanent ranked player.
+
+  App.js decides whether player B is saved.
   */
 
-  const changeA =
-    kA *
-    (
-      actualA -
-      expectedA
+  let movement =
+    getRelativeMovement(
+      playerA,
+      playerB,
+      outcome
     );
 
-  const changeB =
-    kB *
-    (
-      actualB -
-      expectedB
+  /*
+  Reduce movement slightly for players who have
+  already completed many comparisons.
+
+  This gives early H2Hs more influence while making
+  established rankings stable.
+  */
+
+  const comparisonsA =
+    playerA.comparisons ?? 0;
+
+  const comparisonsB =
+    playerB.comparisons ?? 0;
+
+  const experienceFactorA =
+    Math.max(
+      0.45,
+      1 -
+        (
+          comparisonsA *
+          0.07
+        )
+    );
+
+  const experienceFactorB =
+    Math.max(
+      0.45,
+      1 -
+        (
+          comparisonsB *
+          0.07
+        )
+    );
+
+  const movementA =
+    movement *
+    experienceFactorA;
+
+  const movementB =
+    movement *
+    experienceFactorB;
+
+  /*
+  DRAW
+
+  Pull the players slightly towards one another.
+  */
+
+  let changeA = 0;
+  let changeB = 0;
+
+  if (
+    outcome === 'DRAW'
+  ) {
+
+    const difference =
+      Math.abs(
+        playerA.rating -
+        playerB.rating
+      );
+
+    const adjustment =
+      Math.min(
+        30,
+        difference * 0.08
+      );
+
+    if (
+      playerA.rating >
+      playerB.rating
+    ) {
+
+      changeA =
+        -adjustment;
+
+      changeB =
+        adjustment;
+
+    } else {
+
+      changeA =
+        adjustment;
+
+      changeB =
+        -adjustment;
+
+    }
+
+  }
+
+  else {
+
+    /*
+    A wins.
+
+    A moves up.
+    B moves down.
+    */
+
+    if (
+      outcome === 'A'
+    ) {
+
+      changeA =
+        Math.abs(
+          movementA
+        );
+
+      changeB =
+        -Math.abs(
+          movementB
+        );
+
+    }
+
+    /*
+    B wins.
+
+    B moves up.
+    A moves down.
+    */
+
+    else {
+
+      changeA =
+        -Math.abs(
+          movementA
+        );
+
+      changeB =
+        Math.abs(
+          movementB
+        );
+
+    }
+
+  }
+
+  /*
+  Don't allow one comparison to create a huge jump.
+  */
+
+  changeA =
+    Math.max(
+      -SETTINGS.maxPositionMovement,
+      Math.min(
+        SETTINGS.maxPositionMovement,
+        changeA
+      )
+    );
+
+  changeB =
+    Math.max(
+      -SETTINGS.maxPositionMovement,
+      Math.min(
+        SETTINGS.maxPositionMovement,
+        changeB
+      )
     );
 
   const newRatingA =
@@ -368,7 +831,8 @@ function comparePlayers(
       SETTINGS.minRating,
       Math.min(
         SETTINGS.maxRating,
-        ratingA + changeA
+        playerA.rating +
+          changeA
       )
     );
 
@@ -377,11 +841,17 @@ function comparePlayers(
       SETTINGS.minRating,
       Math.min(
         SETTINGS.maxRating,
-        ratingB + changeB
+        playerB.rating +
+          changeB
       )
     );
 
+  // ========================================================
+  // UPDATED PLAYER A
+  // ========================================================
+
   const updatedA = {
+
     ...playerA,
 
     rating:
@@ -393,10 +863,10 @@ function comparePlayers(
       ),
 
     comparisons:
-      playerA.comparisons + 1,
+      comparisonsA + 1,
 
     wins:
-      playerA.wins +
+      (playerA.wins ?? 0) +
       (
         outcome === 'A'
           ? 1
@@ -404,7 +874,7 @@ function comparePlayers(
       ),
 
     losses:
-      playerA.losses +
+      (playerA.losses ?? 0) +
       (
         outcome === 'B'
           ? 1
@@ -412,15 +882,21 @@ function comparePlayers(
       ),
 
     draws:
-      playerA.draws +
+      (playerA.draws ?? 0) +
       (
         outcome === 'DRAW'
           ? 1
           : 0
       ),
+
   };
 
+  // ========================================================
+  // UPDATED PLAYER B
+  // ========================================================
+
   const updatedB = {
+
     ...playerB,
 
     rating:
@@ -432,10 +908,10 @@ function comparePlayers(
       ),
 
     comparisons:
-      playerB.comparisons + 1,
+      (playerB.comparisons ?? 0) + 1,
 
     wins:
-      playerB.wins +
+      (playerB.wins ?? 0) +
       (
         outcome === 'B'
           ? 1
@@ -443,7 +919,7 @@ function comparePlayers(
       ),
 
     losses:
-      playerB.losses +
+      (playerB.losses ?? 0) +
       (
         outcome === 'A'
           ? 1
@@ -451,411 +927,71 @@ function comparePlayers(
       ),
 
     draws:
-      playerB.draws +
+      (playerB.draws ?? 0) +
       (
         outcome === 'DRAW'
           ? 1
           : 0
       ),
+
   };
+
+  /*
+  Add display information after calculating
+  the new ratings.
+  */
+
+  const finalA =
+    addDisplayInformation(
+      updatedA
+    );
+
+  const finalB =
+    addDisplayInformation(
+      updatedB
+    );
 
   return {
+
     playerA:
-      addDisplayInformation(
-        updatedA
-      ),
+      finalA,
 
     playerB:
-      addDisplayInformation(
-        updatedB
-      ),
+      finalB,
 
-    expectedA,
-
-    expectedB,
-
-    changeA,
-
-    changeB,
   };
-}
 
-// ============================================================
-// CATEGORY FOR RATING
-// ============================================================
-
-function getRatingCategory(rating) {
-  return scoreToCategory(
-    ratingToScore(rating)
-  );
-}
-
-// ============================================================
-// FIND BEST NEXT OPPONENT
-// ============================================================
-
-function findBestOpponent(
-  targetPlayer,
-  availablePlayers,
-  comparisonHistory = []
-) {
-
-  // ==========================================================
-  // AUTOMATIC RANKING LIMIT
-  // ==========================================================
-
-  const comparisons =
-    targetPlayer.comparisons ?? 0;
-
-  // A player can have a maximum of 6
-  // automatic ranking comparisons.
-  //
-  // Challenge comparisons bypass this function
-  // and therefore remain unlimited.
-
- 
-
-  if (
-    !availablePlayers ||
-    availablePlayers.length === 0
-  ) {
-    return null;
-  }
-
-  // ==========================================================
-  // EXACT SPECIFIC-POSITION POOL
-  // ==========================================================
-
-  const targetSpecificPosition =
-    targetPlayer.specificPosition;
-
-  let candidates =
-    availablePlayers.filter(
-      player => {
-
-        // Never compare a player against themselves.
-        if (
-          player.id ===
-          targetPlayer.id
-        ) {
-          return false;
-        }
-
-        // Specific position is a hard requirement.
-        //
-        // Example:
-        // Alisson -> Goalkeeper
-        // Theo Hernandez -> Left-Back
-        // Rodri -> Defensive Midfielder
-        if (
-          targetSpecificPosition &&
-          player.specificPosition !==
-            targetSpecificPosition
-        ) {
-          return false;
-        }
-
-        // Never repeat an automatic H2H.
-        const hasCompared =
-          comparisonHistory.some(
-            comparison =>
-
-              (
-                comparison.playerA ===
-                  targetPlayer.id &&
-                comparison.playerB ===
-                  player.id
-              ) ||
-
-              (
-                comparison.playerB ===
-                  targetPlayer.id &&
-                comparison.playerA ===
-                  player.id
-              )
-          );
-
-        return !hasCompared;
-      }
-    );
-
-  // No eligible opponent.
-  if (
-    candidates.length === 0
-  ) {
-    return null;
-  }
-
-  // ==========================================================
-  // CURRENT PLAYER INFORMATION
-  // ==========================================================
-
-  const targetRating =
-    targetPlayer.rating;
-
-  const targetCategory =
-    getRatingCategory(
-      targetRating
-    );
-
-  // ==========================================================
-  // SORT BY RATING DISTANCE
-  // ==========================================================
-
-  const closestPlayers =
-    [...candidates].sort(
-      (a, b) => {
-
-        const distanceA =
-          Math.abs(
-            a.rating -
-            targetRating
-          );
-
-        const distanceB =
-          Math.abs(
-            b.rating -
-            targetRating
-          );
-
-        return (
-          distanceA -
-          distanceB
-        );
-      }
-    );
-
-  // ==========================================================
-  // SAME CATEGORY
-  // ==========================================================
-
-  const sameCategory =
-    closestPlayers.filter(
-      player =>
-        getRatingCategory(
-          player.rating
-        ) === targetCategory
-    );
-
-  // ==========================================================
-  // ABOVE / BELOW PLAYER
-  // ==========================================================
-
-  const playersAbove =
-    closestPlayers.filter(
-      player =>
-        player.rating >
-        targetRating
-    );
-
-  const playersBelow =
-    closestPlayers.filter(
-      player =>
-        player.rating <
-        targetRating
-    );
-
-  // ==========================================================
-  // SIX-STAGE AUTOMATIC RANKING
-  // ==========================================================
-
-  // ----------------------------------------------------------
-  // H2H 1
-  // Establish a rough position.
-  // Prefer someone in the same category.
-  // ----------------------------------------------------------
-
-  if (
-    comparisons === 0
-  ) {
-
-    if (
-      sameCategory.length > 0
-    ) {
-      return sameCategory[0];
-    }
-
-    return closestPlayers[0];
-  }
-
-  // ----------------------------------------------------------
-  // H2H 2
-  // Find another close opponent.
-  // ----------------------------------------------------------
-
-  if (
-    comparisons === 1
-  ) {
-
-    if (
-      sameCategory.length > 0
-    ) {
-      return sameCategory[0];
-    }
-
-    return closestPlayers[0];
-  }
-
-  // ----------------------------------------------------------
-  // H2H 3
-  // TEST ABOVE
-  //
-  // Deliberately challenge the player against someone
-  // rated higher than them.
-  // ----------------------------------------------------------
-
-  if (
-    comparisons === 2
-  ) {
-
-    if (
-      playersAbove.length > 0
-    ) {
-      return playersAbove[0];
-    }
-
-    return closestPlayers[0];
-  }
-
-  // ----------------------------------------------------------
-  // H2H 4
-  // TEST BELOW
-  //
-  // Deliberately challenge the player against someone
-  // rated lower than them.
-  // ----------------------------------------------------------
-
-  if (
-    comparisons === 3
-  ) {
-
-    if (
-      playersBelow.length > 0
-    ) {
-      return playersBelow[0];
-    }
-
-    return closestPlayers[0];
-  }
-
-  // ----------------------------------------------------------
-  // H2H 5
-  // REFINE
-  //
-  // At this point the rating should have moved based on
-  // the first four results.
-  //
-  // Find the closest remaining player to the new rating.
-  // ----------------------------------------------------------
-
-  if (
-    comparisons === 4
-  ) {
-    return closestPlayers[0];
-  }
-
-  // ----------------------------------------------------------
-  // H2H 6
-  // FINAL CONFIRMATION
-  //
-  // Again use the closest remaining player.
-  // ----------------------------------------------------------
-
-  if (
-    comparisons === 5
-  ) {
-    return closestPlayers[0];
-  }
-
-  // Safety fallback.
-  return closestPlayers[0];
-}
-
-// ============================================================
-// CATEGORY BOUNDARY DISTANCE
-// ============================================================
-
-function getCategoryBoundaryDistance(
-  player
-) {
-  const score =
-    ratingToScore(
-      player.rating
-    );
-
-  const category =
-    scoreToCategory(
-      score
-    );
-
-  const currentIndex =
-    CATEGORY_BOUNDARIES.findIndex(
-      item =>
-        item.name === category
-    );
-
-  if (
-    currentIndex === -1
-  ) {
-    return null;
-  }
-
-  const categoryData =
-    CATEGORY_BOUNDARIES[
-      currentIndex
-    ];
-
-  const nextCategory =
-    CATEGORY_BOUNDARIES[
-      currentIndex - 1
-    ];
-
-  if (
-    !nextCategory
-  ) {
-    return null;
-  }
-
-  return (
-    nextCategory.minimumRating -
-    player.rating
-  );
 }
 
 // ============================================================
 // CONFIDENCE
 // ============================================================
 
-function getConfidence(player) {
+function getConfidence(
+  player
+) {
+
   const uncertainty =
-    player.uncertainty ??
+    player?.uncertainty ??
     SETTINGS.startingUncertainty;
 
-  const comparisons =
-    player.comparisons ?? 0;
+  const confidence =
+    1 -
+    (
+      uncertainty /
+      SETTINGS.startingUncertainty
+    );
 
-  /*
-  We want both things to matter:
+  return Math.max(
+    0,
+    Math.min(
+      1,
+      Number(
+        confidence.toFixed(2)
+      )
+    )
+  );
 
-  - More comparisons = better confidence
-  - Lower uncertainty = better confidence
-  */
-
-  if (
-    comparisons >= 7 &&
-    uncertainty <= 100
-  ) {
-    return 'High';
-  }
-
-  if (
-    comparisons >= 3 &&
-    uncertainty <= 200
-  ) {
-    return 'Medium';
-  }
-
-  return 'Low';
 }
 
 // ============================================================
@@ -865,12 +1001,35 @@ function getConfidence(player) {
 function shouldContinueComparing(
   player
 ) {
-  const confidence =
-    getConfidence(
-      player
-    );
 
-  return confidence !== 'High';
+  if (!player) {
+
+    return false;
+
+  }
+
+  /*
+  The anchor does not need H2Hs.
+  */
+
+  if (
+    player.isAnchor
+  ) {
+
+    return false;
+
+  }
+
+  /*
+  Six comparisons gives us the initial
+  positioning information we want.
+  */
+
+  return (
+    (player.comparisons ?? 0) <
+    6
+  );
+
 }
 
 // ============================================================
@@ -878,7 +1037,20 @@ function shouldContinueComparing(
 // ============================================================
 
 export {
-  categoryToStartingRating, comparePlayers, createPlayer, findBestOpponent,
-  getConfidence, ratingToScore,
-  scoreToCategory, shouldContinueComparing
+
+  categoryToStartingRating,
+
+  comparePlayers,
+
+  createPlayer,
+
+  findBestOpponent,
+
+  getConfidence,
+
+  ratingToScore,
+
+  scoreToCategory,
+
+  shouldContinueComparing
 };

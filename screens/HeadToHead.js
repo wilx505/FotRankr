@@ -30,32 +30,33 @@ export default function HeadToHead({
 
   const existingTarget = myRankings?.find(
     ranking =>
-      ranking.id === player?.id ||
-      ranking.playerId === player?.id
+      String(ranking.id) === String(player?.id) ||
+      String(ranking.playerId) === String(player?.id)
   );
 
-const targetPlayer = {
-  ...player,
+  const targetPlayer = {
+    ...player,
 
-  category,
+    ...(existingTarget || {}),
 
-  rating:
-    existingTarget?.rating ??
-    existingTarget?.internalRating ??
-    (
-      category === 'Legendary'
-        ? 2960
-        : category === 'Elite'
-        ? 2800
-        : category === 'Very Good'
-        ? 2600
-        : category === 'Good'
-        ? 2200
-        : category === 'OK'
-        ? 1800
-        : 1000
-    ),
+    category,
 
+    rating:
+      existingTarget?.rating ??
+      existingTarget?.internalRating ??
+      (
+        category === 'Legendary'
+          ? 2960
+          : category === 'Elite'
+          ? 2800
+          : category === 'Very Good'
+          ? 2600
+          : category === 'Good'
+          ? 2200
+          : category === 'OK'
+          ? 1800
+          : 1000
+      ),
 
     uncertainty:
       existingTarget?.uncertainty ??
@@ -76,127 +77,225 @@ const targetPlayer = {
     draws:
       existingTarget?.draws ??
       0,
+
+    // The selected player is genuinely ranked.
+    isRanked: true,
   };
 
+
   // --------------------------------------------------
-// BUILD OPPONENT POOL
-// --------------------------------------------------
-// Use the full player database.
-// Existing rankings are merged in so the ranking
-// engine still has the player's current rating.
+  // BUILD OPPONENT POOL
+  // --------------------------------------------------
+  //
+  // Every player in the database can be used as an
+  // H2H reference.
+  //
+  // IMPORTANT:
+  // An opponent who has NOT been ranked gets a
+  // temporary rating of 2000, but is marked:
+  //
+  //     isRanked: false
+  //
+  // This allows the algorithm to use them for the
+  // comparison without treating them as a real
+  // member of My Rankings.
+  // --------------------------------------------------
 
-const rankedOpponents = players
-  .filter(
-    databasePlayer =>
-      databasePlayer.id !== targetPlayer.id
-  )
-  .map(databasePlayer => {
+  const rankedOpponents = players
+    .filter(
+      databasePlayer =>
+        String(databasePlayer.id) !==
+        String(targetPlayer.id)
+    )
+    .map(databasePlayer => {
 
-    const existingRanking =
-      (myRankings || []).find(
-        ranking =>
-          ranking.id === databasePlayer.id ||
-          ranking.playerId === databasePlayer.id
-      );
+      const existingRanking =
+        (myRankings || []).find(
+          ranking =>
+            String(ranking.id) ===
+              String(databasePlayer.id) ||
+            String(ranking.playerId) ===
+              String(databasePlayer.id)
+        );
 
-    if (existingRanking) {
+
+      // ------------------------------------------------
+      // GENUINELY RANKED PLAYER
+      // ------------------------------------------------
+
+      if (existingRanking) {
+
+        console.log(
+          'FOTRANKR EXISTING RANKED OPPONENT:',
+          existingRanking.name,
+          'ID:',
+          existingRanking.id,
+          'RATING:',
+          existingRanking.rating
+        );
+
+        return {
+          ...databasePlayer,
+          ...existingRanking,
+
+          rating:
+            existingRanking.rating ??
+            existingRanking.internalRating ??
+            2000,
+
+          uncertainty:
+            existingRanking.uncertainty ??
+            350,
+
+          comparisons:
+            existingRanking.comparisons ??
+            0,
+
+          wins:
+            existingRanking.wins ??
+            0,
+
+          losses:
+            existingRanking.losses ??
+            0,
+
+          draws:
+            existingRanking.draws ??
+            0,
+
+          // This player really exists in My Rankings.
+          isRanked: true,
+        };
+      }
+
+
+      // ------------------------------------------------
+      // UNRANKED H2H REFERENCE
+      // ------------------------------------------------
+      //
+      // This player can still appear in a H2H.
+      //
+      // BUT:
+      //
+      // isRanked = false
+      //
+      // This tells App.js that this player should NOT
+      // automatically become part of My Rankings just
+      // because they were used as an opponent.
+      // ------------------------------------------------
+
       return {
         ...databasePlayer,
-        ...existingRanking,
 
-        rating:
-          existingRanking.rating ??
-          existingRanking.internalRating ??
-          2000,
+        rating: 2000,
 
-        uncertainty:
-          existingRanking.uncertainty ??
-          350,
+        uncertainty: 350,
 
-        comparisons:
-          existingRanking.comparisons ??
-          0,
+        comparisons: 0,
 
-        wins:
-          existingRanking.wins ??
-          0,
+        wins: 0,
 
-        losses:
-          existingRanking.losses ??
-          0,
+        losses: 0,
 
-        draws:
-          existingRanking.draws ??
-          0,
+        draws: 0,
+
+        isRanked: false,
       };
-    }
+    });
 
-    return {
-      ...databasePlayer,
 
-      rating: 2000,
+  // --------------------------------------------------
+  // COUNT H2Hs FOR SELECTED PLAYER
+  // --------------------------------------------------
 
-      uncertainty: 350,
+  const playerHistory =
+    (comparisonHistory || []).filter(
+      comparison =>
+        String(comparison.playerA) ===
+          String(targetPlayer.id) ||
+        String(comparison.playerB) ===
+          String(targetPlayer.id)
+    );
 
-      comparisons: 0,
 
-      wins: 0,
+  const automaticComparisonCount =
+    playerHistory.length;
 
-      losses: 0,
 
-      draws: 0,
-    };
-  });
   console.log(
-  'ALGORITHM TEST COUNT:',
-  targetPlayer.name,
-  'H2Hs:',
-  (comparisonHistory || []).filter(
-    comparison =>
-      comparison.playerA === targetPlayer.id ||
-      comparison.playerB === targetPlayer.id
-  )
-);
+    'ALGORITHM TEST COUNT:',
+    targetPlayer.name,
+    'H2Hs:',
+    playerHistory
+  );
 
-const automaticComparisonCount =
-  (comparisonHistory || []).filter(
-    comparison =>
-      comparison.playerA === targetPlayer.id ||
-      comparison.playerB === targetPlayer.id
-  ).length;
 
-const comparisonPlayer =
-  manualChallenge && manualOpponent
-    ? manualOpponent
-    : automaticComparisonCount >= 6
-    ? null
-    : findBestOpponent(
-        targetPlayer,
-        rankedOpponents,
-        comparisonHistory || []
-      );
-      
-      console.log(
-  'FOTRANKR DEBUG:',
-  {
-    target: targetPlayer.name,
-    targetId: targetPlayer.id,
-    specificPosition: targetPlayer.specificPosition,
-    comparisons: targetPlayer.comparisons,
-    historyCount: comparisonHistory?.length,
-    history: comparisonHistory,
-    goalkeeperCount: rankedOpponents.filter(
-      p => p.specificPosition === targetPlayer.specificPosition
-    ).length,
-    goalkeeperNames: rankedOpponents
-      .filter(
-        p => p.specificPosition === targetPlayer.specificPosition
-      )
-      .map(p => p.name),
-    selectedOpponent: comparisonPlayer?.name ?? 'NONE',
-  }
-);
-      
+  // --------------------------------------------------
+  // SELECT OPPONENT
+  // --------------------------------------------------
+
+  const comparisonPlayer =
+    manualChallenge && manualOpponent
+      ? manualOpponent
+      : automaticComparisonCount >= 6
+      ? null
+      : findBestOpponent(
+          targetPlayer,
+          rankedOpponents,
+          comparisonHistory || []
+        );
+
+
+  console.log(
+    'FOTRANKR DEBUG:',
+    {
+      target:
+        targetPlayer.name,
+
+      targetId:
+        targetPlayer.id,
+
+      specificPosition:
+        targetPlayer.specificPosition,
+
+      comparisons:
+        targetPlayer.comparisons,
+
+      historyCount:
+        comparisonHistory?.length,
+
+      h2hCount:
+        automaticComparisonCount,
+
+      goalkeeperCount:
+        rankedOpponents.filter(
+          p =>
+            p.specificPosition ===
+            targetPlayer.specificPosition
+        ).length,
+
+      goalkeeperNames:
+        rankedOpponents
+          .filter(
+            p =>
+              p.specificPosition ===
+              targetPlayer.specificPosition
+          )
+          .map(
+            p => p.name
+          ),
+
+      selectedOpponent:
+        comparisonPlayer?.name ??
+        'NONE',
+
+      selectedOpponentRanked:
+        comparisonPlayer?.isRanked ??
+        false,
+    }
+  );
+
+
   console.log(
     'FOTRANKR H2H:',
     'Selected =',
@@ -205,8 +304,11 @@ const comparisonPlayer =
     '| Ranked opponents =',
     rankedOpponents.length,
     '| Opponent =',
-    comparisonPlayer?.name ?? 'NONE'
+    comparisonPlayer?.name ?? 'NONE',
+    '| Opponent genuinely ranked =',
+    comparisonPlayer?.isRanked ?? false
   );
+
 
   // --------------------------------------------------
   // HANDLE RESULT
@@ -217,31 +319,57 @@ const comparisonPlayer =
     if (!comparisonPlayer) {
 
       console.log(
-        'FOTRANKR H2H: No ranked opponent available.'
+        'FOTRANKR H2H: No opponent available.'
       );
 
       return;
     }
 
+
     console.log(
       'FOTRANKR H2H RESULT:',
       {
-        player: targetPlayer.name,
-        comparisonPlayer: comparisonPlayer.name,
+        player:
+          targetPlayer.name,
+
+        comparisonPlayer:
+          comparisonPlayer.name,
+
         category,
+
         result,
+
+        opponentIsRanked:
+          comparisonPlayer.isRanked,
       }
     );
 
-    onResult({
-      player: targetPlayer,
-      comparisonPlayer,
-      category,
-      result,
-    });
 
-  
+    onResult({
+
+      player:
+        targetPlayer,
+
+      comparisonPlayer:
+        comparisonPlayer,
+
+      category,
+
+      result,
+
+      // ------------------------------------------------
+      // IMPORTANT
+      // ------------------------------------------------
+      //
+      // App.js can use this to determine whether the
+      // opponent should actually be saved in My Rankings.
+      //
+      opponentIsRanked:
+        comparisonPlayer.isRanked === true,
+
+    });
   };
+
 
   // --------------------------------------------------
   // SCREEN
@@ -255,9 +383,11 @@ const comparisonPlayer =
         HEAD TO HEAD
       </Text>
 
+
       <Text style={styles.category}>
         {category}
       </Text>
+
 
       {comparisonPlayer ? (
 
@@ -279,11 +409,13 @@ const comparisonPlayer =
 
             </View>
 
+
             <Text style={styles.vs}>
               VS
             </Text>
 
-            {/* RANKED OPPONENT */}
+
+            {/* OPPONENT */}
 
             <View style={styles.playerSide}>
 
@@ -299,9 +431,13 @@ const comparisonPlayer =
 
           </View>
 
+
           <Text style={styles.question}>
             Who is the better footballer?
           </Text>
+
+
+          {/* SELECTED PLAYER WINS */}
 
           <TouchableOpacity
             style={styles.playerButton}
@@ -320,6 +456,9 @@ const comparisonPlayer =
 
           </TouchableOpacity>
 
+
+          {/* DRAW */}
+
           <TouchableOpacity
             style={styles.drawButton}
             onPress={() =>
@@ -332,6 +471,9 @@ const comparisonPlayer =
             </Text>
 
           </TouchableOpacity>
+
+
+          {/* OPPONENT WINS */}
 
           <TouchableOpacity
             style={styles.playerButton}
@@ -357,17 +499,25 @@ const comparisonPlayer =
         <View style={styles.noOpponentBox}>
 
           <Text style={styles.noOpponentTitle}>
-            No ranked opponent available
+            No more H2Hs available
           </Text>
 
+
           <Text style={styles.noOpponentText}>
-            This player needs to be compared against someone already in your rankings.
+            You have completed the six head-to-head
+            comparisons for this player.
           </Text>
+
 
           <TouchableOpacity
             style={styles.backButton}
             onPress={() =>
-              navigation.navigate('MainTabs', { screen: 'MyRanks' })
+              navigation.navigate(
+                'MainTabs',
+                {
+                  screen: 'MyRanks',
+                }
+              )
             }
           >
 
@@ -386,6 +536,11 @@ const comparisonPlayer =
   );
 }
 
+
+// ======================================================
+// STYLES
+// ======================================================
+
 const styles = StyleSheet.create({
 
   container: {
@@ -393,6 +548,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#050505',
     padding: 20,
   },
+
 
   title: {
     color: '#00ff66',
@@ -402,6 +558,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
 
+
   category: {
     color: '#aaaaaa',
     fontSize: 18,
@@ -409,6 +566,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 30,
   },
+
 
   comparisonBox: {
     backgroundColor: '#111111',
@@ -419,10 +577,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
+
   playerSide: {
     flex: 1,
     alignItems: 'center',
   },
+
 
   playerName: {
     color: '#00ff66',
@@ -431,6 +591,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
+
   info: {
     color: '#aaaaaa',
     fontSize: 14,
@@ -438,12 +599,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
+
   vs: {
     color: 'white',
     fontSize: 22,
     fontWeight: 'bold',
     marginHorizontal: 15,
   },
+
 
   question: {
     color: 'white',
@@ -453,6 +616,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
     marginBottom: 20,
   },
+
 
   playerButton: {
     backgroundColor: '#111111',
@@ -464,17 +628,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+
   buttonText: {
     color: '#00ff66',
     fontSize: 23,
     fontWeight: 'bold',
   },
 
+
   buttonSubtext: {
     color: '#888888',
     fontSize: 14,
     marginTop: 5,
   },
+
 
   drawButton: {
     backgroundColor: '#111111',
@@ -486,11 +653,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+
   drawText: {
     color: '#dddddd',
     fontSize: 18,
     fontWeight: 'bold',
   },
+
 
   noOpponentBox: {
     backgroundColor: '#111111',
@@ -500,12 +669,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+
   noOpponentTitle: {
     color: '#00ff66',
     fontSize: 21,
     fontWeight: 'bold',
     textAlign: 'center',
   },
+
 
   noOpponentText: {
     color: '#999999',
@@ -515,12 +686,14 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
 
+
   backButton: {
     backgroundColor: '#00ff66',
     borderRadius: 12,
     padding: 15,
     marginTop: 25,
   },
+
 
   backButtonText: {
     color: '#000000',
@@ -529,4 +702,3 @@ const styles = StyleSheet.create({
   },
 
 });
-

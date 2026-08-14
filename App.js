@@ -35,7 +35,7 @@ const Stack =
 const Tab =
   createBottomTabNavigator();
 
-const DATA_VERSION = '14';
+const DATA_VERSION = '28';
 
 export default function App() {
 
@@ -215,32 +215,11 @@ console.log(
 );
 
   // Add display information immediately.
-  const score =
-    5 +
-    (anchorPlayer.rating - 2000) / 200;
-
-  const limitedScore =
-    Math.max(
-      0,
-      Math.min(
-        10,
-        score
-      )
-    );
-
-  const playerWithDisplay =
-    {
-      ...anchorPlayer,
-
-      score:
-        Number(
-          limitedScore.toFixed(2)
-        ),
-
-      category,
-
-      isAnchor: true,
-    };
+  
+  const playerWithDisplay = {
+  ...anchorPlayer,
+  isAnchor: true,
+};
 
   setMyRankings([
     playerWithDisplay
@@ -248,6 +227,7 @@ console.log(
 
   setComparisonHistory([]);
 };
+
 // =====================================================
 // HEAD-TO-HEAD RESULT
 // =====================================================
@@ -257,6 +237,7 @@ const handleHeadToHeadResult = ({
   comparisonPlayer,
   category,
   result,
+  opponentIsRanked,
 }) => {
 
   console.log(
@@ -267,115 +248,208 @@ const handleHeadToHeadResult = ({
     result
   );
 
+  console.log(
+    'FOTRANKR OPPONENT STATUS:',
+    comparisonPlayer.name,
+    'already ranked =',
+    opponentIsRanked
+  );
+
+
   setMyRankings(previousRankings => {
 
-    // -----------------------------------------------
-    // Find existing players
-    // -----------------------------------------------
+    // --------------------------------------------------
+    // FIND EXISTING PLAYERS
+    // --------------------------------------------------
 
     const findExistingPlayer = (sourcePlayer) => {
 
       return previousRankings.find(
         rankedPlayer =>
-          rankedPlayer.id === sourcePlayer.id
+          String(rankedPlayer.id) ===
+            String(sourcePlayer.id)
       );
 
     };
 
+
+    // --------------------------------------------------
+    // GET TARGET PLAYER
+    // --------------------------------------------------
+
     let playerA =
       findExistingPlayer(player);
 
+
+    // --------------------------------------------------
+    // CREATE TARGET IF NECESSARY
+    // --------------------------------------------------
+
+    if (!playerA) {
+
+      playerA =
+        createPlayer(
+          player,
+          category
+        );
+
+    }
+
+
+    // --------------------------------------------------
+    // GET OPPONENT
+    // --------------------------------------------------
+
     let playerB =
-      findExistingPlayer(comparisonPlayer);
+      findExistingPlayer(
+        comparisonPlayer
+      );
 
 
-   // -----------------------------------------------
-// Create players if they don't exist
-// -----------------------------------------------
+    // --------------------------------------------------
+    // CREATE TEMPORARY OPPONENT IF NECESSARY
+    // --------------------------------------------------
 
-if (!playerA) {
+    if (!playerB) {
 
-  playerA =
-    createPlayer(
-      player,
-      category
+      playerB =
+        createPlayer(
+          comparisonPlayer,
+          null
+        );
+
+    }
+
+
+    // --------------------------------------------------
+    // RUN RANKING ENGINE
+    // --------------------------------------------------
+
+    const resultData =
+      comparePlayers(
+        playerA,
+        playerB,
+        result
+      );
+
+
+    const updatedA =
+      resultData.playerA;
+
+
+    const updatedB =
+      resultData.playerB;
+
+
+    console.log(
+      'FOTRANKR UPDATED:',
+      {
+        player:
+          updatedA.name,
+
+        rating:
+          updatedA.rating,
+
+        score:
+          updatedA.score,
+
+        category:
+          updatedA.category,
+      }
     );
 
-}
 
-if (!playerB) {
+    console.log(
+      'FOTRANKR OPPONENT UPDATED:',
+      {
+        player:
+          updatedB.name,
 
-  playerB =
-    createPlayer(
-      comparisonPlayer,
-      comparisonPlayer.category
+        rating:
+          updatedB.rating,
+
+        score:
+          updatedB.score,
+
+        category:
+          updatedB.category,
+
+        wasAlreadyRanked:
+          opponentIsRanked,
+      }
     );
 
-}
 
-// -----------------------------------------------
-// FIRST COMPARISON AGAINST ANCHOR
-// -----------------------------------------------
+    // --------------------------------------------------
+    // REMOVE OLD TARGET
+    // AND OLD OPPONENT
+    // --------------------------------------------------
 
-const isPlayerANew =
-  playerA.comparisons === 0 &&
-  !playerA.isAnchor;
-
-const isPlayerBNew =
-  playerB.comparisons === 0 &&
-  !playerB.isAnchor;
-
-const playerAIsAnchor =
-  playerA.isAnchor === true;
-
-const playerBIsAnchor =
-  playerB.isAnchor === true;
-
-  // -----------------------------------------------
-// Run ranking engine
-// -----------------------------------------------
-
-const resultData =
-  comparePlayers(
-    playerA,
-    playerB,
-    result
-  );
-
-const updatedA =
-  resultData.playerA;
-
-const updatedB =
-  resultData.playerB;
+    const otherPlayers =
+      previousRankings.filter(
+        rankedPlayer =>
+          String(rankedPlayer.id) !==
+            String(player.id) &&
+          String(rankedPlayer.id) !==
+            String(comparisonPlayer.id)
+      );
 
 
-// -----------------------------------------------
-// Remove old versions
-// -----------------------------------------------
+    // --------------------------------------------------
+    // TARGET ALWAYS STAYS IN MY RANKINGS
+    // --------------------------------------------------
 
-const otherPlayers =
-  previousRankings.filter(
-    rankedPlayer =>
-      rankedPlayer.id !== player.id &&
-      rankedPlayer.id !== comparisonPlayer.id
-  );
+    const updatedRankings = [
+      ...otherPlayers,
+      updatedA,
+    ];
 
 
-// -----------------------------------------------
-// Save updated players
-// -----------------------------------------------
+    // --------------------------------------------------
+    // ONLY SAVE OPPONENT IF THEY WERE ALREADY
+    // GENUINELY RANKED
+    // --------------------------------------------------
 
-return [
-  ...otherPlayers,
-  updatedA,
-  updatedB,
-];
+    if (opponentIsRanked === true) {
+
+      console.log(
+        'FOTRANKR: Saving existing ranked opponent:',
+        updatedB.name
+      );
+
+      return [
+        ...updatedRankings,
+        updatedB,
+      ];
+
+    }
+
+
+    // --------------------------------------------------
+    // TEMPORARY H2H OPPONENT
+    // --------------------------------------------------
+    //
+    // Do NOT save them.
+    //
+    // Their temporary 2000 rating is only used for
+    // calculating this comparison.
+    //
+    // This is the key fix for the fake 5.00 players.
+    // --------------------------------------------------
+
+    console.log(
+      'FOTRANKR: NOT saving temporary H2H opponent:',
+      updatedB.name
+    );
+
+    return updatedRankings;
+
   });
 
 
-  // -----------------------------------------------
+  // --------------------------------------------------
   // SAVE HISTORY
-  // -----------------------------------------------
+  // --------------------------------------------------
 
   setComparisonHistory(
     previousHistory => [
@@ -383,10 +457,16 @@ return [
       ...previousHistory,
 
       {
-        playerA: player.id,
-        playerB: comparisonPlayer.id,
+        playerA:
+          player.id,
+
+        playerB:
+          comparisonPlayer.id,
+
         result,
-        date: new Date().toISOString(),
+
+        date:
+          new Date().toISOString(),
       },
 
     ]

@@ -1,15 +1,16 @@
 const players = require('./players').default;
+
 const {
   createPlayer,
   findBestOpponent
 } = require('./engine/rankingEngine');
 
+// ==========================================================
+// CREATE A TEST PLAYER
+// ==========================================================
+
 const alissonData = players.find(
   player => player.name === 'Alisson Becker'
-);
-
-const goalkeeperData = players.filter(
-  player => player.specificPosition === 'Goalkeeper'
 );
 
 const alisson = createPlayer(
@@ -17,45 +18,81 @@ const alisson = createPlayer(
   'Elite'
 );
 
-const opponents = goalkeeperData
+alisson.rating = 2840;
+
+// ==========================================================
+// ONLY GIVE THE ALGORITHM 3 OPPONENTS
+// ==========================================================
+
+const selectedNames = [
+  'Thibaut Courtois',
+  'Gianluigi Donnarumma',
+  'Jan Oblak'
+];
+
+const opponents = players
   .filter(
-    player => player.id !== alisson.id
+    player =>
+      selectedNames.includes(player.name)
   )
   .map(
-    player => createPlayer(
-      player,
-      'Elite'
-    )
+    player => {
+
+      const created =
+        createPlayer(
+          player,
+          'Elite'
+        );
+
+      created.rating = 2840;
+
+      return created;
+    }
   );
+
+// ==========================================================
+// TEST
+// ==========================================================
 
 let history = [];
 
-console.log('\n--- SIX AUTOMATIC H2H TEST ---\n');
+console.log('\n========================================');
+console.log(' FOTRANKR EDGE CASE TEST');
+console.log('========================================\n');
 
 console.log(
-  'Goalkeepers available:',
-  goalkeeperData.length
+  'Starting player:',
+  alisson.name
 );
 
 console.log(
-  'Automatic opponents available:',
+  'Available opponents:',
   opponents.length
+);
+
+opponents.forEach(
+  player =>
+    console.log(
+      '-',
+      player.name
+    )
 );
 
 console.log('');
 
-for (let i = 0; i < 7; i++) {
+for (let i = 0; i < 5; i++) {
 
   const target = {
     ...alisson,
     comparisons: i
   };
 
-  const opponent = findBestOpponent(
-    target,
-    opponents,
-    history
-  );
+  const opponent =
+    findBestOpponent(
+      target,
+      opponents,
+      history
+    );
 
   console.log(
     `H2H ${i + 1}:`,
@@ -65,9 +102,16 @@ for (let i = 0; i < 7; i++) {
   );
 
   if (opponent) {
+
     history.push({
       playerA: alisson.id,
       playerB: opponent.id
     });
+
   }
+
 }
+
+console.log('\n========================================');
+console.log(' TEST COMPLETE');
+console.log('========================================\n');

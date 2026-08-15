@@ -9,12 +9,17 @@ import {
 export default function CompareScreen({
   route,
   navigation,
-  isFirstPlayer,
   onAnchorSelected,
-   isPlayerRanked,
+  onCategoryChanged,
+  isPlayerRanked,
 }) {
 
   const { player } = route.params;
+
+
+  // ==================================================
+  // CATEGORIES
+  // ==================================================
 
   const categories = [
     {
@@ -49,36 +54,71 @@ export default function CompareScreen({
     },
   ];
 
- const chooseCategory = (category) => {
 
-  // A completely new player gets their
-  // category as their starting point.
-  if (isFirstPlayer) {
+  // ==================================================
+  // CATEGORY SELECTION
+  // ==================================================
 
-    onAnchorSelected({
+  const chooseCategory = (category) => {
+
+    // --------------------------------------------------
+    // UNRANKED PLAYER
+    // --------------------------------------------------
+
+    if (!isPlayerRanked) {
+
+      onAnchorSelected({
+        player,
+        category: category.name,
+      });
+
+      navigation.navigate(
+        'HeadToHead',
+        {
+          player,
+          category: category.name,
+        }
+      );
+
+      return;
+    }
+
+
+    // --------------------------------------------------
+    // ALREADY RANKED PLAYER
+    // --------------------------------------------------
+
+    onCategoryChanged({
       player,
       category: category.name,
     });
 
-    navigation.navigate('MainTabs', { screen: 'MyRanks' });
+    navigation.navigate(
+      'HeadToHead',
+      {
+        player,
+        category: category.name,
+      }
+    );
 
-    return;
-  }
+  };
 
-  // An already-ranked player keeps their
-  // existing rating and goes straight into
-  // another head-to-head.
-  navigation.navigate('HeadToHead', {
-    player,
-    category: category.name,
-  });
-};
+
+  // ==================================================
+  // SCREEN
+  // ==================================================
+
   return (
-    <ScrollView style={styles.container}>
+
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+    >
 
       <Text style={styles.title}>
         RATE PLAYER
       </Text>
+
 
       <View style={styles.playerBox}>
 
@@ -92,9 +132,11 @@ export default function CompareScreen({
 
       </View>
 
+
       <Text style={styles.question}>
         Which category does {player.name} belong in?
       </Text>
+
 
       {categories.map((category) => (
 
@@ -106,7 +148,9 @@ export default function CompareScreen({
               borderColor: category.colour,
             },
           ]}
-          onPress={() => chooseCategory(category)}
+          onPress={() =>
+            chooseCategory(category)
+          }
         >
 
           <Text
@@ -120,6 +164,7 @@ export default function CompareScreen({
             {category.name}
           </Text>
 
+
           <Text style={styles.description}>
             {category.description}
           </Text>
@@ -129,15 +174,26 @@ export default function CompareScreen({
       ))}
 
     </ScrollView>
+
   );
+
 }
+
+
+// ======================================================
+// STYLES
+// ======================================================
 
 const styles = StyleSheet.create({
 
   container: {
     flex: 1,
     backgroundColor: '#050505',
+  },
+
+  content: {
     padding: 20,
+    paddingBottom: 50,
   },
 
   title: {
@@ -197,4 +253,3 @@ const styles = StyleSheet.create({
   },
 
 });
-

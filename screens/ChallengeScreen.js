@@ -56,16 +56,22 @@ export default function ChallengeScreen({
   // BUILD OPPONENT LIST
   // --------------------------------------------------
 
-  const opponents = [...myRankings]
-    .filter(
-      ranking =>
-        ranking.id !== player.id
-    )
-    .filter(matchesPosition)
-    .sort(
-      (a, b) =>
-        b.rating - a.rating
-    );
+ const opponents = [...myRankings]
+  .filter(
+    ranking =>
+      String(ranking.id) !==
+      String(player.id)
+  )
+  .filter(
+    ranking =>
+      ranking.category ===
+      player.category
+  )
+  .filter(matchesPosition)
+  .sort(
+    (a, b) =>
+      b.rating - a.rating
+  );
 
   // --------------------------------------------------
   // POSITION LABEL

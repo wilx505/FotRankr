@@ -14,42 +14,77 @@ export default function RankingsScreen({
 }) {
 
   const [showPosition, setShowPosition] =
-  useState('All');
-  
+    useState('All');
+
   const [expandedPosition, setExpandedPosition] =
-  useState(null);
+    useState(null);
 
 
-const filteredPlayers =
-  showPosition === 'All'
-    ? myRankings
+  // ==================================================
+  // POSITION FILTER
+  // ==================================================
 
-    : showPosition === 'Attack' ||
-      showPosition === 'Midfielder' ||
-      showPosition === 'Defender' ||
-      showPosition === 'Goalkeeper'
+  const filteredPlayers =
+    showPosition === 'All'
+      ? myRankings
+      : showPosition === 'Attack' ||
+        showPosition === 'Midfielder' ||
+        showPosition === 'Defender' ||
+        showPosition === 'Goalkeeper'
 
-      ? myRankings.filter(
-          player =>
-            player.position?.toLowerCase() ===
-            showPosition.toLowerCase()
-        )
-
-      : myRankings.filter(
-          player =>
-            player.specificPosition
-              ?.toLowerCase() ===
+        ? myRankings.filter(
+            player =>
+              player.position?.toLowerCase() ===
               showPosition.toLowerCase()
-        );
+          )
+
+        : myRankings.filter(
+            player =>
+              player.specificPosition
+                ?.toLowerCase() ===
+              showPosition.toLowerCase()
+          );
 
 
-  const sortedPlayers = [
-    ...filteredPlayers,
-  ].sort(
-    (a, b) =>
-      b.rating - a.rating
+  // ==================================================
+  // CATEGORY ORDER
+  // ==================================================
+
+  const categoryOrder = [
+    'Legendary',
+    'Elite',
+    'Very Good',
+    'Good',
+    'OK',
+    'Bad',
+  ];
+
+
+  // ==================================================
+  // GROUP PLAYERS BY CATEGORY
+  // ==================================================
+
+  const playersByCategory = {};
+
+  categoryOrder.forEach(
+    category => {
+      playersByCategory[category] =
+        filteredPlayers
+          .filter(
+            player =>
+              player.category === category
+          )
+          .sort(
+            (a, b) =>
+              b.rating - a.rating
+          );
+    }
   );
 
+
+  // ==================================================
+  // POSITION NAVIGATION
+  // ==================================================
 
   const goToPosition = (
     position
@@ -59,6 +94,165 @@ const filteredPlayers =
 
   };
 
+
+  // ==================================================
+  // CATEGORY SECTION
+  // ==================================================
+
+  const renderCategory = (
+    category
+  ) => {
+
+    const players =
+      playersByCategory[category] || [];
+
+    if (players.length === 0) {
+      return null;
+    }
+
+
+    return (
+
+      <View
+        key={category}
+        style={styles.categorySection}
+      >
+
+        {/* CATEGORY HEADER */}
+
+        <View
+          style={styles.categoryHeader}
+        >
+
+          <Text
+            style={styles.categoryTitle}
+          >
+            {category.toUpperCase()}
+          </Text>
+
+          <Text
+            style={styles.categoryCount}
+          >
+            {players.length}
+            {' '}
+            {players.length === 1
+              ? 'PLAYER'
+              : 'PLAYERS'}
+          </Text>
+
+        </View>
+
+
+        {/* PLAYERS */}
+
+        {players.map(
+          (player, index) => (
+
+            <TouchableOpacity
+              key={player.id}
+              style={styles.playerBox}
+              onPress={() =>
+                navigation.navigate(
+                  'Challenge',
+                  {
+                    player,
+
+                    positionFilter:
+                      showPosition,
+                  }
+                )
+              }
+              activeOpacity={0.75}
+            >
+
+              {/* CATEGORY RANK */}
+
+              <View
+                style={styles.rankCircle}
+              >
+
+                <Text
+                  style={styles.rankNumber}
+                >
+                  {index + 1}
+                </Text>
+
+              </View>
+
+
+              {/* PLAYER */}
+
+              <View
+                style={styles.playerDetails}
+              >
+
+                <Text
+                  style={styles.playerName}
+                >
+                  {player.name}
+                </Text>
+
+
+                <Text
+                  style={styles.info}
+                >
+                  {player.nation}
+                  {' • '}
+                  {player.position}
+                </Text>
+
+
+                {player.specificPosition && (
+
+                  <Text
+                    style={styles.specificPosition}
+                  >
+                    {player.specificPosition}
+                  </Text>
+
+                )}
+
+              </View>
+
+
+              {/* SCORE */}
+
+              <View
+                style={styles.scoreBox}
+              >
+
+                <Text
+                  style={styles.score}
+                >
+                  {typeof player.score ===
+                  'number'
+                    ? player.score.toFixed(2)
+                    : '—'}
+                </Text>
+
+                <Text
+                  style={styles.outOf}
+                >
+                  / 10
+                </Text>
+
+              </View>
+
+            </TouchableOpacity>
+
+          )
+        )}
+
+      </View>
+
+    );
+
+  };
+
+
+  // ==================================================
+  // SCREEN
+  // ==================================================
 
   return (
 
@@ -104,6 +298,8 @@ const filteredPlayers =
         style={styles.filterContainer}
       >
 
+        {/* ALL */}
+
         <TouchableOpacity
           style={[
             styles.filterButton,
@@ -128,91 +324,128 @@ const filteredPlayers =
         </TouchableOpacity>
 
 
+        {/* ATTACK */}
+
         <TouchableOpacity
-  style={[
-    styles.filterButton,
-    showPosition === 'Attack' &&
-      styles.filterButtonActive,
-  ]}
-  onPress={() => {
-    setExpandedPosition(
-      expandedPosition === 'Attack'
-        ? null
-        : 'Attack'
-    );
+          style={[
+            styles.filterButton,
+            showPosition === 'Attack' &&
+              styles.filterButtonActive,
+          ]}
+          onPress={() => {
 
-    goToPosition('Attack');
-  }}
->
-  <Text
-    style={[
-      styles.filterText,
-      showPosition === 'Attack' &&
-        styles.filterTextActive,
-    ]}
-  >
-    ATTACKERS {expandedPosition === 'Attack' ? '▲' : '▼'}
-  </Text>
-</TouchableOpacity>
+            setExpandedPosition(
+              expandedPosition === 'Attack'
+                ? null
+                : 'Attack'
+            );
 
-{expandedPosition === 'Attack' && (
-  <View style={styles.subFilterContainer}>
+            goToPosition('Attack');
 
-    <TouchableOpacity
-      style={styles.subFilterButton}
-      onPress={() =>
-        goToPosition('Attack')
-      }
-    >
-      <Text style={styles.subFilterText}>
-        ALL ATTACKERS
-      </Text>
-    </TouchableOpacity>
+          }}
+        >
 
-    <TouchableOpacity
-      style={styles.subFilterButton}
-      onPress={() =>
-        goToPosition('Striker')
-      }
-    >
-      <Text style={styles.subFilterText}>
-        STRIKERS
-      </Text>
-    </TouchableOpacity>
+          <Text
+            style={[
+              styles.filterText,
+              showPosition === 'Attack' &&
+                styles.filterTextActive,
+            ]}
+          >
+            ATTACKERS
+            {' '}
+            {expandedPosition === 'Attack'
+              ? '▲'
+              : '▼'}
+          </Text>
 
-    <TouchableOpacity
-      style={styles.subFilterButton}
-      onPress={() =>
-        goToPosition('Left Winger')
-      }
-    >
-      <Text style={styles.subFilterText}>
-        LEFT WINGERS
-      </Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity
-      style={styles.subFilterButton}
-      onPress={() =>
-        goToPosition('Right Winger')
-      }
-    >
-      <Text style={styles.subFilterText}>
-        RIGHT WINGERS
-      </Text>
-    </TouchableOpacity>
-
-  </View>
-)}
+        </TouchableOpacity>
 
 
-                  <TouchableOpacity
+        {expandedPosition === 'Attack' && (
+
+          <View
+            style={styles.subFilterContainer}
+          >
+
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Attack')
+              }
+            >
+
+              <Text
+                style={styles.subFilterText}
+              >
+                ALL ATTACKERS
+              </Text>
+
+            </TouchableOpacity>
+
+
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Striker')
+              }
+            >
+
+              <Text
+                style={styles.subFilterText}
+              >
+                STRIKERS
+              </Text>
+
+            </TouchableOpacity>
+
+
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Left Winger')
+              }
+            >
+
+              <Text
+                style={styles.subFilterText}
+              >
+                LEFT WINGERS
+              </Text>
+
+            </TouchableOpacity>
+
+
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Right Winger')
+              }
+            >
+
+              <Text
+                style={styles.subFilterText}
+              >
+                RIGHT WINGERS
+              </Text>
+
+            </TouchableOpacity>
+
+          </View>
+
+        )}
+
+
+        {/* MIDFIELD */}
+
+        <TouchableOpacity
           style={[
             styles.filterButton,
             showPosition === 'Midfielder' &&
               styles.filterButtonActive,
           ]}
           onPress={() => {
+
             setExpandedPosition(
               expandedPosition === 'Midfielder'
                 ? null
@@ -220,8 +453,10 @@ const filteredPlayers =
             );
 
             goToPosition('Midfielder');
+
           }}
         >
+
           <Text
             style={[
               styles.filterText,
@@ -229,12 +464,21 @@ const filteredPlayers =
                 styles.filterTextActive,
             ]}
           >
-            MIDFIELDERS {expandedPosition === 'Midfielder' ? '▲' : '▼'}
+            MIDFIELDERS
+            {' '}
+            {expandedPosition === 'Midfielder'
+              ? '▲'
+              : '▼'}
           </Text>
+
         </TouchableOpacity>
 
+
         {expandedPosition === 'Midfielder' && (
-          <View style={styles.subFilterContainer}>
+
+          <View
+            style={styles.subFilterContainer}
+          >
 
             <TouchableOpacity
               style={styles.subFilterButton}
@@ -242,125 +486,187 @@ const filteredPlayers =
                 goToPosition('Midfielder')
               }
             >
-              <Text style={styles.subFilterText}>
+
+              <Text
+                style={styles.subFilterText}
+              >
                 ALL MIDFIELDERS
               </Text>
+
             </TouchableOpacity>
+
 
             <TouchableOpacity
               style={styles.subFilterButton}
               onPress={() =>
-                goToPosition('Defensive Midfielder')
+                goToPosition(
+                  'Defensive Midfielder'
+                )
               }
             >
-              <Text style={styles.subFilterText}>
+
+              <Text
+                style={styles.subFilterText}
+              >
                 DEFENSIVE MIDFIELDERS
               </Text>
+
             </TouchableOpacity>
+
 
             <TouchableOpacity
               style={styles.subFilterButton}
               onPress={() =>
-                goToPosition('Central Midfielder')
+                goToPosition(
+                  'Central Midfielder'
+                )
               }
             >
-              <Text style={styles.subFilterText}>
+
+              <Text
+                style={styles.subFilterText}
+              >
                 CENTRAL MIDFIELDERS
               </Text>
+
             </TouchableOpacity>
+
 
             <TouchableOpacity
               style={styles.subFilterButton}
               onPress={() =>
-                goToPosition('Attacking Midfielder')
+                goToPosition(
+                  'Attacking Midfielder'
+                )
               }
             >
-              <Text style={styles.subFilterText}>
+
+              <Text
+                style={styles.subFilterText}
+              >
                 ATTACKING MIDFIELDERS
               </Text>
+
             </TouchableOpacity>
 
           </View>
+
         )}
 
 
-       <TouchableOpacity
-  style={[
-    styles.filterButton,
-    showPosition === 'Defender' &&
-      styles.filterButtonActive,
-  ]}
-  onPress={() => {
-    setExpandedPosition(
-      expandedPosition === 'Defender'
-        ? null
-        : 'Defender'
-    );
+        {/* DEFENDERS */}
 
-    goToPosition('Defender');
-  }}
->
-  <Text
-    style={[
-      styles.filterText,
-      showPosition === 'Defender' &&
-        styles.filterTextActive,
-    ]}
-  >
-    DEFENDERS {expandedPosition === 'Defender' ? '▲' : '▼'}
-  </Text>
-</TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.filterButton,
+            showPosition === 'Defender' &&
+              styles.filterButtonActive,
+          ]}
+          onPress={() => {
 
-{expandedPosition === 'Defender' && (
-  <View style={styles.subFilterContainer}>
+            setExpandedPosition(
+              expandedPosition === 'Defender'
+                ? null
+                : 'Defender'
+            );
 
-    <TouchableOpacity
-      style={styles.subFilterButton}
-      onPress={() =>
-        goToPosition('Defender')
-      }
-    >
-      <Text style={styles.subFilterText}>
-        ALL DEFENDERS
-      </Text>
-    </TouchableOpacity>
+            goToPosition('Defender');
 
-    <TouchableOpacity
-      style={styles.subFilterButton}
-      onPress={() =>
-        goToPosition('Centre-Back')
-      }
-    >
-      <Text style={styles.subFilterText}>
-        CENTRE-BACKS
-      </Text>
-    </TouchableOpacity>
+          }}
+        >
 
-    <TouchableOpacity
-      style={styles.subFilterButton}
-      onPress={() =>
-        goToPosition('Right-Back')
-      }
-    >
-      <Text style={styles.subFilterText}>
-        RIGHT-BACKS
-      </Text>
-    </TouchableOpacity>
+          <Text
+            style={[
+              styles.filterText,
+              showPosition === 'Defender' &&
+                styles.filterTextActive,
+            ]}
+          >
+            DEFENDERS
+            {' '}
+            {expandedPosition === 'Defender'
+              ? '▲'
+              : '▼'}
+          </Text>
 
-    <TouchableOpacity
-      style={styles.subFilterButton}
-      onPress={() =>
-        goToPosition('Left-Back')
-      }
-    >
-      <Text style={styles.subFilterText}>
-        LEFT-BACKS
-      </Text>
-    </TouchableOpacity>
+        </TouchableOpacity>
 
-  </View>
-)}
 
+        {expandedPosition === 'Defender' && (
+
+          <View
+            style={styles.subFilterContainer}
+          >
+
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Defender')
+              }
+            >
+
+              <Text
+                style={styles.subFilterText}
+              >
+                ALL DEFENDERS
+              </Text>
+
+            </TouchableOpacity>
+
+
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Centre-Back')
+              }
+            >
+
+              <Text
+                style={styles.subFilterText}
+              >
+                CENTRE-BACKS
+              </Text>
+
+            </TouchableOpacity>
+
+
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Right-Back')
+              }
+            >
+
+              <Text
+                style={styles.subFilterText}
+              >
+                RIGHT-BACKS
+              </Text>
+
+            </TouchableOpacity>
+
+
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition('Left-Back')
+              }
+            >
+
+              <Text
+                style={styles.subFilterText}
+              >
+                LEFT-BACKS
+              </Text>
+
+            </TouchableOpacity>
+
+          </View>
+
+        )}
+
+
+        {/* GOALKEEPERS */}
 
         <TouchableOpacity
           style={[
@@ -390,11 +696,15 @@ const filteredPlayers =
 
       {/* PLAYER LIST */}
 
-      {sortedPlayers.length === 0 ? (
+      {filteredPlayers.length === 0 ? (
 
-        <View style={styles.emptyBox}>
+        <View
+          style={styles.emptyBox}
+        >
 
-          <Text style={styles.emptyText}>
+          <Text
+            style={styles.emptyText}
+          >
             No players ranked yet.
           </Text>
 
@@ -409,95 +719,9 @@ const filteredPlayers =
 
       ) : (
 
-        sortedPlayers.map(
-          (player, index) => (
-
-            <TouchableOpacity
-              key={player.id}
-              style={styles.playerBox}
-              onPress={() =>
-                navigation.navigate(
-                  'Challenge',
-                  {
-                    player,
-                    positionFilter:
-                      showPosition,
-                  }
-                )
-              }
-              activeOpacity={0.75}
-            >
-
-              {/* RANK */}
-
-              <View
-                style={styles.rankCircle}
-              >
-
-                <Text
-                  style={styles.rankNumber}
-                >
-                  {index + 1}
-                </Text>
-
-              </View>
-
-
-              {/* PLAYER */}
-
-              <View
-                style={styles.playerDetails}
-              >
-
-                <Text
-                  style={styles.playerName}
-                >
-                  {player.name}
-                </Text>
-
-                <Text
-                  style={styles.info}
-                >
-                  {player.nation}
-                  {' • '}
-                  {player.position}
-                </Text>
-
-                <Text
-                  style={styles.category}
-                >
-                  {player.category}
-                </Text>
-
-              </View>
-
-
-              {/* SCORE */}
-
-              <View
-                style={styles.scoreBox}
-              >
-
-                <Text
-                  style={styles.score}
-                >
-                  {typeof player.score ===
-                  'number'
-                    ? player.score.toFixed(2)
-                    : '—'}
-                </Text>
-
-                <Text
-                  style={styles.outOf}
-                >
-                  / 10
-                </Text>
-
-              </View>
-
-            </TouchableOpacity>
-
-          )
+        categoryOrder.map(
+          category =>
+            renderCategory(category)
         )
 
       )}
@@ -508,6 +732,10 @@ const filteredPlayers =
 
 }
 
+
+// ======================================================
+// STYLES
+// ======================================================
 
 const styles = StyleSheet.create({
 
@@ -551,39 +779,18 @@ const styles = StyleSheet.create({
   },
 
   filterContainer: {
-  marginBottom: 20,
-},
-  
-subFilterContainer: {
-  backgroundColor: '#0d0d0d',
-  borderRadius: 10,
-  padding: 6,
-  marginTop: -4,
-  marginBottom: 8,
-  borderWidth: 1,
-  borderColor: '#1d1d1d',
-},
+    marginBottom: 20,
+  },
 
-subFilterButton: {
-  paddingVertical: 11,
-  paddingHorizontal: 14,
-},
-
-subFilterText: {
-  color: '#aaaaaa',
-  fontSize: 12,
-  fontWeight: '800',
-},
-
-filterButton: {
-  backgroundColor: '#111111',
-  borderWidth: 1,
-  borderColor: '#222222',
-  borderRadius: 10,
-  paddingVertical: 13,
-  paddingHorizontal: 14,
-  marginBottom: 8,
-},
+  filterButton: {
+    backgroundColor: '#111111',
+    borderWidth: 1,
+    borderColor: '#222222',
+    borderRadius: 10,
+    paddingVertical: 13,
+    paddingHorizontal: 14,
+    marginBottom: 8,
+  },
 
   filterButtonActive: {
     backgroundColor: '#00ff66',
@@ -599,6 +806,60 @@ filterButton: {
   filterTextActive: {
     color: '#000000',
   },
+
+  subFilterContainer: {
+    backgroundColor: '#0d0d0d',
+    borderRadius: 10,
+    padding: 6,
+    marginTop: -4,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
+  },
+
+  subFilterButton: {
+    paddingVertical: 11,
+    paddingHorizontal: 14,
+  },
+
+  subFilterText: {
+    color: '#aaaaaa',
+    fontSize: 12,
+    fontWeight: '800',
+  },
+
+  // ==================================================
+  // CATEGORY
+  // ==================================================
+
+  categorySection: {
+    marginBottom: 25,
+  },
+
+  categoryHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    paddingHorizontal: 4,
+  },
+
+  categoryTitle: {
+    color: '#00ff66',
+    fontSize: 17,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+  categoryCount: {
+    color: '#555555',
+    fontSize: 11,
+    fontWeight: '800',
+  },
+
+  // ==================================================
+  // PLAYER
+  // ==================================================
 
   playerBox: {
     backgroundColor: '#111111',
@@ -643,11 +904,10 @@ filterButton: {
     marginTop: 5,
   },
 
-  category: {
-    color: '#00ff66',
-    fontSize: 12,
-    fontWeight: '800',
-    marginTop: 5,
+  specificPosition: {
+    color: '#555555',
+    fontSize: 11,
+    marginTop: 3,
   },
 
   scoreBox: {
@@ -665,6 +925,10 @@ filterButton: {
     color: '#555555',
     fontSize: 11,
   },
+
+  // ==================================================
+  // EMPTY
+  // ==================================================
 
   emptyBox: {
     backgroundColor: '#0d0d0d',
@@ -688,4 +952,3 @@ filterButton: {
   },
 
 });
-

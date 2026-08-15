@@ -35,7 +35,7 @@ const Stack =
 const Tab =
   createBottomTabNavigator();
 
-const DATA_VERSION = '28';
+const DATA_VERSION = '34';
 
 export default function App() {
 
@@ -199,33 +199,128 @@ const handleAnchorSelected = ({
   category,
 }) => {
 
-  // Let the ranking engine determine the
-  // correct starting rating for the category.
+  // Let the ranking engine create the new player
+  // at the starting position for this category.
   const anchorPlayer =
     createPlayer(
       player,
       category
     );
-console.log(
-  'FOTRANKR NEW PLAYER:',
-  player.name,
-  category,
-  anchorPlayer.rating,
-  anchorPlayer.score
-);
 
-  // Add display information immediately.
-  
+  console.log(
+    'FOTRANKR NEW PLAYER:',
+    player.name,
+    category,
+    anchorPlayer.rating,
+    anchorPlayer.score
+  );
+
+  // New category anchors are added to the
+  // existing rankings — they do NOT replace them.
   const playerWithDisplay = {
-  ...anchorPlayer,
-  isAnchor: true,
-};
+    ...anchorPlayer,
+    isAnchor: true,
+  };
 
-  setMyRankings([
-    playerWithDisplay
+  setMyRankings(previousRankings => [
+    ...previousRankings,
+    playerWithDisplay,
   ]);
 
-  setComparisonHistory([]);
+  // This new player starts a fresh automatic
+  // H2H process.
+  //
+  // IMPORTANT:
+  // We do NOT clear the entire comparison history
+  // because other players' H2Hs still need to exist.
+  setComparisonHistory(previousHistory => [
+    ...previousHistory,
+  ]);
+};
+// =====================================================
+// CHANGE PLAYER CATEGORY
+// =====================================================
+
+const handleCategoryChanged = ({
+  player,
+  category,
+}) => {
+
+  console.log(
+    'FOTRANKR CATEGORY CHANGE:',
+    player.name,
+    '->',
+    category
+  );
+
+
+  setMyRankings(previousRankings => {
+
+    return previousRankings.map(
+      rankedPlayer => {
+
+        if (
+          String(rankedPlayer.id) !==
+          String(player.id)
+        ) {
+          return rankedPlayer;
+        }
+
+
+        // Create a completely fresh ranking
+        // for the new category.
+        const newCategoryPlayer =
+          createPlayer(
+            player,
+            category
+          );
+
+
+        console.log(
+          'FOTRANKR NEW CATEGORY PLAYER:',
+          newCategoryPlayer.name,
+          category,
+          newCategoryPlayer.rating,
+          newCategoryPlayer.score
+        );
+
+
+        return {
+          ...newCategoryPlayer,
+
+          isAnchor: false,
+
+          // Keep the fact that this player
+          // is already in My Rankings.
+          isRanked: true,
+        };
+
+      }
+    );
+
+  });
+
+
+  // ==================================================
+  // REMOVE ONLY THIS PLAYER'S OLD H2H HISTORY
+  // FOR THE PURPOSES OF THE NEW CATEGORY.
+  //
+  // We don't delete the history globally because
+  // the old category history may still be useful.
+  // The HeadToHead screen already checks category.
+  // ==================================================
+
+  setComparisonHistory(
+    previousHistory =>
+      previousHistory.filter(
+        comparison =>
+          String(comparison.playerA) !==
+            String(player.id) &&
+          String(comparison.playerB) !==
+            String(player.id)
+      )
+  );
+
 };
 
 // =====================================================
@@ -312,13 +407,13 @@ const handleHeadToHeadResult = ({
 
     if (!playerB) {
 
-      playerB =
-        createPlayer(
-          comparisonPlayer,
-          null
-        );
+  playerB =
+    createPlayer(
+      comparisonPlayer,
+      category
+    );
 
-    }
+}
 
 
     // --------------------------------------------------
@@ -451,7 +546,7 @@ const handleHeadToHeadResult = ({
   // SAVE HISTORY
   // --------------------------------------------------
 
-  setComparisonHistory(
+    setComparisonHistory(
     previousHistory => [
 
       ...previousHistory,
@@ -462,6 +557,9 @@ const handleHeadToHeadResult = ({
 
         playerB:
           comparisonPlayer.id,
+
+        category:
+          category,
 
         result,
 
@@ -634,19 +732,25 @@ return (
 
           return (
 
-            <CompareScreen
-              navigation={navigation}
-              route={route}
-              isFirstPlayer={
-                myRankings.length === 0
-              }
-              isPlayerRanked={
-                isPlayerRanked
-              }
-              onAnchorSelected={
-                handleAnchorSelected
-              }
-            />
+<CompareScreen
+  navigation={navigation}
+  route={route}
+  isFirstPlayer={
+    myRankings.length === 0
+  }
+  isPlayerRanked={
+    isPlayerRanked
+  }
+  myRankings={
+    myRankings
+  }
+  onAnchorSelected={
+    handleAnchorSelected
+  }
+  onCategoryChanged={
+    handleCategoryChanged
+  }
+/>
 
           );
 

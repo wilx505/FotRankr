@@ -12,92 +12,35 @@ export default function ChallengeScreen({
   myRankings,
 }) {
 
- const {
-  player,
-} = route.params || {};
-
-const positionFilter =
-  player?.position || 'All';
-
-  console.log(
-    'FOTRANKR POSITION FILTER:',
-    positionFilter
-  );
-
-  // --------------------------------------------------
-  // POSITION MATCHING
-  // --------------------------------------------------
-
-  const matchesPosition = (ranking) => {
-
-    if (positionFilter === 'All') {
-      return true;
-    }
-
-    // Broad position filters
-    if (
-      positionFilter === 'Attack' ||
-      positionFilter === 'Midfielder' ||
-      positionFilter === 'Defender' ||
-      positionFilter === 'Goalkeeper'
-    ) {
-      return (
-        ranking.position?.toLowerCase() ===
-        positionFilter.toLowerCase()
-      );
-    }
-
-    // Specific position filters
-    return (
-      ranking.specificPosition?.toLowerCase() ===
-      positionFilter.toLowerCase()
-    );
-  };
+  const {
+    player,
+  } = route.params || {};
 
   // --------------------------------------------------
   // BUILD OPPONENT LIST
   // --------------------------------------------------
-
- const opponents = [...myRankings]
-  .filter(
-    ranking =>
-      String(ranking.id) !==
-      String(player.id)
-  )
-  .filter(matchesPosition)
-  .sort(
-    (a, b) =>
-      b.rating - a.rating
-  );
-
-  // --------------------------------------------------
-  // POSITION LABEL
+  // MANUAL CHALLENGE IS COMPLETELY UNRESTRICTED.
+  //
+  // A player can challenge ANY ranked player.
+  //
+  // No restrictions based on:
+  // - Category
+  // - Position
+  // - Specific position
+  // - H2H history
+  // - Automatic H2H limit
   // --------------------------------------------------
 
-  const getPositionLabel = () => {
-
-    if (positionFilter === 'All') {
-      return 'ALL PLAYERS';
-    }
-
-    if (positionFilter === 'Attack') {
-      return 'ATTACKERS';
-    }
-
-    if (positionFilter === 'Midfielder') {
-      return 'MIDFIELDERS';
-    }
-
-    if (positionFilter === 'Defender') {
-      return 'DEFENDERS';
-    }
-
-    if (positionFilter === 'Goalkeeper') {
-      return 'GOALKEEPERS';
-    }
-
-    return positionFilter.toUpperCase();
-  };
+  const opponents = [...(myRankings || [])]
+    .filter(
+      ranking =>
+        String(ranking.id) !==
+        String(player?.id)
+    )
+    .sort(
+      (a, b) =>
+        b.rating - a.rating
+    );
 
   // --------------------------------------------------
   // SELECT OPPONENT
@@ -147,14 +90,14 @@ const positionFilter =
       </Text>
 
       <Text style={styles.subtitle}>
-        Who do you want {player.name}
+        Who do you want {player?.name}
         {' '}to challenge?
       </Text>
 
-      {/* POSITION CONTEXT */}
+      {/* ALL PLAYERS */}
 
       <Text style={styles.positionLabel}>
-        {getPositionLabel()}
+        ALL RANKED PLAYERS
       </Text>
 
       {/* SELECTED PLAYER */}
@@ -166,11 +109,11 @@ const positionFilter =
         </Text>
 
         <Text style={styles.selectedName}>
-          {player.name}
+          {player?.name}
         </Text>
 
         <Text style={styles.selectedScore}>
-          {typeof player.score === 'number'
+          {typeof player?.score === 'number'
             ? player.score.toFixed(2)
             : '—'}
           {' '} / 10
@@ -185,13 +128,12 @@ const positionFilter =
         <View style={styles.emptyBox}>
 
           <Text style={styles.emptyTitle}>
-            NO OPPONENTS AVAILABLE
+            NO RANKED PLAYERS
           </Text>
 
           <Text style={styles.emptyText}>
             You need to rank another player
-            in this position before
-            {` ${player.name}`} can challenge them.
+            before {player?.name} can challenge them.
           </Text>
 
           <TouchableOpacity
@@ -225,7 +167,7 @@ const positionFilter =
       ) : (
 
         opponents.map(
-          (opponent) => (
+          (opponent, index) => (
 
             <TouchableOpacity
               key={opponent.id}
@@ -247,25 +189,7 @@ const positionFilter =
                 <Text
                   style={styles.rankNumber}
                 >
-                  {myRankings
-                    .filter(
-                      ranking =>
-                        ranking.id !==
-                        player.id &&
-                        matchesPosition(
-                          ranking
-                        )
-                    )
-                    .sort(
-                      (a, b) =>
-                        b.rating -
-                        a.rating
-                    )
-                    .findIndex(
-                      ranking =>
-                        ranking.id ===
-                        opponent.id
-                    ) + 1}
+                  {index + 1}
                 </Text>
 
               </View>
@@ -521,7 +445,6 @@ const styles = StyleSheet.create({
     color: '#aaaaaa',
     fontSize: 13,
     fontWeight: '900',
-    textAlign: 'center',
   },
 
 });

@@ -440,13 +440,7 @@ export default function HeadToHead({
         );
 
 
-     if (
-  manualRankedPlayer &&
-  manualRankedPlayer.position ===
-    targetPlayer.position &&
-  manualRankedPlayer.specificPosition ===
-    targetPlayer.specificPosition
-) {
+ if (manualRankedPlayer) {
 
         setComparisonPlayer({
           ...manualOpponent,

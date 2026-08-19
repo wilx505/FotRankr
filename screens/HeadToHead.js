@@ -42,6 +42,11 @@ export default function HeadToHead({
   // ==================================================
 
   const MAX_H2HS = 6;
+  const goToRankings = () => {
+  navigation.navigate('MainTabs', {
+    screen: 'MyRanks',
+  });
+};
 
 
   // ==================================================
@@ -518,21 +523,17 @@ export default function HeadToHead({
     // SIX H2H LIMIT
     // ----------------------------------------------
 
-    if (
-      automaticComparisonCount >=
-      MAX_H2HS
-    ) {
+   if (
+  automaticComparisonCount >=
+  MAX_H2HS
+) {
+  console.log(
+    'FOTRANKR SMART H2H: Six H2Hs completed. Returning to Rankings.'
+  );
 
-      setComparisonPlayer(
-        null
-      );
-
-      setSessionFinished(
-        true
-      );
-
-      return;
-    }
+  goToRankings();
+  return;
+}
 
 
     // ----------------------------------------------
@@ -544,17 +545,13 @@ export default function HeadToHead({
 
 
     if (!nextOpponent) {
+  console.log(
+    'FOTRANKR SMART H2H: No available opponent. Returning to Rankings.'
+  );
 
-      setComparisonPlayer(
-        null
-      );
-
-      setSessionFinished(
-        true
-      );
-
-      return;
-    }
+  goToRankings();
+  return;
+}
 
 
     setComparisonPlayer(
@@ -753,24 +750,16 @@ export default function HeadToHead({
     // ----------------------------------------------
 
     if (
-      updatedCount >=
-      MAX_H2HS
-    ) {
+  updatedCount >=
+  MAX_H2HS
+) {
+  console.log(
+    'FOTRANKR SMART H2H: SESSION COMPLETE. Returning to Rankings.'
+  );
 
-      console.log(
-        'FOTRANKR SMART H2H: SESSION COMPLETE.'
-      );
-
-      setComparisonPlayer(
-        null
-      );
-
-      setSessionFinished(
-        true
-      );
-
-      return;
-    }
+  goToRankings();
+  return;
+}
 
 
     // ----------------------------------------------

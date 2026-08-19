@@ -745,24 +745,26 @@ return (
           RANKING PROCESS
           ================================================= */}
 
-      <Stack.Screen
-        name="Challenge"
-        options={{
-          title: 'Challenge',
-        }}
-      >
+{/* =================================================
+    CHALLENGE
+    ================================================= */}
 
-        {({ navigation, route }) => (
+<Stack.Screen
+  name="Challenge"
+  options={{
+    headerShown: false,
+  }}
+>
+  {({ navigation, route }) => (
 
-          <ChallengeScreen
-            navigation={navigation}
-            route={route}
-            myRankings={myRankings}
-          />
+    <ChallengeScreen
+      navigation={navigation}
+      route={route}
+      myRankings={myRankings}
+    />
 
-        )}
-
-      </Stack.Screen>
+  )}
+</Stack.Screen>
 
 
       <Stack.Screen

@@ -42,11 +42,12 @@ export default function HeadToHead({
   // ==================================================
 
   const MAX_H2HS = 6;
+
   const goToRankings = () => {
-  navigation.navigate('MainTabs', {
-    screen: 'MyRanks',
-  });
-};
+    navigation.navigate('MainTabs', {
+      screen: 'MyRanks',
+    });
+  };
 
 
   // ==================================================
@@ -117,8 +118,7 @@ export default function HeadToHead({
             existingTarget.h2hCategory ??
             category,
 
-          isRanked:
-            true,
+          isRanked: true,
         }
       : {
           ...createPlayer(
@@ -128,8 +128,7 @@ export default function HeadToHead({
 
           category,
 
-          isRanked:
-            true,
+          isRanked: true,
         };
 
 
@@ -144,27 +143,6 @@ export default function HeadToHead({
           0
         )
       : 0;
-
-
-  console.log(
-    'FOTRANKR SMART H2H STATE:',
-    {
-      player:
-        targetPlayer.name,
-
-      category,
-
-      h2hCount:
-        automaticComparisonCount,
-
-      maximumH2Hs:
-        MAX_H2HS,
-
-      resultSubmitted,
-
-      sessionFinished,
-    }
-  );
 
 
   // ==================================================
@@ -191,10 +169,6 @@ export default function HeadToHead({
                   String(databasePlayer.id)
             );
 
-
-          // ------------------------------------------
-          // EXISTING RANKED PLAYER
-          // ------------------------------------------
 
           if (existingRanking) {
 
@@ -226,40 +200,28 @@ export default function HeadToHead({
                 existingRanking.draws ??
                 0,
 
-              isRanked:
-                true,
+              isRanked: true,
             };
 
           }
 
 
-          // ------------------------------------------
-          // UNRANKED PLAYER
-          // ------------------------------------------
-
           return {
             ...databasePlayer,
 
-            category:
-              null,
+            category: null,
 
-            rating:
-              500,
+            rating: 500,
 
-            comparisons:
-              0,
+            comparisons: 0,
 
-            wins:
-              0,
+            wins: 0,
 
-            losses:
-              0,
+            losses: 0,
 
-            draws:
-              0,
+            draws: 0,
 
-            isRanked:
-              false,
+            isRanked: false,
           };
 
         }
@@ -269,77 +231,22 @@ export default function HeadToHead({
 
 
   // ==================================================
-  // CATEGORY HISTORY
-  // ==================================================
-
-  const categoryHistory =
-    (comparisonHistory || []).filter(
-      comparison => {
-
-        if (!comparison) {
-          return false;
-        }
-
-        const involvesPlayer =
-          String(comparison.playerA) ===
-            String(targetPlayer.id) ||
-          String(comparison.playerB) ===
-            String(targetPlayer.id);
-
-        const sameCategory =
-          comparison.category ===
-          category;
-
-        return (
-          involvesPlayer &&
-          sameCategory
-        );
-
-      }
-    );
-
-
-  // ==================================================
   // FIND AUTOMATIC OPPONENT
   // ==================================================
 
   const getNextAutomaticOpponent = () => {
 
-    // ----------------------------------------------
-    // SIX H2H LIMIT
-    // ----------------------------------------------
-
     if (
       automaticComparisonCount >=
       MAX_H2HS
     ) {
-
-      console.log(
-        'FOTRANKR SMART H2H: Six H2Hs completed.',
-        {
-          player:
-            targetPlayer.name,
-
-          h2hCount:
-            automaticComparisonCount,
-        }
-      );
-
       return null;
     }
 
 
-    // ----------------------------------------------
-    // BUILD POOL
-    // ----------------------------------------------
-
     const opponentPool =
       buildOpponentPool();
 
-
-    // ----------------------------------------------
-    // ASK ENGINE FOR BEST OPPONENT
-    // ----------------------------------------------
 
     const opponent =
       findBestOpponent(
@@ -350,49 +257,8 @@ export default function HeadToHead({
 
 
     if (!opponent) {
-
-      console.log(
-        'FOTRANKR SMART H2H: No valid opponent available.',
-        {
-          player:
-            targetPlayer.name,
-
-          category,
-
-          position:
-            targetPlayer.position,
-
-          specificPosition:
-            targetPlayer.specificPosition,
-        }
-      );
-
       return null;
     }
-
-
-    console.log(
-      'FOTRANKR SMART H2H: NEXT OPPONENT',
-      {
-        player:
-          targetPlayer.name,
-
-        opponent:
-          opponent.name,
-
-        targetRating:
-          targetPlayer.rating,
-
-        opponentRating:
-          opponent.rating,
-
-        h2hNumber:
-          automaticComparisonCount + 1,
-
-        maximumH2Hs:
-          MAX_H2HS,
-      }
-    );
 
 
     return opponent;
@@ -401,30 +267,23 @@ export default function HeadToHead({
 
 
   // ==================================================
-  // START AUTOMATIC H2H SESSION
+  // START H2H SESSION
   // ==================================================
 
   useEffect(() => {
 
-    // ----------------------------------------------
+    // --------------------------------------------------
     // MANUAL CHALLENGE
-    // ----------------------------------------------
+    // --------------------------------------------------
 
     if (
       manualChallenge === true
     ) {
 
-      if (
-        !manualOpponent
-      ) {
+      if (!manualOpponent) {
 
-        setComparisonPlayer(
-          null
-        );
-
-        setSessionFinished(
-          true
-        );
+        setComparisonPlayer(null);
+        setSessionFinished(true);
 
         return;
       }
@@ -440,7 +299,7 @@ export default function HeadToHead({
         );
 
 
- if (manualRankedPlayer) {
+      if (manualRankedPlayer) {
 
         setComparisonPlayer({
           ...manualOpponent,
@@ -448,104 +307,65 @@ export default function HeadToHead({
 
           category,
 
-          isRanked:
-            true,
+          isRanked: true,
         });
 
-        setSessionFinished(
-          false
-        );
+        setSessionFinished(false);
 
       } else {
 
-        console.log(
-          'FOTRANKR MANUAL H2H: Invalid opponent.'
-        );
+        setComparisonPlayer(null);
+        setSessionFinished(true);
 
-        setComparisonPlayer(
-          null
-        );
-
-        setSessionFinished(
-          true
-        );
       }
 
       return;
     }
 
 
-    // ----------------------------------------------
-    // AUTOMATIC / SMART H2H
-    // ----------------------------------------------
+    // --------------------------------------------------
+    // SMART H2H
+    // --------------------------------------------------
 
     if (
       smartH2H !== true &&
       startSmartH2H !== true
     ) {
-
       return;
     }
 
 
-    // ----------------------------------------------
-    // IF RESULT WAS JUST SUBMITTED
-    // WAIT FOR APP STATE TO UPDATE
-    // ----------------------------------------------
+    if (resultSubmitted) {
+      return;
+    }
+
+
+    if (sessionFinished) {
+      return;
+    }
+
 
     if (
-      resultSubmitted
+      automaticComparisonCount >=
+      MAX_H2HS
     ) {
+
+      goToRankings();
 
       return;
     }
 
-
-    // ----------------------------------------------
-    // ALREADY FINISHED
-    // ----------------------------------------------
-
-    if (
-      sessionFinished
-    ) {
-
-      return;
-    }
-
-
-    // ----------------------------------------------
-    // SIX H2H LIMIT
-    // ----------------------------------------------
-
-   if (
-  automaticComparisonCount >=
-  MAX_H2HS
-) {
-  console.log(
-    'FOTRANKR SMART H2H: Six H2Hs completed. Returning to Rankings.'
-  );
-
-  goToRankings();
-  return;
-}
-
-
-    // ----------------------------------------------
-    // FIND NEXT OPPONENT
-    // ----------------------------------------------
 
     const nextOpponent =
       getNextAutomaticOpponent();
 
 
     if (!nextOpponent) {
-  console.log(
-    'FOTRANKR SMART H2H: No available opponent. Returning to Rankings.'
-  );
 
-  goToRankings();
-  return;
-}
+      goToRankings();
+
+      return;
+    }
 
 
     setComparisonPlayer(
@@ -576,75 +396,18 @@ export default function HeadToHead({
   const updateScores =
     result => {
 
-      // ----------------------------------------------
-      // PREVENT DOUBLE TAP
-      // ----------------------------------------------
-
-      if (
-        resultSubmitted
-      ) {
-
-        console.log(
-          'FOTRANKR: Result already submitted.'
-        );
-
+      if (resultSubmitted) {
         return;
       }
 
 
-      // ----------------------------------------------
-      // VALIDATE OPPONENT
-      // ----------------------------------------------
-
-      if (
-        !comparisonPlayer
-      ) {
-
-        console.log(
-          'FOTRANKR SMART H2H: No opponent.'
-        );
-
+      if (!comparisonPlayer) {
         return;
       }
 
 
-      // ----------------------------------------------
-      // LOCK CURRENT H2H
-      // ----------------------------------------------
+      setResultSubmitted(true);
 
-      setResultSubmitted(
-        true
-      );
-
-
-      console.log(
-        'FOTRANKR SMART H2H RESULT:',
-        {
-          player:
-            targetPlayer.name,
-
-          opponent:
-            comparisonPlayer.name,
-
-          category,
-
-          result,
-
-          h2hNumber:
-            automaticComparisonCount + 1,
-
-          maximumH2Hs:
-            MAX_H2HS,
-
-          opponentIsRanked:
-            comparisonPlayer.isRanked,
-        }
-      );
-
-
-      // ----------------------------------------------
-      // SEND RESULT TO APP
-      // ----------------------------------------------
 
       onResult({
 
@@ -673,34 +436,18 @@ export default function HeadToHead({
 
   useEffect(() => {
 
-    if (
-      !resultSubmitted
-    ) {
-
+    if (!resultSubmitted) {
       return;
     }
 
 
-    // ----------------------------------------------
-    // MANUAL CHALLENGE
-    // ----------------------------------------------
-
+    // Manual challenge ends immediately
     if (
       manualChallenge === true
     ) {
-
       return;
     }
 
-
-    // ----------------------------------------------
-    // WAIT FOR UPDATED PLAYER DATA
-    //
-    // App.js updates myRankings.
-    // Once h2hCount changes, this component
-    // will re-render and the next opponent
-    // will be selected by the effect above.
-    // ----------------------------------------------
 
     const updatedPlayer =
       (myRankings || []).find(
@@ -724,49 +471,20 @@ export default function HeadToHead({
         : 0;
 
 
-    console.log(
-      'FOTRANKR SMART H2H: RESULT PROCESSED',
-      {
-        player:
-          updatedPlayer.name,
-
-        h2hCount:
-          updatedCount,
-
-        maximumH2Hs:
-          MAX_H2HS,
-      }
-    );
-
-
-    // ----------------------------------------------
-    // SIX COMPLETED
-    // ----------------------------------------------
-
     if (
-  updatedCount >=
-  MAX_H2HS
-) {
-  console.log(
-    'FOTRANKR SMART H2H: SESSION COMPLETE. Returning to Rankings.'
-  );
+      updatedCount >=
+      MAX_H2HS
+    ) {
 
-  goToRankings();
-  return;
-}
+      goToRankings();
+
+      return;
+    }
 
 
-    // ----------------------------------------------
-    // PREPARE NEXT H2H
-    // ----------------------------------------------
+    setComparisonPlayer(null);
 
-    setComparisonPlayer(
-      null
-    );
-
-    setResultSubmitted(
-      false
-    );
+    setResultSubmitted(false);
 
   }, [
     myRankings,
@@ -778,7 +496,7 @@ export default function HeadToHead({
 
 
   // ==================================================
-  // H2H NUMBER FOR DISPLAY
+  // DISPLAY DATA
   // ==================================================
 
   const currentH2HNumber =
@@ -786,6 +504,18 @@ export default function HeadToHead({
       automaticComparisonCount + 1,
       MAX_H2HS
     );
+
+
+  const targetPosition =
+    targetPlayer.specificPosition ||
+    targetPlayer.position ||
+    'Footballer';
+
+
+  const opponentPosition =
+    comparisonPlayer?.specificPosition ||
+    comparisonPlayer?.position ||
+    'Footballer';
 
 
   // ==================================================
@@ -796,87 +526,199 @@ export default function HeadToHead({
 
     <View style={styles.container}>
 
-      <Text style={styles.title}>
+      {/* HEADER */}
+
+      <View style={styles.header}>
+
+        <Text style={styles.brand}>
+          FotRankr
+        </Text>
+
+        <View style={styles.brandLine} />
+
+      </View>
+
+
+      {/* H2H LABEL */}
+
+      <Text style={styles.headline}>
         HEAD TO HEAD
       </Text>
 
 
-      <Text style={styles.category}>
-        {category}
-      </Text>
+      <View style={styles.categoryPill}>
 
+        <Text style={styles.categoryText}>
+          {category?.toUpperCase()}
+        </Text>
+
+      </View>
+
+
+      {/* PROGRESS */}
 
       {manualChallenge !== true && (
-        <Text style={styles.h2hCount}>
-          H2H {currentH2HNumber} OF {MAX_H2HS}
-        </Text>
+
+        <View style={styles.progressContainer}>
+
+          <Text style={styles.progressLabel}>
+            RANKING PROGRESS
+          </Text>
+
+          <Text style={styles.progressCount}>
+            {currentH2HNumber} / {MAX_H2HS}
+          </Text>
+
+          <View style={styles.progressTrack}>
+
+            <View
+              style={[
+                styles.progressFill,
+                {
+                  width:
+                    `${(currentH2HNumber / MAX_H2HS) * 100}%`,
+                },
+              ]}
+            />
+
+          </View>
+
+        </View>
+
       )}
 
+
+      {/* COMPARISON */}
 
       {comparisonPlayer &&
       !resultSubmitted &&
       !sessionFinished ? (
 
-        <>
+        <View style={styles.mainContent}>
 
-          <View style={styles.comparisonBox}>
+          <Text style={styles.question}>
+            WHO IS BETTER?
+          </Text>
 
-            <View style={styles.playerSide}>
+          <Text style={styles.instruction}>
+            Tap the player you rate higher
+          </Text>
 
-              <Text style={styles.playerName}>
-                {targetPlayer.name}
-              </Text>
 
-              <Text style={styles.info}>
-                {targetPlayer.nation}
-              </Text>
+          {/* PLAYER CARDS */}
+
+          <View style={styles.playersRow}>
+
+            {/* TARGET */}
+
+            <View style={styles.playerColumn}>
+
+              <TouchableOpacity
+                style={styles.playerCard}
+                onPress={() =>
+                  updateScores('player')
+                }
+                activeOpacity={0.8}
+                disabled={resultSubmitted}
+              >
+
+                <View style={styles.playerInitial}>
+
+                  <Text style={styles.initialText}>
+                    {targetPlayer.name
+                      ?.charAt(0)
+                      ?.toUpperCase()}
+                  </Text>
+
+                </View>
+
+                <Text style={styles.playerName}>
+                  {targetPlayer.name}
+                </Text>
+
+                <Text style={styles.playerPosition}>
+                  {targetPosition}
+                </Text>
+
+                <View style={styles.chooseBadge}>
+
+                  <Text style={styles.chooseText}>
+                    CHOOSE
+                  </Text>
+
+                </View>
+
+              </TouchableOpacity>
 
             </View>
 
 
-            <Text style={styles.vs}>
-              VS
-            </Text>
+            {/* VS */}
+
+            <View style={styles.vsContainer}>
+
+              <View style={styles.vsLine} />
+
+              <View style={styles.vsCircle}>
+
+                <Text style={styles.vsText}>
+                  VS
+                </Text>
+
+              </View>
+
+              <View style={styles.vsLine} />
+
+            </View>
 
 
-            <View style={styles.playerSide}>
+            {/* OPPONENT */}
 
-              <Text style={styles.playerName}>
-                {comparisonPlayer.name}
-              </Text>
+            <View style={styles.playerColumn}>
 
-              <Text style={styles.info}>
-                {comparisonPlayer.nation}
-              </Text>
+              <TouchableOpacity
+                style={styles.playerCard}
+                onPress={() =>
+                  updateScores('comparison')
+                }
+                activeOpacity={0.8}
+                disabled={resultSubmitted}
+              >
+
+                <View style={styles.playerInitial}>
+
+                  <Text style={styles.initialText}>
+                    {comparisonPlayer.name
+                      ?.charAt(0)
+                      ?.toUpperCase()}
+                  </Text>
+
+                </View>
+
+                <Text style={styles.playerName}>
+                  {comparisonPlayer.name}
+                </Text>
+
+                <Text style={styles.playerPosition}>
+                  {opponentPosition}
+                </Text>
+
+                <View style={styles.chooseBadge}>
+
+                  <Text style={styles.chooseText}>
+                    CHOOSE
+                  </Text>
+
+                </View>
+
+              </TouchableOpacity>
 
             </View>
 
           </View>
 
 
-          <Text style={styles.question}>
-            Who is the better footballer?
-          </Text>
-
-
-          <TouchableOpacity
-            style={styles.playerButton}
-            onPress={() =>
-              updateScores('player')
-            }
-            disabled={resultSubmitted}
-          >
-
-            <Text style={styles.buttonText}>
-              {targetPlayer.name}
-            </Text>
-
-            <Text style={styles.buttonSubtext}>
-              is better
-            </Text>
-
-          </TouchableOpacity>
-
+          {/* DRAW */}
 
           <TouchableOpacity
             style={styles.drawButton}
@@ -884,81 +726,78 @@ export default function HeadToHead({
               updateScores('equal')
             }
             disabled={resultSubmitted}
+            activeOpacity={0.8}
           >
 
-            <Text style={styles.drawText}>
-              They are equal
+            <Text style={styles.drawTitle}>
+              THEY'RE EQUAL
+            </Text>
+
+            <Text style={styles.drawSubtitle}>
+              I can't separate them
             </Text>
 
           </TouchableOpacity>
 
 
-          <TouchableOpacity
-            style={styles.playerButton}
-            onPress={() =>
-              updateScores('comparison')
-            }
-            disabled={resultSubmitted}
-          >
+          <Text style={styles.footerHint}>
+            Your choice helps determine their position
+            within the {category} category.
+          </Text>
 
-            <Text style={styles.buttonText}>
-              {comparisonPlayer.name}
-            </Text>
-
-            <Text style={styles.buttonSubtext}>
-              is better
-            </Text>
-
-          </TouchableOpacity>
-
-        </>
+        </View>
 
       ) : (
 
-        <View style={styles.noOpponentBox}>
+        /* PROCESSING / COMPLETE */
 
-          <Text style={styles.noOpponentTitle}>
+        <View style={styles.statusContainer}>
+
+          <View style={styles.statusIcon}>
+
+            <Text style={styles.statusIconText}>
+              ✓
+            </Text>
+
+          </View>
+
+
+          <Text style={styles.statusTitle}>
 
             {resultSubmitted
-              ? 'PROCESSING H2H...'
+              ? 'PROCESSING'
               : sessionFinished
                 ? (
                     automaticComparisonCount >=
                     MAX_H2HS
-                      ? 'SMART H2H COMPLETE'
-                      : 'NO MORE H2Hs AVAILABLE'
+                      ? 'H2H COMPLETE'
+                      : 'NO MORE COMPARISONS'
                   )
-                : 'LOADING H2H...'}
+                : 'FINDING MATCH'}
 
           </Text>
 
 
-          <Text style={styles.noOpponentText}>
+          <Text style={styles.statusText}>
 
             {resultSubmitted
-              ? 'Calculating the next comparison...'
+              ? 'Updating your rankings and finding the next comparison...'
               : sessionFinished
                 ? (
                     automaticComparisonCount >=
                     MAX_H2HS
                       ? `FotRankr has completed ${MAX_H2HS} intelligent comparisons for ${targetPlayer.name}.`
-                      : 'There are no more eligible same-category opponents available.'
+                      : 'There are no more eligible opponents available.'
                   )
-                : 'Finding the most useful comparison...'}
+                : 'Finding the most useful comparison for you...'}
 
           </Text>
 
 
           <TouchableOpacity
             style={styles.backButton}
-            onPress={() =>
-              navigation.navigate(
-                'MainTabs',
-                {
-                  screen: 'MyRanks',
-                }
-              )
-            }
+            onPress={goToRankings}
+            activeOpacity={0.8}
           >
 
             <Text style={styles.backButtonText}>
@@ -988,150 +827,341 @@ const styles =
     container: {
       flex: 1,
       backgroundColor: '#050505',
-      padding: 20,
+      paddingHorizontal: 20,
     },
 
-    title: {
+
+    // ==================================================
+    // HEADER
+    // ==================================================
+
+    header: {
+      paddingTop: 45,
+      marginBottom: 20,
+    },
+
+    brand: {
       color: '#00ff66',
-      fontSize: 32,
-      fontWeight: 'bold',
-      textAlign: 'center',
-      marginTop: 30,
+      fontSize: 25,
+      fontWeight: '900',
+      letterSpacing: -1,
     },
 
-    category: {
-      color: '#aaaaaa',
-      fontSize: 18,
+    brandLine: {
+      width: 32,
+      height: 3,
+      backgroundColor: '#00ff66',
+      marginTop: 7,
+      borderRadius: 2,
+    },
+
+
+    // ==================================================
+    // TITLE
+    // ==================================================
+
+    headline: {
+      color: '#ffffff',
+      fontSize: 34,
+      fontWeight: '900',
+      letterSpacing: -1.5,
       textAlign: 'center',
+    },
+
+    categoryPill: {
+      alignSelf: 'center',
+      backgroundColor: '#0d0d0d',
+      borderWidth: 1,
+      borderColor: '#00ff66',
+      borderRadius: 20,
+      paddingHorizontal: 15,
+      paddingVertical: 7,
       marginTop: 10,
-      marginBottom: 5,
     },
 
-    h2hCount: {
+    categoryText: {
       color: '#00ff66',
-      fontSize: 15,
-      fontWeight: 'bold',
+      fontSize: 11,
+      fontWeight: '900',
+      letterSpacing: 1.2,
+    },
+
+
+    // ==================================================
+    // PROGRESS
+    // ==================================================
+
+    progressContainer: {
+      marginTop: 25,
+      marginBottom: 20,
+    },
+
+    progressLabel: {
+      color: '#666666',
+      fontSize: 10,
+      fontWeight: '900',
+      letterSpacing: 1.2,
+    },
+
+    progressCount: {
+      color: '#ffffff',
+      fontSize: 13,
+      fontWeight: '800',
+      position: 'absolute',
+      right: 0,
+      top: -3,
+    },
+
+    progressTrack: {
+      height: 5,
+      backgroundColor: '#1b1b1b',
+      borderRadius: 5,
+      marginTop: 9,
+      overflow: 'hidden',
+    },
+
+    progressFill: {
+      height: '100%',
+      backgroundColor: '#00ff66',
+      borderRadius: 5,
+    },
+
+
+    // ==================================================
+    // MAIN
+    // ==================================================
+
+    mainContent: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingBottom: 25,
+    },
+
+    question: {
+      color: '#ffffff',
+      fontSize: 27,
+      fontWeight: '900',
       textAlign: 'center',
+      letterSpacing: -0.5,
+    },
+
+    instruction: {
+      color: '#666666',
+      fontSize: 14,
+      textAlign: 'center',
+      marginTop: 7,
       marginBottom: 25,
     },
 
-    comparisonBox: {
-      backgroundColor: '#111111',
-      borderRadius: 15,
-      padding: 20,
+
+    // ==================================================
+    // PLAYER CARDS
+    // ==================================================
+
+    playersRow: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
     },
 
-    playerSide: {
+    playerColumn: {
       flex: 1,
+    },
+
+    playerCard: {
+      backgroundColor: '#111111',
+      borderRadius: 18,
+      borderWidth: 1,
+      borderColor: '#252525',
+      minHeight: 220,
+      padding: 15,
       alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    playerInitial: {
+      width: 62,
+      height: 62,
+      borderRadius: 31,
+      backgroundColor: '#00ff66',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 14,
+    },
+
+    initialText: {
+      color: '#000000',
+      fontSize: 27,
+      fontWeight: '900',
     },
 
     playerName: {
+      color: '#ffffff',
+      fontSize: 18,
+      fontWeight: '900',
+      textAlign: 'center',
+    },
+
+    playerPosition: {
+      color: '#666666',
+      fontSize: 11,
+      fontWeight: '700',
+      textAlign: 'center',
+      marginTop: 6,
+      textTransform: 'uppercase',
+    },
+
+    chooseBadge: {
+      borderWidth: 1,
+      borderColor: '#00ff66',
+      borderRadius: 8,
+      paddingHorizontal: 10,
+      paddingVertical: 6,
+      marginTop: 16,
+    },
+
+    chooseText: {
       color: '#00ff66',
-      fontSize: 22,
-      fontWeight: 'bold',
-      textAlign: 'center',
+      fontSize: 9,
+      fontWeight: '900',
+      letterSpacing: 1,
     },
 
-    info: {
-      color: '#aaaaaa',
+
+    // ==================================================
+    // VS
+    // ==================================================
+
+    vsContainer: {
+      width: 42,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    vsLine: {
+      width: 1,
+      height: 25,
+      backgroundColor: '#252525',
+    },
+
+    vsCircle: {
+      width: 38,
+      height: 38,
+      borderRadius: 19,
+      backgroundColor: '#050505',
+      borderWidth: 1,
+      borderColor: '#333333',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginVertical: 7,
+    },
+
+    vsText: {
+      color: '#ffffff',
+      fontSize: 11,
+      fontWeight: '900',
+    },
+
+
+    // ==================================================
+    // DRAW
+    // ==================================================
+
+    drawButton: {
+      backgroundColor: '#0d0d0d',
+      borderWidth: 1,
+      borderColor: '#292929',
+      borderRadius: 13,
+      paddingVertical: 15,
+      alignItems: 'center',
+      marginTop: 16,
+    },
+
+    drawTitle: {
+      color: '#dddddd',
       fontSize: 14,
-      marginTop: 7,
-      textAlign: 'center',
+      fontWeight: '900',
     },
 
-    vs: {
-      color: 'white',
-      fontSize: 22,
-      fontWeight: 'bold',
-      marginHorizontal: 15,
+    drawSubtitle: {
+      color: '#555555',
+      fontSize: 11,
+      marginTop: 4,
     },
 
-    question: {
-      color: 'white',
-      fontSize: 21,
-      fontWeight: 'bold',
+
+    // ==================================================
+    // FOOTER
+    // ==================================================
+
+    footerHint: {
+      color: '#444444',
+      fontSize: 11,
+      lineHeight: 17,
       textAlign: 'center',
-      marginTop: 35,
+      marginTop: 15,
+      paddingHorizontal: 20,
+    },
+
+
+    // ==================================================
+    // STATUS
+    // ==================================================
+
+    statusContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 20,
+    },
+
+    statusIcon: {
+      width: 70,
+      height: 70,
+      borderRadius: 35,
+      backgroundColor: '#00ff66',
+      alignItems: 'center',
+      justifyContent: 'center',
       marginBottom: 20,
     },
 
-    playerButton: {
-      backgroundColor: '#111111',
-      borderWidth: 2,
-      borderColor: '#00ff66',
-      borderRadius: 15,
-      padding: 20,
-      marginBottom: 15,
-      alignItems: 'center',
+    statusIconText: {
+      color: '#000000',
+      fontSize: 32,
+      fontWeight: '900',
     },
 
-    buttonText: {
-      color: '#00ff66',
-      fontSize: 23,
-      fontWeight: 'bold',
+    statusTitle: {
+      color: '#ffffff',
+      fontSize: 25,
+      fontWeight: '900',
+      textAlign: 'center',
     },
 
-    buttonSubtext: {
-      color: '#888888',
+    statusText: {
+      color: '#777777',
       fontSize: 14,
-      marginTop: 5,
-    },
-
-    drawButton: {
-      backgroundColor: '#111111',
-      borderWidth: 2,
-      borderColor: '#777777',
-      borderRadius: 15,
-      padding: 18,
-      marginBottom: 15,
-      alignItems: 'center',
-    },
-
-    drawText: {
-      color: '#dddddd',
-      fontSize: 18,
-      fontWeight: 'bold',
-    },
-
-    noOpponentBox: {
-      backgroundColor: '#111111',
-      borderRadius: 15,
-      padding: 25,
-      marginTop: 30,
-      alignItems: 'center',
-    },
-
-    noOpponentTitle: {
-      color: '#00ff66',
-      fontSize: 21,
-      fontWeight: 'bold',
+      lineHeight: 21,
       textAlign: 'center',
-    },
-
-    noOpponentText: {
-      color: '#999999',
-      fontSize: 15,
-      textAlign: 'center',
-      marginTop: 12,
-      lineHeight: 22,
-      textAlign: 'center',
+      marginTop: 10,
+      maxWidth: 320,
     },
 
     backButton: {
       backgroundColor: '#00ff66',
       borderRadius: 12,
-      padding: 15,
+      paddingVertical: 15,
+      paddingHorizontal: 25,
       marginTop: 25,
     },
 
     backButtonText: {
       color: '#000000',
-      fontSize: 15,
-      fontWeight: 'bold',
+      fontSize: 13,
+      fontWeight: '900',
+      letterSpacing: 0.4,
     },
 
   });
+
+

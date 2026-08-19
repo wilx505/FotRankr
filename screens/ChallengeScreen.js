@@ -16,6 +16,16 @@ export default function ChallengeScreen({
     player,
   } = route.params || {};
 
+
+  // --------------------------------------------------
+  // BACK
+  // --------------------------------------------------
+
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+
   // --------------------------------------------------
   // BUILD OPPONENT LIST
   // --------------------------------------------------
@@ -42,6 +52,7 @@ export default function ChallengeScreen({
         b.rating - a.rating
     );
 
+
   // --------------------------------------------------
   // SELECT OPPONENT
   // --------------------------------------------------
@@ -63,6 +74,7 @@ export default function ChallengeScreen({
     );
   };
 
+
   // --------------------------------------------------
   // RANK ANOTHER PLAYER
   // --------------------------------------------------
@@ -74,230 +86,318 @@ export default function ChallengeScreen({
     );
   };
 
+
   // --------------------------------------------------
   // SCREEN
   // --------------------------------------------------
 
   return (
 
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.content}
-    >
+    <View style={styles.screen}>
 
-      <Text style={styles.title}>
-        CHALLENGE
-      </Text>
+      {/* -------------------------------------------- */}
+      {/* TOP BAR */}
+      {/* -------------------------------------------- */}
 
-      <Text style={styles.subtitle}>
-        Who do you want {player?.name}
-        {' '}to challenge?
-      </Text>
+      <View style={styles.topBar}>
 
-      {/* ALL PLAYERS */}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={goBack}
+          activeOpacity={0.7}
+        >
 
-      <Text style={styles.positionLabel}>
-        ALL RANKED PLAYERS
-      </Text>
+          <Text style={styles.backArrow}>
+            ‹
+          </Text>
 
-      {/* SELECTED PLAYER */}
+        </TouchableOpacity>
 
-      <View style={styles.selectedBox}>
 
-        <Text style={styles.selectedLabel}>
-          YOUR PLAYER
+        <Text style={styles.topBarTitle}>
+          CHALLENGE
         </Text>
 
-        <Text style={styles.selectedName}>
-          {player?.name}
-        </Text>
 
-        <Text style={styles.selectedScore}>
-          {typeof player?.score === 'number'
-            ? player.score.toFixed(2)
-            : '—'}
-          {' '} / 10
-        </Text>
+        <View style={styles.topBarSpacer} />
 
       </View>
 
-      {/* OPPONENTS */}
 
-      {opponents.length === 0 ? (
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
 
-        <View style={styles.emptyBox}>
+        <Text style={styles.subtitle}>
+          Who do you want {player?.name}
+          {' '}to challenge?
+        </Text>
 
-          <Text style={styles.emptyTitle}>
-            NO RANKED PLAYERS
+
+        {/* ALL PLAYERS */}
+
+        <Text style={styles.positionLabel}>
+          ALL RANKED PLAYERS
+        </Text>
+
+
+        {/* SELECTED PLAYER */}
+
+        <View style={styles.selectedBox}>
+
+          <Text style={styles.selectedLabel}>
+            YOUR PLAYER
           </Text>
 
-          <Text style={styles.emptyText}>
-            You need to rank another player
-            before {player?.name} can challenge them.
+          <Text style={styles.selectedName}>
+            {player?.name}
           </Text>
 
-          <TouchableOpacity
-            style={styles.rankButton}
-            onPress={
-              rankAnotherPlayer
-            }
-          >
-
-            <Text style={styles.rankButtonText}>
-              + RANK ANOTHER PLAYER
-            </Text>
-
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() =>
-              navigation.goBack()
-            }
-          >
-
-            <Text style={styles.backButtonText}>
-              GO BACK
-            </Text>
-
-          </TouchableOpacity>
+          <Text style={styles.selectedScore}>
+            {typeof player?.score === 'number'
+              ? player.score.toFixed(2)
+              : '—'}
+            {' '} / 10
+          </Text>
 
         </View>
 
-      ) : (
 
-        opponents.map(
-          (opponent, index) => (
+        {/* OPPONENTS */}
+
+        {opponents.length === 0 ? (
+
+          <View style={styles.emptyBox}>
+
+            <Text style={styles.emptyTitle}>
+              NO RANKED PLAYERS
+            </Text>
+
+            <Text style={styles.emptyText}>
+              You need to rank another player
+              before {player?.name} can challenge them.
+            </Text>
 
             <TouchableOpacity
-              key={opponent.id}
-              style={styles.playerBox}
-              onPress={() =>
-                selectOpponent(
-                  opponent
-                )
+              style={styles.rankButton}
+              onPress={
+                rankAnotherPlayer
               }
-              activeOpacity={0.75}
+              activeOpacity={0.8}
             >
 
-              {/* RANK */}
-
-              <View
-                style={styles.rankCircle}
-              >
-
-                <Text
-                  style={styles.rankNumber}
-                >
-                  {index + 1}
-                </Text>
-
-              </View>
-
-              {/* PLAYER */}
-
-              <View
-                style={styles.playerDetails}
-              >
-
-                <Text
-                  style={styles.playerName}
-                >
-                  {opponent.name}
-                </Text>
-
-                <Text
-                  style={styles.info}
-                >
-                  {opponent.nation}
-                  {' '}•{' '}
-                  {opponent.specificPosition ||
-                    opponent.position}
-                </Text>
-
-                <Text
-                  style={styles.category}
-                >
-                  {opponent.category}
-                </Text>
-
-              </View>
-
-              {/* SCORE */}
-
-              <View
-                style={styles.scoreBox}
-              >
-
-                <Text
-                  style={styles.score}
-                >
-                  {typeof opponent.score ===
-                  'number'
-                    ? opponent.score.toFixed(2)
-                    : '—'}
-                </Text>
-
-                <Text
-                  style={styles.outOf}
-                >
-                  / 10
-                </Text>
-
-              </View>
+              <Text style={styles.rankButtonText}>
+                + RANK ANOTHER PLAYER
+              </Text>
 
             </TouchableOpacity>
 
+          </View>
+
+        ) : (
+
+          opponents.map(
+            (opponent, index) => (
+
+              <TouchableOpacity
+                key={opponent.id}
+                style={styles.playerBox}
+                onPress={() =>
+                  selectOpponent(
+                    opponent
+                  )
+                }
+                activeOpacity={0.75}
+              >
+
+                {/* RANK */}
+
+                <View
+                  style={styles.rankCircle}
+                >
+
+                  <Text
+                    style={styles.rankNumber}
+                  >
+                    {index + 1}
+                  </Text>
+
+                </View>
+
+
+                {/* PLAYER */}
+
+                <View
+                  style={styles.playerDetails}
+                >
+
+                  <Text
+                    style={styles.playerName}
+                  >
+                    {opponent.name}
+                  </Text>
+
+                  <Text
+                    style={styles.info}
+                  >
+                    {opponent.nation}
+                    {' '}•{' '}
+                    {opponent.specificPosition ||
+                      opponent.position}
+                  </Text>
+
+                  <Text
+                    style={styles.category}
+                  >
+                    {opponent.category}
+                  </Text>
+
+                </View>
+
+
+                {/* SCORE */}
+
+                <View
+                  style={styles.scoreBox}
+                >
+
+                  <Text
+                    style={styles.score}
+                  >
+                    {typeof opponent.score ===
+                    'number'
+                      ? opponent.score.toFixed(2)
+                      : '—'}
+                  </Text>
+
+                  <Text
+                    style={styles.outOf}
+                  >
+                    / 10
+                  </Text>
+
+                </View>
+
+
+                {/* ARROW */}
+
+                <Text style={styles.playerArrow}>
+                  ›
+                </Text>
+
+              </TouchableOpacity>
+
+            )
           )
-        )
 
-      )}
+        )}
 
-    </ScrollView>
+      </ScrollView>
+
+    </View>
 
   );
 
 }
 
+
+// ======================================================
+// STYLES
+// ======================================================
+
 const styles = StyleSheet.create({
+
+  screen: {
+    flex: 1,
+    backgroundColor: '#050505',
+  },
+
+
+  // ==================================================
+  // TOP BAR
+  // ==================================================
+
+  topBar: {
+    height: 78,
+    paddingHorizontal: 20,
+    paddingTop: 35,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#050505',
+  },
+
+  backButton: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: '#111111',
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  backArrow: {
+    color: '#00ff66',
+    fontSize: 32,
+    fontWeight: '300',
+    lineHeight: 34,
+    marginTop: -2,
+  },
+
+  topBarTitle: {
+    color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '900',
+    letterSpacing: 1.5,
+  },
+
+  topBarSpacer: {
+    width: 42,
+  },
+
+
+  // ==================================================
+  // SCREEN
+  // ==================================================
 
   container: {
     flex: 1,
-    backgroundColor: '#050505',
-    padding: 20,
   },
 
   content: {
+    paddingHorizontal: 20,
     paddingBottom: 40,
   },
 
-  title: {
-    color: '#00ff66',
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 30,
-  },
 
   subtitle: {
-    color: '#aaaaaa',
-    fontSize: 16,
+    color: '#777777',
+    fontSize: 15,
     textAlign: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: 8,
+    marginBottom: 22,
   },
 
   positionLabel: {
     color: '#00ff66',
-    fontSize: 13,
+    fontSize: 11,
     fontWeight: '900',
     textAlign: 'center',
-    marginBottom: 20,
-    letterSpacing: 1,
+    marginBottom: 15,
+    letterSpacing: 1.4,
   },
 
+
+  // ==================================================
+  // SELECTED PLAYER
+  // ==================================================
+
   selectedBox: {
-    backgroundColor: '#111111',
+    backgroundColor: '#0f0f0f',
     borderRadius: 15,
     padding: 20,
     alignItems: 'center',
@@ -307,9 +407,10 @@ const styles = StyleSheet.create({
   },
 
   selectedLabel: {
-    color: '#777777',
-    fontSize: 11,
+    color: '#555555',
+    fontSize: 10,
     fontWeight: '900',
+    letterSpacing: 1.2,
     marginBottom: 8,
   },
 
@@ -321,20 +422,25 @@ const styles = StyleSheet.create({
 
   selectedScore: {
     color: '#ffffff',
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '800',
     marginTop: 8,
   },
 
+
+  // ==================================================
+  // PLAYERS
+  // ==================================================
+
   playerBox: {
-    backgroundColor: '#111111',
+    backgroundColor: '#0f0f0f',
     borderRadius: 14,
-    padding: 16,
-    marginBottom: 10,
+    padding: 14,
+    marginBottom: 8,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#1d1d1d',
+    borderColor: '#1b1b1b',
   },
 
   rankCircle: {
@@ -344,17 +450,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#00ff66',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 14,
+    marginRight: 13,
   },
 
   rankNumber: {
     color: '#000000',
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '900',
   },
 
   playerDetails: {
     flex: 1,
+    minWidth: 0,
   },
 
   playerName: {
@@ -371,14 +478,14 @@ const styles = StyleSheet.create({
 
   category: {
     color: '#00ff66',
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '800',
     marginTop: 5,
   },
 
   scoreBox: {
     alignItems: 'flex-end',
-    marginLeft: 10,
+    marginLeft: 8,
   },
 
   score: {
@@ -388,12 +495,24 @@ const styles = StyleSheet.create({
   },
 
   outOf: {
-    color: '#666666',
-    fontSize: 11,
+    color: '#555555',
+    fontSize: 10,
   },
 
+  playerArrow: {
+    color: '#333333',
+    fontSize: 25,
+    fontWeight: '300',
+    marginLeft: 8,
+  },
+
+
+  // ==================================================
+  // EMPTY
+  // ==================================================
+
   emptyBox: {
-    backgroundColor: '#111111',
+    backgroundColor: '#0f0f0f',
     borderRadius: 15,
     padding: 25,
     alignItems: 'center',
@@ -403,7 +522,7 @@ const styles = StyleSheet.create({
 
   emptyTitle: {
     color: '#ffffff',
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '900',
     textAlign: 'center',
   },
@@ -432,19 +551,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  backButton: {
-    backgroundColor: '#1d1d1d',
-    borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    width: '100%',
-    marginTop: 10,
-  },
-
-  backButtonText: {
-    color: '#aaaaaa',
-    fontSize: 13,
-    fontWeight: '900',
-  },
-
 });
+

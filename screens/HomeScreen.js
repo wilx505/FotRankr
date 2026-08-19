@@ -97,12 +97,6 @@ export default function HomeScreen({
           The World.
         </Text>
 
-        <Text style={styles.heroSubtitle}>
-          Your rankings. Your opinions.
-          {'\n'}
-          No algorithms. Just football.
-        </Text>
-
         <TouchableOpacity
           style={styles.startButton}
           onPress={startRanking}

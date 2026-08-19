@@ -157,8 +157,7 @@ export default function RankingsScreen({
                   {
                     player,
 
-                    positionFilter:
-                      showPosition,
+                   
                   }
                 )
               }
@@ -278,9 +277,12 @@ export default function RankingsScreen({
 
       <TouchableOpacity
         style={styles.rankMoreButton}
-        onPress={() =>
-          navigation.navigate('Search')
-        }
+   onPress={() =>
+  navigation.navigate('MainTabs', {
+    screen: 'Search',
+  })
+}
+        
       >
 
         <Text

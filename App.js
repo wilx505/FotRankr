@@ -35,13 +35,29 @@ const Stack =
 const Tab =
   createBottomTabNavigator();
 
-const DATA_VERSION = '34';
+const DATA_VERSION = '53';
 
 export default function App() {
 
-  const [myRankings, setMyRankings] = useState([]);
-  const [comparisonHistory, setComparisonHistory] = useState([]);
-  const [dataLoaded, setDataLoaded] = useState(false);
+ const [myRankings, setMyRankings] = useState([]);
+
+const [comparisonHistory, setComparisonHistory] = useState([]);
+
+// =====================================================
+// SMART H2H SESSION
+// =====================================================
+// Tracks the current automatic placement session.
+// This is separate from permanent comparisonHistory.
+//
+// A session:
+// - starts when a player is newly ranked
+// - can contain a maximum of 6 H2Hs
+// - prevents opponents repeating within the session
+// - ends after the player has been placed
+// =====================================================
+const [smartH2HSession, setSmartH2HSession] = useState(null);
+
+const [dataLoaded, setDataLoaded] = useState(false);
 
   // =====================================================
   // LOAD DATA
@@ -253,8 +269,50 @@ const handleCategoryChanged = ({
     category
   );
 
-
   setMyRankings(previousRankings => {
+
+    const existingPlayer =
+      previousRankings.find(
+        rankedPlayer =>
+          String(rankedPlayer.id) ===
+          String(player.id)
+      );
+
+    // ==================================================
+    // SAME CATEGORY = DO NOTHING
+    // ==================================================
+    //
+    // If the player is already in this category,
+    // we MUST NOT recreate them.
+    //
+    // This preserves:
+    // - rating
+    // - score
+    // - H2H history
+    // - automatic H2H count
+    //
+    // ==================================================
+
+    if (
+      existingPlayer &&
+      existingPlayer.category === category
+    ) {
+
+      console.log(
+        'FOTRANKR SAME CATEGORY: Keeping existing player',
+        existingPlayer.name,
+        category,
+        existingPlayer.rating,
+        existingPlayer.score
+      );
+
+      return previousRankings;
+    }
+
+
+    // ==================================================
+    // GENUINE CATEGORY CHANGE
+    // ==================================================
 
     return previousRankings.map(
       rankedPlayer => {
@@ -268,13 +326,13 @@ const handleCategoryChanged = ({
 
 
         // Create a completely fresh ranking
-        // for the new category.
+        // for the NEW category.
+
         const newCategoryPlayer =
           createPlayer(
             player,
             category
           );
-
 
         console.log(
           'FOTRANKR NEW CATEGORY PLAYER:',
@@ -302,12 +360,7 @@ const handleCategoryChanged = ({
 
 
   // ==================================================
-  // REMOVE ONLY THIS PLAYER'S OLD H2H HISTORY
-  // FOR THE PURPOSES OF THE NEW CATEGORY.
-  //
-  // We don't delete the history globally because
-  // the old category history may still be useful.
-  // The HeadToHead screen already checks category.
+  // ONLY REMOVE HISTORY FOR A GENUINE CATEGORY CHANGE
   // ==================================================
 
   setComparisonHistory(
@@ -320,7 +373,6 @@ const handleCategoryChanged = ({
             String(player.id)
       )
   );
-
 };
 
 // =====================================================
@@ -333,6 +385,7 @@ const handleHeadToHeadResult = ({
   category,
   result,
   opponentIsRanked,
+  manualChallenge,
 }) => {
 
   console.log(
@@ -420,12 +473,13 @@ const handleHeadToHeadResult = ({
     // RUN RANKING ENGINE
     // --------------------------------------------------
 
-    const resultData =
-      comparePlayers(
-        playerA,
-        playerB,
-        result
-      );
+ const resultData =
+  comparePlayers(
+    playerA,
+    playerB,
+    result,
+    manualChallenge !== true
+  );
 
 
     const updatedA =

@@ -3,42 +3,91 @@
 FOTRANKR RANKING ENGINE
 ============================================================
 
-THE BIG CHANGE
+THE BIG CHANGE — FINAL STRUCTURE
 
-Categories are H2H pools.
+Every automatic ranking pool is defined by THREE things:
 
-A player's category determines who they can initially
-face in a head-to-head.
+1. CATEGORY
+2. BROAD POSITION
+3. SPECIFIC POSITION
 
-However, ratings are GLOBAL.
+Example:
+
+Elite
+Attack
+Right Winger
 
 Therefore:
 
-Very Good players can rise into Elite.
-Elite players can fall into Very Good.
-Very Good players can fall into Good.
+Mohamed Salah
+Elite + Attack + Right Winger
+
+can ONLY be automatically compared with:
+
+Elite + Attack + Right Winger
+
+He cannot automatically face:
+
+Elite + Attack + Striker
+Elite + Midfielder + Central Midfielder
+Very Good + Attack + Right Winger
+Good + Attack + Right Winger
+
 etc.
 
-When a player crosses into a new category, their next
-automatic H2H process begins inside that new category.
+============================================================
 
-The 6 H2H limit applies to the automatic H2H process
-within the player's CURRENT category.
+IMPORTANT
 
-Challenge mode is NOT capped by this limit.
+Ratings are GLOBAL.
+
+Therefore a player can move between categories.
+
+Example:
+
+Very Good
+8.50
+
+wins H2Hs
+
+8.98
+still Very Good
+
+then:
+
+9.01
+→ Elite
+
+When a player enters a new category, their automatic
+H2H process starts again inside that new category.
+
+============================================================
+
+AUTOMATIC H2H LIMIT
+
+Maximum 6 automatic H2Hs per player per category.
+
+Challenge mode is NOT restricted by this limit.
 
 ============================================================
 */
 
+
+// ============================================================
+// SETTINGS
+// ============================================================
+
 const SETTINGS = {
 
   minRating: 0,
+
   maxRating: 1000,
 
   startingUncertainty: 350,
+
   minimumUncertainty: 45,
 
-  maxMovementPerH2H: 90,
+  maxMovementPerH2H: 5,
 
   maximumH2Hs: 6,
 
@@ -48,20 +97,6 @@ const SETTINGS = {
 // ============================================================
 // CATEGORY STARTING RATINGS
 // ============================================================
-//
-// These are GLOBAL ratings.
-//
-// They correspond approximately to:
-//
-// Legendary = 9.90
-// Elite     = 9.39
-// Very Good = 8.50
-// Good      = 7.00
-// OK        = 5.00
-// Bad       = 2.00
-//
-// A player can move across these boundaries.
-//
 
 const CATEGORY_STARTING_RATINGS = {
 
@@ -136,85 +171,25 @@ function categoryToStartingRating(category) {
 // ============================================================
 // RATING → SCORE
 // ============================================================
-//
-// GLOBAL SCALE.
-//
-// 0    = 0.00
-// 200  = 2.00
-// 500  = 5.00
-// 700  = 7.00
-// 850  = 8.50
-// 939  = 9.39
-// 980  = 9.80
-// 1000 = 10.00
-//
-// This is what allows players to cross categories.
-//
 
-function ratingToScore(
-  rating,
-  category = null
-) {
+function ratingToScore(rating) {
+
+  const numericRating =
+    Number(rating);
 
   const safeRating =
-    Math.max(
-      0,
-      Math.min(
-        1000,
-        Number(rating) || 0
-      )
-    );
-
-  const categoryRanges = {
-
-    Legendary: {
-      minimum: 9.80,
-      maximum: 10.00,
-    },
-
-    Elite: {
-      minimum: 9.00,
-      maximum: 9.79,
-    },
-
-    'Very Good': {
-      minimum: 8.00,
-      maximum: 8.99,
-    },
-
-    Good: {
-      minimum: 6.00,
-      maximum: 7.99,
-    },
-
-    OK: {
-      minimum: 4.00,
-      maximum: 5.99,
-    },
-
-    Bad: {
-      minimum: 0.00,
-      maximum: 3.99,
-    },
-
-  };
-
-  const range =
-    categoryRanges[category] ||
-    categoryRanges.OK;
-
-  const score =
-    range.minimum +
-    (
-      safeRating / 1000
-    ) *
-    (
-      range.maximum -
-      range.minimum
-    );
+    Number.isFinite(numericRating)
+      ? Math.max(
+          SETTINGS.minRating,
+          Math.min(
+            SETTINGS.maxRating,
+            numericRating
+          )
+        )
+      : 0;
 
   return Number(
-    score.toFixed(2)
+    (safeRating / 100).toFixed(2)
   );
 
 }
@@ -226,23 +201,26 @@ function ratingToScore(
 
 function scoreToCategory(score) {
 
-  if (score >= 9.80) {
+  const numericScore =
+    Number(score) || 0;
+
+  if (numericScore >= 9.80) {
     return 'Legendary';
   }
 
-  if (score >= 9.00) {
+  if (numericScore >= 9.00) {
     return 'Elite';
   }
 
-  if (score >= 8.00) {
+  if (numericScore >= 8.00) {
     return 'Very Good';
   }
 
-  if (score >= 6.00) {
+  if (numericScore >= 6.00) {
     return 'Good';
   }
 
-  if (score >= 4.00) {
+  if (numericScore >= 4.00) {
     return 'OK';
   }
 
@@ -254,34 +232,28 @@ function scoreToCategory(score) {
 // ============================================================
 // ADD DISPLAY INFORMATION
 // ============================================================
-//
-// IMPORTANT:
-//
-// Category is now determined from the GLOBAL rating.
-//
-// This means category can change after an H2H.
-//
 
 function addDisplayInformation(player) {
 
-  const category =
-    player.category ||
-    player.initialCategory ||
-    'OK';
+  if (!player) {
+    return null;
+  }
 
   const score =
     ratingToScore(
-      player.rating,
-      category
+      player.rating
     );
+
+  const category =
+    scoreToCategory(score);
 
   return {
 
     ...player,
 
-    category,
-
     score,
+
+    category,
 
   };
 
@@ -297,18 +269,22 @@ function createPlayer(
   startingCategory = null
 ) {
 
+  if (!player) {
+    throw new Error(
+      'FotRankr createPlayer: player is undefined.'
+    );
+  }
+
   const category =
     startingCategory ||
     player.category ||
     player.initialCategory ||
     'OK';
 
-
   const startingRating =
     categoryToStartingRating(
       category
     );
-
 
   const newPlayer = {
 
@@ -316,7 +292,7 @@ function createPlayer(
       player.id,
 
     name:
-      player.name,
+      player.name || 'Unknown Player',
 
     nation:
       player.nation || '',
@@ -326,6 +302,9 @@ function createPlayer(
 
     specificPosition:
       player.specificPosition || '',
+
+    club:
+      player.club || '',
 
     rating:
       startingRating,
@@ -356,16 +335,22 @@ function createPlayer(
     isRanked:
       true,
 
-    // Number of automatic H2Hs in the
-    // player's CURRENT category.
+    /*
+    Number of automatic H2Hs performed
+    in the player's CURRENT category.
+    */
+
     h2hCount:
       0,
+
+    /*
+    Category in which h2hCount applies.
+    */
 
     h2hCategory:
       category,
 
   };
-
 
   return addDisplayInformation(
     newPlayer
@@ -390,7 +375,6 @@ function normaliseResult(result) {
 
   }
 
-
   if (
     result === 'comparison' ||
     result === 'B' ||
@@ -400,7 +384,6 @@ function normaliseResult(result) {
     return 'B';
 
   }
-
 
   if (
     result === 'equal' ||
@@ -412,9 +395,52 @@ function normaliseResult(result) {
 
   }
 
-
   throw new Error(
-    `Unknown comparison result: ${result}`
+    `FotRankr: Unknown comparison result: ${result}`
+  );
+
+}
+
+
+// ============================================================
+// SAME RANKING POOL
+// ============================================================
+//
+// This is extremely important.
+//
+// Two players belong to the same automatic H2H pool ONLY
+// if all three match:
+//
+// CATEGORY
+// POSITION
+// SPECIFIC POSITION
+//
+// ============================================================
+
+function sameRankingPool(
+  playerA,
+  playerB
+) {
+
+  if (!playerA || !playerB) {
+    return false;
+  }
+
+  return (
+
+    playerA.category ===
+    playerB.category
+
+    &&
+
+    playerA.position ===
+    playerB.position
+
+    &&
+
+    playerA.specificPosition ===
+    playerB.specificPosition
+
   );
 
 }
@@ -424,12 +450,17 @@ function normaliseResult(result) {
 // FIND BEST OPPONENT
 // ============================================================
 //
-// Same CURRENT category only.
+// Automatic H2Hs only.
 //
-// This is the automatic H2H process.
+// Pool:
 //
-// Challenge mode can bypass this limit.
+// CATEGORY
+// +
+// POSITION
+// +
+// SPECIFIC POSITION
 //
+// ============================================================
 
 function findBestOpponent(
   targetPlayer,
@@ -437,96 +468,226 @@ function findBestOpponent(
   comparisonHistory = []
 ) {
 
+  if (!targetPlayer) {
+
+    console.log(
+      'FOTRANKR: No target player.'
+    );
+
+    return null;
+
+  }
+
   if (
-    !targetPlayer ||
-    !opponents ||
+    !Array.isArray(opponents) ||
     opponents.length === 0
   ) {
+
+    console.log(
+      'FOTRANKR: No opponents available.'
+    );
 
     return null;
 
   }
 
 
+  // ----------------------------------------------------------
+  // TARGET POOL
+  // ----------------------------------------------------------
+
   const targetCategory =
     targetPlayer.category;
 
+  const targetPosition =
+    targetPlayer.position;
+    console.log(
+  'FOTRANKR H2H TARGET:',
+  {
+    player: targetPlayer.name,
+    category: targetCategory,
+    position: targetPlayer.position,
+    specificPosition: targetPlayer.specificPosition,
+    h2hCount: targetPlayer.h2hCount,
+  }
+);
+
+  const targetSpecificPosition =
+    targetPlayer.specificPosition;
+
+
+  /*
+  Safety check.
+
+  A player without these fields should not enter
+  an automatic H2H pool.
+  */
+
+  if (
+    !targetCategory ||
+    !targetPosition ||
+    !targetSpecificPosition
+  ) {
+
+    console.log(
+      'FOTRANKR: Target player missing ranking-pool data.',
+      {
+        player:
+          targetPlayer.name,
+
+        category:
+          targetCategory,
+
+        position:
+          targetPosition,
+
+        specificPosition:
+          targetSpecificPosition,
+      }
+    );
+
+    return null;
+
+  }
+
 
   // ----------------------------------------------------------
-  // H2H COUNT
+  // CURRENT AUTOMATIC H2H COUNT
   // ----------------------------------------------------------
 
   const currentH2HCount =
-    targetPlayer.h2hCategory === targetCategory
-      ? (targetPlayer.h2hCount ?? 0)
+
+    targetPlayer.h2hCategory ===
+    targetCategory
+
+      ? (
+          targetPlayer.h2hCount ??
+          0
+        )
+
       : 0;
 
+
+  // ----------------------------------------------------------
+  // SIX H2H LIMIT
+  // ----------------------------------------------------------
 
   if (
     currentH2HCount >=
     SETTINGS.maximumH2Hs
   ) {
 
+    console.log(
+      'FOTRANKR: Automatic H2H limit reached.',
+      {
+        player:
+          targetPlayer.name,
+
+        category:
+          targetCategory,
+
+        h2hCount:
+          currentH2HCount,
+      }
+    );
+
     return null;
 
   }
 
 
   // ----------------------------------------------------------
-  // FIND EXISTING H2Hs
+  // BUILD SET OF ALREADY USED OPPONENTS
   // ----------------------------------------------------------
 
   const alreadyCompared =
     new Set();
 
 
-  comparisonHistory.forEach(
-    comparison => {
+  if (
+    Array.isArray(comparisonHistory)
+  ) {
 
-      if (
-        comparison.category !==
-        targetCategory
-      ) {
+    comparisonHistory.forEach(
+      comparison => {
 
-        return;
+        if (!comparison) {
+          return;
+        }
+
+        if (
+          comparison.category !==
+          targetCategory
+        ) {
+
+          return;
+
+        }
+
+
+        const playerA =
+          String(
+            comparison.playerA
+          );
+
+        const playerB =
+          String(
+            comparison.playerB
+          );
+
+        const targetId =
+          String(
+            targetPlayer.id
+          );
+
+
+        if (
+          playerA ===
+          targetId
+        ) {
+
+          alreadyCompared.add(
+            playerB
+          );
+
+        }
+
+
+        if (
+          playerB ===
+          targetId
+        ) {
+
+          alreadyCompared.add(
+            playerA
+          );
+
+        }
 
       }
+    );
 
-
-      if (
-        String(comparison.playerA) ===
-        String(targetPlayer.id)
-      ) {
-
-        alreadyCompared.add(
-          String(comparison.playerB)
-        );
-
-      }
-
-
-      if (
-        String(comparison.playerB) ===
-        String(targetPlayer.id)
-      ) {
-
-        alreadyCompared.add(
-          String(comparison.playerA)
-        );
-
-      }
-
-    }
-  );
+  }
 
 
   // ----------------------------------------------------------
-  // SAME CATEGORY ONLY
+  // BUILD VALID OPPONENT POOL
+  // ----------------------------------------------------------
+  //
+  // ALL THREE RESTRICTIONS ARE REQUIRED.
+  //
   // ----------------------------------------------------------
 
   const availableOpponents =
     opponents.filter(
       opponent => {
+
+        if (!opponent) {
+          return false;
+        }
+
+
+        // Cannot play yourself.
 
         if (
           String(opponent.id) ===
@@ -538,15 +699,7 @@ function findBestOpponent(
         }
 
 
-        if (
-          opponent.category !==
-          targetCategory
-        ) {
-
-          return false;
-
-        }
-
+        // Must be ranked.
 
         if (
           opponent.isRanked !== true &&
@@ -557,6 +710,52 @@ function findBestOpponent(
 
         }
 
+
+        // ----------------------------------------------------
+        // CATEGORY
+        // ----------------------------------------------------
+
+        if (
+          opponent.category !==
+          targetCategory
+        ) {
+
+          return false;
+
+        }
+
+
+        // ----------------------------------------------------
+        // BROAD POSITION
+        // ----------------------------------------------------
+
+        if (
+          opponent.position !==
+          targetPosition
+        ) {
+
+          return false;
+
+        }
+
+
+        // ----------------------------------------------------
+        // SPECIFIC POSITION
+        // ----------------------------------------------------
+
+        if (
+          opponent.specificPosition !==
+          targetSpecificPosition
+        ) {
+
+          return false;
+
+        }
+
+
+        // ----------------------------------------------------
+        // NO REPEAT H2H
+        // ----------------------------------------------------
 
         if (
           alreadyCompared.has(
@@ -575,9 +774,30 @@ function findBestOpponent(
     );
 
 
+  // ----------------------------------------------------------
+  // NO VALID OPPONENTS
+  // ----------------------------------------------------------
+
   if (
     availableOpponents.length === 0
   ) {
+
+    console.log(
+      'FOTRANKR: No valid same-pool opponent.',
+      {
+        player:
+          targetPlayer.name,
+
+        category:
+          targetCategory,
+
+        position:
+          targetPosition,
+
+        specificPosition:
+          targetSpecificPosition,
+      }
+    );
 
     return null;
 
@@ -585,36 +805,100 @@ function findBestOpponent(
 
 
   // ----------------------------------------------------------
-  // CLOSEST PLAYER
+  // FIND BEST RATING MATCH
+  // ----------------------------------------------------------
+  //
+  // We want an opponent whose rating is close to the
+  // target's rating.
+  //
+  // As the database grows, this becomes increasingly useful
+  // because there will be more players around every rating.
+  //
   // ----------------------------------------------------------
 
-  availableOpponents.sort(
-    (a, b) => {
+  const targetRating =
+    Number(
+      targetPlayer.rating
+    ) || 500;
 
-      const differenceA =
-        Math.abs(
-          (a.rating ?? 500) -
-          (targetPlayer.rating ?? 500)
+
+  const sortedOpponents =
+    [...availableOpponents].sort(
+      (a, b) => {
+
+        const ratingA =
+          Number(a.rating) || 500;
+
+        const ratingB =
+          Number(b.rating) || 500;
+
+        const distanceA =
+          Math.abs(
+            ratingA -
+            targetRating
+          );
+
+        const distanceB =
+          Math.abs(
+            ratingB -
+            targetRating
+          );
+
+        return (
+          distanceA -
+          distanceB
         );
 
-
-      const differenceB =
-        Math.abs(
-          (b.rating ?? 500) -
-          (targetPlayer.rating ?? 500)
-        );
+      }
+    );
 
 
-      return (
-        differenceA -
-        differenceB
-      );
+  // ----------------------------------------------------------
+  // SELECT CLOSEST INFORMATIVE OPPONENT
+  // ----------------------------------------------------------
 
+  const selectedOpponent =
+    sortedOpponents[0];
+
+
+  if (!selectedOpponent) {
+    return null;
+  }
+
+
+  console.log(
+    'FOTRANKR AUTOMATIC H2H SELECTED:',
+    {
+      player:
+        targetPlayer.name,
+
+      opponent:
+        selectedOpponent.name,
+
+      category:
+        targetCategory,
+
+      position:
+        targetPosition,
+
+      specificPosition:
+        targetSpecificPosition,
+
+      targetRating,
+
+      opponentRating:
+        selectedOpponent.rating,
+
+      h2hCount:
+        currentH2HCount,
+
+      remainingOpponents:
+        availableOpponents.length,
     }
   );
 
 
-  return availableOpponents[0];
+  return selectedOpponent;
 
 }
 
@@ -626,11 +910,9 @@ function findBestOpponent(
 function updateUncertainty(player) {
 
   const comparisons =
-    player.comparisons ?? 0;
-
+    player?.comparisons ?? 0;
 
   let reduction;
-
 
   if (
     comparisons < 2
@@ -639,6 +921,7 @@ function updateUncertainty(player) {
     reduction = 0.82;
 
   }
+
   else if (
     comparisons < 4
   ) {
@@ -646,6 +929,7 @@ function updateUncertainty(player) {
     reduction = 0.88;
 
   }
+
   else {
 
     reduction = 0.93;
@@ -654,13 +938,15 @@ function updateUncertainty(player) {
 
 
   return Math.max(
+
     SETTINGS.minimumUncertainty,
 
     (
-      player.uncertainty ??
+      player?.uncertainty ??
       SETTINGS.startingUncertainty
     ) *
     reduction
+
   );
 
 }
@@ -670,50 +956,92 @@ function updateUncertainty(player) {
 // COMPARE PLAYERS
 // ============================================================
 //
-// Players MUST begin in the same category.
+// IMPORTANT:
 //
-// AFTER the comparison, however, either player can
-// cross into another category.
+// Automatic H2H:
 //
+// CATEGORY must match
+// POSITION must match
+// SPECIFIC POSITION must match
+//
+// Manual Challenge:
+//
+// Can compare regardless of pool.
+//
+// ============================================================
 
 function comparePlayers(
   playerA,
   playerB,
-  result
+  result,
+  isAutomatic = true
 ) {
 
-  const outcome =
-    normaliseResult(result);
-
-
-  const categoryA =
-    playerA.category;
-
-  const categoryB =
-    playerB.category;
-
-
-  // ----------------------------------------------------------
-  // SAFETY CHECK
-  // ----------------------------------------------------------
-
-  if (
-    categoryA !==
-    categoryB
-  ) {
+  if (!playerA) {
 
     throw new Error(
-      `FotRankr H2H blocked: ${playerA.name} is ${categoryA} but ${playerB.name} is ${categoryB}.`
+      'FotRankr comparePlayers: playerA is undefined.'
+    );
+
+  }
+
+  if (!playerB) {
+
+    throw new Error(
+      'FotRankr comparePlayers: playerB is undefined.'
     );
 
   }
 
 
+  const outcome =
+    normaliseResult(result);
+
+
+  // ----------------------------------------------------------
+  // AUTOMATIC POOL SAFETY
+  // ----------------------------------------------------------
+
+  if (
+    isAutomatic &&
+    !sameRankingPool(
+      playerA,
+      playerB
+    )
+  ) {
+
+    throw new Error(
+
+      `FotRankr H2H blocked: ` +
+
+      `${playerA.name} (${playerA.category} / ` +
+      `${playerA.position} / ` +
+      `${playerA.specificPosition}) ` +
+
+      `cannot automatically face ` +
+
+      `${playerB.name} (${playerB.category} / ` +
+      `${playerB.position} / ` +
+      `${playerB.specificPosition}).`
+
+    );
+
+  }
+
+
+  // ----------------------------------------------------------
+  // RATINGS
+  // ----------------------------------------------------------
+
   const ratingA =
-    playerA.rating ?? 500;
+    Number(
+      playerA.rating
+    ) || 500;
 
   const ratingB =
-    playerB.rating ?? 500;
+    Number(
+      playerB.rating
+    ) || 500;
 
 
   const comparisonsA =
@@ -724,7 +1052,7 @@ function comparePlayers(
 
 
   // ----------------------------------------------------------
-  // MOVEMENT
+  // EXPERIENCE
   // ----------------------------------------------------------
 
   const experienceFactorA =
@@ -749,11 +1077,27 @@ function comparePlayers(
     );
 
 
-  const baseMovement =
-    SETTINGS.maxMovementPerH2H;
+  // ----------------------------------------------------------
+  // BASE MOVEMENT
+  // ----------------------------------------------------------
 
+  const baseMovementA =
+    getTopEndMovement(
+      ratingA
+    );
+
+  const baseMovementB =
+    getTopEndMovement(
+      ratingB
+    );
+
+
+  // ----------------------------------------------------------
+  // RESULT MOVEMENT
+  // ----------------------------------------------------------
 
   let changeA = 0;
+
   let changeB = 0;
 
 
@@ -765,42 +1109,27 @@ function comparePlayers(
     outcome === 'DRAW'
   ) {
 
-    const difference =
-      Math.abs(
-        ratingA -
+    const averageRating =
+      (
+        ratingA +
         ratingB
-      );
+      ) / 2;
 
 
-    const adjustment =
-      Math.min(
-        25,
-        difference *
-        0.08
-      );
+    changeA =
+      (
+        averageRating -
+        ratingA
+      ) *
+      0.5;
 
 
-    if (
-      ratingA >
-      ratingB
-    ) {
-
-      changeA =
-        -adjustment;
-
-      changeB =
-        adjustment;
-
-    }
-    else {
-
-      changeA =
-        adjustment;
-
-      changeB =
-        -adjustment;
-
-    }
+    changeB =
+      (
+        averageRating -
+        ratingB
+      ) *
+      0.5;
 
   }
 
@@ -813,13 +1142,24 @@ function comparePlayers(
     outcome === 'A'
   ) {
 
+    const multiplier =
+      getMovementMultiplier(
+        ratingA,
+        ratingB,
+        true
+      );
+
+
     changeA =
-      baseMovement *
+      baseMovementA *
+      multiplier *
       experienceFactorA;
+
 
     changeB =
       -(
-        baseMovement *
+        baseMovementB *
+        multiplier *
         experienceFactorB
       );
 
@@ -832,24 +1172,35 @@ function comparePlayers(
 
   else {
 
+    const multiplier =
+      getMovementMultiplier(
+        ratingA,
+        ratingB,
+        false
+      );
+
+
     changeA =
       -(
-        baseMovement *
+        baseMovementA *
+        multiplier *
         experienceFactorA
       );
 
+
     changeB =
-      baseMovement *
+      baseMovementB *
+      multiplier *
       experienceFactorB;
 
   }
 
 
   // ----------------------------------------------------------
-  // GLOBAL RATING
+  // NEW GLOBAL RATINGS
   // ----------------------------------------------------------
 
-  const newRatingA =
+  let finalRatingA =
     Math.max(
       SETTINGS.minRating,
       Math.min(
@@ -860,7 +1211,7 @@ function comparePlayers(
     );
 
 
-  const newRatingB =
+  let finalRatingB =
     Math.max(
       SETTINGS.minRating,
       Math.min(
@@ -870,59 +1221,132 @@ function comparePlayers(
       )
     );
 
+
   // ----------------------------------------------------------
-  // CATEGORY IS LOCKED
+  // WINNER MUST FINISH ABOVE LOSER
   // ----------------------------------------------------------
   //
-  // The user selected the category.
+  // This keeps the actual ranking order consistent with
+  // the user's decision.
   //
-  // H2Hs only move players INSIDE that category.
-  // An H2H can never change a player's category.
-  //
+  // ----------------------------------------------------------
+
+  if (
+    outcome === 'A' &&
+    finalRatingA <= finalRatingB
+  ) {
+
+    finalRatingA =
+      Math.min(
+        SETTINGS.maxRating,
+        finalRatingB + 0.01
+      );
+
+  }
+
+
+  if (
+    outcome === 'B' &&
+    finalRatingB <= finalRatingA
+  ) {
+
+    finalRatingB =
+      Math.min(
+        SETTINGS.maxRating,
+        finalRatingA + 0.01
+      );
+
+  }
+
+
+  // ----------------------------------------------------------
+  // NEW SCORES
   // ----------------------------------------------------------
 
   const scoreA =
-  ratingToScore(
-    newRatingA
-  );
+    ratingToScore(
+      finalRatingA
+    );
 
-const scoreB =
-  ratingToScore(
-    newRatingB
-  );
+  const scoreB =
+    ratingToScore(
+      finalRatingB
+    );
 
-const newCategoryA =
-  scoreToCategory(
-    scoreA
-  );
-
-const newCategoryB =
-  scoreToCategory(
-    scoreB
-  );
 
   // ----------------------------------------------------------
-  // CATEGORY H2H COUNTER
+  // NEW CATEGORIES
+  // ----------------------------------------------------------
+
+  const newCategoryA =
+    scoreToCategory(
+      scoreA
+    );
+
+  const newCategoryB =
+    scoreToCategory(
+      scoreB
+    );
+
+
+  // ----------------------------------------------------------
+  // H2H COUNTERS
   // ----------------------------------------------------------
   //
-  // Count the H2H within the player's current category.
+  // If a player remains in the same category:
   //
-  // IMPORTANT:
-  // This counter is for the automatic ranking process.
-  // It does NOT cap the Challenge feature.
+  //     count + 1
+  //
+  // If a player moves category:
+  //
+  //     count resets to 1
   //
   // ----------------------------------------------------------
 
   const newH2HCountA =
-    (playerA.h2hCount ?? 0) + 1;
+    isAutomatic
+
+      ? (
+          playerA.h2hCategory ===
+          newCategoryA
+
+            ? (
+                playerA.h2hCount ??
+                0
+              ) + 1
+
+            : 1
+        )
+
+      : (
+          playerA.h2hCount ??
+          0
+        );
+
 
   const newH2HCountB =
-    (playerB.h2hCount ?? 0) + 1;
- 
+    isAutomatic
+
+      ? (
+          playerB.h2hCategory ===
+          newCategoryB
+
+            ? (
+                playerB.h2hCount ??
+                0
+              ) + 1
+
+            : 1
+        )
+
+      : (
+          playerB.h2hCount ??
+          0
+        );
 
 
   // ----------------------------------------------------------
-  // UPDATED A
+  // UPDATED PLAYER A
   // ----------------------------------------------------------
 
   const updatedA = {
@@ -930,10 +1354,13 @@ const newCategoryB =
     ...playerA,
 
     rating:
-      newRatingA,
+      finalRatingA,
 
     category:
       newCategoryA,
+
+    score:
+      scoreA,
 
     uncertainty:
       updateUncertainty(
@@ -950,7 +1377,10 @@ const newCategoryB =
       newCategoryA,
 
     wins:
-      (playerA.wins ?? 0) +
+      (
+        playerA.wins ??
+        0
+      ) +
       (
         outcome === 'A'
           ? 1
@@ -958,7 +1388,10 @@ const newCategoryB =
       ),
 
     losses:
-      (playerA.losses ?? 0) +
+      (
+        playerA.losses ??
+        0
+      ) +
       (
         outcome === 'B'
           ? 1
@@ -966,7 +1399,10 @@ const newCategoryB =
       ),
 
     draws:
-      (playerA.draws ?? 0) +
+      (
+        playerA.draws ??
+        0
+      ) +
       (
         outcome === 'DRAW'
           ? 1
@@ -977,7 +1413,7 @@ const newCategoryB =
 
 
   // ----------------------------------------------------------
-  // UPDATED B
+  // UPDATED PLAYER B
   // ----------------------------------------------------------
 
   const updatedB = {
@@ -985,10 +1421,13 @@ const newCategoryB =
     ...playerB,
 
     rating:
-      newRatingB,
+      finalRatingB,
 
     category:
       newCategoryB,
+
+    score:
+      scoreB,
 
     uncertainty:
       updateUncertainty(
@@ -1005,7 +1444,10 @@ const newCategoryB =
       newCategoryB,
 
     wins:
-      (playerB.wins ?? 0) +
+      (
+        playerB.wins ??
+        0
+      ) +
       (
         outcome === 'B'
           ? 1
@@ -1013,7 +1455,10 @@ const newCategoryB =
       ),
 
     losses:
-      (playerB.losses ?? 0) +
+      (
+        playerB.losses ??
+        0
+      ) +
       (
         outcome === 'A'
           ? 1
@@ -1021,7 +1466,10 @@ const newCategoryB =
       ),
 
     draws:
-      (playerB.draws ?? 0) +
+      (
+        playerB.draws ??
+        0
+      ) +
       (
         outcome === 'DRAW'
           ? 1
@@ -1030,6 +1478,10 @@ const newCategoryB =
 
   };
 
+
+  // ----------------------------------------------------------
+  // RETURN
+  // ----------------------------------------------------------
 
   return {
 
@@ -1049,13 +1501,165 @@ const newCategoryB =
 
 
 // ============================================================
+// MOVEMENT MULTIPLIER
+// ============================================================
+//
+// Unexpected results cause greater movement.
+//
+// Expected results cause smaller movement.
+//
+// ============================================================
+
+function getMovementMultiplier(
+  ratingA,
+  ratingB,
+  winnerIsA
+) {
+
+  const gap =
+    Math.abs(
+      ratingA -
+      ratingB
+    );
+
+
+  let expectedMultiplier;
+
+
+  if (
+    gap <= 25
+  ) {
+
+    expectedMultiplier = 1;
+
+  }
+
+  else if (
+    gap <= 75
+  ) {
+
+    expectedMultiplier = 0.90;
+
+  }
+
+  else if (
+    gap <= 150
+  ) {
+
+    expectedMultiplier = 0.75;
+
+  }
+
+  else if (
+    gap <= 250
+  ) {
+
+    expectedMultiplier = 0.60;
+
+  }
+
+  else {
+
+    expectedMultiplier = 0.50;
+
+  }
+
+
+  const higherRatedPlayerIsA =
+    ratingA >= ratingB;
+
+
+  const expectedWinnerIsA =
+    higherRatedPlayerIsA;
+
+
+  const expectedResult =
+    winnerIsA ===
+    expectedWinnerIsA;
+
+
+  if (
+    expectedResult
+  ) {
+
+    return expectedMultiplier;
+
+  }
+
+
+  return Math.min(
+    1.5,
+    2 -
+    expectedMultiplier
+  );
+
+}
+
+
+// ============================================================
+// TOP-END MOVEMENT
+// ============================================================
+
+function getTopEndMovement(
+  rating
+) {
+
+  if (
+    rating >= 998
+  ) {
+
+    return 0.25;
+
+  }
+
+
+  if (
+    rating >= 990
+  ) {
+
+    return 1;
+
+  }
+
+
+  if (
+    rating >= 980
+  ) {
+
+    return 2;
+
+  }
+
+
+  if (
+    rating >= 950
+  ) {
+
+    return 3;
+
+  }
+
+
+  return SETTINGS.maxMovementPerH2H;
+
+}
+
+
+// ============================================================
 // CONFIDENCE
 // ============================================================
 
-function getConfidence(player) {
+function getConfidence(
+  player
+) {
+
+  if (!player) {
+    return 0;
+  }
+
 
   const uncertainty =
-    player?.uncertainty ??
+    player.uncertainty ??
     SETTINGS.startingUncertainty;
 
 
@@ -1068,13 +1672,19 @@ function getConfidence(player) {
 
 
   return Math.max(
+
     0,
+
     Math.min(
+
       1,
+
       Number(
         confidence.toFixed(2)
       )
+
     )
+
   );
 
 }
@@ -1084,21 +1694,40 @@ function getConfidence(player) {
 // SHOULD CONTINUE COMPARING
 // ============================================================
 
-function shouldContinueComparing(player) {
+function shouldContinueComparing(
+  player
+) {
 
   if (!player) {
     return false;
   }
 
 
-  if (player.isAnchor) {
+  /*
+  Anchors establish the starting point and don't need
+  automatic calibration.
+  */
+
+  if (
+    player.isAnchor
+  ) {
+
     return false;
+
   }
 
 
   return (
-    (player.h2hCount ?? 0) <
+
+    (
+      player.h2hCount ??
+      0
+    )
+
+    <
+
     SETTINGS.maximumH2Hs
+
   );
 
 }

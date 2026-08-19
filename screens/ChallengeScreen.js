@@ -12,10 +12,12 @@ export default function ChallengeScreen({
   myRankings,
 }) {
 
-  const {
-    player,
-    positionFilter = 'All',
-  } = route.params || {};
+ const {
+  player,
+} = route.params || {};
+
+const positionFilter =
+  player?.position || 'All';
 
   console.log(
     'FOTRANKR POSITION FILTER:',
@@ -61,11 +63,6 @@ export default function ChallengeScreen({
     ranking =>
       String(ranking.id) !==
       String(player.id)
-  )
-  .filter(
-    ranking =>
-      ranking.category ===
-      player.category
   )
   .filter(matchesPosition)
   .sort(

@@ -5,7 +5,7 @@ import {
   View,
 } from 'react-native';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   createPlayer,
@@ -15,6 +15,10 @@ import {
 import players from '../players';
 
 
+// ======================================================
+// HEAD TO HEAD
+// ======================================================
+
 export default function HeadToHead({
   route,
   navigation,
@@ -23,16 +27,35 @@ export default function HeadToHead({
   comparisonHistory,
 }) {
 
-  const [resultSubmitted, setResultSubmitted] =
-    useState(false);
-
-
   const {
     player,
     category,
     comparisonPlayer: manualOpponent,
     manualChallenge,
+    smartH2H,
+    startSmartH2H,
   } = route.params || {};
+
+
+  // ==================================================
+  // CONSTANTS
+  // ==================================================
+
+  const MAX_H2HS = 6;
+
+
+  // ==================================================
+  // STATE
+  // ==================================================
+
+  const [resultSubmitted, setResultSubmitted] =
+    useState(false);
+
+  const [comparisonPlayer, setComparisonPlayer] =
+    useState(null);
+
+  const [sessionFinished, setSessionFinished] =
+    useState(false);
 
 
   // ==================================================
@@ -81,10 +104,17 @@ export default function HeadToHead({
             existingTarget.draws ??
             0,
 
+          h2hCount:
+            existingTarget.h2hCount ??
+            0,
+
+          h2hCategory:
+            existingTarget.h2hCategory ??
+            category,
+
           isRanked:
             true,
         }
-
       : {
           ...createPlayer(
             player,
@@ -99,40 +129,20 @@ export default function HeadToHead({
 
 
   // ==================================================
-  // CATEGORY H2H HISTORY
+  // CURRENT AUTOMATIC H2H COUNT
   // ==================================================
 
-  const categoryHistory =
-    (comparisonHistory || []).filter(
-      comparison => {
-
-        const involvesPlayer =
-          String(comparison.playerA) ===
-            String(targetPlayer.id) ||
-          String(comparison.playerB) ===
-            String(targetPlayer.id);
-
-        const sameCategory =
-          comparison.category ===
-          category;
-
-        return (
-          involvesPlayer &&
-          sameCategory
-        );
-
-      }
-    );
-
-
- const automaticComparisonCount =
-  targetPlayer.h2hCategory === category
-    ? (targetPlayer.h2hCount ?? 0)
-    : 0;
+  const automaticComparisonCount =
+    targetPlayer.h2hCategory === category
+      ? (
+          targetPlayer.h2hCount ??
+          0
+        )
+      : 0;
 
 
   console.log(
-    'FOTRANKR BIG CHANGE:',
+    'FOTRANKR SMART H2H STATE:',
     {
       player:
         targetPlayer.name,
@@ -143,24 +153,27 @@ export default function HeadToHead({
         automaticComparisonCount,
 
       maximumH2Hs:
-        6,
+        MAX_H2HS,
+
+      resultSubmitted,
+
+      sessionFinished,
     }
   );
 
 
   // ==================================================
-  // BUILD SAME-CATEGORY OPPONENT POOL
+  // BUILD OPPONENT POOL
   // ==================================================
 
-  const rankedOpponents =
-    players
+  const buildOpponentPool = () => {
 
+    return players
       .filter(
         databasePlayer =>
           String(databasePlayer.id) !==
           String(targetPlayer.id)
       )
-
       .map(
         databasePlayer => {
 
@@ -181,9 +194,7 @@ export default function HeadToHead({
           if (existingRanking) {
 
             return {
-
               ...databasePlayer,
-
               ...existingRanking,
 
               category:
@@ -212,7 +223,6 @@ export default function HeadToHead({
 
               isRanked:
                 true,
-
             };
 
           }
@@ -223,7 +233,6 @@ export default function HeadToHead({
           // ------------------------------------------
 
           return {
-
             ...databasePlayer,
 
             category:
@@ -246,91 +255,327 @@ export default function HeadToHead({
 
             isRanked:
               false,
-
           };
 
         }
       );
 
+  };
+
 
   // ==================================================
-  // AUTOMATIC OPPONENT
+  // CATEGORY HISTORY
   // ==================================================
 
- const automaticOpponent =
-  manualChallenge
+  const categoryHistory =
+    (comparisonHistory || []).filter(
+      comparison => {
 
-    ? null
+        if (!comparison) {
+          return false;
+        }
 
-    : automaticComparisonCount >= 6
+        const involvesPlayer =
+          String(comparison.playerA) ===
+            String(targetPlayer.id) ||
+          String(comparison.playerB) ===
+            String(targetPlayer.id);
 
-      ? null
+        const sameCategory =
+          comparison.category ===
+          category;
 
-      : findBestOpponent(
-          targetPlayer,
-          rankedOpponents,
-          comparisonHistory || []
+        return (
+          involvesPlayer &&
+          sameCategory
+        );
+
+      }
+    );
+
+
+  // ==================================================
+  // FIND AUTOMATIC OPPONENT
+  // ==================================================
+
+  const getNextAutomaticOpponent = () => {
+
+    // ----------------------------------------------
+    // SIX H2H LIMIT
+    // ----------------------------------------------
+
+    if (
+      automaticComparisonCount >=
+      MAX_H2HS
+    ) {
+
+      console.log(
+        'FOTRANKR SMART H2H: Six H2Hs completed.',
+        {
+          player:
+            targetPlayer.name,
+
+          h2hCount:
+            automaticComparisonCount,
+        }
+      );
+
+      return null;
+    }
+
+
+    // ----------------------------------------------
+    // BUILD POOL
+    // ----------------------------------------------
+
+    const opponentPool =
+      buildOpponentPool();
+
+
+    // ----------------------------------------------
+    // ASK ENGINE FOR BEST OPPONENT
+    // ----------------------------------------------
+
+    const opponent =
+      findBestOpponent(
+        targetPlayer,
+        opponentPool,
+        comparisonHistory || []
+      );
+
+
+    if (!opponent) {
+
+      console.log(
+        'FOTRANKR SMART H2H: No valid opponent available.',
+        {
+          player:
+            targetPlayer.name,
+
+          category,
+
+          position:
+            targetPlayer.position,
+
+          specificPosition:
+            targetPlayer.specificPosition,
+        }
+      );
+
+      return null;
+    }
+
+
+    console.log(
+      'FOTRANKR SMART H2H: NEXT OPPONENT',
+      {
+        player:
+          targetPlayer.name,
+
+        opponent:
+          opponent.name,
+
+        targetRating:
+          targetPlayer.rating,
+
+        opponentRating:
+          opponent.rating,
+
+        h2hNumber:
+          automaticComparisonCount + 1,
+
+        maximumH2Hs:
+          MAX_H2HS,
+      }
+    );
+
+
+    return opponent;
+
+  };
+
+
+  // ==================================================
+  // START AUTOMATIC H2H SESSION
+  // ==================================================
+
+  useEffect(() => {
+
+    // ----------------------------------------------
+    // MANUAL CHALLENGE
+    // ----------------------------------------------
+
+    if (
+      manualChallenge === true
+    ) {
+
+      if (
+        !manualOpponent
+      ) {
+
+        setComparisonPlayer(
+          null
+        );
+
+        setSessionFinished(
+          true
+        );
+
+        return;
+      }
+
+
+      const manualRankedPlayer =
+        (myRankings || []).find(
+          ranking =>
+            String(ranking.id) ===
+              String(manualOpponent.id) ||
+            String(ranking.playerId) ===
+              String(manualOpponent.id)
         );
 
 
-  // ==================================================
-  // MANUAL CHALLENGE
-  // ==================================================
+     if (
+  manualRankedPlayer &&
+  manualRankedPlayer.position ===
+    targetPlayer.position &&
+  manualRankedPlayer.specificPosition ===
+    targetPlayer.specificPosition
+) {
 
-  let comparisonPlayer =
-    automaticOpponent;
+        setComparisonPlayer({
+          ...manualOpponent,
+          ...manualRankedPlayer,
+
+          category,
+
+          isRanked:
+            true,
+        });
+
+        setSessionFinished(
+          false
+        );
+
+      } else {
+
+        console.log(
+          'FOTRANKR MANUAL H2H: Invalid opponent.'
+        );
+
+        setComparisonPlayer(
+          null
+        );
+
+        setSessionFinished(
+          true
+        );
+      }
+
+      return;
+    }
 
 
-  if (
-    manualChallenge &&
-    manualOpponent
-  ) {
-
-    const manualRankedPlayer =
-      (myRankings || []).find(
-        ranking =>
-          String(ranking.id) ===
-            String(manualOpponent.id) ||
-          String(ranking.playerId) ===
-            String(manualOpponent.id)
-      );
-
-
-    // Manual challenge is only allowed
-    // inside the same category.
+    // ----------------------------------------------
+    // AUTOMATIC / SMART H2H
+    // ----------------------------------------------
 
     if (
-      manualRankedPlayer &&
-      manualRankedPlayer.category ===
-        category
+      smartH2H !== true &&
+      startSmartH2H !== true
     ) {
 
-      comparisonPlayer = {
-
-        ...manualOpponent,
-
-        ...manualRankedPlayer,
-
-        category,
-
-        isRanked:
-          true,
-
-      };
-
+      return;
     }
-    else {
 
-      comparisonPlayer =
-        null;
 
-      console.log(
-        'FOTRANKR BIG CHANGE: Manual H2H blocked because opponent is not in the same category.'
+    // ----------------------------------------------
+    // IF RESULT WAS JUST SUBMITTED
+    // WAIT FOR APP STATE TO UPDATE
+    // ----------------------------------------------
+
+    if (
+      resultSubmitted
+    ) {
+
+      return;
+    }
+
+
+    // ----------------------------------------------
+    // ALREADY FINISHED
+    // ----------------------------------------------
+
+    if (
+      sessionFinished
+    ) {
+
+      return;
+    }
+
+
+    // ----------------------------------------------
+    // SIX H2H LIMIT
+    // ----------------------------------------------
+
+    if (
+      automaticComparisonCount >=
+      MAX_H2HS
+    ) {
+
+      setComparisonPlayer(
+        null
       );
 
+      setSessionFinished(
+        true
+      );
+
+      return;
     }
 
-  }
+
+    // ----------------------------------------------
+    // FIND NEXT OPPONENT
+    // ----------------------------------------------
+
+    const nextOpponent =
+      getNextAutomaticOpponent();
+
+
+    if (!nextOpponent) {
+
+      setComparisonPlayer(
+        null
+      );
+
+      setSessionFinished(
+        true
+      );
+
+      return;
+    }
+
+
+    setComparisonPlayer(
+      nextOpponent
+    );
+
+
+  }, [
+    targetPlayer.id,
+    targetPlayer.h2hCount,
+    targetPlayer.h2hCategory,
+    category,
+    comparisonHistory,
+    myRankings,
+    resultSubmitted,
+    sessionFinished,
+    manualChallenge,
+    manualOpponent,
+    smartH2H,
+    startSmartH2H,
+  ]);
 
 
   // ==================================================
@@ -340,39 +585,49 @@ export default function HeadToHead({
   const updateScores =
     result => {
 
-      // Prevent duplicate submissions.
+      // ----------------------------------------------
+      // PREVENT DOUBLE TAP
+      // ----------------------------------------------
 
-      if (resultSubmitted) {
+      if (
+        resultSubmitted
+      ) {
 
         console.log(
-          'FOTRANKR: Result already submitted. Ignoring duplicate tap.'
+          'FOTRANKR: Result already submitted.'
         );
 
         return;
-
       }
 
 
-      // Make sure a valid opponent exists.
+      // ----------------------------------------------
+      // VALIDATE OPPONENT
+      // ----------------------------------------------
 
-      if (!comparisonPlayer) {
+      if (
+        !comparisonPlayer
+      ) {
 
         console.log(
-          'FOTRANKR BIG CHANGE: No valid same-category opponent.'
+          'FOTRANKR SMART H2H: No opponent.'
         );
 
         return;
-
       }
 
 
-      // Lock this H2H immediately.
+      // ----------------------------------------------
+      // LOCK CURRENT H2H
+      // ----------------------------------------------
 
-      setResultSubmitted(true);
+      setResultSubmitted(
+        true
+      );
 
 
       console.log(
-        'FOTRANKR BIG CHANGE RESULT:',
+        'FOTRANKR SMART H2H RESULT:',
         {
           player:
             targetPlayer.name,
@@ -384,11 +639,21 @@ export default function HeadToHead({
 
           result,
 
+          h2hNumber:
+            automaticComparisonCount + 1,
+
+          maximumH2Hs:
+            MAX_H2HS,
+
           opponentIsRanked:
             comparisonPlayer.isRanked,
         }
       );
 
+
+      // ----------------------------------------------
+      // SEND RESULT TO APP
+      // ----------------------------------------------
 
       onResult({
 
@@ -404,9 +669,140 @@ export default function HeadToHead({
         opponentIsRanked:
           comparisonPlayer.isRanked === true,
 
+        manualChallenge:
+          manualChallenge === true,
       });
 
     };
+
+
+  // ==================================================
+  // AFTER RESULT
+  // ==================================================
+
+  useEffect(() => {
+
+    if (
+      !resultSubmitted
+    ) {
+
+      return;
+    }
+
+
+    // ----------------------------------------------
+    // MANUAL CHALLENGE
+    // ----------------------------------------------
+
+    if (
+      manualChallenge === true
+    ) {
+
+      return;
+    }
+
+
+    // ----------------------------------------------
+    // WAIT FOR UPDATED PLAYER DATA
+    //
+    // App.js updates myRankings.
+    // Once h2hCount changes, this component
+    // will re-render and the next opponent
+    // will be selected by the effect above.
+    // ----------------------------------------------
+
+    const updatedPlayer =
+      (myRankings || []).find(
+        ranking =>
+          String(ranking.id) ===
+          String(player?.id)
+      );
+
+
+    if (!updatedPlayer) {
+      return;
+    }
+
+
+    const updatedCount =
+      updatedPlayer.h2hCategory === category
+        ? (
+            updatedPlayer.h2hCount ??
+            0
+          )
+        : 0;
+
+
+    console.log(
+      'FOTRANKR SMART H2H: RESULT PROCESSED',
+      {
+        player:
+          updatedPlayer.name,
+
+        h2hCount:
+          updatedCount,
+
+        maximumH2Hs:
+          MAX_H2HS,
+      }
+    );
+
+
+    // ----------------------------------------------
+    // SIX COMPLETED
+    // ----------------------------------------------
+
+    if (
+      updatedCount >=
+      MAX_H2HS
+    ) {
+
+      console.log(
+        'FOTRANKR SMART H2H: SESSION COMPLETE.'
+      );
+
+      setComparisonPlayer(
+        null
+      );
+
+      setSessionFinished(
+        true
+      );
+
+      return;
+    }
+
+
+    // ----------------------------------------------
+    // PREPARE NEXT H2H
+    // ----------------------------------------------
+
+    setComparisonPlayer(
+      null
+    );
+
+    setResultSubmitted(
+      false
+    );
+
+  }, [
+    myRankings,
+    resultSubmitted,
+    category,
+    manualChallenge,
+    player?.id,
+  ]);
+
+
+  // ==================================================
+  // H2H NUMBER FOR DISPLAY
+  // ==================================================
+
+  const currentH2HNumber =
+    Math.min(
+      automaticComparisonCount + 1,
+      MAX_H2HS
+    );
 
 
   // ==================================================
@@ -427,12 +823,16 @@ export default function HeadToHead({
       </Text>
 
 
-      <Text style={styles.h2hCount}>
-        {automaticComparisonCount} / 6
-      </Text>
+      {manualChallenge !== true && (
+        <Text style={styles.h2hCount}>
+          H2H {currentH2HNumber} OF {MAX_H2HS}
+        </Text>
+      )}
 
 
-      {comparisonPlayer && !resultSubmitted ? (
+      {comparisonPlayer &&
+      !resultSubmitted &&
+      !sessionFinished ? (
 
         <>
 
@@ -535,16 +935,34 @@ export default function HeadToHead({
         <View style={styles.noOpponentBox}>
 
           <Text style={styles.noOpponentTitle}>
+
             {resultSubmitted
-              ? 'H2H SUBMITTED'
-              : 'NO MORE H2Hs AVAILABLE'}
+              ? 'PROCESSING H2H...'
+              : sessionFinished
+                ? (
+                    automaticComparisonCount >=
+                    MAX_H2HS
+                      ? 'SMART H2H COMPLETE'
+                      : 'NO MORE H2Hs AVAILABLE'
+                  )
+                : 'LOADING H2H...'}
+
           </Text>
 
 
           <Text style={styles.noOpponentText}>
+
             {resultSubmitted
-              ? 'Your comparison has been recorded.'
-              : 'This player has completed the available same-category head-to-head comparisons, or there are no other ranked players in this category yet.'}
+              ? 'Calculating the next comparison...'
+              : sessionFinished
+                ? (
+                    automaticComparisonCount >=
+                    MAX_H2HS
+                      ? `FotRankr has completed ${MAX_H2HS} intelligent comparisons for ${targetPlayer.name}.`
+                      : 'There are no more eligible same-category opponents available.'
+                  )
+                : 'Finding the most useful comparison...'}
+
           </Text>
 
 
@@ -717,6 +1135,7 @@ const styles =
       textAlign: 'center',
       marginTop: 12,
       lineHeight: 22,
+      textAlign: 'center',
     },
 
     backButton: {

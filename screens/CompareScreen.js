@@ -12,6 +12,7 @@ export default function CompareScreen({
   onAnchorSelected,
   onCategoryChanged,
   isPlayerRanked,
+  myRankings,
 }) {
 
   const { player } = route.params;
@@ -72,11 +73,19 @@ export default function CompareScreen({
         category: category.name,
       });
 
+      // Start the Smart H2H process.
+      //
+      // HeadToHead will determine whether a valid
+      // opponent exists and will control the
+      // six-comparison session.
+
       navigation.navigate(
         'HeadToHead',
         {
           player,
           category: category.name,
+          smartH2H: true,
+          startSmartH2H: true,
         }
       );
 
@@ -93,11 +102,16 @@ export default function CompareScreen({
       category: category.name,
     });
 
+    // A genuine category change starts a fresh
+    // Smart H2H placement process.
+
     navigation.navigate(
       'HeadToHead',
       {
         player,
         category: category.name,
+        smartH2H: true,
+        startSmartH2H: true,
       }
     );
 

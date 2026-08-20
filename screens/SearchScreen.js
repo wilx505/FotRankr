@@ -33,18 +33,17 @@ export default function SearchScreen({
         );
 
   const selectPlayer = (
-    player
-  ) => {
+  player
+) => {
 
-    navigation.navigate(
-      'Compare',
-      {
-        player,
-        isFirstPlayer: true,
-      }
-    );
+  navigation.navigate(
+    'Compare',
+    {
+      player,
+    }
+  );
 
-  };
+};
 
   const getPositionLabel = (
     player

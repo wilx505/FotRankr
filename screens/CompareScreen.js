@@ -1,21 +1,28 @@
 import {
+  useState,
+} from 'react';
+import {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-
 export default function CompareScreen({
   route,
   navigation,
   onAnchorSelected,
   onCategoryChanged,
+  onRankAgain,
   isPlayerRanked,
   myRankings,
+
 }) {
 
   const { player } = route.params;
+  const [rankingReset, setRankingReset] =
+  useState(false);
 
 
   // ==================================================
@@ -66,6 +73,36 @@ export default function CompareScreen({
       number: '06',
     },
   ];
+  // ==================================================
+// RANK AGAIN
+// ==================================================
+
+const rankAgain = () => {
+
+  Alert.alert(
+    'Rank again?',
+    `This will completely reset ${player.name}'s current ranking and H2H progress.`,
+    [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Rank Again',
+        style: 'destructive',
+        onPress: () => {
+
+          setRankingReset(true);
+
+          onRankAgain({
+            player,
+          });
+
+        },
+      },
+    ]
+  );
+};
 
 
   // ==================================================
@@ -80,7 +117,7 @@ export default function CompareScreen({
     // UNRANKED PLAYER
     // --------------------------------------------------
 
-    if (!isPlayerRanked) {
+    if (!isPlayerRanked || rankingReset) {
 
       onAnchorSelected({
         player,
@@ -234,6 +271,65 @@ export default function CompareScreen({
         </View>
 
       </View>
+
+      {/* =================================================
+    RANK AGAIN
+    ================================================= */}
+
+{isPlayerRanked && (
+
+  <TouchableOpacity
+    style={styles.rankAgainButton}
+    onPress={rankAgain}
+    activeOpacity={0.75}
+  >
+
+    <View
+      style={styles.rankAgainContent}
+    >
+
+      <View
+        style={styles.rankAgainIcon}
+      >
+
+        <Text
+          style={styles.rankAgainIconText}
+        >
+          ↻
+        </Text>
+
+      </View>
+
+      <View
+        style={styles.rankAgainDetails}
+      >
+
+        <Text
+          style={styles.rankAgainTitle}
+        >
+          RANK AGAIN
+        </Text>
+
+        <Text
+          style={styles.rankAgainDescription}
+        >
+          Reset this player's ranking
+          and start from the beginning.
+        </Text>
+
+      </View>
+
+      <Text
+        style={styles.rankAgainArrow}
+      >
+        →
+      </Text>
+
+    </View>
+
+  </TouchableOpacity>
+
+)}
 
 
       {/* =================================================
@@ -547,6 +643,69 @@ const styles = StyleSheet.create({
     backgroundColor: '#555555',
     marginHorizontal: 7,
   },
+
+  // =====================================================
+// RANK AGAIN
+// =====================================================
+
+rankAgainButton: {
+  backgroundColor: '#101010',
+  borderWidth: 1,
+  borderColor: '#292929',
+  borderRadius: 16,
+  minHeight: 76,
+  paddingHorizontal: 14,
+  paddingVertical: 12,
+  marginBottom: 25,
+},
+
+rankAgainContent: {
+  flexDirection: 'row',
+  alignItems: 'center',
+},
+
+rankAgainIcon: {
+  width: 42,
+  height: 42,
+  borderRadius: 21,
+  backgroundColor: '#181818',
+  borderWidth: 1,
+  borderColor: '#333333',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginRight: 13,
+},
+
+rankAgainIconText: {
+  color: '#ffffff',
+  fontSize: 23,
+  fontWeight: '500',
+},
+
+rankAgainDetails: {
+  flex: 1,
+  paddingRight: 8,
+},
+
+rankAgainTitle: {
+  color: '#ffffff',
+  fontSize: 14,
+  fontWeight: '900',
+  letterSpacing: 1,
+},
+
+rankAgainDescription: {
+  color: '#666666',
+  fontSize: 11,
+  lineHeight: 16,
+  marginTop: 3,
+},
+
+rankAgainArrow: {
+  color: '#888888',
+  fontSize: 20,
+  fontWeight: '700',
+},
 
 
   // =====================================================

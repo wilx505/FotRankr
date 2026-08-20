@@ -277,7 +277,55 @@ const handleCategoryChanged = ({
           String(rankedPlayer.id) ===
           String(player.id)
       );
+// =====================================================
+// RANK PLAYER AGAIN
+// =====================================================
 
+const handleRankAgain = ({
+  player,
+}) => {
+
+  console.log(
+    'FOTRANKR RANK AGAIN:',
+    player.name
+  );
+
+
+  // ==================================================
+  // REMOVE PLAYER'S CURRENT RANKING
+  // ==================================================
+
+  setMyRankings(
+    previousRankings =>
+      previousRankings.filter(
+        rankedPlayer =>
+          String(rankedPlayer.id) !==
+          String(player.id)
+      )
+  );
+
+
+  // ==================================================
+  // REMOVE ALL H2H HISTORY INVOLVING THIS PLAYER
+  // ==================================================
+
+  setComparisonHistory(
+    previousHistory =>
+      previousHistory.filter(
+        comparison =>
+          String(comparison.playerA) !==
+            String(player.id) &&
+          String(comparison.playerB) !==
+            String(player.id)
+      )
+  );
+
+
+  console.log(
+    'FOTRANKR RANK AGAIN COMPLETE:',
+    player.name
+  );
+};
     // ==================================================
     // SAME CATEGORY = DO NOTHING
     // ==================================================
@@ -372,6 +420,55 @@ const handleCategoryChanged = ({
           String(comparison.playerB) !==
             String(player.id)
       )
+  );
+};
+// =====================================================
+// RANK PLAYER AGAIN
+// =====================================================
+
+const handleRankAgain = ({
+  player,
+}) => {
+
+  console.log(
+    'FOTRANKR RANK AGAIN:',
+    player.name
+  );
+
+
+  // ==================================================
+  // REMOVE PLAYER FROM MY RANKINGS
+  // ==================================================
+
+  setMyRankings(
+    previousRankings =>
+      previousRankings.filter(
+        rankedPlayer =>
+          String(rankedPlayer.id) !==
+          String(player.id)
+      )
+  );
+
+
+  // ==================================================
+  // REMOVE ALL H2H HISTORY INVOLVING THIS PLAYER
+  // ==================================================
+
+  setComparisonHistory(
+    previousHistory =>
+      previousHistory.filter(
+        comparison =>
+          String(comparison.playerA) !==
+            String(player.id) &&
+          String(comparison.playerB) !==
+            String(player.id)
+      )
+  );
+
+
+  console.log(
+    'FOTRANKR RANK AGAIN COMPLETE:',
+    player.name
   );
 };
 
@@ -805,6 +902,10 @@ return (
   }
   onCategoryChanged={
     handleCategoryChanged
+  }
+    
+  onRankAgain={
+    handleRankAgain
   }
 />
 

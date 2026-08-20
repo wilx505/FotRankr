@@ -17,10 +17,13 @@ import {
   useState,
 } from 'react';
 
+import AddPlayersToListScreen from './screens/AddPlayersToListScreen';
 import ChallengeScreen from './screens/ChallengeScreen';
 import CompareScreen from './screens/CompareScreen';
+import CreateListScreen from './screens/CreateListScreen';
 import HeadToHead from './screens/HeadToHead';
 import HomeScreen from './screens/HomeScreen';
+import ListsScreen from './screens/ListsScreen';
 import RankingsScreen from './screens/RankingsScreen';
 import SearchScreen from './screens/SearchScreen';
 
@@ -29,35 +32,32 @@ import {
   createPlayer,
 } from './engine/rankingEngine.js';
 
-const Stack =
-  createNativeStackNavigator();
 
-const Tab =
-  createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const DATA_VERSION = '53';
 
+
 export default function App() {
 
- const [myRankings, setMyRankings] = useState([]);
+  // =====================================================
+  // STATE
+  // =====================================================
 
-const [comparisonHistory, setComparisonHistory] = useState([]);
+  const [myRankings, setMyRankings] = useState([]);
 
-// =====================================================
-// SMART H2H SESSION
-// =====================================================
-// Tracks the current automatic placement session.
-// This is separate from permanent comparisonHistory.
-//
-// A session:
-// - starts when a player is newly ranked
-// - can contain a maximum of 6 H2Hs
-// - prevents opponents repeating within the session
-// - ends after the player has been placed
-// =====================================================
-const [smartH2HSession, setSmartH2HSession] = useState(null);
+  const [lists, setLists] = useState([]);
 
-const [dataLoaded, setDataLoaded] = useState(false);
+  const [comparisonHistory, setComparisonHistory] =
+    useState([]);
+
+  const [smartH2HSession, setSmartH2HSession] =
+    useState(null);
+
+  const [dataLoaded, setDataLoaded] =
+    useState(false);
+
 
   // =====================================================
   // LOAD DATA
@@ -74,7 +74,11 @@ const [dataLoaded, setDataLoaded] = useState(false);
             'fotrankrDataVersion'
           );
 
-        // New engine = clear old incompatible data
+
+        // =================================================
+        // NEW DATA VERSION
+        // =================================================
+
         if (savedVersion !== DATA_VERSION) {
 
           await AsyncStorage.removeItem(
@@ -85,12 +89,17 @@ const [dataLoaded, setDataLoaded] = useState(false);
             'comparisonHistory'
           );
 
+          await AsyncStorage.removeItem(
+            'fotrankrLists'
+          );
+
           await AsyncStorage.setItem(
             'fotrankrDataVersion',
             DATA_VERSION
           );
 
           setMyRankings([]);
+          setLists([]);
           setComparisonHistory([]);
           setDataLoaded(true);
 
@@ -101,14 +110,14 @@ const [dataLoaded, setDataLoaded] = useState(false);
           return;
         }
 
+
+        // =================================================
+        // LOAD RANKINGS
+        // =================================================
+
         const savedRankings =
           await AsyncStorage.getItem(
             'myRankings'
-          );
-
-        const savedHistory =
-          await AsyncStorage.getItem(
-            'comparisonHistory'
           );
 
         if (savedRankings) {
@@ -117,10 +126,45 @@ const [dataLoaded, setDataLoaded] = useState(false);
             JSON.parse(savedRankings);
 
           if (Array.isArray(parsed)) {
+
             setMyRankings(parsed);
+
           }
 
         }
+
+
+        // =================================================
+        // LOAD LISTS
+        // =================================================
+
+        const savedLists =
+          await AsyncStorage.getItem(
+            'fotrankrLists'
+          );
+
+        if (savedLists) {
+
+          const parsedLists =
+            JSON.parse(savedLists);
+
+          if (Array.isArray(parsedLists)) {
+
+            setLists(parsedLists);
+
+          }
+
+        }
+
+
+        // =================================================
+        // LOAD COMPARISON HISTORY
+        // =================================================
+
+        const savedHistory =
+          await AsyncStorage.getItem(
+            'comparisonHistory'
+          );
 
         if (savedHistory) {
 
@@ -128,12 +172,15 @@ const [dataLoaded, setDataLoaded] = useState(false);
             JSON.parse(savedHistory);
 
           if (Array.isArray(parsedHistory)) {
+
             setComparisonHistory(
               parsedHistory
             );
+
           }
 
         }
+
 
         setDataLoaded(true);
 
@@ -145,6 +192,7 @@ const [dataLoaded, setDataLoaded] = useState(false);
         );
 
         setMyRankings([]);
+        setLists([]);
         setComparisonHistory([]);
         setDataLoaded(true);
 
@@ -152,9 +200,11 @@ const [dataLoaded, setDataLoaded] = useState(false);
 
     };
 
+
     loadData();
 
   }, []);
+
 
   // =====================================================
   // SAVE DATA
@@ -166,6 +216,7 @@ const [dataLoaded, setDataLoaded] = useState(false);
       return;
     }
 
+
     const saveData = async () => {
 
       try {
@@ -175,12 +226,20 @@ const [dataLoaded, setDataLoaded] = useState(false);
           JSON.stringify(myRankings)
         );
 
+
+        await AsyncStorage.setItem(
+          'fotrankrLists',
+          JSON.stringify(lists)
+        );
+
+
         await AsyncStorage.setItem(
           'comparisonHistory',
           JSON.stringify(
             comparisonHistory
           )
         );
+
 
         await AsyncStorage.setItem(
           'fotrankrDataVersion',
@@ -198,753 +257,861 @@ const [dataLoaded, setDataLoaded] = useState(false);
 
     };
 
+
     saveData();
 
   }, [
     myRankings,
+    lists,
     comparisonHistory,
     dataLoaded,
   ]);
 
-// =====================================================
-// FIRST PLAYER ANCHOR
-// =====================================================
 
-const handleAnchorSelected = ({
-  player,
-  category,
-}) => {
+  // =====================================================
+  // FIRST PLAYER ANCHOR
+  // =====================================================
 
-  // Let the ranking engine create the new player
-  // at the starting position for this category.
-  const anchorPlayer =
-    createPlayer(
-      player,
-      category
-    );
-
-  console.log(
-    'FOTRANKR NEW PLAYER:',
-    player.name,
+  const handleAnchorSelected = ({
+    player,
     category,
-    anchorPlayer.rating,
-    anchorPlayer.score
-  );
+  }) => {
 
-  // New category anchors are added to the
-  // existing rankings — they do NOT replace them.
-  const playerWithDisplay = {
-    ...anchorPlayer,
-    isAnchor: true,
-  };
-
-  setMyRankings(previousRankings => [
-    ...previousRankings,
-    playerWithDisplay,
-  ]);
-
-  // This new player starts a fresh automatic
-  // H2H process.
-  //
-  // IMPORTANT:
-  // We do NOT clear the entire comparison history
-  // because other players' H2Hs still need to exist.
-  setComparisonHistory(previousHistory => [
-    ...previousHistory,
-  ]);
-};
-// =====================================================
-// CHANGE PLAYER CATEGORY
-// =====================================================
-
-const handleCategoryChanged = ({
-  player,
-  category,
-}) => {
-
-  console.log(
-    'FOTRANKR CATEGORY CHANGE:',
-    player.name,
-    '->',
-    category
-  );
-
-  setMyRankings(previousRankings => {
-
-    const existingPlayer =
-      previousRankings.find(
-        rankedPlayer =>
-          String(rankedPlayer.id) ===
-          String(player.id)
-      );
-// =====================================================
-// RANK PLAYER AGAIN
-// =====================================================
-
-const handleRankAgain = ({
-  player,
-}) => {
-
-  console.log(
-    'FOTRANKR RANK AGAIN:',
-    player.name
-  );
-
-
-  // ==================================================
-  // REMOVE PLAYER'S CURRENT RANKING
-  // ==================================================
-
-  setMyRankings(
-    previousRankings =>
-      previousRankings.filter(
-        rankedPlayer =>
-          String(rankedPlayer.id) !==
-          String(player.id)
-      )
-  );
-
-
-  // ==================================================
-  // REMOVE ALL H2H HISTORY INVOLVING THIS PLAYER
-  // ==================================================
-
-  setComparisonHistory(
-    previousHistory =>
-      previousHistory.filter(
-        comparison =>
-          String(comparison.playerA) !==
-            String(player.id) &&
-          String(comparison.playerB) !==
-            String(player.id)
-      )
-  );
-
-
-  console.log(
-    'FOTRANKR RANK AGAIN COMPLETE:',
-    player.name
-  );
-};
-    // ==================================================
-    // SAME CATEGORY = DO NOTHING
-    // ==================================================
-    //
-    // If the player is already in this category,
-    // we MUST NOT recreate them.
-    //
-    // This preserves:
-    // - rating
-    // - score
-    // - H2H history
-    // - automatic H2H count
-    //
-    // ==================================================
-
-    if (
-      existingPlayer &&
-      existingPlayer.category === category
-    ) {
-
-      console.log(
-        'FOTRANKR SAME CATEGORY: Keeping existing player',
-        existingPlayer.name,
-        category,
-        existingPlayer.rating,
-        existingPlayer.score
+    const anchorPlayer =
+      createPlayer(
+        player,
+        category
       );
 
-      return previousRankings;
-    }
 
-
-    // ==================================================
-    // GENUINE CATEGORY CHANGE
-    // ==================================================
-
-    return previousRankings.map(
-      rankedPlayer => {
-
-        if (
-          String(rankedPlayer.id) !==
-          String(player.id)
-        ) {
-          return rankedPlayer;
-        }
-
-
-        // Create a completely fresh ranking
-        // for the NEW category.
-
-        const newCategoryPlayer =
-          createPlayer(
-            player,
-            category
-          );
-
-        console.log(
-          'FOTRANKR NEW CATEGORY PLAYER:',
-          newCategoryPlayer.name,
-          category,
-          newCategoryPlayer.rating,
-          newCategoryPlayer.score
-        );
-
-
-        return {
-          ...newCategoryPlayer,
-
-          isAnchor: false,
-
-          // Keep the fact that this player
-          // is already in My Rankings.
-          isRanked: true,
-        };
-
-      }
+    console.log(
+      'FOTRANKR NEW PLAYER:',
+      player.name,
+      category,
+      anchorPlayer.rating,
+      anchorPlayer.score
     );
 
-  });
 
-
-  // ==================================================
-  // ONLY REMOVE HISTORY FOR A GENUINE CATEGORY CHANGE
-  // ==================================================
-
-  setComparisonHistory(
-    previousHistory =>
-      previousHistory.filter(
-        comparison =>
-          String(comparison.playerA) !==
-            String(player.id) &&
-          String(comparison.playerB) !==
-            String(player.id)
-      )
-  );
-};
-// =====================================================
-// RANK PLAYER AGAIN
-// =====================================================
-
-const handleRankAgain = ({
-  player,
-}) => {
-
-  console.log(
-    'FOTRANKR RANK AGAIN:',
-    player.name
-  );
-
-
-  // ==================================================
-  // REMOVE PLAYER FROM MY RANKINGS
-  // ==================================================
-
-  setMyRankings(
-    previousRankings =>
-      previousRankings.filter(
-        rankedPlayer =>
-          String(rankedPlayer.id) !==
-          String(player.id)
-      )
-  );
-
-
-  // ==================================================
-  // REMOVE ALL H2H HISTORY INVOLVING THIS PLAYER
-  // ==================================================
-
-  setComparisonHistory(
-    previousHistory =>
-      previousHistory.filter(
-        comparison =>
-          String(comparison.playerA) !==
-            String(player.id) &&
-          String(comparison.playerB) !==
-            String(player.id)
-      )
-  );
-
-
-  console.log(
-    'FOTRANKR RANK AGAIN COMPLETE:',
-    player.name
-  );
-};
-
-// =====================================================
-// HEAD-TO-HEAD RESULT
-// =====================================================
-
-const handleHeadToHeadResult = ({
-  player,
-  comparisonPlayer,
-  category,
-  result,
-  opponentIsRanked,
-  manualChallenge,
-}) => {
-
-  console.log(
-    'FOTRANKR COMPARISON:',
-    player.name,
-    'vs',
-    comparisonPlayer.name,
-    result
-  );
-
-  console.log(
-    'FOTRANKR OPPONENT STATUS:',
-    comparisonPlayer.name,
-    'already ranked =',
-    opponentIsRanked
-  );
-
-
-  setMyRankings(previousRankings => {
-
-    // --------------------------------------------------
-    // FIND EXISTING PLAYERS
-    // --------------------------------------------------
-
-    const findExistingPlayer = (sourcePlayer) => {
-
-      return previousRankings.find(
-        rankedPlayer =>
-          String(rankedPlayer.id) ===
-            String(sourcePlayer.id)
-      );
-
+    const playerWithDisplay = {
+      ...anchorPlayer,
+      isAnchor: true,
     };
 
 
-    // --------------------------------------------------
-    // GET TARGET PLAYER
-    // --------------------------------------------------
-
-    let playerA =
-      findExistingPlayer(player);
-
-
-    // --------------------------------------------------
-    // CREATE TARGET IF NECESSARY
-    // --------------------------------------------------
-
-    if (!playerA) {
-
-      playerA =
-        createPlayer(
-          player,
-          category
-        );
-
-    }
+    setMyRankings(
+      previousRankings => [
+        ...previousRankings,
+        playerWithDisplay,
+      ]
+    );
 
 
-    // --------------------------------------------------
-    // GET OPPONENT
-    // --------------------------------------------------
+    setComparisonHistory(
+      previousHistory => [
+        ...previousHistory,
+      ]
+    );
 
-    let playerB =
-      findExistingPlayer(
-        comparisonPlayer
-      );
+  };
 
 
-    // --------------------------------------------------
-    // CREATE TEMPORARY OPPONENT IF NECESSARY
-    // --------------------------------------------------
+  // =====================================================
+  // CHANGE PLAYER CATEGORY
+  // =====================================================
 
-    if (!playerB) {
+  const handleCategoryChanged = ({
+    player,
+    category,
+  }) => {
 
-  playerB =
-    createPlayer(
-      comparisonPlayer,
+    console.log(
+      'FOTRANKR CATEGORY CHANGE:',
+      player.name,
+      '->',
       category
     );
 
-}
 
-
-    // --------------------------------------------------
-    // RUN RANKING ENGINE
-    // --------------------------------------------------
-
- const resultData =
-  comparePlayers(
-    playerA,
-    playerB,
-    result,
-    manualChallenge !== true
-  );
-
-
-    const updatedA =
-      resultData.playerA;
-
-
-    const updatedB =
-      resultData.playerB;
-
-
-    console.log(
-      'FOTRANKR UPDATED:',
-      {
-        player:
-          updatedA.name,
-
-        rating:
-          updatedA.rating,
-
-        score:
-          updatedA.score,
-
-        category:
-          updatedA.category,
-      }
-    );
-
-
-    console.log(
-      'FOTRANKR OPPONENT UPDATED:',
-      {
-        player:
-          updatedB.name,
-
-        rating:
-          updatedB.rating,
-
-        score:
-          updatedB.score,
-
-        category:
-          updatedB.category,
-
-        wasAlreadyRanked:
-          opponentIsRanked,
-      }
-    );
-
-
-    // --------------------------------------------------
-    // REMOVE OLD TARGET
-    // AND OLD OPPONENT
-    // --------------------------------------------------
-
-    const otherPlayers =
-      previousRankings.filter(
-        rankedPlayer =>
-          String(rankedPlayer.id) !==
-            String(player.id) &&
-          String(rankedPlayer.id) !==
-            String(comparisonPlayer.id)
-      );
-
-
-    // --------------------------------------------------
-    // TARGET ALWAYS STAYS IN MY RANKINGS
-    // --------------------------------------------------
-
-    const updatedRankings = [
-      ...otherPlayers,
-      updatedA,
-    ];
-
-
-    // --------------------------------------------------
-    // ONLY SAVE OPPONENT IF THEY WERE ALREADY
-    // GENUINELY RANKED
-    // --------------------------------------------------
-
-    if (opponentIsRanked === true) {
-
-      console.log(
-        'FOTRANKR: Saving existing ranked opponent:',
-        updatedB.name
-      );
-
-      return [
-        ...updatedRankings,
-        updatedB,
-      ];
-
-    }
-
-
-    // --------------------------------------------------
-    // TEMPORARY H2H OPPONENT
-    // --------------------------------------------------
-    //
-    // Do NOT save them.
-    //
-    // Their temporary 2000 rating is only used for
-    // calculating this comparison.
-    //
-    // This is the key fix for the fake 5.00 players.
-    // --------------------------------------------------
-
-    console.log(
-      'FOTRANKR: NOT saving temporary H2H opponent:',
-      updatedB.name
-    );
-
-    return updatedRankings;
-
-  });
-
-
-  // --------------------------------------------------
-  // SAVE HISTORY
-  // --------------------------------------------------
-
-    setComparisonHistory(
-    previousHistory => [
-
-      ...previousHistory,
-
-      {
-        playerA:
-          player.id,
-
-        playerB:
-          comparisonPlayer.id,
-
-        category:
-          category,
-
-        result,
-
-        date:
-          new Date().toISOString(),
-      },
-
-    ]
-  );
-
-};
-
-// =====================================================
-// NAVIGATION
-// =====================================================
-
-return (
-
-  <NavigationContainer>
-
-    <Stack.Navigator>
-
-      {/* =================================================
-          MAIN APP TABS
-          ================================================= */}
-
-      <Stack.Screen
-        name="MainTabs"
-        options={{
-          headerShown: false,
-        }}
-      >
-
-        {({ navigation }) => (
-
-          <Tab.Navigator
-            screenOptions={{
-              headerShown: false,
-              tabBarStyle: {
-                backgroundColor: '#050505',
-                borderTopColor: '#1a1a1a',
-                height: 68,
-                paddingBottom: 8,
-                paddingTop: 8,
-              },
-              tabBarActiveTintColor: '#00ff66',
-              tabBarInactiveTintColor: '#666666',
-              tabBarLabelStyle: {
-                fontSize: 11,
-                fontWeight: '800',
-              },
-            }}
-          >
-
-            {/* HOME */}
-
-            <Tab.Screen
-              name="Home"
-              options={{
-                tabBarLabel: 'HOME',
-                tabBarIcon: () => null,
-              }}
-            >
-
-              {({ navigation }) => (
-
-                <HomeScreen
-                  navigation={navigation}
-                  isFirstPlayer={
-                    myRankings.length === 0
-                  }
-                />
-
-              )}
-
-            </Tab.Screen>
-
-
-            {/* SEARCH */}
-
-            <Tab.Screen
-              name="Search"
-              options={{
-                tabBarLabel: 'SEARCH',
-                tabBarIcon: () => null,
-              }}
-            >
-
-              {({ navigation }) => (
-
-                <SearchScreen
-                  navigation={navigation}
-                />
-
-              )}
-
-            </Tab.Screen>
-
-
-            {/* MY RANKS */}
-
-            <Tab.Screen
-              name="MyRanks"
-              options={{
-                tabBarLabel: 'MY RANKS',
-                tabBarIcon: () => null,
-              }}
-            >
-
-              {({ navigation }) => (
-
-                <RankingsScreen
-                  navigation={navigation}
-                  myRankings={myRankings}
-                />
-
-              )}
-
-            </Tab.Screen>
-
-          </Tab.Navigator>
-
-        )}
-
-      </Stack.Screen>
-
-
-      {/* =================================================
-          RANKING PROCESS
-          ================================================= */}
-
-{/* =================================================
-    CHALLENGE
-    ================================================= */}
-
-<Stack.Screen
-  name="Challenge"
-  options={{
-    headerShown: false,
-  }}
->
-  {({ navigation, route }) => (
-
-    <ChallengeScreen
-      navigation={navigation}
-      route={route}
-      myRankings={myRankings}
-    />
-
-  )}
-</Stack.Screen>
-
-
-      <Stack.Screen
-        name="Compare"
-        options={{
-          title: 'Rank Player',
-        }}
-      >
-
-        {({ navigation, route }) => {
-
-          const selectedPlayer =
-            route.params?.player;
-
-          const isPlayerRanked =
-            myRankings.some(
-              ranking =>
-                ranking.id ===
-                selectedPlayer?.id
-            );
-
-          return (
-
-<CompareScreen
-  navigation={navigation}
-  route={route}
-  isFirstPlayer={
-    myRankings.length === 0
-  }
-  isPlayerRanked={
-    isPlayerRanked
-  }
-  myRankings={
-    myRankings
-  }
-  onAnchorSelected={
-    handleAnchorSelected
-  }
-  onCategoryChanged={
-    handleCategoryChanged
-  }
-    
-  onRankAgain={
-    handleRankAgain
-  }
-/>
-
+    setMyRankings(
+      previousRankings => {
+
+        const existingPlayer =
+          previousRankings.find(
+            rankedPlayer =>
+              String(rankedPlayer.id) ===
+              String(player.id)
           );
 
-        }}
 
-      </Stack.Screen>
+        // -----------------------------------------------
+        // SAME CATEGORY
+        // -----------------------------------------------
+
+        if (
+          existingPlayer &&
+          existingPlayer.category === category
+        ) {
+
+          console.log(
+            'FOTRANKR SAME CATEGORY: Keeping existing player',
+            existingPlayer.name,
+            category,
+            existingPlayer.rating,
+            existingPlayer.score
+          );
+
+          return previousRankings;
+
+        }
 
 
-      <Stack.Screen
-        name="HeadToHead"
-      >
+        // -----------------------------------------------
+        // GENUINE CATEGORY CHANGE
+        // -----------------------------------------------
 
-        {({ navigation, route }) => (
+        return previousRankings.map(
+          rankedPlayer => {
 
-          <HeadToHead
-            navigation={navigation}
-            route={route}
-            onResult={
-              handleHeadToHeadResult
+            if (
+              String(rankedPlayer.id) !==
+              String(player.id)
+            ) {
+
+              return rankedPlayer;
+
             }
-            myRankings={
-              myRankings
-            }
-            comparisonHistory={
-              comparisonHistory
-            }
-          />
 
-        )}
 
-      </Stack.Screen>
+            const newCategoryPlayer =
+              createPlayer(
+                player,
+                category
+              );
 
-    </Stack.Navigator>
 
-  </NavigationContainer>
+            console.log(
+              'FOTRANKR NEW CATEGORY PLAYER:',
+              newCategoryPlayer.name,
+              category,
+              newCategoryPlayer.rating,
+              newCategoryPlayer.score
+            );
 
-);
+
+            return {
+
+              ...newCategoryPlayer,
+
+              isAnchor: false,
+
+              isRanked: true,
+
+            };
+
+          }
+        );
+
+      }
+    );
+
+
+    // -----------------------------------------------
+    // REMOVE OLD H2H HISTORY
+    // -----------------------------------------------
+
+    setComparisonHistory(
+      previousHistory =>
+        previousHistory.filter(
+          comparison =>
+            String(comparison.playerA) !==
+              String(player.id) &&
+            String(comparison.playerB) !==
+              String(player.id)
+        )
+    );
+
+  };
+
+
+  // =====================================================
+  // RANK PLAYER AGAIN
+  // =====================================================
+
+  const handleRankAgain = ({
+    player,
+  }) => {
+
+    console.log(
+      'FOTRANKR RANK AGAIN:',
+      player.name
+    );
+
+
+    setMyRankings(
+      previousRankings =>
+        previousRankings.filter(
+          rankedPlayer =>
+            String(rankedPlayer.id) !==
+            String(player.id)
+        )
+    );
+
+
+    setComparisonHistory(
+      previousHistory =>
+        previousHistory.filter(
+          comparison =>
+            String(comparison.playerA) !==
+              String(player.id) &&
+            String(comparison.playerB) !==
+              String(player.id)
+        )
+    );
+
+
+    console.log(
+      'FOTRANKR RANK AGAIN COMPLETE:',
+      player.name
+    );
+
+  };
+
+
+  // =====================================================
+  // HEAD-TO-HEAD RESULT
+  // =====================================================
+
+  const handleHeadToHeadResult = ({
+    player,
+    comparisonPlayer,
+    category,
+    result,
+    opponentIsRanked,
+    manualChallenge,
+  }) => {
+
+    console.log(
+      'FOTRANKR COMPARISON:',
+      player.name,
+      'vs',
+      comparisonPlayer.name,
+      result
+    );
+
+
+    console.log(
+      'FOTRANKR OPPONENT STATUS:',
+      comparisonPlayer.name,
+      'already ranked =',
+      opponentIsRanked
+    );
+
+
+    setMyRankings(
+      previousRankings => {
+
+        const findExistingPlayer = (
+          sourcePlayer
+        ) => {
+
+          return previousRankings.find(
+            rankedPlayer =>
+              String(rankedPlayer.id) ===
+              String(sourcePlayer.id)
+          );
+
+        };
+
+
+        // ---------------------------------------------
+        // TARGET PLAYER
+        // ---------------------------------------------
+
+        let playerA =
+          findExistingPlayer(player);
+
+
+        if (!playerA) {
+
+          playerA =
+            createPlayer(
+              player,
+              category
+            );
+
+        }
+
+
+        // ---------------------------------------------
+        // OPPONENT
+        // ---------------------------------------------
+
+        let playerB =
+          findExistingPlayer(
+            comparisonPlayer
+          );
+
+
+        if (!playerB) {
+
+          playerB =
+            createPlayer(
+              comparisonPlayer,
+              category
+            );
+
+        }
+
+
+        // ---------------------------------------------
+        // RUN RANKING ENGINE
+        // ---------------------------------------------
+
+        const resultData =
+          comparePlayers(
+            playerA,
+            playerB,
+            result,
+            manualChallenge !== true
+          );
+
+
+        const updatedA =
+          resultData.playerA;
+
+        const updatedB =
+          resultData.playerB;
+
+
+        console.log(
+          'FOTRANKR UPDATED:',
+          {
+            player:
+              updatedA.name,
+
+            rating:
+              updatedA.rating,
+
+            score:
+              updatedA.score,
+
+            category:
+              updatedA.category,
+          }
+        );
+
+
+        console.log(
+          'FOTRANKR OPPONENT UPDATED:',
+          {
+            player:
+              updatedB.name,
+
+            rating:
+              updatedB.rating,
+
+            score:
+              updatedB.score,
+
+            category:
+              updatedB.category,
+
+            wasAlreadyRanked:
+              opponentIsRanked,
+          }
+        );
+
+
+        // ---------------------------------------------
+        // REMOVE OLD TARGET + OPPONENT
+        // ---------------------------------------------
+
+        const otherPlayers =
+          previousRankings.filter(
+            rankedPlayer =>
+              String(rankedPlayer.id) !==
+                String(player.id) &&
+              String(rankedPlayer.id) !==
+                String(comparisonPlayer.id)
+          );
+
+
+        // ---------------------------------------------
+        // TARGET ALWAYS STAYS
+        // ---------------------------------------------
+
+        const updatedRankings = [
+          ...otherPlayers,
+          updatedA,
+        ];
+
+
+        // ---------------------------------------------
+        // SAVE EXISTING RANKED OPPONENT
+        // ---------------------------------------------
+
+        if (
+          opponentIsRanked === true
+        ) {
+
+          console.log(
+            'FOTRANKR: Saving existing ranked opponent:',
+            updatedB.name
+          );
+
+
+          return [
+            ...updatedRankings,
+            updatedB,
+          ];
+
+        }
+
+
+        // ---------------------------------------------
+        // TEMPORARY OPPONENT
+        // ---------------------------------------------
+
+        console.log(
+          'FOTRANKR: NOT saving temporary H2H opponent:',
+          updatedB.name
+        );
+
+
+        return updatedRankings;
+
+      }
+    );
+
+
+    // -----------------------------------------------
+    // SAVE HISTORY
+    // -----------------------------------------------
+
+    setComparisonHistory(
+      previousHistory => [
+
+        ...previousHistory,
+
+        {
+          playerA:
+            player.id,
+
+          playerB:
+            comparisonPlayer.id,
+
+          category:
+            category,
+
+          result,
+
+          date:
+            new Date().toISOString(),
+        },
+
+      ]
+    );
+
+  };
+
+
+  // =====================================================
+  // CREATE CUSTOM LIST
+  // =====================================================
+
+  const handleCreateList = (newList) => {
+
+    console.log(
+      'FOTRANKR NEW LIST:',
+      newList
+    );
+
+
+    setLists(
+      previousLists => [
+        ...previousLists,
+        newList,
+      ]
+    );
+
+  };
+
+
+  // =====================================================
+  // ADD PLAYERS TO CUSTOM LIST
+  // =====================================================
+
+  const handlePlayersAdded = ({
+    listId,
+    players,
+  }) => {
+
+    console.log(
+      'FOTRANKR LIST PLAYERS UPDATED:',
+      listId,
+      players
+    );
+
+
+    setLists(
+      previousLists =>
+        previousLists.map(list => {
+
+          if (
+            String(list.id) !==
+            String(listId)
+          ) {
+
+            return list;
+
+          }
+
+
+          return {
+            ...list,
+            players: players,
+          };
+
+        })
+    );
+
+  };
+
+
+  // =====================================================
+  // NAVIGATION
+  // =====================================================
+
+  return (
+
+    <NavigationContainer>
+
+      <Stack.Navigator>
+
+
+        {/* =================================================
+            MAIN TABS
+            ================================================= */}
+
+        <Stack.Screen
+          name="MainTabs"
+          options={{
+            headerShown: false,
+          }}
+        >
+
+          {() => (
+
+            <Tab.Navigator
+
+              screenOptions={{
+                headerShown: false,
+
+                tabBarStyle: {
+                  backgroundColor: '#050505',
+                  borderTopColor: '#1a1a1a',
+                  height: 68,
+                  paddingBottom: 8,
+                  paddingTop: 8,
+                },
+
+                tabBarActiveTintColor:
+                  '#00ff66',
+
+                tabBarInactiveTintColor:
+                  '#666666',
+
+                tabBarLabelStyle: {
+                  fontSize: 11,
+                  fontWeight: '800',
+                },
+
+              }}
+            >
+
+
+              {/* =================================================
+                  HOME
+                  ================================================= */}
+
+              <Tab.Screen
+                name="Home"
+                options={{
+                  tabBarLabel: 'HOME',
+                  tabBarIcon: () => null,
+                }}
+              >
+
+                {({ navigation }) => (
+
+                  <HomeScreen
+                    navigation={navigation}
+                    isFirstPlayer={
+                      myRankings.length === 0
+                    }
+                  />
+
+                )}
+
+              </Tab.Screen>
+
+
+              {/* =================================================
+                  SEARCH
+                  ================================================= */}
+
+              <Tab.Screen
+                name="Search"
+                options={{
+                  tabBarLabel: 'SEARCH',
+                  tabBarIcon: () => null,
+                }}
+              >
+
+                {({ navigation }) => (
+
+                  <SearchScreen
+                    navigation={navigation}
+                  />
+
+                )}
+
+              </Tab.Screen>
+
+
+              {/* =================================================
+                  MY RANKS
+                  ================================================= */}
+
+              <Tab.Screen
+                name="MyRanks"
+                options={{
+                  tabBarLabel: 'MY RANKS',
+                  tabBarIcon: () => null,
+                }}
+              >
+
+                {({ navigation }) => (
+
+                  <RankingsScreen
+                    navigation={navigation}
+                    myRankings={myRankings}
+                  />
+
+                )}
+
+              </Tab.Screen>
+
+
+              {/* =================================================
+                  LISTS
+                  ================================================= */}
+
+              <Tab.Screen
+                name="Lists"
+                options={{
+                  tabBarLabel: 'LISTS',
+                  tabBarIcon: () => null,
+                }}
+              >
+
+                {({ navigation }) => (
+
+                  <ListsScreen
+                    navigation={navigation}
+                    lists={lists}
+                  />
+
+                )}
+
+              </Tab.Screen>
+
+
+            </Tab.Navigator>
+
+          )}
+
+        </Stack.Screen>
+
+
+        {/* =================================================
+            CREATE LIST
+            ================================================= */}
+
+        <Stack.Screen
+          name="CreateList"
+          options={{
+            headerShown: false,
+          }}
+        >
+
+          {({ navigation, route }) => (
+
+            <CreateListScreen
+              navigation={navigation}
+              route={route}
+              onCreateList={handleCreateList}
+            />
+
+          )}
+
+        </Stack.Screen>
+
+
+        {/* =================================================
+            ADD PLAYERS TO LIST
+            ================================================= */}
+
+        <Stack.Screen
+          name="AddPlayersToList"
+          options={{
+            headerShown: false,
+          }}
+        >
+
+          {({ navigation, route }) => (
+
+            <AddPlayersToListScreen
+              navigation={navigation}
+              route={route}
+              onPlayersAdded={handlePlayersAdded}
+            />
+
+          )}
+
+        </Stack.Screen>
+
+
+        {/* =================================================
+            CHALLENGE
+            ================================================= */}
+
+        <Stack.Screen
+          name="Challenge"
+          options={{
+            headerShown: false,
+          }}
+        >
+
+          {({ navigation, route }) => (
+
+            <ChallengeScreen
+              navigation={navigation}
+              route={route}
+              myRankings={myRankings}
+            />
+
+          )}
+
+        </Stack.Screen>
+
+
+        {/* =================================================
+            COMPARE
+            ================================================= */}
+
+        <Stack.Screen
+          name="Compare"
+          options={{
+            title: 'Rank Player',
+          }}
+        >
+
+          {({ navigation, route }) => {
+
+            const selectedPlayer =
+              route.params?.player;
+
+
+            const isPlayerRanked =
+              myRankings.some(
+                ranking =>
+                  String(ranking.id) ===
+                  String(selectedPlayer?.id)
+              );
+
+
+            return (
+
+              <CompareScreen
+
+                navigation={navigation}
+
+                route={route}
+
+                isFirstPlayer={
+                  myRankings.length === 0
+                }
+
+                isPlayerRanked={
+                  isPlayerRanked
+                }
+
+                myRankings={
+                  myRankings
+                }
+
+                onAnchorSelected={
+                  handleAnchorSelected
+                }
+
+                onCategoryChanged={
+                  handleCategoryChanged
+                }
+
+                onRankAgain={
+                  handleRankAgain
+                }
+
+              />
+
+            );
+
+          }}
+
+        </Stack.Screen>
+
+
+        {/* =================================================
+            HEAD TO HEAD
+            ================================================= */}
+
+        <Stack.Screen
+          name="HeadToHead"
+        >
+
+          {({ navigation, route }) => (
+
+            <HeadToHead
+
+              navigation={navigation}
+
+              route={route}
+
+              onResult={
+                handleHeadToHeadResult
+              }
+
+              myRankings={
+                myRankings
+              }
+
+              comparisonHistory={
+                comparisonHistory
+              }
+
+            />
+
+          )}
+
+        </Stack.Screen>
+
+
+      </Stack.Navigator>
+
+    </NavigationContainer>
+
+  );
 
 }
-

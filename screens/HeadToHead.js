@@ -5,8 +5,8 @@ import {
   View,
 } from 'react-native';
 
+import { useIsFocused } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-
 import {
   createPlayer,
   findBestOpponent,
@@ -26,6 +26,7 @@ export default function HeadToHead({
   myRankings,
   comparisonHistory,
 }) {
+  const isFocused = useIsFocused();
 
   const {
     player,
@@ -326,7 +327,9 @@ export default function HeadToHead({
     // --------------------------------------------------
     // SMART H2H
     // --------------------------------------------------
-
+if (!isFocused) {
+  return;
+}
     if (
       smartH2H !== true &&
       startSmartH2H !== true
@@ -374,6 +377,7 @@ export default function HeadToHead({
 
 
   }, [
+    isFocused,
     targetPlayer.id,
     targetPlayer.h2hCount,
     targetPlayer.h2hCategory,

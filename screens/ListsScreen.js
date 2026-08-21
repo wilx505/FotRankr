@@ -1,9 +1,9 @@
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 export default function ListsScreen({
@@ -63,6 +63,11 @@ export default function ListsScreen({
           navigation.navigate('CreateList')
         }
         activeOpacity={0.75}
+          onPress={() =>
+    navigation.navigate('ListDetail', {
+      list,
+    })
+  }
       >
 
         <View style={styles.createIcon}>
@@ -117,6 +122,11 @@ export default function ListsScreen({
               key={list.id}
               style={styles.listCard}
               activeOpacity={0.75}
+              onPress={() =>
+                navigation.navigate('ListDetail', {
+                  list,
+                })
+              }
             >
 
               <View style={styles.listIcon}>

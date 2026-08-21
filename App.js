@@ -23,6 +23,7 @@ import CompareScreen from './screens/CompareScreen';
 import CreateListScreen from './screens/CreateListScreen';
 import HeadToHead from './screens/HeadToHead';
 import HomeScreen from './screens/HomeScreen';
+import ListDetailScreen from './screens/ListDetailScreen';
 import ListsScreen from './screens/ListsScreen';
 import RankingsScreen from './screens/RankingsScreen';
 import SearchScreen from './screens/SearchScreen';
@@ -982,7 +983,23 @@ export default function App() {
 
         </Stack.Screen>
 
+{/* =================================================
+    LIST DETAIL
+    ================================================= */}
 
+<Stack.Screen
+  name="ListDetail"
+  options={{
+    headerShown: false,
+  }}
+>
+  {({ navigation, route }) => (
+    <ListDetailScreen
+      navigation={navigation}
+      route={route}
+    />
+  )}
+</Stack.Screen>
         {/* =================================================
             CHALLENGE
             ================================================= */}

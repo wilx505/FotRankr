@@ -29,9 +29,9 @@ EDIT LEVELS BELOW. NOTHING ELSE NEEDS TO CHANGE.
 ============================================================
 */
 
-export const XP_PER_PLAYER = 10;
+export const XP_PER_PLAYER = 5;
 
-export const CLUB_BONUS_XP = 50;
+export const CLUB_BONUS_XP = 10;
 
 export const XP_PER_LEVEL = 1000;
 

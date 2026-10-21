@@ -36,6 +36,17 @@ export const CLUB_BONUS_XP = 10;
 export const XP_PER_LEVEL = 1000;
 
 
+// "I DO NOT KNOW" players: saved in myRankings with this
+// category and a score of 0. They count as ranked for club
+// completion and locks, but earn no player XP and are never
+// used as opponents.
+export const UNKNOWN_CATEGORY = 'Unknown';
+
+export function isUnknown(player) {
+  return player?.category === UNKNOWN_CATEGORY;
+}
+
+
 // unlocks: which players become rankable at this level.
 //   a league name     = active players currently in it
 //   'REST_OF_WORLD'   = active players in any other league
@@ -196,8 +207,14 @@ export function getProgress(myRankings) {
     return lastProgress;
   }
 
-  const playersRanked =
-    (myRankings || []).length;
+  // Unknown players earn no XP of their own (but do count
+  // towards completing a club).
+  const playersRanked = (myRankings || []).filter(
+    player => !isUnknown(player)
+  ).length;
+
+  const unknownCount =
+    (myRankings || []).length - playersRanked;
 
   const clubsCompleted =
     getCompletedClubs(myRankings).length;
@@ -222,6 +239,7 @@ export function getProgress(myRankings) {
 
   const progress = {
     playersRanked,
+    unknownCount,
     clubsCompleted,
     xp,
     level,

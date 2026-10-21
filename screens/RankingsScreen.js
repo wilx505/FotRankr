@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
 import {
+  UNKNOWN_CATEGORY,
+  isUnknown,
+} from '../utils/progression';
+
+import {
   ScrollView,
   StyleSheet,
   Text,
@@ -71,18 +76,32 @@ export default function RankingsScreen({
   const activeFilter =
     positionFilters[showPosition];
 
+  // "I DO NOT KNOW" players only appear under UNKNOWN.
+  const rankedPlayers = myRankings.filter(
+    player => !isUnknown(player)
+  );
+
+  const unknownPlayers = myRankings
+    .filter(isUnknown)
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const showingUnknown =
+    showPosition === UNKNOWN_CATEGORY;
+
   const filteredPlayers =
-    !activeFilter
-      ? myRankings
+    showingUnknown
+      ? unknownPlayers
+    : !activeFilter
+      ? rankedPlayers
       : activeFilter.position
 
-        ? myRankings.filter(
+        ? rankedPlayers.filter(
             player =>
               player.position ===
               activeFilter.position
           )
 
-        : myRankings.filter(
+        : rankedPlayers.filter(
             player =>
               activeFilter.specificPosition.includes(
                 player.specificPosition
@@ -115,6 +134,7 @@ export default function RankingsScreen({
     Good:  '#FFD700',
     OK: '#F39C12',
     Bad: '#E74C3C',
+    [UNKNOWN_CATEGORY]: '#777777',
   };
 
 
@@ -140,6 +160,9 @@ export default function RankingsScreen({
 
     }
   );
+
+  playersByCategory[UNKNOWN_CATEGORY] =
+    unknownPlayers;
 
 
   // ==================================================
@@ -249,7 +272,9 @@ export default function RankingsScreen({
               style={styles.playerBox}
               onPress={() =>
                 navigation.navigate(
-                  'Challenge',
+                  isUnknown(player)
+                    ? 'Compare'
+                    : 'Challenge',
                   {
                     player,
                   }
@@ -867,6 +892,48 @@ export default function RankingsScreen({
         </TouchableOpacity>
 
 
+        {/* UNKNOWN */}
+
+        <TouchableOpacity
+          style={[
+            styles.filterButton,
+            showingUnknown &&
+              styles.filterButtonActive,
+          ]}
+          onPress={() => {
+            setExpandedPosition(null);
+            goToPosition(UNKNOWN_CATEGORY);
+          }}
+          activeOpacity={0.8}
+        >
+
+          <Text
+            style={[
+              styles.filterText,
+              showingUnknown &&
+                styles.filterTextActive,
+            ]}
+          >
+            UNKNOWN
+          </Text>
+
+          {unknownPlayers.length > 0 && (
+
+            <Text
+              style={[
+                styles.filterText,
+                showingUnknown &&
+                  styles.filterTextActive,
+              ]}
+            >
+              {unknownPlayers.length}
+            </Text>
+
+          )}
+
+        </TouchableOpacity>
+
+
         {/* ALL */}
 
         <TouchableOpacity
@@ -913,7 +980,7 @@ export default function RankingsScreen({
             {filteredPlayers.length === 1
               ? 'PLAYER'
               : 'PLAYERS'}
-            {' RANKED'}
+            {showingUnknown ? ' UNKNOWN' : ' RANKED'}
           </Text>
 
           <View
@@ -926,7 +993,9 @@ export default function RankingsScreen({
 
       {filteredPlayers.length > 0 && (
   <Text style={styles.challengeHint}>
-    TAP A PLAYER TO CHALLENGE FOR A HIGHER RANK
+    {showingUnknown
+      ? 'TAP A PLAYER TO RANK THEM PROPERLY'
+      : 'TAP A PLAYER TO CHALLENGE FOR A HIGHER RANK'}
   </Text>
 )}
 
@@ -952,14 +1021,17 @@ export default function RankingsScreen({
           <Text
             style={styles.emptyTitle}
           >
-            NO PLAYERS RANKED
+            {showingUnknown
+              ? 'NO UNKNOWN PLAYERS'
+              : 'NO PLAYERS RANKED'}
           </Text>
 
           <Text
             style={styles.emptyText}
           >
-            Rank a player in this position
-            to start building your list.
+            {showingUnknown
+              ? 'Players you mark "I do not know" appear here.'
+              : 'Rank a player in this position to start building your list.'}
           </Text>
 
           <TouchableOpacity
@@ -987,10 +1059,12 @@ export default function RankingsScreen({
 
       ) : (
 
-        categoryOrder.map(
-          category =>
-            renderCategory(category)
-        )
+        showingUnknown
+          ? renderCategory(UNKNOWN_CATEGORY)
+          : categoryOrder.map(
+              category =>
+                renderCategory(category)
+            )
 
       )}
 

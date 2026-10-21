@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { isUnknown } from '../utils/progression';
+
 import {
   ScrollView,
   StyleSheet,
@@ -64,7 +66,8 @@ export default function ChallengeScreen({
     .filter(
       ranking =>
         String(ranking.id) !==
-        String(player?.id)
+          String(player?.id) &&
+        !isUnknown(ranking)
     )
     .filter(
       ranking =>

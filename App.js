@@ -45,8 +45,10 @@ import {
 
 import {
   CLUB_BONUS_XP,
+  UNKNOWN_CATEGORY,
   getCompletedClubs,
   getProgress,
+  isUnknown,
   unlockName,
 } from './utils/progression';
 
@@ -327,6 +329,69 @@ export default function App() {
 
 
   // =====================================================
+  // CLUB COMPLETE / LEVEL UP ALERT
+  // =====================================================
+  // Compares the rankings before and after a change and
+  // tells the user about any club completed or level gained.
+
+  const announceProgress = (
+    rankingsBefore,
+    rankingsAfter
+  ) => {
+
+    const before = getProgress(rankingsBefore);
+
+    const after = getProgress(rankingsAfter);
+
+    const clubsBefore = new Set(
+      getCompletedClubs(rankingsBefore).map(
+        club => `${club.league}|${club.club}`
+      )
+    );
+
+    const newClubs = getCompletedClubs(
+      rankingsAfter
+    ).filter(
+      club =>
+        !clubsBefore.has(`${club.league}|${club.club}`)
+    );
+
+    const messages = [];
+
+    newClubs.forEach(club => {
+      messages.push(
+        `🏟️ Club complete: you've ranked every ${club.club} player. +${CLUB_BONUS_XP} XP bonus!`
+      );
+    });
+
+    if (after.level > before.level) {
+
+      const { current } = after;
+
+      messages.push(
+        `${current.badge} You're now Level ${after.level}: ${current.title}.` +
+          (current.unlocks
+            ? ` ${unlockName(current.unlocks)} players are now unlocked.`
+            : '')
+      );
+
+    }
+
+    if (messages.length > 0) {
+
+      Alert.alert(
+        after.level > before.level
+          ? 'LEVEL UP!'
+          : 'CLUB COMPLETE!',
+        messages.join('\n\n')
+      );
+
+    }
+
+  };
+
+
+  // =====================================================
   // FIRST PLAYER ANCHOR
   // =====================================================
 
@@ -382,59 +447,93 @@ export default function App() {
         String(player.id)
     );
 
-    const rankingsAfter = [
-      ...rankingsBefore,
-      playerWithDisplay,
-    ];
-
-    const before = getProgress(rankingsBefore);
-
-    const after = getProgress(rankingsAfter);
-
-    const clubsBefore = new Set(
-      getCompletedClubs(rankingsBefore).map(
-        club => `${club.league}|${club.club}`
-      )
+    announceProgress(
+      rankingsBefore,
+      [
+        ...rankingsBefore,
+        playerWithDisplay,
+      ]
     );
 
-    const newClubs = getCompletedClubs(
-      rankingsAfter
-    ).filter(
-      club =>
-        !clubsBefore.has(`${club.league}|${club.club}`)
+  };
+
+
+  // =====================================================
+  // "I DO NOT KNOW"
+  // =====================================================
+  // Saves the player as Unknown with a score of 0. They
+  // count towards completing a club but earn no player XP,
+  // and can be ranked properly later from My Ranks.
+
+  const handleMarkUnknown = ({
+    player,
+  }) => {
+
+    console.log(
+      'FOTRANKR UNKNOWN PLAYER:',
+      player.name
     );
 
-    const messages = [];
 
-    newClubs.forEach(club => {
-      messages.push(
-        `🏟️ Club complete: you've ranked every ${club.club} player. +${CLUB_BONUS_XP} XP bonus!`
-      );
-    });
+    const unknownPlayer = {
+      id: player.id,
+      name: player.name || 'Unknown Player',
+      nation: player.nation || '',
+      position: player.position || '',
+      specificPosition: player.specificPosition || '',
+      club: player.club || '',
+      category: UNKNOWN_CATEGORY,
+      initialCategory: UNKNOWN_CATEGORY,
+      rating: 0,
+      score: 0,
+      comparisons: 0,
+      wins: 0,
+      losses: 0,
+      draws: 0,
+      isAnchor: false,
+      isRanked: true,
+    };
 
-    if (after.level > before.level) {
 
-      const { current } = after;
+    const rankingsBefore = myRankings.filter(
+      rankedPlayer =>
+        String(rankedPlayer.id) !==
+        String(player.id)
+    );
 
-      messages.push(
-        `${current.badge} You're now Level ${after.level}: ${current.title}.` +
-          (current.unlocks
-            ? ` ${unlockName(current.unlocks)} players are now unlocked.`
-            : '')
-      );
 
-    }
+    setMyRankings(
+      previousRankings => [
+        ...previousRankings.filter(
+          rankedPlayer =>
+            String(rankedPlayer.id) !==
+            String(player.id)
+        ),
+        unknownPlayer,
+      ]
+    );
 
-    if (messages.length > 0) {
 
-      Alert.alert(
-        after.level > before.level
-          ? 'LEVEL UP!'
-          : 'CLUB COMPLETE!',
-        messages.join('\n\n')
-      );
+    // Any old H2H results for them no longer apply.
+    setComparisonHistory(
+      previousHistory =>
+        previousHistory.filter(
+          comparison =>
+            String(comparison.playerA) !==
+              String(player.id) &&
+            String(comparison.playerB) !==
+              String(player.id)
+        )
+    );
 
-    }
+
+    announceProgress(
+      rankingsBefore,
+      [
+        ...rankingsBefore,
+        unknownPlayer,
+      ]
+    );
 
   };
 
@@ -447,6 +546,31 @@ export default function App() {
     player,
     category,
   }) => {
+
+
+    // An Unknown player being ranked properly earns their
+    // XP now, which may complete a level.
+    const wasUnknown = myRankings.some(
+      rankedPlayer =>
+        String(rankedPlayer.id) ===
+          String(player.id) &&
+        isUnknown(rankedPlayer)
+    );
+
+    if (wasUnknown) {
+
+      announceProgress(
+        myRankings,
+        myRankings.map(rankedPlayer =>
+          String(rankedPlayer.id) ===
+          String(player.id)
+            ? { ...rankedPlayer, category }
+            : rankedPlayer
+        )
+      );
+
+    }
+
 
     console.log(
       'FOTRANKR CATEGORY CHANGE:',
@@ -1372,6 +1496,10 @@ export default function App() {
 
                 onRankAgain={
                   handleRankAgain
+                }
+
+                onMarkUnknown={
+                  handleMarkUnknown
                 }
 
               />

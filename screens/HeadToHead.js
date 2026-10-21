@@ -14,7 +14,10 @@ import {
 
 import players from '../players';
 
-import { getLock } from '../utils/progression';
+import {
+  getLock,
+  isUnknown,
+} from '../utils/progression';
 
 import {
   getFlag,
@@ -186,11 +189,20 @@ export default function HeadToHead({
 
   const buildOpponentPool = () => {
 
+    // "I DO NOT KNOW" players have no real rating, so they
+    // are never used as opponents.
+    const unknownIds = new Set(
+      (myRankings || [])
+        .filter(isUnknown)
+        .map(ranking => String(ranking.id))
+    );
+
     return players
       .filter(
         databasePlayer =>
           String(databasePlayer.id) !==
-          String(targetPlayer.id)
+            String(targetPlayer.id) &&
+          !unknownIds.has(String(databasePlayer.id))
       )
       .map(
         databasePlayer => {

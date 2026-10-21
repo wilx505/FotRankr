@@ -12,6 +12,7 @@ import {
 
 import {
   getLock,
+  isUnknown,
   lockMessage,
 } from '../utils/progression';
 
@@ -25,6 +26,7 @@ export default function CompareScreen({
   onAnchorSelected,
   onCategoryChanged,
   onRankAgain,
+  onMarkUnknown,
   isPlayerRanked,
   myRankings,
 
@@ -33,6 +35,58 @@ export default function CompareScreen({
   const { player } = route.params;
   const [rankingReset, setRankingReset] =
   useState(false);
+
+  const currentRanking = (myRankings || []).find(
+    ranking =>
+      String(ranking.id) === String(player.id)
+  );
+
+  // Marked "I DO NOT KNOW" earlier: picking a category
+  // now ranks them properly.
+  const playerIsUnknown =
+    !rankingReset && isUnknown(currentRanking);
+
+
+  // ==================================================
+  // I DO NOT KNOW
+  // ==================================================
+
+  const markUnknown = () => {
+
+    const save = () => {
+      onMarkUnknown({ player });
+      navigation.goBack();
+    };
+
+    if (playerIsUnknown) {
+      navigation.goBack();
+      return;
+    }
+
+    // Replacing a real ranking: check first.
+    if (isPlayerRanked && !rankingReset) {
+
+      Alert.alert(
+        `Don't know ${player.name}?`,
+        `This replaces ${player.name}'s current ranking with Unknown (0.00).`,
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'Mark Unknown',
+            style: 'destructive',
+            onPress: save,
+          },
+        ]
+      );
+
+      return;
+    }
+
+    save();
+  };
 
 
   // ==================================================
@@ -333,7 +387,7 @@ const rankAgain = () => {
     RANK AGAIN
     ================================================= */}
 
-{isPlayerRanked && (
+{isPlayerRanked && !playerIsUnknown && (
 
   <TouchableOpacity
     style={styles.rankAgainButton}
@@ -520,6 +574,41 @@ const rankAgain = () => {
 
         )
       )}
+
+
+      {/* =================================================
+          I DO NOT KNOW
+          ================================================= */}
+
+      <TouchableOpacity
+        style={styles.unknownBox}
+        onPress={markUnknown}
+        activeOpacity={0.72}
+      >
+
+        <View style={styles.unknownNumberBox}>
+
+          <Text style={styles.unknownNumber}>
+            ?
+          </Text>
+
+        </View>
+
+        <View style={styles.categoryDetails}>
+
+          <Text style={styles.unknownName}>
+            I DO NOT KNOW
+          </Text>
+
+          <Text style={styles.description}>
+            {playerIsUnknown
+              ? 'Already marked as unknown. Pick a category above to rank them properly.'
+              : 'Counts as ranked (0 XP, score 0.00). Rank them properly any time.'}
+          </Text>
+
+        </View>
+
+      </TouchableOpacity>
 
 
       {/* =================================================
@@ -809,6 +898,45 @@ rankAgainArrow: {
     marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+
+  unknownBox: {
+    backgroundColor: '#0b0b0b',
+    borderWidth: 1,
+    borderColor: '#3a3a3a',
+    borderStyle: 'dashed',
+    borderRadius: 16,
+    minHeight: 80,
+    paddingHorizontal: 13,
+    paddingVertical: 13,
+    marginTop: 6,
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  unknownNumberBox: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 1,
+    borderColor: '#555555',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 13,
+  },
+
+  unknownNumber: {
+    color: '#888888',
+    fontSize: 18,
+    fontWeight: '900',
+  },
+
+  unknownName: {
+    color: '#aaaaaa',
+    fontSize: 17,
+    fontWeight: '900',
+    letterSpacing: 0.5,
   },
 
   numberBox: {

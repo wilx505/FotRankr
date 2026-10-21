@@ -25,6 +25,7 @@ import {
   getLock,
   getProgress,
   getUnlockLevel,
+  isUnknown,
   lockMessage,
   unlockedGroups,
 } from '../utils/progression';
@@ -57,6 +58,12 @@ export default function SearchScreen({
     (myRankings || []).map(
       ranking => String(ranking.id)
     )
+  );
+
+  const unknownIds = new Set(
+    (myRankings || [])
+      .filter(isUnknown)
+      .map(ranking => String(ranking.id))
   );
 
   const filteredPlayers =
@@ -321,13 +328,23 @@ export default function SearchScreen({
         ) : rankedIds.has(String(player.id)) ? (
 
           <View
-            style={styles.rankedPill}
+            style={[
+              styles.rankedPill,
+              unknownIds.has(String(player.id)) &&
+                styles.unknownPill,
+            ]}
           >
 
             <Text
-              style={styles.rankedPillText}
+              style={[
+                styles.rankedPillText,
+                unknownIds.has(String(player.id)) &&
+                  styles.unknownPillText,
+              ]}
             >
-              ✓ RANKED
+              {unknownIds.has(String(player.id))
+                ? '? UNKNOWN'
+                : '✓ RANKED'}
             </Text>
 
           </View>
@@ -1006,6 +1023,14 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: -3,
     marginRight: -5,
+  },
+
+  unknownPill: {
+    backgroundColor: '#1d1d1d',
+  },
+
+  unknownPillText: {
+    color: '#999999',
   },
 
   rankedPillText: {

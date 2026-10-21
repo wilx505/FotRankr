@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
 
+import { isUnknown } from '../utils/progression';
+
 import {
   ScrollView,
   StyleSheet,
@@ -123,7 +125,10 @@ export default function AddPlayersToListScreen({
       String(route.params?.listId)
   );
 
-  const ranked = myRankings || [];
+  // "I DO NOT KNOW" players can't go in lists.
+  const ranked = (myRankings || []).filter(
+    player => !isUnknown(player)
+  );
 
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('ALL');

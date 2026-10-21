@@ -42,7 +42,7 @@ import {
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const DATA_VERSION = '58';
+const DATA_VERSION = '59';
 
 
 export default function App() {

@@ -2996,9 +2996,10 @@ const PLAYERS = [
     "specificPosition": "Attacking Midfield",
     "club": "West Ham United",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
       "Brasileirao",
+      "Championship",
       "Ligue 1",
       "Premier League",
       "Serie A"
@@ -4527,8 +4528,9 @@ const PLAYERS = [
     "specificPosition": "Right-Back",
     "club": "Burnley FC",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Premier League",
       "Serie A"
     ]
@@ -4899,8 +4901,9 @@ const PLAYERS = [
     "specificPosition": "Right Winger",
     "club": "West Ham United",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Premier League"
     ]
   },
@@ -5004,8 +5007,9 @@ const PLAYERS = [
     "specificPosition": "Defensive Midfield",
     "club": "Sheffield United",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Premier League"
     ]
   },
@@ -6173,8 +6177,9 @@ const PLAYERS = [
     "specificPosition": "Defensive Midfield",
     "club": "West Ham United",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Czech First League",
       "Premier League"
     ]
@@ -6401,8 +6406,9 @@ const PLAYERS = [
     "specificPosition": "Centre-Forward",
     "club": "Wolverhampton Wanderers",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Eliteserien",
       "Eredivisie",
       "La Liga",
@@ -8561,9 +8567,10 @@ const PLAYERS = [
     "specificPosition": "Central Midfield",
     "club": "Wolverhampton Wanderers",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
       "Brasileirao",
+      "Championship",
       "Premier League"
     ]
   },
@@ -8884,8 +8891,9 @@ const PLAYERS = [
     "specificPosition": "Central Midfield",
     "club": "Southampton FC",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Premier League"
     ]
   },
@@ -8996,8 +9004,9 @@ const PLAYERS = [
     "specificPosition": "Centre-Back",
     "club": "West Ham United",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Premier League"
     ]
   },
@@ -10214,8 +10223,9 @@ const PLAYERS = [
     "specificPosition": "Defensive Midfield",
     "club": "West Ham United",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Eredivisie",
       "Liga MX",
       "Premier League",
@@ -12171,8 +12181,9 @@ const PLAYERS = [
     "specificPosition": "Centre-Forward",
     "club": "West Ham United",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Premier League"
     ]
   },
@@ -12745,7 +12756,7 @@ const PLAYERS = [
     "nation": "Nigeria",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Nottingham Forest",
+    "club": "Coventry City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -12777,8 +12788,9 @@ const PLAYERS = [
     "specificPosition": "Right Winger",
     "club": "Burnley FC",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Eredivisie",
       "Premier League",
       "Primeira Liga"
@@ -13358,8 +13370,9 @@ const PLAYERS = [
     "specificPosition": "Centre-Forward",
     "club": "Burnley FC",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Eredivisie",
       "Premier League"
     ]
@@ -14422,9 +14435,10 @@ const PLAYERS = [
     "specificPosition": "Defensive Midfield",
     "club": "West Ham United",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
       "Argentine Primera Division",
+      "Championship",
       "La Liga",
       "Liga MX",
       "Premier League"
@@ -14663,8 +14677,9 @@ const PLAYERS = [
     "specificPosition": "Centre-Forward",
     "club": "West Ham United",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "La Liga",
       "MLS",
       "Premier League",
@@ -14725,8 +14740,9 @@ const PLAYERS = [
     "specificPosition": "Centre-Back",
     "club": "Wolverhampton Wanderers",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Premier League",
       "Primeira Liga",
       "Swiss Super League"
@@ -14867,9 +14883,10 @@ const PLAYERS = [
     "specificPosition": "Defensive Midfield",
     "club": "Wolverhampton Wanderers",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
       "Brasileirao",
+      "Championship",
       "Premier League"
     ]
   },
@@ -14896,8 +14913,9 @@ const PLAYERS = [
     "specificPosition": "Centre-Back",
     "club": "Burnley FC",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Ligue 1",
       "Premier League"
     ]
@@ -16869,8 +16887,9 @@ const PLAYERS = [
     "specificPosition": "Right-Back",
     "club": "West Ham United",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Premier League"
     ]
   },
@@ -17972,8 +17991,9 @@ const PLAYERS = [
     "specificPosition": "Defensive Midfield",
     "club": "Burnley FC",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Championship",
     "leagues": [
+      "Championship",
       "Ligue 1",
       "Premier League"
     ]
@@ -18285,10 +18305,11 @@ const PLAYERS = [
     "nation": "Greece",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Olympiakos Syndesmos Filathlon Peiraios",
+    "club": "Hull City",
     "active": true,
-    "currentLeague": "Super League Greece",
+    "currentLeague": "Premier League",
     "leagues": [
+      "Premier League",
       "Super League Greece"
     ]
   },
@@ -18451,6 +18472,737 @@ const PLAYERS = [
     "currentLeague": "Ligue 1",
     "leagues": [
       "Ligue 1"
+    ]
+  },
+  {
+    "id": "tm-128899",
+    "name": "Jack Butland",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-463613",
+    "name": "Yann Gboho",
+    "nation": "France",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Eredivisie",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-554389",
+    "name": "Konstantinos Tzolakis",
+    "nation": "Greece",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Super League Greece"
+    ]
+  },
+  {
+    "id": "tm-696589",
+    "name": "Tim Iroegbunam",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-986288",
+    "name": "Sidiki Chérif",
+    "nation": "Guinea",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League",
+      "Super Lig"
+    ]
+  },
+  {
+    "id": "tm-1131161",
+    "name": "Robinio Vaz",
+    "nation": "France",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-250478",
+    "name": "Matt Targett",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-315291",
+    "name": "Haji Wright",
+    "nation": "United States",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Danish Superliga",
+      "Eredivisie",
+      "Premier League",
+      "Super Lig"
+    ]
+  },
+  {
+    "id": "tm-322985",
+    "name": "Gustavo Hamer",
+    "nation": "Netherlands",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Eredivisie",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-646353",
+    "name": "Carl Rushworth",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-728733",
+    "name": "Brooke Norton-Cuffy",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-271495",
+    "name": "Abdülkadir Ömür",
+    "nation": "Türkiye",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Super Lig"
+    ]
+  },
+  {
+    "id": "tm-298477",
+    "name": "Oli McBurnie",
+    "nation": "Scotland",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-442248",
+    "name": "Ethan Pinnock",
+    "nation": "Jamaica",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-524315",
+    "name": "Hidemasa Morita",
+    "nation": "Japan",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "J1 League",
+      "Premier League",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-607226",
+    "name": "Loum Tchaouna",
+    "nation": "France",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Championship",
+      "Ligue 1",
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-670847",
+    "name": "Mohamed-Ali Cho",
+    "nation": "France",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-475416",
+    "name": "Sorba Thomas",
+    "nation": "Wales",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-121324",
+    "name": "John Egan",
+    "nation": "Ireland",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-620313",
+    "name": "Lucas Gourna-Douath",
+    "nation": "France",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Austrian Bundesliga",
+      "Ligue 1",
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-1035765",
+    "name": "Ilyas Ansah",
+    "nation": "Germany",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-421637",
+    "name": "Frank Onyeka",
+    "nation": "Nigeria",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Danish Superliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-635645",
+    "name": "Aurèle Amenda",
+    "nation": "Switzerland",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Premier League",
+      "Swiss Super League"
+    ]
+  },
+  {
+    "id": "tm-923535",
+    "name": "Jens Hjertø-Dahl",
+    "nation": "Norway",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Eliteserien",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1240763",
+    "name": "Caleb Yirenkyi",
+    "nation": "Ghana",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Danish Superliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-258915",
+    "name": "Jay Dasilva",
+    "nation": "Wales",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-504581",
+    "name": "Ryan Giles",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-503980",
+    "name": "Joe Gelhardt",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-535834",
+    "name": "Eliot Matazo",
+    "nation": "Belgium",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1034853",
+    "name": "Nobel Mendy",
+    "nation": "Senegal",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-265471",
+    "name": "Matt Grimes",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-587335",
+    "name": "Milan van Ewijk",
+    "nation": "Netherlands",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Eredivisie",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-167268",
+    "name": "Paddy McNair",
+    "nation": "Northern Ireland",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "MLS",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-251912",
+    "name": "Semi Ajayi",
+    "nation": "Nigeria",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-511550",
+    "name": "Ellis Simms",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-687622",
+    "name": "Elliot Stroud",
+    "nation": "Sweden",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Allsvenskan",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1279984",
+    "name": "Lucas Herrington",
+    "nation": "Australia",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "A-League",
+      "MLS",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-857079",
+    "name": "Mohamed Belloumi",
+    "nation": "Algeria",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-473080",
+    "name": "Regan Slater",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-258916",
+    "name": "Kieran Dowell",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-412823",
+    "name": "Joel Latibeaudiere",
+    "nation": "Jamaica",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Eredivisie",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-663264",
+    "name": "Darko Gyabi",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-353775",
+    "name": "David Akintola",
+    "nation": "Nigeria",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Danish Superliga",
+      "Eliteserien",
+      "Premier League",
+      "Super Lig"
+    ]
+  },
+  {
+    "id": "tm-626888",
+    "name": "Kaine Kesler-Hayden",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-527425",
+    "name": "Luke Woolfenden",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-788283",
+    "name": "Bobby Thomas",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-617408",
+    "name": "Tatsuhiro Sakamoto",
+    "nation": "Japan",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-169416",
+    "name": "Matt Crooks",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-403692",
+    "name": "Victor Torp",
+    "nation": "Denmark",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Danish Superliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-308431",
+    "name": "Dillon Phillips",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-451747",
+    "name": "Brandon Thomas-Asante",
+    "nation": "Ghana",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1049020",
+    "name": "Stephen Mfuni",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
     ]
   },
   {
@@ -19103,6 +19855,162 @@ const PLAYERS = [
       "Serie A",
       "Super Lig"
     ]
+  },
+  {
+    "id": "manual-lewie-coyle",
+    "name": "Lewie Coyle",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-charlie-hughes",
+    "name": "Charlie Hughes",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-oscar-zambrano",
+    "name": "Óscar Zambrano",
+    "nation": "Ecuador",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-ben-wilson",
+    "name": "Ben Wilson",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-dan-bentley",
+    "name": "Dan Bentley",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-luke-bell",
+    "name": "Luke Bell",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-oscar-varney",
+    "name": "Oscar Varney",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-jake-bidwell",
+    "name": "Jake Bidwell",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-riccardo-di-trolio",
+    "name": "Riccardo Di Trolio",
+    "nation": "Italy",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-jack-rudoni",
+    "name": "Jack Rudoni",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-ephron-mason-clark",
+    "name": "Ephron Mason-Clark",
+    "nation": "Jamaica",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-josh-eccles",
+    "name": "Josh Eccles",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
   }
 ];
 

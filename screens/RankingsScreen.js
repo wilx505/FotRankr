@@ -14,7 +14,7 @@ export default function RankingsScreen({
 }) {
 
   const [showPosition, setShowPosition] =
-    useState('All');
+    useState('Attack');
 
   const [expandedPosition, setExpandedPosition] =
     useState(null);
@@ -24,25 +24,69 @@ export default function RankingsScreen({
   // POSITION FILTER
   // ==================================================
 
+  // Maps each filter button to the position names used
+  // in the players data (Transfermarkt: "Defence",
+  // "Midfield", "Centre-Forward", ...).
+
+  const positionFilters = {
+    Attack: { position: 'Attack' },
+    Striker: {
+      specificPosition: [
+        'Centre-Forward',
+        'Second Striker',
+      ],
+    },
+    'Left Winger': {
+      specificPosition: ['Left Winger'],
+    },
+    'Right Winger': {
+      specificPosition: ['Right Winger'],
+    },
+
+    Midfielder: { position: 'Midfield' },
+    'Defensive Midfielder': {
+      specificPosition: ['Defensive Midfield'],
+    },
+    'Central Midfielder': {
+      specificPosition: ['Central Midfield'],
+    },
+    'Attacking Midfielder': {
+      specificPosition: ['Attacking Midfield'],
+    },
+
+    Defender: { position: 'Defence' },
+    'Centre-Back': {
+      specificPosition: ['Centre-Back'],
+    },
+    'Right-Back': {
+      specificPosition: ['Right-Back'],
+    },
+    'Left-Back': {
+      specificPosition: ['Left-Back'],
+    },
+
+    Goalkeeper: { position: 'Goalkeeper' },
+  };
+
+  const activeFilter =
+    positionFilters[showPosition];
+
   const filteredPlayers =
-    showPosition === 'All'
+    !activeFilter
       ? myRankings
-      : showPosition === 'Attack' ||
-        showPosition === 'Midfielder' ||
-        showPosition === 'Defender' ||
-        showPosition === 'Goalkeeper'
+      : activeFilter.position
 
         ? myRankings.filter(
             player =>
-              player.position?.toLowerCase() ===
-              showPosition.toLowerCase()
+              player.position ===
+              activeFilter.position
           )
 
         : myRankings.filter(
             player =>
-              player.specificPosition
-                ?.toLowerCase() ===
-              showPosition.toLowerCase()
+              activeFilter.specificPosition.includes(
+                player.specificPosition
+              )
           );
 
 
@@ -460,34 +504,6 @@ export default function RankingsScreen({
         </Text>
 
 
-        {/* ALL */}
-
-        <TouchableOpacity
-          style={[
-            styles.filterButton,
-            showPosition === 'All' &&
-              styles.filterButtonActive,
-          ]}
-          onPress={() => {
-            setExpandedPosition(null);
-            goToPosition('All');
-          }}
-          activeOpacity={0.8}
-        >
-
-          <Text
-            style={[
-              styles.filterText,
-              showPosition === 'All' &&
-                styles.filterTextActive,
-            ]}
-          >
-            ALL PLAYERS
-          </Text>
-
-        </TouchableOpacity>
-
-
         {/* ATTACK */}
 
         <TouchableOpacity
@@ -850,6 +866,34 @@ export default function RankingsScreen({
 
         </TouchableOpacity>
 
+
+        {/* ALL */}
+
+        <TouchableOpacity
+          style={[
+            styles.filterButton,
+            showPosition === 'All' &&
+              styles.filterButtonActive,
+          ]}
+          onPress={() => {
+            setExpandedPosition(null);
+            goToPosition('All');
+          }}
+          activeOpacity={0.8}
+        >
+
+          <Text
+            style={[
+              styles.filterText,
+              showPosition === 'All' &&
+                styles.filterTextActive,
+            ]}
+          >
+            ALL PLAYERS
+          </Text>
+
+        </TouchableOpacity>
+
       </View>
 
 
@@ -882,7 +926,7 @@ export default function RankingsScreen({
 
       {filteredPlayers.length > 0 && (
   <Text style={styles.challengeHint}>
-    TAP A PLAYER TO COMPETE IN A CHALLENGE
+    TAP A PLAYER TO CHALLENGE FOR A HIGHER RANK
   </Text>
 )}
 

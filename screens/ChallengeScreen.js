@@ -14,6 +14,7 @@ export default function ChallengeScreen({
 
   const {
     player,
+    opponentIds,
   } = route.params || {};
 
 
@@ -39,6 +40,9 @@ export default function ChallengeScreen({
   // - Specific position
   // - H2H history
   // - Automatic H2H limit
+  //
+  // The only optional limit: when opened from a list,
+  // opponentIds restricts it to that list's players.
   // --------------------------------------------------
 
   const opponents = [...(myRankings || [])]
@@ -46,6 +50,13 @@ export default function ChallengeScreen({
       ranking =>
         String(ranking.id) !==
         String(player?.id)
+    )
+    .filter(
+      ranking =>
+        !opponentIds ||
+        opponentIds.includes(
+          String(ranking.id)
+        )
     )
     .sort(
       (a, b) =>
@@ -136,10 +147,12 @@ export default function ChallengeScreen({
         </Text>
 
 
-        {/* ALL PLAYERS */}
+        {/* ALL PLAYERS / LIST PLAYERS */}
 
         <Text style={styles.positionLabel}>
-          ALL RANKED PLAYERS
+          {opponentIds
+            ? 'PLAYERS IN THIS LIST'
+            : 'ALL RANKED PLAYERS'}
         </Text>
 
 
@@ -552,4 +565,3 @@ const styles = StyleSheet.create({
   },
 
 });
-

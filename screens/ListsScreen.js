@@ -63,11 +63,6 @@ export default function ListsScreen({
           navigation.navigate('CreateList')
         }
         activeOpacity={0.75}
-          onPress={() =>
-    navigation.navigate('ListDetail', {
-      list,
-    })
-  }
       >
 
         <View style={styles.createIcon}>
@@ -124,7 +119,7 @@ export default function ListsScreen({
               activeOpacity={0.75}
               onPress={() =>
                 navigation.navigate('ListDetail', {
-                  list,
+                  listId: list.id,
                 })
               }
             >
@@ -147,7 +142,7 @@ export default function ListsScreen({
                 </Text>
 
                 <Text style={styles.listMeta}>
-                  {list.players?.length || 0}
+                  {list.playerIds?.length || 0}
                   {' '}
                   players
                 </Text>

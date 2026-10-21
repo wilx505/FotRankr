@@ -33,11 +33,15 @@ import {
   createPlayer,
 } from './engine/rankingEngine.js';
 
+import {
+  normaliseList,
+} from './utils/listHelpers';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const DATA_VERSION = '55';
+const DATA_VERSION = '57';
 
 
 export default function App() {
@@ -151,7 +155,11 @@ export default function App() {
 
           if (Array.isArray(parsedLists)) {
 
-            setLists(parsedLists);
+            // Converts old lists ({ players: [...] })
+            // into the new shape ({ playerIds: [...] }).
+            setLists(
+              parsedLists.map(normaliseList)
+            );
 
           }
 
@@ -740,18 +748,18 @@ export default function App() {
 
 
   // =====================================================
-  // ADD PLAYERS TO CUSTOM LIST
+  // SET PLAYERS IN A CUSTOM LIST (by ID)
   // =====================================================
 
   const handlePlayersAdded = ({
     listId,
-    players,
+    playerIds,
   }) => {
 
     console.log(
       'FOTRANKR LIST PLAYERS UPDATED:',
       listId,
-      players
+      playerIds
     );
 
 
@@ -771,10 +779,34 @@ export default function App() {
 
           return {
             ...list,
-            players: players,
+            playerIds: playerIds.map(String),
           };
 
         })
+    );
+
+  };
+
+
+  // =====================================================
+  // DELETE A CUSTOM LIST
+  // =====================================================
+
+  const handleDeleteList = (listId) => {
+
+    console.log(
+      'FOTRANKR LIST DELETED:',
+      listId
+    );
+
+
+    setLists(
+      previousLists =>
+        previousLists.filter(
+          list =>
+            String(list.id) !==
+            String(listId)
+        )
     );
 
   };
@@ -976,6 +1008,8 @@ export default function App() {
             <AddPlayersToListScreen
               navigation={navigation}
               route={route}
+              lists={lists}
+              myRankings={myRankings}
               onPlayersAdded={handlePlayersAdded}
             />
 
@@ -983,23 +1017,34 @@ export default function App() {
 
         </Stack.Screen>
 
-{/* =================================================
-    LIST DETAIL
-    ================================================= */}
 
-<Stack.Screen
-  name="ListDetail"
-  options={{
-    headerShown: false,
-  }}
->
-  {({ navigation, route }) => (
-    <ListDetailScreen
-      navigation={navigation}
-      route={route}
-    />
-  )}
-</Stack.Screen>
+        {/* =================================================
+            LIST DETAIL
+            ================================================= */}
+
+        <Stack.Screen
+          name="ListDetail"
+          options={{
+            headerShown: false,
+          }}
+        >
+
+          {({ navigation, route }) => (
+
+            <ListDetailScreen
+              navigation={navigation}
+              route={route}
+              lists={lists}
+              myRankings={myRankings}
+              onPlayersChanged={handlePlayersAdded}
+              onDeleteList={handleDeleteList}
+            />
+
+          )}
+
+        </Stack.Screen>
+
+
         {/* =================================================
             CHALLENGE
             ================================================= */}

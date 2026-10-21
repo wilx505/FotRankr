@@ -1,10 +1,10 @@
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 import { useState } from 'react';
@@ -24,18 +24,19 @@ export default function CreateListScreen({
       return;
     }
 
- const newList = {
-  id: Date.now().toString(),
-  name: listName,
-  players: [],
-  createdAt: new Date().toISOString(),
-};
+    const newList = {
+      id: Date.now().toString(),
+      name: trimmedName,
+      playerIds: [],
+      createdAt: new Date().toISOString(),
+    };
 
-onCreateList(newList);
+    onCreateList(newList);
 
-navigation.navigate('AddPlayersToList', {
-  list: newList,
-});
+    navigation.navigate('AddPlayersToList', {
+      listId: newList.id,
+    });
+
   };
 
   return (

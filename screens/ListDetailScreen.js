@@ -1,21 +1,120 @@
+import { useState } from 'react';
 
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+
+import {
+  getActiveStatus,
+  getListPlayers,
+  hasStatusData,
+} from '../utils/listHelpers';
+
 
 export default function ListDetailScreen({
   navigation,
   route,
+  lists,
+  myRankings,
+  onPlayersChanged,
+  onDeleteList,
 }) {
-  const list = route.params?.list;
 
-  const players = list?.players || [];
+  const list = (lists || []).find(
+    item =>
+      String(item.id) ===
+      String(route.params?.listId)
+  );
+
+  const [view, setView] = useState('ALL');
+
+  // Always derived live from your rankings, best first.
+  const allPlayers = getListPlayers(list, myRankings);
+
+  const showViews = hasStatusData(allPlayers);
+
+  const players =
+    view === 'ALL'
+      ? allPlayers
+      : allPlayers.filter(
+          player =>
+            getActiveStatus(player.id) ===
+            (view === 'ACTIVE')
+        );
+
+
+  const removePlayer = id => {
+
+    onPlayersChanged({
+      listId: list.id,
+      playerIds: (list.playerIds || []).filter(
+        item => String(item) !== String(id)
+      ),
+    });
+
+  };
+
+  // Opens the existing Challenge screen, limited to
+  // the other players in this list.
+  const challengePlayer = player => {
+
+    navigation.navigate('Challenge', {
+      player,
+      opponentIds: allPlayers.map(item =>
+        String(item.id)
+      ),
+    });
+
+  };
+
+
+  // Asks first, then leaves the screen and deletes.
+  // Your player rankings are not affected.
+  const confirmDelete = () => {
+
+    Alert.alert(
+      'Delete list?',
+      `"${list?.name}" will be deleted. ` +
+        'Your player rankings won\'t be affected.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            navigation.goBack();
+            onDeleteList(list.id);
+          },
+        },
+      ]
+    );
+
+  };
+
+
+  if (!list) {
+
+    return (
+      <View style={styles.container}>
+        <Text style={styles.missing}>
+          List not found.
+        </Text>
+      </View>
+    );
+
+  }
+
 
   return (
+
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.content}
@@ -23,6 +122,7 @@ export default function ListDetailScreen({
     >
 
       {/* HEADER */}
+
       <View style={styles.header}>
 
         <TouchableOpacity
@@ -40,43 +140,88 @@ export default function ListDetailScreen({
 
 
       {/* TITLE */}
+
       <Text style={styles.title}>
-        {list?.name || 'Your list'}
+        {list.name || 'Your list'}
       </Text>
 
       <Text style={styles.subtitle}>
-        {players.length} players in this list.
+        {allPlayers.length} players, ordered by
+        {' '}
+        your scores.
       </Text>
 
 
-      {/* ADD PLAYERS */}
+      {/* ADD / AUTO-FILL */}
+
       <TouchableOpacity
         style={styles.addButton}
         onPress={() =>
           navigation.navigate(
             'AddPlayersToList',
-            {
-              list,
-            }
+            { listId: list.id }
           )
         }
         activeOpacity={0.75}
       >
+
         <Text style={styles.addButtonText}>
-          ADD PLAYERS
+          ADD PLAYERS / AUTO-FILL
         </Text>
 
         <Text style={styles.addArrow}>
           →
         </Text>
+
       </TouchableOpacity>
 
 
-      {/* PLAYERS */}
+      {/* ACTIVE / RETIRED VIEW */}
+
+      {showViews && (
+
+        <View style={styles.viewRow}>
+
+          {['ALL', 'ACTIVE', 'RETIRED'].map(
+            option => (
+
+              <TouchableOpacity
+                key={option}
+                style={[
+                  styles.chip,
+                  view === option &&
+                    styles.chipActive,
+                ]}
+                onPress={() => setView(option)}
+                activeOpacity={0.75}
+              >
+
+                <Text
+                  style={[
+                    styles.chipText,
+                    view === option &&
+                      styles.chipTextActive,
+                  ]}
+                >
+                  {option}
+                </Text>
+
+              </TouchableOpacity>
+
+            )
+          )}
+
+        </View>
+
+      )}
+
+
+      {/* SECTION */}
+
       <View style={styles.sectionHeader}>
 
         <Text style={styles.sectionTitle}>
-          PLAYERS
+          RANKING
         </Text>
 
         <Text style={styles.sectionCount}>
@@ -86,8 +231,10 @@ export default function ListDetailScreen({
       </View>
 
 
-      {/* EMPTY STATE */}
+      {/* EMPTY */}
+
       {players.length === 0 && (
+
         <View style={styles.emptyState}>
 
           <Text style={styles.emptyTitle}>
@@ -95,53 +242,132 @@ export default function ListDetailScreen({
           </Text>
 
           <Text style={styles.emptyText}>
-            Add players to start building
-            this list.
+            Add players, or auto-fill this list
+            {' '}
+            from your highest scores.
           </Text>
 
         </View>
+
       )}
 
 
-      {/* PLAYER LIST */}
-      {players.map(player => (
+      {/* PLAYERS */}
 
-        <View
-          key={player.id}
-          style={styles.playerCard}
-        >
+      {players.map((player, index) => {
 
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>
-              {player.name
-                ?.charAt(0)
-                ?.toUpperCase()}
-            </Text>
+        const active =
+          getActiveStatus(player.id);
+
+        return (
+
+          <View
+            key={player.id}
+            style={styles.playerCard}
+          >
+
+            <View style={styles.rankCircle}>
+              <Text style={styles.rankNumber}>
+                {index + 1}
+              </Text>
+            </View>
+
+
+            <View style={styles.playerDetails}>
+
+              <Text style={styles.playerName}>
+                {player.name}
+              </Text>
+
+              <Text style={styles.playerInfo}>
+                {player.nation}
+                {' • '}
+                {player.specificPosition ||
+                  player.position ||
+                  'Footballer'}
+                {active === null
+                  ? ''
+                  : active
+                    ? ' • ACTIVE'
+                    : ' • RETIRED'}
+              </Text>
+
+              <Text style={styles.playerCategory}>
+                {player.category}
+              </Text>
+
+            </View>
+
+
+            <View style={styles.scoreBox}>
+
+              <Text style={styles.score}>
+                {typeof player.score === 'number'
+                  ? player.score.toFixed(2)
+                  : '—'}
+              </Text>
+
+              <Text style={styles.outOf}>
+                / 10
+              </Text>
+
+            </View>
+
+
+            {allPlayers.length >= 2 && (
+
+              <TouchableOpacity
+                style={styles.iconButton}
+                onPress={() =>
+                  challengePlayer(player)
+                }
+                activeOpacity={0.7}
+              >
+                <Text style={styles.iconText}>
+                  ⚔
+                </Text>
+              </TouchableOpacity>
+
+            )}
+
+
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() =>
+                removePlayer(player.id)
+              }
+              activeOpacity={0.7}
+            >
+              <Text style={styles.removeText}>
+                ✕
+              </Text>
+            </TouchableOpacity>
+
           </View>
 
+        );
 
-          <View style={styles.playerDetails}>
+      })}
 
-            <Text style={styles.playerName}>
-              {player.name}
-            </Text>
 
-            <Text style={styles.playerInfo}>
-              {player.nation}
-              {' • '}
-              {player.specificPosition ||
-                player.position ||
-                'Footballer'}
-            </Text>
+      {/* DELETE */}
 
-          </View>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={confirmDelete}
+        activeOpacity={0.75}
+      >
 
-        </View>
+        <Text style={styles.deleteText}>
+          DELETE LIST
+        </Text>
 
-      ))}
+      </TouchableOpacity>
 
     </ScrollView>
+
   );
+
 }
 
 
@@ -157,6 +383,12 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
   },
 
+  missing: {
+    color: '#777777',
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 120,
+  },
 
   // HEADER
 
@@ -180,7 +412,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
 
-
   // TITLE
 
   title: {
@@ -198,8 +429,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
 
-
-  // ADD BUTTON
+  // ADD
 
   addButton: {
     height: 62,
@@ -208,7 +438,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 32,
+    marginBottom: 24,
   },
 
   addButtonText: {
@@ -225,6 +455,40 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 
+  // VIEW CHIPS
+
+  viewRow: {
+    flexDirection: 'row',
+    marginBottom: 24,
+  },
+
+  chip: {
+    height: 34,
+    paddingHorizontal: 16,
+    borderRadius: 17,
+    borderWidth: 1,
+    borderColor: '#2a2a2a',
+    backgroundColor: '#101010',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8,
+  },
+
+  chipActive: {
+    borderColor: '#00ff66',
+    backgroundColor: '#00ff66',
+  },
+
+  chipText: {
+    color: '#888888',
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 0.8,
+  },
+
+  chipTextActive: {
+    color: '#050505',
+  },
 
   // SECTION
 
@@ -248,39 +512,39 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
 
-
   // PLAYER
 
   playerCard: {
-    minHeight: 76,
+    minHeight: 80,
     backgroundColor: '#0d0d0d',
     borderWidth: 1,
     borderColor: '#1d1d1d',
     borderRadius: 16,
-    paddingHorizontal: 14,
+    paddingHorizontal: 12,
     marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },
 
-  avatar: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: '#161616',
+  rankCircle: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: '#00ff66',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 13,
+    marginRight: 12,
   },
 
-  avatarText: {
-    color: '#00ff66',
-    fontSize: 16,
+  rankNumber: {
+    color: '#000000',
+    fontSize: 15,
     fontWeight: '900',
   },
 
   playerDetails: {
     flex: 1,
+    minWidth: 0,
   },
 
   playerName: {
@@ -291,10 +555,71 @@ const styles = StyleSheet.create({
 
   playerInfo: {
     color: '#666666',
-    fontSize: 12,
-    marginTop: 5,
+    fontSize: 11,
+    marginTop: 4,
   },
 
+  playerCategory: {
+    color: '#00ff66',
+    fontSize: 10,
+    fontWeight: '800',
+    marginTop: 4,
+  },
+
+  scoreBox: {
+    alignItems: 'flex-end',
+    marginLeft: 8,
+    marginRight: 4,
+  },
+
+  score: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '900',
+  },
+
+  outOf: {
+    color: '#555555',
+    fontSize: 10,
+  },
+
+  iconButton: {
+    width: 34,
+    height: 34,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 2,
+  },
+
+  iconText: {
+    color: '#00ff66',
+    fontSize: 17,
+  },
+
+  removeText: {
+    color: '#666666',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+
+  // DELETE
+
+  deleteButton: {
+    height: 52,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#4a1f1f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
+  },
+
+  deleteText: {
+    color: '#ff5a5a',
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 1.3,
+  },
 
   // EMPTY
 

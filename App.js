@@ -18,6 +18,7 @@ import {
 } from 'react';
 
 import AddPlayersToListScreen from './screens/AddPlayersToListScreen';
+import BackupScreen from './screens/BackupScreen';
 import ChallengeScreen from './screens/ChallengeScreen';
 import CompareScreen from './screens/CompareScreen';
 import CreateListScreen from './screens/CreateListScreen';
@@ -813,6 +814,59 @@ export default function App() {
 
 
   // =====================================================
+  // RESTORE FROM BACKUP
+  // =====================================================
+
+  const handleRestoreBackup = async ({
+    myRankings: restoredRankings,
+    lists: restoredLists,
+    comparisonHistory: restoredHistory,
+  }) => {
+
+    const normalisedLists =
+      restoredLists.map(normaliseList);
+
+
+    await AsyncStorage.setItem(
+      'myRankings',
+      JSON.stringify(restoredRankings)
+    );
+
+    await AsyncStorage.setItem(
+      'fotrankrLists',
+      JSON.stringify(normalisedLists)
+    );
+
+    await AsyncStorage.setItem(
+      'comparisonHistory',
+      JSON.stringify(restoredHistory)
+    );
+
+    // Always the CURRENT version, otherwise the next
+    // launch would treat the data as old and clear it.
+    await AsyncStorage.setItem(
+      'fotrankrDataVersion',
+      DATA_VERSION
+    );
+
+
+    setMyRankings(restoredRankings);
+    setLists(normalisedLists);
+    setComparisonHistory(restoredHistory);
+
+
+    console.log(
+      'FOTRANKR BACKUP RESTORED:',
+      restoredRankings.length,
+      'rankings,',
+      normalisedLists.length,
+      'lists'
+    );
+
+  };
+
+
+  // =====================================================
   // NAVIGATION
   // =====================================================
 
@@ -1062,6 +1116,33 @@ export default function App() {
               navigation={navigation}
               route={route}
               myRankings={myRankings}
+            />
+
+          )}
+
+        </Stack.Screen>
+
+
+        {/* =================================================
+            BACKUP
+            ================================================= */}
+
+        <Stack.Screen
+          name="Backup"
+          options={{
+            headerShown: false,
+          }}
+        >
+
+          {({ navigation }) => (
+
+            <BackupScreen
+              navigation={navigation}
+              myRankings={myRankings}
+              lists={lists}
+              comparisonHistory={comparisonHistory}
+              dataVersion={DATA_VERSION}
+              onRestore={handleRestoreBackup}
             />
 
           )}

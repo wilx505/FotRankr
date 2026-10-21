@@ -357,7 +357,9 @@ export default function RankingsScreen({
         style={styles.header}
       >
 
-        <View>
+        <View
+          style={styles.headerText}
+        >
 
           <Text
             style={styles.title}
@@ -372,6 +374,23 @@ export default function RankingsScreen({
           </Text>
 
         </View>
+
+
+        <TouchableOpacity
+          style={styles.backupButton}
+          onPress={() =>
+            navigation.navigate('Backup')
+          }
+          activeOpacity={0.7}
+        >
+
+          <Text
+            style={styles.backupButtonText}
+          >
+            BACKUP
+          </Text>
+
+        </TouchableOpacity>
 
       </View>
 
@@ -961,7 +980,32 @@ const styles = StyleSheet.create({
   // ==================================================
 
   header: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
     marginBottom: 25,
+  },
+
+  headerText: {
+    flex: 1,
+  },
+
+  backupButton: {
+    backgroundColor: '#111111',
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
+    borderRadius: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginLeft: 12,
+    marginTop: 6,
+  },
+
+  backupButtonText: {
+    color: '#00ff66',
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 1.2,
   },
 
   eyebrow: {

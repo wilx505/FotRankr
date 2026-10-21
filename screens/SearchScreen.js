@@ -1,4 +1,5 @@
 import {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,12 +12,43 @@ import { useState } from 'react';
 
 import players from '../players';
 
+import {
+  getLock,
+  getProgress,
+  getUnlockLevel,
+  lockMessage,
+  unlockedGroups,
+} from '../utils/progression';
+
 export default function SearchScreen({
   navigation,
+  myRankings,
 }) {
+
+  const progress = getProgress(myRankings);
 
   const [search, setSearch] =
     useState('');
+
+  // Banner tapped: browse everyone you can rank at your
+  // level, league -> club -> squad. Typing a search wins.
+  const [showAvailable, setShowAvailable] =
+    useState(false);
+
+  // The club opened from the browse list:
+  // { group, club } or null.
+  const [openClub, setOpenClub] =
+    useState(null);
+
+  const browsing =
+    showAvailable &&
+    search.trim().length === 0;
+
+  const rankedIds = new Set(
+    (myRankings || []).map(
+      ranking => String(ranking.id)
+    )
+  );
 
   const filteredPlayers =
     search.trim().length === 0
@@ -32,9 +64,105 @@ export default function SearchScreen({
               )
         );
 
+
+  // ==================================================
+  // BROWSE: LEAGUE -> CLUB -> PLAYERS
+  // ==================================================
+  // Retired players have no club, so they all sit
+  // under one "Legends" entry.
+
+  const clubsByGroup = new Map();
+
+  if (browsing) {
+
+    players
+      .filter(
+        player =>
+          getUnlockLevel(player.id) <=
+          progress.level
+      )
+      .forEach(player => {
+
+        const isLegend = player.active === false;
+
+        const group = isLegend
+          ? 'Legends'
+          : player.currentLeague || 'Other';
+
+        const club = isLegend
+          ? 'All Legends'
+          : player.club || 'No club';
+
+        if (!clubsByGroup.has(group)) {
+          clubsByGroup.set(group, new Map());
+        }
+
+        const clubs = clubsByGroup.get(group);
+
+        if (!clubs.has(club)) {
+          clubs.set(club, []);
+        }
+
+        clubs.get(club).push(player);
+      });
+  }
+
+  // Unlock order first (Premier League, La Liga, ...),
+  // then A-Z for the rest of the world.
+  const groupOrder = [...clubsByGroup.keys()].sort(
+    (a, b) => {
+
+      const levelOf = group =>
+        getUnlockLevel(
+          clubsByGroup.get(group)
+            .values().next().value[0].id
+        );
+
+      return (
+        levelOf(a) - levelOf(b) ||
+        a.localeCompare(b)
+      );
+    }
+  );
+
+  const openSquad = openClub
+    ? clubsByGroup
+        .get(openClub.group)
+        ?.get(openClub.club) || []
+    : [];
+
+  const POSITION_SECTIONS = [
+    { position: 'Goalkeeper', label: 'GOALKEEPERS' },
+    { position: 'Defence', label: 'DEFENDERS' },
+    { position: 'Midfield', label: 'MIDFIELDERS' },
+    { position: 'Attack', label: 'ATTACKERS' },
+  ];
+
+  const countRanked = squad =>
+    squad.filter(
+      player => rankedIds.has(String(player.id))
+    ).length;
+
   const selectPlayer = (
   player
 ) => {
+
+  const lock = getLock(player, myRankings);
+
+  if (lock) {
+
+    Alert.alert(
+      `🔒 ${player.name} is locked`,
+      `${lockMessage(lock)}\n\n` +
+        `You're Level ${progress.level} ` +
+        `(${progress.current.title}). Rank ` +
+        `${progress.playersToNextLevel} more ` +
+        `${progress.playersToNextLevel === 1 ? 'player' : 'players'} ` +
+        `to reach the next level.`
+    );
+
+    return;
+  }
 
   navigation.navigate(
     'Compare',
@@ -57,6 +185,166 @@ export default function SearchScreen({
 
     return player.position || 'Footballer';
   };
+
+  // ==================================================
+  // PLAYER CARD
+  // ==================================================
+
+  const renderPlayerCard = (player) => {
+
+    const lock = getLock(
+      player,
+      myRankings
+    );
+
+    return (
+
+      <TouchableOpacity
+        key={player.id}
+        style={[
+          styles.playerCard,
+          lock && styles.playerCardLocked,
+        ]}
+        onPress={() =>
+          selectPlayer(player)
+        }
+        activeOpacity={0.7}
+      >
+
+        {/* PLAYER MARKER */}
+
+        <View
+          style={styles.playerMarker}
+        >
+
+          <Text
+            style={
+              styles.playerMarkerText
+            }
+          >
+            {player.name
+              ?.charAt(0)
+              ?.toUpperCase()}
+          </Text>
+
+        </View>
+
+
+        {/* PLAYER INFORMATION */}
+
+        <View
+          style={
+            styles.playerDetails
+          }
+        >
+
+          <Text
+            style={
+              styles.playerName
+            }
+          >
+            {player.name}
+          </Text>
+
+          <View
+            style={
+              styles.infoRow
+            }
+          >
+
+            <Text
+              style={
+                styles.playerNation
+              }
+            >
+              {player.nation}
+            </Text>
+
+            <View
+              style={
+                styles.infoDot
+              }
+            />
+
+            <Text
+              style={
+                styles.playerInfo
+              }
+            >
+              {getPositionLabel(
+                player
+              )}
+            </Text>
+
+          </View>
+
+
+          {lock && (
+
+            <Text
+              style={styles.lockText}
+            >
+              {lockMessage(lock)}
+            </Text>
+
+          )}
+
+        </View>
+
+
+        {/* ARROW / LOCK / RANKED */}
+
+        {lock ? (
+
+          <View
+            style={styles.lockPill}
+          >
+
+            <Text
+              style={styles.lockPillText}
+            >
+              🔒 LV {lock.level}
+            </Text>
+
+          </View>
+
+        ) : rankedIds.has(String(player.id)) ? (
+
+          <View
+            style={styles.rankedPill}
+          >
+
+            <Text
+              style={styles.rankedPillText}
+            >
+              ✓ RANKED
+            </Text>
+
+          </View>
+
+        ) : (
+
+          <View
+            style={
+              styles.arrowContainer
+            }
+          >
+
+            <Text
+              style={styles.arrow}
+            >
+              →
+            </Text>
+
+          </View>
+
+        )}
+
+      </TouchableOpacity>
+
+    );
+  };
+
 
   return (
 
@@ -103,6 +391,48 @@ export default function SearchScreen({
         {' '}
         start ranking them.
       </Text>
+
+
+      {/* =================================================
+          LEVEL
+          ================================================= */}
+
+      <TouchableOpacity
+        style={[
+          styles.levelBanner,
+          browsing && styles.levelBannerActive,
+        ]}
+        onPress={() => {
+          setSearch('');
+          setOpenClub(null);
+          setShowAvailable(!browsing);
+        }}
+        activeOpacity={0.8}
+      >
+
+        <Text style={styles.levelBadge}>
+          {progress.current.badge}
+        </Text>
+
+        <View style={styles.levelDetails}>
+
+          <Text style={styles.levelTitle}>
+            LEVEL {progress.level} ·{' '}
+            {progress.current.title.toUpperCase()}
+          </Text>
+
+          <Text style={styles.levelText}>
+            You can rank:{' '}
+            {unlockedGroups(progress.level).join(', ')}
+          </Text>
+
+        </View>
+
+        <Text style={styles.levelArrow}>
+          {browsing ? '▲' : '▼'}
+        </Text>
+
+      </TouchableOpacity>
 
 
       {/* =================================================
@@ -153,11 +483,175 @@ export default function SearchScreen({
       </View>
 
 
-      {/* =================================================
-          EMPTY SEARCH
-          ================================================= */}
+      {browsing ? (
 
-      {search.trim().length === 0 ? (
+        openClub ? (
+
+          /* =================================================
+             CLUB SQUAD
+             ================================================= */
+
+          <View>
+
+            <TouchableOpacity
+              style={styles.backRow}
+              onPress={() => setOpenClub(null)}
+              activeOpacity={0.7}
+            >
+
+              <Text style={styles.backText}>
+                ‹  ALL CLUBS
+              </Text>
+
+            </TouchableOpacity>
+
+
+            <Text style={styles.clubTitle}>
+              {openClub.club}
+            </Text>
+
+            <Text style={styles.clubSubtitle}>
+              {openClub.group}
+              {'  ·  '}
+              {countRanked(openSquad)}/{openSquad.length} RANKED
+            </Text>
+
+
+            {POSITION_SECTIONS.map(section => {
+
+              const sectionPlayers = openSquad.filter(
+                player =>
+                  player.position === section.position
+              );
+
+              if (sectionPlayers.length === 0) {
+                return null;
+              }
+
+              return (
+
+                <View
+                  key={section.position}
+                  style={styles.positionSection}
+                >
+
+                  <View style={styles.resultsHeader}>
+
+                    <Text style={styles.resultsLabel}>
+                      {section.label}
+                    </Text>
+
+                    <Text style={styles.resultCount}>
+                      {sectionPlayers.length}
+                    </Text>
+
+                  </View>
+
+                  {sectionPlayers.map(renderPlayerCard)}
+
+                </View>
+
+              );
+            })}
+
+          </View>
+
+        ) : (
+
+          /* =================================================
+             CLUBS
+             ================================================= */
+
+          <View>
+
+            {groupOrder.map(group => {
+
+              const clubs = [
+                ...clubsByGroup.get(group).entries(),
+              ].sort(
+                ([a], [b]) => a.localeCompare(b)
+              );
+
+              return (
+
+                <View
+                  key={group}
+                  style={styles.positionSection}
+                >
+
+                  <View style={styles.resultsHeader}>
+
+                    <Text style={styles.resultsLabel}>
+                      {group.toUpperCase()}
+                    </Text>
+
+                    <Text style={styles.resultCount}>
+                      {clubs.length}
+                      {clubs.length === 1
+                        ? ' CLUB'
+                        : ' CLUBS'}
+                    </Text>
+
+                  </View>
+
+                  {clubs.map(([club, squad]) => (
+
+                    <TouchableOpacity
+                      key={club}
+                      style={styles.clubCard}
+                      onPress={() =>
+                        setOpenClub({ group, club })
+                      }
+                      activeOpacity={0.7}
+                    >
+
+                      <View style={styles.playerMarker}>
+
+                        <Text style={styles.playerMarkerText}>
+                          {club.charAt(0).toUpperCase()}
+                        </Text>
+
+                      </View>
+
+                      <View style={styles.playerDetails}>
+
+                        <Text style={styles.clubName}>
+                          {club}
+                        </Text>
+
+                        <Text style={styles.playerInfo}>
+                          {squad.length}
+                          {squad.length === 1
+                            ? ' player'
+                            : ' players'}
+                          {'  ·  '}
+                          {countRanked(squad)} ranked
+                        </Text>
+
+                      </View>
+
+                      <Text style={styles.clubArrow}>
+                        ›
+                      </Text>
+
+                    </TouchableOpacity>
+
+                  ))}
+
+                </View>
+
+              );
+            })}
+
+          </View>
+
+        )
+
+      ) : search.trim().length === 0 ? (
+
+        /* =================================================
+           EMPTY SEARCH
+           ================================================= */
 
         <View style={styles.emptyState}>
 
@@ -251,109 +745,7 @@ export default function SearchScreen({
 
           </View>
 
-
-          {filteredPlayers.map(
-            (player, index) => (
-
-              <TouchableOpacity
-                key={player.id}
-                style={styles.playerCard}
-                onPress={() =>
-                  selectPlayer(player)
-                }
-                activeOpacity={0.7}
-              >
-
-                {/* PLAYER MARKER */}
-
-                <View
-                  style={styles.playerMarker}
-                >
-
-                  <Text
-                    style={
-                      styles.playerMarkerText
-                    }
-                  >
-                    {player.name
-                      ?.charAt(0)
-                      ?.toUpperCase()}
-                  </Text>
-
-                </View>
-
-
-                {/* PLAYER INFORMATION */}
-
-                <View
-                  style={
-                    styles.playerDetails
-                  }
-                >
-
-                  <Text
-                    style={
-                      styles.playerName
-                    }
-                  >
-                    {player.name}
-                  </Text>
-
-                  <View
-                    style={
-                      styles.infoRow
-                    }
-                  >
-
-                    <Text
-                      style={
-                        styles.playerNation
-                      }
-                    >
-                      {player.nation}
-                    </Text>
-
-                    <View
-                      style={
-                        styles.infoDot
-                      }
-                    />
-
-                    <Text
-                      style={
-                        styles.playerInfo
-                      }
-                    >
-                      {getPositionLabel(
-                        player
-                      )}
-                    </Text>
-
-                  </View>
-
-                </View>
-
-
-                {/* ARROW */}
-
-                <View
-                  style={
-                    styles.arrowContainer
-                  }
-                >
-
-                  <Text
-                    style={styles.arrow}
-                  >
-                    →
-                  </Text>
-
-                </View>
-
-              </TouchableOpacity>
-
-            )
-          )}
+          {filteredPlayers.map(renderPlayerCard)}
 
         </View>
 
@@ -436,6 +828,56 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     marginTop: 11,
     marginBottom: 25,
+  },
+
+
+  // =====================================================
+  // LEVEL
+  // =====================================================
+
+  levelBanner: {
+    backgroundColor: '#0f0f0f',
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
+    borderRadius: 14,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 14,
+  },
+
+  levelBadge: {
+    fontSize: 24,
+    marginRight: 12,
+  },
+
+  levelDetails: {
+    flex: 1,
+  },
+
+  levelTitle: {
+    color: '#00ff66',
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+  },
+
+  levelText: {
+    color: '#777777',
+    fontSize: 12,
+    marginTop: 3,
+  },
+
+  levelBannerActive: {
+    borderColor: '#00ff66',
+  },
+
+  levelArrow: {
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '900',
+    marginLeft: 8,
   },
 
 
@@ -528,6 +970,112 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#1d1d1d',
+  },
+
+  rankedPill: {
+    backgroundColor: '#0d2b18',
+    borderRadius: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 9,
+    marginLeft: 10,
+  },
+
+  rankedPillText: {
+    color: '#00ff66',
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+  },
+
+
+  // =====================================================
+  // CLUBS
+  // =====================================================
+
+  positionSection: {
+    marginBottom: 18,
+  },
+
+  clubCard: {
+    backgroundColor: '#101010',
+    borderRadius: 15,
+    minHeight: 70,
+    paddingHorizontal: 15,
+    paddingVertical: 11,
+    marginBottom: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
+  },
+
+  clubName: {
+    color: '#ffffff',
+    fontSize: 17,
+    fontWeight: '800',
+    marginBottom: 4,
+  },
+
+  clubArrow: {
+    color: '#333333',
+    fontSize: 25,
+    fontWeight: '300',
+    marginLeft: 8,
+  },
+
+  backRow: {
+    alignSelf: 'flex-start',
+    paddingVertical: 6,
+    marginBottom: 8,
+  },
+
+  backText: {
+    color: '#00ff66',
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+  },
+
+  clubTitle: {
+    color: '#ffffff',
+    fontSize: 28,
+    fontWeight: '900',
+    letterSpacing: -0.8,
+  },
+
+  clubSubtitle: {
+    color: '#777777',
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 1,
+    marginTop: 5,
+    marginBottom: 20,
+  },
+
+  playerCardLocked: {
+    opacity: 0.55,
+  },
+
+  lockText: {
+    color: '#F39C12',
+    fontSize: 11,
+    fontWeight: '800',
+    marginTop: 5,
+  },
+
+  lockPill: {
+    backgroundColor: '#171717',
+    borderRadius: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 9,
+    marginLeft: 10,
+  },
+
+  lockPillText: {
+    color: '#F39C12',
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 0.5,
   },
 
   playerMarker: {

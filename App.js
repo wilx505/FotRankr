@@ -26,8 +26,13 @@ import HeadToHead from './screens/HeadToHead';
 import HomeScreen from './screens/HomeScreen';
 import ListDetailScreen from './screens/ListDetailScreen';
 import ListsScreen from './screens/ListsScreen';
+import ProfileScreen from './screens/ProfileScreen';
 import RankingsScreen from './screens/RankingsScreen';
 import SearchScreen from './screens/SearchScreen';
+
+import {
+  Alert,
+} from 'react-native';
 
 import {
   comparePlayers,
@@ -37,6 +42,12 @@ import {
 import {
   normaliseList,
 } from './utils/listHelpers';
+
+import {
+  PLAYERS_PER_LEVEL,
+  getProgress,
+  unlockName,
+} from './utils/progression';
 
 
 const Stack = createNativeStackNavigator();
@@ -64,6 +75,11 @@ export default function App() {
   const [dataLoaded, setDataLoaded] =
     useState(false);
 
+  // { username, photoUri, createdAt } or null.
+  // Not cleared by a DATA_VERSION change.
+  const [profile, setProfile] =
+    useState(null);
+
 
   // =====================================================
   // LOAD DATA
@@ -74,6 +90,16 @@ export default function App() {
     const loadData = async () => {
 
       try {
+
+        const savedProfile =
+          await AsyncStorage.getItem(
+            'fotrankrProfile'
+          );
+
+        if (savedProfile) {
+          setProfile(JSON.parse(savedProfile));
+        }
+
 
         const savedVersion =
           await AsyncStorage.getItem(
@@ -279,6 +305,27 @@ export default function App() {
 
 
   // =====================================================
+  // SAVE PROFILE
+  // =====================================================
+
+  const handleSaveProfile = (newProfile) => {
+
+    setProfile(newProfile);
+
+    AsyncStorage.setItem(
+      'fotrankrProfile',
+      JSON.stringify(newProfile)
+    ).catch(error =>
+      console.log(
+        'Error saving FotRankr profile:',
+        error
+      )
+    );
+
+  };
+
+
+  // =====================================================
   // FIRST PLAYER ANCHOR
   // =====================================================
 
@@ -322,6 +369,41 @@ export default function App() {
         ...previousHistory,
       ]
     );
+
+
+    // -----------------------------------------------
+    // LEVEL UP?
+    // -----------------------------------------------
+
+    const rankingsBefore = myRankings.filter(
+      rankedPlayer =>
+        String(rankedPlayer.id) !==
+        String(player.id)
+    );
+
+    const before = getProgress(rankingsBefore);
+
+    const after = getProgress([
+      ...rankingsBefore,
+      playerWithDisplay,
+    ]);
+
+    if (after.level > before.level) {
+
+      const { current } = after;
+
+      Alert.alert(
+        `${current.badge} LEVEL UP!`,
+        `You're now Level ${after.level}: ${current.title}.` +
+          (current.unlocks
+            ? `\n\n${unlockName(current.unlocks)} players are now unlocked.`
+            : '') +
+          (after.isMaxLevel
+            ? ''
+            : `\n\nRank ${PLAYERS_PER_LEVEL} more players to reach the next level.`)
+      );
+
+    }
 
   };
 
@@ -821,10 +903,26 @@ export default function App() {
     myRankings: restoredRankings,
     lists: restoredLists,
     comparisonHistory: restoredHistory,
+    profile: restoredProfile,
   }) => {
 
     const normalisedLists =
       restoredLists.map(normaliseList);
+
+
+    // Backups carry the username only (the photo is a file
+    // on the old phone), so this phone's photo is kept.
+    if (restoredProfile?.username) {
+
+      handleSaveProfile({
+        ...profile,
+        username: restoredProfile.username,
+        createdAt:
+          restoredProfile.createdAt ||
+          profile?.createdAt,
+      });
+
+    }
 
 
     await AsyncStorage.setItem(
@@ -909,10 +1007,21 @@ export default function App() {
                 tabBarInactiveTintColor:
                   '#666666',
 
+                // Five tabs share the width, so labels are
+                // kept small, unpadded and unscaled, with a
+                // little side padding so iOS doesn't clip
+                // the last letter of bold text.
                 tabBarLabelStyle: {
-                  fontSize: 11,
+                  fontSize: 10,
                   fontWeight: '800',
+                  paddingHorizontal: 2,
                 },
+
+                tabBarItemStyle: {
+                  paddingHorizontal: 0,
+                },
+
+                tabBarAllowFontScaling: false,
 
               }}
             >
@@ -937,6 +1046,7 @@ export default function App() {
                     isFirstPlayer={
                       myRankings.length === 0
                     }
+                    myRankings={myRankings}
                   />
 
                 )}
@@ -960,6 +1070,7 @@ export default function App() {
 
                   <SearchScreen
                     navigation={navigation}
+                    myRankings={myRankings}
                   />
 
                 )}
@@ -1008,6 +1119,31 @@ export default function App() {
                   <ListsScreen
                     navigation={navigation}
                     lists={lists}
+                  />
+
+                )}
+
+              </Tab.Screen>
+
+
+              {/* =================================================
+                  PROFILE
+                  ================================================= */}
+
+              <Tab.Screen
+                name="Profile"
+                options={{
+                  tabBarLabel: 'PROFILE',
+                  tabBarIcon: () => null,
+                }}
+              >
+
+                {() => (
+
+                  <ProfileScreen
+                    profile={profile}
+                    onSaveProfile={handleSaveProfile}
+                    myRankings={myRankings}
                   />
 
                 )}

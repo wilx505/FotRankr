@@ -26,7 +26,13 @@
     },
     "plugins": [
       "expo-status-bar",
-      "expo-sharing"
+      "expo-sharing",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "FotRankr uses your photos so you can choose a profile picture."
+        }
+      ]
     ]
   }
 }

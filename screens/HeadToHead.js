@@ -14,6 +14,8 @@ import {
 
 import players from '../players';
 
+import { getLock } from '../utils/progression';
+
 
 // ======================================================
 // HEAD TO HEAD
@@ -226,6 +228,13 @@ export default function HeadToHead({
           };
 
         }
+      )
+      // Unranked opponents must be from leagues the
+      // user has unlocked.
+      .filter(
+        opponent =>
+          opponent.isRanked ||
+          !getLock(opponent, myRankings)
       );
 
   };

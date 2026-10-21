@@ -9,6 +9,11 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+
+import {
+  getLock,
+  lockMessage,
+} from '../utils/progression';
 export default function CompareScreen({
   route,
   navigation,
@@ -163,6 +168,50 @@ const rankAgain = () => {
   // ==================================================
   // SCREEN
   // ==================================================
+
+  // Locked players can't be ranked yet, however they
+  // got here. (Rank Again briefly un-ranks a player, so
+  // it must not lock them mid-way.)
+  const lock = rankingReset
+    ? null
+    : getLock(player, myRankings);
+
+  if (lock) {
+
+    return (
+
+      <View style={styles.lockedScreen}>
+
+        <Text style={styles.lockedIcon}>
+          🔒
+        </Text>
+
+        <Text style={styles.lockedTitle}>
+          {player.name} is locked
+        </Text>
+
+        <Text style={styles.lockedText}>
+          {lockMessage(lock)}
+          {'\n'}
+          Rank more players to level up.
+        </Text>
+
+        <TouchableOpacity
+          style={styles.lockedButton}
+          onPress={() => navigation.goBack()}
+          activeOpacity={0.8}
+        >
+
+          <Text style={styles.lockedButtonText}>
+            GO BACK
+          </Text>
+
+        </TouchableOpacity>
+
+      </View>
+
+    );
+  }
 
   return (
 
@@ -826,6 +875,54 @@ rankAgainArrow: {
     color: '#333333',
     fontSize: 10,
     marginTop: 5,
+  },
+
+
+  // ==================================================
+  // LOCKED
+  // ==================================================
+
+  lockedScreen: {
+    flex: 1,
+    backgroundColor: '#050505',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 30,
+  },
+
+  lockedIcon: {
+    fontSize: 44,
+    marginBottom: 16,
+  },
+
+  lockedTitle: {
+    color: '#ffffff',
+    fontSize: 22,
+    fontWeight: '900',
+    textAlign: 'center',
+  },
+
+  lockedText: {
+    color: '#777777',
+    fontSize: 15,
+    lineHeight: 22,
+    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 24,
+  },
+
+  lockedButton: {
+    backgroundColor: '#00ff66',
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 30,
+  },
+
+  lockedButtonText: {
+    color: '#000000',
+    fontSize: 13,
+    fontWeight: '900',
+    letterSpacing: 0.5,
   },
 
 });

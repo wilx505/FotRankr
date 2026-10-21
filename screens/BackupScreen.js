@@ -83,6 +83,22 @@ export default function BackupScreen({
       }
 
 
+      // Username only: the photo is a file on this phone.
+      const savedProfile =
+        await AsyncStorage.getItem('fotrankrProfile');
+
+      if (savedProfile) {
+
+        const { username, createdAt } =
+          JSON.parse(savedProfile);
+
+        data.fotrankrProfile = {
+          username,
+          createdAt,
+        };
+      }
+
+
       const backup = {
         app: 'FotRankr',
         version: 1,
@@ -228,6 +244,9 @@ export default function BackupScreen({
       )
         ? backup.data.comparisonHistory
         : [],
+
+      profile:
+        backup.data.fotrankrProfile || null,
     };
 
 

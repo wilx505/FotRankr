@@ -1,4 +1,5 @@
 import {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -8,14 +9,20 @@ import {
 
 import players from '../players';
 
+import {
+  getLock,
+  lockMessage,
+} from '../utils/progression';
+
 export default function HomeScreen({
   navigation,
+  myRankings,
 }) {
 
   const popularNames = [
     'Lionel Messi',
     'Cristiano Ronaldo',
-    'Kylian Mbappe',
+    'Kylian Mbappé',
     'Erling Haaland',
     'Mohamed Salah',
   ];
@@ -30,26 +37,47 @@ export default function HomeScreen({
     )
     .filter(Boolean);
 
+  // Start with the first great you're allowed to rank,
+  // otherwise go and search for someone.
   const startRanking = () => {
 
-    if (popularPlayers.length > 0) {
+    const firstUnlocked = popularPlayers.find(
+      player => !getLock(player, myRankings)
+    );
+
+    if (firstUnlocked) {
 
       navigation.navigate(
         'Compare',
         {
           player:
-            popularPlayers[0],
+            firstUnlocked,
           isFirstPlayer: true,
         }
       );
 
+      return;
     }
+
+    navigation.navigate('Search');
 
   };
 
   const selectPlayer = (
     player
   ) => {
+
+    const lock = getLock(player, myRankings);
+
+    if (lock) {
+
+      Alert.alert(
+        `🔒 ${player.name} is locked`,
+        lockMessage(lock)
+      );
+
+      return;
+    }
 
     navigation.navigate(
       'Compare',
@@ -177,12 +205,26 @@ export default function HomeScreen({
                   {player.position}
                 </Text>
 
+                {getLock(player, myRankings) && (
+
+                  <Text
+                    style={styles.lockText}
+                  >
+                    {lockMessage(
+                      getLock(player, myRankings)
+                    )}
+                  </Text>
+
+                )}
+
               </View>
 
               <Text
                 style={styles.playerArrow}
               >
-                →
+                {getLock(player, myRankings)
+                  ? '🔒'
+                  : '→'}
               </Text>
 
             </TouchableOpacity>
@@ -346,6 +388,13 @@ const styles = StyleSheet.create({
     color: '#777777',
     fontSize: 12,
     marginTop: 5,
+  },
+
+  lockText: {
+    color: '#F39C12',
+    fontSize: 11,
+    fontWeight: '800',
+    marginTop: 4,
   },
 
   playerArrow: {

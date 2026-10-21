@@ -16,6 +16,11 @@ import {
   matchesFilters,
 } from '../utils/listHelpers';
 
+import {
+  getFlag,
+  getMarkerText,
+} from '../utils/flags';
+
 
 const CATEGORIES = [
   'Legendary',
@@ -520,10 +525,15 @@ export default function AddPlayersToListScreen({
                 >
 
                   <View style={styles.avatar}>
-                    <Text style={styles.avatarText}>
-                      {player.name
-                        ?.charAt(0)
-                        ?.toUpperCase()}
+                    <Text
+                      style={
+                        getFlag(player.nation)
+                          ? styles.avatarFlag
+                          : styles.avatarText
+                      }
+                    >
+                      {getFlag(player.nation) ||
+                        getMarkerText(player)}
                     </Text>
                   </View>
 
@@ -891,6 +901,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 13,
+  },
+
+  avatarFlag: {
+    fontSize: 22,
   },
 
   avatarText: {

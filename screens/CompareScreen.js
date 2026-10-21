@@ -14,6 +14,11 @@ import {
   getLock,
   lockMessage,
 } from '../utils/progression';
+
+import {
+  getFlag,
+  getMarkerText,
+} from '../utils/flags';
 export default function CompareScreen({
   route,
   navigation,
@@ -274,11 +279,14 @@ const rankAgain = () => {
         >
 
           <Text
-            style={styles.playerAvatarText}
+            style={
+              getFlag(player.nation)
+                ? styles.playerAvatarFlag
+                : styles.playerAvatarText
+            }
           >
-            {player.name
-              ?.charAt(0)
-              ?.toUpperCase()}
+            {getFlag(player.nation) ||
+              getMarkerText(player)}
           </Text>
 
         </View>
@@ -651,6 +659,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
+  },
+
+  playerAvatarFlag: {
+    fontSize: 28,
   },
 
   playerAvatarText: {

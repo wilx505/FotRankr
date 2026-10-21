@@ -12,6 +12,13 @@ import { useState } from 'react';
 
 import players from '../players';
 
+import { getClubBadge } from '../utils/clubBadges';
+
+import {
+  getFlag,
+  getMarkerText,
+} from '../utils/flags';
+
 import {
   CLUB_BONUS_XP,
   XP_PER_PLAYER,
@@ -221,12 +228,13 @@ export default function SearchScreen({
 
           <Text
             style={
-              styles.playerMarkerText
+              getFlag(player.nation)
+                ? styles.clubBadge
+                : styles.playerMarkerText
             }
           >
-            {player.name
-              ?.charAt(0)
-              ?.toUpperCase()}
+            {getFlag(player.nation) ||
+              getMarkerText(player)}
           </Text>
 
         </View>
@@ -389,9 +397,7 @@ export default function SearchScreen({
       </Text>
 
       <Text style={styles.subtitle}>
-        Search any footballer to
-        {' '}
-        start ranking them.
+        Tap a player name to rank or rank again.
       </Text>
 
 
@@ -609,8 +615,15 @@ export default function SearchScreen({
 
                       <View style={styles.playerMarker}>
 
-                        <Text style={styles.playerMarkerText}>
-                          {club.charAt(0).toUpperCase()}
+                        <Text
+                          style={
+                            getClubBadge(club)
+                              ? styles.clubBadge
+                              : styles.playerMarkerText
+                          }
+                        >
+                          {getClubBadge(club) ||
+                            club.charAt(0).toUpperCase()}
                         </Text>
 
                       </View>
@@ -630,18 +643,11 @@ export default function SearchScreen({
                           {countRanked(squad)} ranked
                         </Text>
 
-                        {group !== 'Legends' && (
+                        {group !== 'Legends' &&
+                          countRanked(squad) === squad.length && (
 
-                          <Text
-                            style={
-                              countRanked(squad) === squad.length
-                                ? styles.clubComplete
-                                : styles.clubBonus
-                            }
-                          >
-                            {countRanked(squad) === squad.length
-                              ? '✓ CLUB COMPLETE'
-                              : `+${CLUB_BONUS_XP} XP WHEN COMPLETE`}
+                          <Text style={styles.clubComplete}>
+                            ✓ CLUB COMPLETE
                           </Text>
 
                         )}
@@ -990,12 +996,16 @@ const styles = StyleSheet.create({
     borderColor: '#1d1d1d',
   },
 
+  // Sits in the card's top-right corner.
   rankedPill: {
+    alignSelf: 'flex-start',
     backgroundColor: '#0d2b18',
     borderRadius: 12,
-    paddingVertical: 6,
+    paddingVertical: 5,
     paddingHorizontal: 9,
     marginLeft: 10,
+    marginTop: -3,
+    marginRight: -5,
   },
 
   rankedPillText: {
@@ -1034,12 +1044,8 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
 
-  clubBonus: {
-    color: '#555555',
-    fontSize: 9,
-    fontWeight: '900',
-    letterSpacing: 0.8,
-    marginTop: 4,
+  clubBadge: {
+    fontSize: 24,
   },
 
   clubComplete: {

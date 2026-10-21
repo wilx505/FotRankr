@@ -16,6 +16,11 @@ import players from '../players';
 
 import { getLock } from '../utils/progression';
 
+import {
+  getFlag,
+  getMarkerText,
+} from '../utils/flags';
+
 
 // ======================================================
 // HEAD TO HEAD
@@ -539,13 +544,6 @@ if (!isFocused) {
   // DISPLAY DATA
   // ==================================================
 
-  const currentH2HNumber =
-    Math.min(
-      automaticComparisonCount + 1,
-      MAX_H2HS
-    );
-
-
   const targetPosition =
     targetPlayer.specificPosition ||
     targetPlayer.position ||
@@ -595,39 +593,6 @@ if (!isFocused) {
       </View>
 
 
-      {/* PROGRESS */}
-
-      {manualChallenge !== true && (
-
-        <View style={styles.progressContainer}>
-
-          <Text style={styles.progressLabel}>
-            RANKING PROGRESS
-          </Text>
-
-          <Text style={styles.progressCount}>
-            {currentH2HNumber} / {MAX_H2HS}
-          </Text>
-
-          <View style={styles.progressTrack}>
-
-            <View
-              style={[
-                styles.progressFill,
-                {
-                  width:
-                    `${(currentH2HNumber / MAX_H2HS) * 100}%`,
-                },
-              ]}
-            />
-
-          </View>
-
-        </View>
-
-      )}
-
-
       {/* COMPARISON */}
 
       {comparisonPlayer &&
@@ -664,10 +629,15 @@ if (!isFocused) {
 
                 <View style={styles.playerInitial}>
 
-                  <Text style={styles.initialText}>
-                    {targetPlayer.name
-                      ?.charAt(0)
-                      ?.toUpperCase()}
+                  <Text
+                    style={
+                      getFlag(targetPlayer.nation)
+                        ? styles.initialFlag
+                        : styles.initialText
+                    }
+                  >
+                    {getFlag(targetPlayer.nation) ||
+                      getMarkerText(targetPlayer)}
                   </Text>
 
                 </View>
@@ -727,10 +697,15 @@ if (!isFocused) {
 
                 <View style={styles.playerInitial}>
 
-                  <Text style={styles.initialText}>
-                    {comparisonPlayer.name
-                      ?.charAt(0)
-                      ?.toUpperCase()}
+                  <Text
+                    style={
+                      getFlag(comparisonPlayer.nation)
+                        ? styles.initialFlag
+                        : styles.initialText
+                    }
+                  >
+                    {getFlag(comparisonPlayer.nation) ||
+                      getMarkerText(comparisonPlayer)}
                   </Text>
 
                 </View>
@@ -928,46 +903,6 @@ const styles =
 
 
     // ==================================================
-    // PROGRESS
-    // ==================================================
-
-    progressContainer: {
-      marginTop: 25,
-      marginBottom: 20,
-    },
-
-    progressLabel: {
-      color: '#666666',
-      fontSize: 10,
-      fontWeight: '900',
-      letterSpacing: 1.2,
-    },
-
-    progressCount: {
-      color: '#ffffff',
-      fontSize: 13,
-      fontWeight: '800',
-      position: 'absolute',
-      right: 0,
-      top: -3,
-    },
-
-    progressTrack: {
-      height: 5,
-      backgroundColor: '#1b1b1b',
-      borderRadius: 5,
-      marginTop: 9,
-      overflow: 'hidden',
-    },
-
-    progressFill: {
-      height: '100%',
-      backgroundColor: '#00ff66',
-      borderRadius: 5,
-    },
-
-
-    // ==================================================
     // MAIN
     // ==================================================
 
@@ -1027,6 +962,10 @@ const styles =
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 14,
+    },
+
+    initialFlag: {
+      fontSize: 32,
     },
 
     initialText: {

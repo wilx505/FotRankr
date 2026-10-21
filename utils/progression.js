@@ -1,3 +1,5 @@
+import players from '../players';
+
 import {
   getActiveStatus,
   getCurrentLeague,
@@ -8,11 +10,16 @@ import {
 FOTRANKR PROGRESSION
 ============================================================
 
-XP comes from how many players you have ranked:
-every ranked player = XP_PER_PLAYER.
+XP:
+  every ranked player       = XP_PER_PLAYER
+  every club fully ranked   = CLUB_BONUS_XP extra
+                              (every current player at that
+                              club, e.g. all of Arsenal)
 
 Every XP_PER_LEVEL takes you up a level, which changes
-your title + badge and unlocks the next group of players.
+your title + badge and may unlock the next group of
+players. Unlocks depend ONLY on total XP, and every ranked
+player counts, whatever league they are from.
 
 XP is worked out live from myRankings, so it can never
 drift out of sync (and a backup restore restores it too).
@@ -22,71 +29,89 @@ EDIT LEVELS BELOW. NOTHING ELSE NEEDS TO CHANGE.
 ============================================================
 */
 
-export const XP_PER_PLAYER = 20;
+export const XP_PER_PLAYER = 10;
+
+export const CLUB_BONUS_XP = 50;
 
 export const XP_PER_LEVEL = 1000;
-
-export const PLAYERS_PER_LEVEL =
-  XP_PER_LEVEL / XP_PER_PLAYER;
 
 
 // unlocks: which players become rankable at this level.
 //   a league name     = active players currently in it
 //   'REST_OF_WORLD'   = active players in any other league
 //   'LEGENDS'         = retired players
+//   null              = new title + badge only
 export const LEVELS = [
   {
     level: 1,
-    title: 'Sunday League',
-    badge: '🥾',
+    title: 'Amateur Baller',
+    badge: '⚽',
     unlocks: 'Premier League',
   },
   {
     level: 2,
-    title: 'Academy Prospect',
-    badge: '🎓',
+    title: 'Sunday League Pro',
+    badge: '🥾',
     unlocks: 'La Liga',
   },
   {
     level: 3,
-    title: 'Reserve',
-    badge: '🪑',
+    title: 'Academy Prospect',
+    badge: '🎓',
     unlocks: 'Ligue 1',
   },
   {
     level: 4,
-    title: 'First Team',
-    badge: '👕',
+    title: 'Benchwarmer',
+    badge: '🪑',
     unlocks: 'Serie A',
   },
   {
     level: 5,
-    title: 'Club Captain',
-    badge: '©️',
+    title: 'First Team Talent',
+    badge: '👕',
     unlocks: 'Bundesliga',
   },
   {
     level: 6,
-    title: 'International',
-    badge: '🌍',
+    title: 'Captain',
+    badge: '©️',
     unlocks: 'REST_OF_WORLD',
   },
   {
     level: 7,
-    title: 'World Class',
-    badge: '⭐',
+    title: 'International',
+    badge: '🌍',
     unlocks: 'LEGENDS',
   },
   {
     level: 8,
-    title: "Ballon d'Or",
-    badge: '🏆',
+    title: 'Club Legend',
+    badge: '🏟️',
     unlocks: null,
   },
   {
     level: 9,
+    title: "Ballon d'Or Winner",
+    badge: '🏆',
+    unlocks: null,
+  },
+  {
+    level: 10,
+    title: 'Icon',
+    badge: '⭐',
+    unlocks: null,
+  },
+  {
+    level: 11,
     title: 'Legend',
     badge: '👑',
+    unlocks: null,
+  },
+  {
+    level: 12,
+    title: 'GOAT',
+    badge: '🐐',
     unlocks: null,
   },
 ];
@@ -114,13 +139,72 @@ export function getLevelInfo(level) {
 }
 
 
+// Every current club and its players' IDs, built once.
+// Retired players have no club, so they never count.
+const CLUBS = (() => {
+
+  const clubs = new Map();
+
+  players.forEach(player => {
+
+    if (player.active === false || !player.club) {
+      return;
+    }
+
+    const key =
+      `${player.currentLeague || ''}|${player.club}`;
+
+    if (!clubs.has(key)) {
+      clubs.set(key, {
+        club: player.club,
+        league: player.currentLeague,
+        playerIds: [],
+      });
+    }
+
+    clubs.get(key).playerIds.push(String(player.id));
+  });
+
+  return [...clubs.values()];
+})();
+
+
+// Clubs where every current player has been ranked.
+export function getCompletedClubs(myRankings) {
+
+  const rankedIds = new Set(
+    (myRankings || []).map(
+      ranking => String(ranking.id)
+    )
+  );
+
+  return CLUBS.filter(club =>
+    club.playerIds.every(id => rankedIds.has(id))
+  );
+}
+
+
 // Everything the profile screen needs, from the rankings.
+// Remembers the last answer, because Search asks once per
+// player in a list.
+let lastRankings = null;
+let lastProgress = null;
+
 export function getProgress(myRankings) {
+
+  if (myRankings && myRankings === lastRankings) {
+    return lastProgress;
+  }
 
   const playersRanked =
     (myRankings || []).length;
 
-  const xp = playersRanked * XP_PER_PLAYER;
+  const clubsCompleted =
+    getCompletedClubs(myRankings).length;
+
+  const xp =
+    playersRanked * XP_PER_PLAYER +
+    clubsCompleted * CLUB_BONUS_XP;
 
   const level = Math.min(
     Math.floor(xp / XP_PER_LEVEL) + 1,
@@ -136,25 +220,26 @@ export function getProgress(myRankings) {
     ? XP_PER_LEVEL
     : xp - levelStartXp;
 
-  const playersToNextLevel = isMaxLevel
-    ? 0
-    : Math.ceil(
-        (XP_PER_LEVEL - xpIntoLevel) /
-          XP_PER_PLAYER
-      );
-
-  return {
+  const progress = {
     playersRanked,
+    clubsCompleted,
     xp,
     level,
     isMaxLevel,
     xpIntoLevel,
-    playersToNextLevel,
+    xpToNextLevel: isMaxLevel
+      ? 0
+      : XP_PER_LEVEL - xpIntoLevel,
     current: getLevelInfo(level),
     next: isMaxLevel
       ? null
       : getLevelInfo(level + 1),
   };
+
+  lastRankings = myRankings;
+  lastProgress = progress;
+
+  return progress;
 }
 
 

@@ -499,15 +499,31 @@ export default function ProfileScreen({
         </Text>
 
 
-        <View style={styles.statBox}>
+        <View style={styles.statRow}>
 
-          <Text style={styles.statValue}>
-            {progress.playersRanked}
-          </Text>
+          <View style={styles.statBox}>
 
-          <Text style={styles.statLabel}>
-            PLAYERS RANKED
-          </Text>
+            <Text style={styles.statValue}>
+              {progress.playersRanked}
+            </Text>
+
+            <Text style={styles.statLabel}>
+              PLAYERS RANKED
+            </Text>
+
+          </View>
+
+          <View style={styles.statBox}>
+
+            <Text style={styles.statValue}>
+              {progress.clubsCompleted}
+            </Text>
+
+            <Text style={styles.statLabel}>
+              CLUBS COMPLETED
+            </Text>
+
+          </View>
 
         </View>
 
@@ -803,12 +819,19 @@ const styles = StyleSheet.create({
     color: '#00ff66',
   },
 
+  statRow: {
+    flexDirection: 'row',
+    marginTop: 18,
+    marginHorizontal: -4,
+  },
+
   statBox: {
+    flex: 1,
     backgroundColor: '#141414',
     borderRadius: 12,
     paddingVertical: 12,
     alignItems: 'center',
-    marginTop: 18,
+    marginHorizontal: 4,
   },
 
   statValue: {

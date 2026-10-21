@@ -13,6 +13,8 @@ import { useState } from 'react';
 import players from '../players';
 
 import {
+  CLUB_BONUS_XP,
+  XP_PER_PLAYER,
   getLock,
   getProgress,
   getUnlockLevel,
@@ -155,10 +157,10 @@ export default function SearchScreen({
       `🔒 ${player.name} is locked`,
       `${lockMessage(lock)}\n\n` +
         `You're Level ${progress.level} ` +
-        `(${progress.current.title}). Rank ` +
-        `${progress.playersToNextLevel} more ` +
-        `${progress.playersToNextLevel === 1 ? 'player' : 'players'} ` +
-        `to reach the next level.`
+        `(${progress.current.title}). Earn ` +
+        `${progress.xpToNextLevel.toLocaleString()} more XP ` +
+        `to reach the next level: ${XP_PER_PLAYER} XP per ` +
+        `player, +${CLUB_BONUS_XP} for finishing a club.`
     );
 
     return;
@@ -628,6 +630,22 @@ export default function SearchScreen({
                           {countRanked(squad)} ranked
                         </Text>
 
+                        {group !== 'Legends' && (
+
+                          <Text
+                            style={
+                              countRanked(squad) === squad.length
+                                ? styles.clubComplete
+                                : styles.clubBonus
+                            }
+                          >
+                            {countRanked(squad) === squad.length
+                              ? '✓ CLUB COMPLETE'
+                              : `+${CLUB_BONUS_XP} XP WHEN COMPLETE`}
+                          </Text>
+
+                        )}
+
                       </View>
 
                       <Text style={styles.clubArrow}>
@@ -1014,6 +1032,22 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '800',
     marginBottom: 4,
+  },
+
+  clubBonus: {
+    color: '#555555',
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 0.8,
+    marginTop: 4,
+  },
+
+  clubComplete: {
+    color: '#00ff66',
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 0.8,
+    marginTop: 4,
   },
 
   clubArrow: {

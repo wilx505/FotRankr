@@ -44,7 +44,8 @@ import {
 } from './utils/listHelpers';
 
 import {
-  PLAYERS_PER_LEVEL,
+  CLUB_BONUS_XP,
+  getCompletedClubs,
   getProgress,
   unlockName,
 } from './utils/progression';
@@ -53,7 +54,7 @@ import {
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const DATA_VERSION = '59';
+const DATA_VERSION = '60';
 
 
 export default function App() {
@@ -372,7 +373,7 @@ export default function App() {
 
 
     // -----------------------------------------------
-    // LEVEL UP?
+    // CLUB COMPLETE? LEVEL UP?
     // -----------------------------------------------
 
     const rankingsBefore = myRankings.filter(
@@ -381,26 +382,56 @@ export default function App() {
         String(player.id)
     );
 
-    const before = getProgress(rankingsBefore);
-
-    const after = getProgress([
+    const rankingsAfter = [
       ...rankingsBefore,
       playerWithDisplay,
-    ]);
+    ];
+
+    const before = getProgress(rankingsBefore);
+
+    const after = getProgress(rankingsAfter);
+
+    const clubsBefore = new Set(
+      getCompletedClubs(rankingsBefore).map(
+        club => `${club.league}|${club.club}`
+      )
+    );
+
+    const newClubs = getCompletedClubs(
+      rankingsAfter
+    ).filter(
+      club =>
+        !clubsBefore.has(`${club.league}|${club.club}`)
+    );
+
+    const messages = [];
+
+    newClubs.forEach(club => {
+      messages.push(
+        `🏟️ Club complete: you've ranked every ${club.club} player. +${CLUB_BONUS_XP} XP bonus!`
+      );
+    });
 
     if (after.level > before.level) {
 
       const { current } = after;
 
-      Alert.alert(
-        `${current.badge} LEVEL UP!`,
-        `You're now Level ${after.level}: ${current.title}.` +
+      messages.push(
+        `${current.badge} You're now Level ${after.level}: ${current.title}.` +
           (current.unlocks
-            ? `\n\n${unlockName(current.unlocks)} players are now unlocked.`
-            : '') +
-          (after.isMaxLevel
-            ? ''
-            : `\n\nRank ${PLAYERS_PER_LEVEL} more players to reach the next level.`)
+            ? ` ${unlockName(current.unlocks)} players are now unlocked.`
+            : '')
+      );
+
+    }
+
+    if (messages.length > 0) {
+
+      Alert.alert(
+        after.level > before.level
+          ? 'LEVEL UP!'
+          : 'CLUB COMPLETE!',
+        messages.join('\n\n')
       );
 
     }

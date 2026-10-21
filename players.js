@@ -145,9 +145,9 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Club de Regatas Vasco da Gama",
-    "active": false,
-    "currentLeague": null,
+    "club": "Santos Futebol Clube",
+    "active": true,
+    "currentLeague": "Brasileirao",
     "leagues": [
       "Brasileirao",
       "Bundesliga",
@@ -206,12 +206,13 @@ const PLAYERS = [
     "nation": "Egypt",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Liverpool FC",
+    "club": "Trabzonspor",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Super Lig",
     "leagues": [
       "Premier League",
       "Serie A",
+      "Super Lig",
       "Swiss Super League"
     ]
   },
@@ -379,9 +380,9 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Manchester City",
+    "club": "FC Barcelona",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "La Liga",
     "leagues": [
       "La Liga",
       "Premier League"
@@ -625,13 +626,14 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "SSC Napoli",
+    "club": "Fenerbahce",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Super Lig",
     "leagues": [
       "Belgian Pro League",
       "Premier League",
-      "Serie A"
+      "Serie A",
+      "Super Lig"
     ]
   },
   {
@@ -920,11 +922,12 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "FC Barcelona",
+    "club": "Ajax Amsterdam",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Eredivisie",
     "leagues": [
       "Bundesliga",
+      "Eredivisie",
       "La Liga"
     ]
   },
@@ -977,12 +980,13 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Al-Ahli Saudi Football Club",
-    "active": false,
-    "currentLeague": null,
+    "club": "Al Sadd Sports Club",
+    "active": true,
+    "currentLeague": "Qatar Stars League",
     "leagues": [
       "Bundesliga",
       "Premier League",
+      "Qatar Stars League",
       "Saudi Pro League"
     ]
   },
@@ -1109,13 +1113,14 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "AC Milan",
+    "club": "Galatasaray",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Super Lig",
     "leagues": [
       "Ligue 1",
       "Primeira Liga",
-      "Serie A"
+      "Serie A",
+      "Super Lig"
     ]
   },
   {
@@ -1155,7 +1160,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Aston Villa",
+    "club": "Chelsea FC",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1195,7 +1200,7 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Chelsea FC",
+    "club": "Manchester City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1253,9 +1258,9 @@ const PLAYERS = [
     "nation": "Cote d'Ivoire",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "RB Leipzig",
+    "club": "Real Madrid",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "La Liga",
     "leagues": [
       "Bundesliga",
       "La Liga"
@@ -1310,7 +1315,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Newcastle United",
+    "club": "Arsenal FC",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1325,11 +1330,12 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Arsenal FC",
+    "club": "Al-Hilal Saudi Football Club",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Saudi Pro League",
     "leagues": [
-      "Premier League"
+      "Premier League",
+      "Saudi Pro League"
     ]
   },
   {
@@ -1338,12 +1344,13 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Manchester United",
+    "club": "Club Internacional de Fútbol Miami",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "MLS",
     "leagues": [
       "Brasileirao",
       "La Liga",
+      "MLS",
       "Premier League",
       "Primeira Liga"
     ]
@@ -1396,13 +1403,14 @@ const PLAYERS = [
     "nation": "Colombia",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Club León FC",
+    "club": "Atlético Nacional",
     "active": true,
-    "currentLeague": "Liga MX",
+    "currentLeague": "Categoría Primera A",
     "leagues": [
       "Argentine Primera Division",
       "Brasileirao",
       "Bundesliga",
+      "Categoría Primera A",
       "La Liga",
       "Liga MX",
       "Ligue 1",
@@ -1516,9 +1524,9 @@ const PLAYERS = [
     "nation": "France",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "AC Milan",
+    "club": "RB Leipzig",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Bundesliga",
     "leagues": [
       "Bundesliga",
       "Ligue 1",
@@ -1532,11 +1540,12 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Arsenal FC",
+    "club": "FC Barcelona",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "La Liga",
     "leagues": [
       "Brasileirao",
+      "La Liga",
       "Premier League"
     ]
   },
@@ -1546,7 +1555,7 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Newcastle United",
+    "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1648,9 +1657,9 @@ const PLAYERS = [
     "nation": "France",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Tottenham Hotspur",
+    "club": "Juventus FC",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
       "Bundesliga",
       "Ligue 1",
@@ -1819,9 +1828,9 @@ const PLAYERS = [
     "nation": "Gabon",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Olympique Marseille",
+    "club": "Deportivo de La Coruña",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "La Liga",
     "leagues": [
       "Bundesliga",
       "La Liga",
@@ -1854,11 +1863,12 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Paris Saint-Germain",
-    "active": false,
-    "currentLeague": null,
+    "club": "Al-Duhail SC",
+    "active": true,
+    "currentLeague": "Qatar Stars League",
     "leagues": [
-      "Ligue 1"
+      "Ligue 1",
+      "Qatar Stars League"
     ]
   },
   {
@@ -1882,9 +1892,9 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "SSC Napoli",
-    "active": false,
-    "currentLeague": null,
+    "club": "UC Sampdoria",
+    "active": true,
+    "currentLeague": "Serie A",
     "leagues": [
       "Serie A"
     ]
@@ -2016,7 +2026,7 @@ const PLAYERS = [
     "nation": "Egypt",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Manchester City",
+    "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -2061,7 +2071,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Nottingham Forest",
+    "club": "Manchester City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -2162,13 +2172,14 @@ const PLAYERS = [
     "nation": "Chile",
     "position": "Attack",
     "specificPosition": "Second Striker",
-    "club": "Sevilla FC",
+    "club": "Club de Foot Montréal",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "MLS",
     "leagues": [
       "Argentine Primera Division",
       "La Liga",
       "Ligue 1",
+      "MLS",
       "Premier League",
       "Serie A"
     ]
@@ -2297,11 +2308,12 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Bayern Munich",
+    "club": "Aston Villa",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Premier League",
     "leagues": [
-      "Bundesliga"
+      "Bundesliga",
+      "Premier League"
     ]
   },
   {
@@ -2323,9 +2335,9 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Al-Hilal Saudi Football Club",
+    "club": "FC Barcelona",
     "active": true,
-    "currentLeague": "Saudi Pro League",
+    "currentLeague": "La Liga",
     "leagues": [
       "Bundesliga",
       "La Liga",
@@ -2341,12 +2353,13 @@ const PLAYERS = [
     "nation": "France",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Real Betis Balompié",
-    "active": false,
-    "currentLeague": null,
+    "club": "Abha",
+    "active": true,
+    "currentLeague": "Saudi Pro League",
     "leagues": [
       "La Liga",
-      "Ligue 1"
+      "Ligue 1",
+      "Saudi Pro League"
     ]
   },
   {
@@ -2355,7 +2368,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Girona FC",
+    "club": "Elche CF",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -2369,15 +2382,16 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Al-Ittihad Football Club",
+    "club": "Trabzonspor",
     "active": true,
-    "currentLeague": "Saudi Pro League",
+    "currentLeague": "Super Lig",
     "leagues": [
       "La Liga",
       "Ligue 1",
       "Premier League",
       "Primeira Liga",
-      "Saudi Pro League"
+      "Saudi Pro League",
+      "Super Lig"
     ]
   },
   {
@@ -2386,9 +2400,9 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Manchester City",
+    "club": "Fenerbahce",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Super Lig",
     "leagues": [
       "Premier League",
       "Primeira Liga",
@@ -2401,7 +2415,7 @@ const PLAYERS = [
     "nation": "Uruguay",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Atlético de Madrid",
+    "club": "Deportivo de La Coruña",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -2484,7 +2498,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Grêmio Foot-Ball Porto Alegrense",
+    "club": "Santos Futebol Clube",
     "active": true,
     "currentLeague": "Brasileirao",
     "leagues": [
@@ -2585,12 +2599,13 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Newcastle United",
+    "club": "Juventus FC",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
       "Bundesliga",
-      "Premier League"
+      "Premier League",
+      "Serie A"
     ]
   },
   {
@@ -2599,12 +2614,13 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Manchester City",
+    "club": "Al-Qadsiah Saudi Football Club",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Saudi Pro League",
     "leagues": [
       "Eredivisie",
       "Premier League",
+      "Saudi Pro League",
       "Serie A"
     ]
   },
@@ -2627,11 +2643,12 @@ const PLAYERS = [
     "nation": "Uruguay",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "FC Barcelona",
+    "club": "Liverpool FC",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Premier League",
     "leagues": [
-      "La Liga"
+      "La Liga",
+      "Premier League"
     ]
   },
   {
@@ -2640,7 +2657,7 @@ const PLAYERS = [
     "nation": "Uruguay",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Al-Hilal Saudi Football Club",
+    "club": "Al-Diriyah Club",
     "active": true,
     "currentLeague": "Saudi Pro League",
     "leagues": [
@@ -2656,11 +2673,12 @@ const PLAYERS = [
     "nation": "France",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Paris Saint-Germain",
+    "club": "Liverpool FC",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
-      "Ligue 1"
+      "Ligue 1",
+      "Premier League"
     ]
   },
   {
@@ -2794,12 +2812,13 @@ const PLAYERS = [
     "nation": "Austria",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Real Madrid",
+    "club": "Udinese Calcio",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Serie A",
     "leagues": [
       "Bundesliga",
-      "La Liga"
+      "La Liga",
+      "Serie A"
     ]
   },
   {
@@ -2823,9 +2842,9 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Como 1907",
+    "club": "CD Leganés",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "La Liga",
     "leagues": [
       "La Liga",
       "Premier League",
@@ -2917,11 +2936,12 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Aston Villa",
+    "club": "Al-Hilal Saudi Football Club",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Saudi Pro League",
     "leagues": [
-      "Premier League"
+      "Premier League",
+      "Saudi Pro League"
     ]
   },
   {
@@ -2930,11 +2950,12 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Tottenham Hotspur",
+    "club": "Atlético de Madrid",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "La Liga",
     "leagues": [
       "Argentine Primera Division",
+      "La Liga",
       "Premier League",
       "Serie A"
     ]
@@ -3032,9 +3053,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Newcastle United",
+    "club": "FC Barcelona",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "La Liga",
     "leagues": [
       "La Liga",
       "Premier League"
@@ -3184,11 +3205,12 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Como 1907",
+    "club": "Los Angeles Galaxy",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "MLS",
     "leagues": [
       "La Liga",
+      "MLS",
       "Serie A"
     ]
   },
@@ -3198,12 +3220,13 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Inter Milan",
+    "club": "Panathinaikos Athlitikos Omilos",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Super League Greece",
     "leagues": [
       "Eredivisie",
-      "Serie A"
+      "Serie A",
+      "Super League Greece"
     ]
   },
   {
@@ -3228,7 +3251,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Real Madrid",
+    "club": "Getafe CF",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -3242,11 +3265,12 @@ const PLAYERS = [
     "nation": "Croatia",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Al-Nassr Football Club",
+    "club": "Al Sadd Sports Club",
     "active": true,
-    "currentLeague": "Saudi Pro League",
+    "currentLeague": "Qatar Stars League",
     "leagues": [
       "Croatian HNL",
+      "Qatar Stars League",
       "Saudi Pro League",
       "Serie A"
     ]
@@ -3270,12 +3294,13 @@ const PLAYERS = [
     "nation": "Algeria",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Al-Ahli Saudi Football Club",
+    "club": "Al-Shamal Sports Club",
     "active": true,
-    "currentLeague": "Saudi Pro League",
+    "currentLeague": "Qatar Stars League 2",
     "leagues": [
       "Ligue 1",
       "Premier League",
+      "Qatar Stars League 2",
       "Saudi Pro League"
     ]
   },
@@ -3285,13 +3310,14 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Atlético de Madrid",
+    "club": "SL Benfica",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Primeira Liga",
     "leagues": [
       "La Liga",
       "Ligue 1",
-      "Premier League"
+      "Premier League",
+      "Primeira Liga"
     ]
   },
   {
@@ -3300,11 +3326,12 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Manchester City",
+    "club": "Inter Milan",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
-      "Premier League"
+      "Premier League",
+      "Serie A"
     ]
   },
   {
@@ -3341,9 +3368,9 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Tottenham Hotspur",
+    "club": "SL Benfica",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Primeira Liga",
     "leagues": [
       "Bundesliga",
       "Premier League",
@@ -3494,9 +3521,9 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Juventus FC",
+    "club": "Olympique Lyon",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Ligue 1",
     "leagues": [
       "Belgian Pro League",
       "Bundesliga",
@@ -3511,9 +3538,9 @@ const PLAYERS = [
     "nation": "France",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Al-Ittihad Football Club",
+    "club": "Bayer 04 Leverkusen",
     "active": true,
-    "currentLeague": "Saudi Pro League",
+    "currentLeague": "Bundesliga",
     "leagues": [
       "Bundesliga",
       "Ligue 1",
@@ -3602,12 +3629,13 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Borussia Dortmund",
+    "club": "FC Barcelona",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "La Liga",
     "leagues": [
       "Austrian Bundesliga",
-      "Bundesliga"
+      "Bundesliga",
+      "La Liga"
     ]
   },
   {
@@ -3646,11 +3674,12 @@ const PLAYERS = [
     "nation": "Canada",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Juventus FC",
+    "club": "Atlético de Madrid",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "La Liga",
     "leagues": [
       "Belgian Pro League",
+      "La Liga",
       "Ligue 1",
       "Serie A"
     ]
@@ -3661,7 +3690,7 @@ const PLAYERS = [
     "nation": "Ukraine",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Chelsea FC",
+    "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -3729,7 +3758,7 @@ const PLAYERS = [
     "nation": "Croatia",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Tottenham Hotspur",
+    "club": "Brighton & Hove Albion",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -3761,7 +3790,7 @@ const PLAYERS = [
     "nation": "Cameroon",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Brighton & Hove Albion",
+    "club": "Manchester United",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -3847,8 +3876,8 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Sydney FC",
-    "active": false,
+    "club": "Al-Ittifaq F. C.",
+    "active": true,
     "currentLeague": null,
     "leagues": [
       "A-League",
@@ -3911,7 +3940,7 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Aston Villa",
+    "club": "Manchester United",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -3926,9 +3955,9 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Chelsea FC",
+    "club": "Real Madrid",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "La Liga",
     "leagues": [
       "La Liga",
       "Premier League"
@@ -3956,9 +3985,9 @@ const PLAYERS = [
     "nation": "Cote d'Ivoire",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Al-Ahli Saudi Football Club",
+    "club": "Atalanta BC",
     "active": true,
-    "currentLeague": "Saudi Pro League",
+    "currentLeague": "Serie A",
     "leagues": [
       "La Liga",
       "Saudi Pro League",
@@ -4087,13 +4116,14 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Olympique Marseille",
+    "club": "Fenerbahce",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Super Lig",
     "leagues": [
       "La Liga",
       "Ligue 1",
-      "Premier League"
+      "Premier League",
+      "Super Lig"
     ]
   },
   {
@@ -4170,7 +4200,7 @@ const PLAYERS = [
     "nation": "Senegal",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Everton FC",
+    "club": "Manchester City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -4199,7 +4229,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Manchester City",
+    "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -4216,9 +4246,9 @@ const PLAYERS = [
     "nation": "Senegal",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Bayern Munich",
+    "club": "Aston Villa",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Bundesliga",
       "La Liga",
@@ -4231,10 +4261,11 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Olympique Marseille",
+    "club": "Borussia Dortmund",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Bundesliga",
     "leagues": [
+      "Bundesliga",
       "Ligue 1",
       "Premier League"
     ]
@@ -4259,9 +4290,9 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Stade Rennais FC",
+    "club": "Liverpool FC",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
       "Ligue 1",
       "Premier League"
@@ -4413,7 +4444,7 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Al-Ettifaq Football Club",
+    "club": "Al-Ittihad Football Club",
     "active": true,
     "currentLeague": "Saudi Pro League",
     "leagues": [
@@ -4447,9 +4478,9 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Manchester City",
+    "club": "Galatasaray",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Super Lig",
     "leagues": [
       "Bundesliga",
       "La Liga",
@@ -4569,8 +4600,8 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Leeds United",
-    "active": false,
+    "club": "Lusail Sports Club",
+    "active": true,
     "currentLeague": null,
     "leagues": [
       "La Liga",
@@ -4584,12 +4615,13 @@ const PLAYERS = [
     "nation": "France",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "AS Monaco",
-    "active": false,
-    "currentLeague": null,
+    "club": "Sakaryaspor",
+    "active": true,
+    "currentLeague": "TFF First League",
     "leagues": [
       "La Liga",
-      "Ligue 1"
+      "Ligue 1",
+      "TFF First League"
     ]
   },
   {
@@ -4641,11 +4673,12 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Borussia Dortmund",
+    "club": "Ajax Amsterdam",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Eredivisie",
     "leagues": [
-      "Bundesliga"
+      "Bundesliga",
+      "Eredivisie"
     ]
   },
   {
@@ -4672,9 +4705,9 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Fenerbahce",
+    "club": "Clube Atlético Mineiro",
     "active": true,
-    "currentLeague": "Super Lig",
+    "currentLeague": "Brasileirao",
     "leagues": [
       "Brasileirao",
       "Premier League",
@@ -4688,10 +4721,11 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Società Sportiva Lazio S.p.A.",
+    "club": "Al Sadd Sports Club",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Qatar Stars League",
     "leagues": [
+      "Qatar Stars League",
       "Serie A"
     ]
   },
@@ -4717,10 +4751,11 @@ const PLAYERS = [
     "nation": "Morocco",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Galatasaray",
-    "active": false,
-    "currentLeague": null,
+    "club": "S. A. F. Botafogo",
+    "active": true,
+    "currentLeague": "Brasileirao",
     "leagues": [
+      "Brasileirao",
       "Eredivisie",
       "Premier League",
       "Super Lig"
@@ -4777,12 +4812,13 @@ const PLAYERS = [
     "nation": "Ghana",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Villarreal CF",
+    "club": "Al-Shabab Club",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Saudi Pro League",
     "leagues": [
       "La Liga",
-      "Premier League"
+      "Premier League",
+      "Saudi Pro League"
     ]
   },
   {
@@ -4888,9 +4924,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "RC Strasbourg Alsace",
+    "club": "Crystal Palace",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
       "Ligue 1",
       "Premier League"
@@ -4902,7 +4938,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Como 1907",
+    "club": "Parma Calcio 1913",
     "active": true,
     "currentLeague": "Serie A",
     "leagues": [
@@ -4920,9 +4956,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Beşiktaş Jimnastik Kulübü",
+    "club": "Aston Villa",
     "active": true,
-    "currentLeague": "Super Lig",
+    "currentLeague": "Premier League",
     "leagues": [
       "Premier League",
       "Serie A",
@@ -4966,7 +5002,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Manchester City",
+    "club": "Sheffield United",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5025,7 +5061,7 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "ACF Fiorentina",
+    "club": "Como 1907",
     "active": true,
     "currentLeague": "Serie A",
     "leagues": [
@@ -5068,11 +5104,12 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "FC Barcelona",
+    "club": "Paris Saint-Germain",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Ligue 1",
     "leagues": [
       "La Liga",
+      "Ligue 1",
       "Premier League"
     ]
   },
@@ -5122,9 +5159,9 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Atlético de Madrid",
+    "club": "Associazione Sportiva Roma",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Serie A",
     "leagues": [
       "Argentine Primera Division",
       "La Liga",
@@ -5137,11 +5174,12 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Liverpool FC",
+    "club": "Inter Milan",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
-      "Premier League"
+      "Premier League",
+      "Serie A"
     ]
   },
   {
@@ -5150,7 +5188,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Crystal Palace",
+    "club": "Chelsea FC",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5198,10 +5236,11 @@ const PLAYERS = [
     "nation": "Denmark",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Sporting CP",
+    "club": "Atlético de Madrid",
     "active": true,
-    "currentLeague": "Primeira Liga",
+    "currentLeague": "La Liga",
     "leagues": [
+      "La Liga",
       "Primeira Liga",
       "Serie A"
     ]
@@ -5212,9 +5251,9 @@ const PLAYERS = [
     "nation": "France",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Società Sportiva Lazio S.p.A.",
+    "club": "Fenerbahce",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Super Lig",
     "leagues": [
       "Bundesliga",
       "Ligue 1",
@@ -5347,12 +5386,13 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Paris Saint-Germain",
+    "club": "AC Milan",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Serie A",
     "leagues": [
       "Ligue 1",
-      "Primeira Liga"
+      "Primeira Liga",
+      "Serie A"
     ]
   },
   {
@@ -5361,12 +5401,13 @@ const PLAYERS = [
     "nation": "Mexico",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "AC Milan",
+    "club": "FC Porto",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Primeira Liga",
     "leagues": [
       "Eredivisie",
       "Liga MX",
+      "Primeira Liga",
       "Serie A"
     ]
   },
@@ -5488,7 +5529,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "AS Monaco",
+    "club": "Paris Saint-Germain",
     "active": true,
     "currentLeague": "Ligue 1",
     "leagues": [
@@ -5530,7 +5571,7 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Chelsea FC",
+    "club": "Aston Villa",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5556,7 +5597,7 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "West Ham United",
+    "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5584,11 +5625,12 @@ const PLAYERS = [
     "nation": "Switzerland",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "SC Freiburg",
+    "club": "Aston Villa",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Premier League",
     "leagues": [
-      "Bundesliga"
+      "Bundesliga",
+      "Premier League"
     ]
   },
   {
@@ -5611,12 +5653,13 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Real Madrid",
+    "club": "ACF Fiorentina",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Serie A",
     "leagues": [
       "Argentine Primera Division",
-      "La Liga"
+      "La Liga",
+      "Serie A"
     ]
   },
   {
@@ -5625,11 +5668,12 @@ const PLAYERS = [
     "nation": "Morocco",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "LOSC Lille",
+    "club": "Manchester City",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
-      "Ligue 1"
+      "Ligue 1",
+      "Premier League"
     ]
   },
   {
@@ -6023,11 +6067,12 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Bayer 04 Leverkusen",
+    "club": "Atlético de Madrid",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "La Liga",
     "leagues": [
       "Bundesliga",
+      "La Liga",
       "Primeira Liga"
     ]
   },
@@ -6097,9 +6142,9 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Attack",
     "specificPosition": "Second Striker",
-    "club": "Tigres UANL",
+    "club": "Club Atlético River Plate",
     "active": true,
-    "currentLeague": "Liga MX",
+    "currentLeague": "Argentine Primera Division",
     "leagues": [
       "Argentine Primera Division",
       "La Liga",
@@ -6140,9 +6185,9 @@ const PLAYERS = [
     "nation": "Switzerland",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Manchester City",
+    "club": "Inter Milan",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
       "Bundesliga",
       "Premier League",
@@ -6197,7 +6242,7 @@ const PLAYERS = [
     "nation": "Mexico",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "San Diego Football Club",
+    "club": "Los Angeles Galaxy",
     "active": true,
     "currentLeague": "MLS",
     "leagues": [
@@ -6213,7 +6258,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Real Madrid",
+    "club": "Real Betis Balompié",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -6227,7 +6272,7 @@ const PLAYERS = [
     "nation": "Türkiye",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Fenerbahce",
+    "club": "Çorum FK",
     "active": true,
     "currentLeague": "Super Lig",
     "leagues": [
@@ -6243,15 +6288,16 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Al-Hilal Saudi Football Club",
+    "club": "Al Jazira Club",
     "active": true,
-    "currentLeague": "Saudi Pro League",
+    "currentLeague": "UAE Pro League",
     "leagues": [
       "Brasileirao",
       "La Liga",
       "Ligue 1",
       "Russian Premier League",
-      "Saudi Pro League"
+      "Saudi Pro League",
+      "UAE Pro League"
     ]
   },
   {
@@ -6321,14 +6367,15 @@ const PLAYERS = [
     "nation": "Jamaica",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Associazione Sportiva Roma",
+    "club": "Olympiakos Syndesmos Filathlon Peiraios",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Super League Greece",
     "leagues": [
       "Belgian Pro League",
       "Bundesliga",
       "Premier League",
-      "Serie A"
+      "Serie A",
+      "Super League Greece"
     ]
   },
   {
@@ -6337,12 +6384,13 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Bayer 04 Leverkusen",
+    "club": "Ipswich Town",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Argentine Primera Division",
-      "Bundesliga"
+      "Bundesliga",
+      "Premier League"
     ]
   },
   {
@@ -6380,7 +6428,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Manchester City",
+    "club": "Newcastle United",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -6565,12 +6613,13 @@ const PLAYERS = [
     "nation": "Senegal",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Tottenham Hotspur",
+    "club": "Juventus FC",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
       "Ligue 1",
-      "Premier League"
+      "Premier League",
+      "Serie A"
     ]
   },
   {
@@ -6729,11 +6778,12 @@ const PLAYERS = [
     "nation": "Cote d'Ivoire",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Sporting CP",
+    "club": "Nottingham Forest",
     "active": true,
-    "currentLeague": "Primeira Liga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Danish Superliga",
+      "Premier League",
       "Primeira Liga"
     ]
   },
@@ -6758,9 +6808,9 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Sporting CP",
+    "club": "Chelsea FC",
     "active": true,
-    "currentLeague": "Primeira Liga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Premier League",
       "Primeira Liga"
@@ -6831,11 +6881,12 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Manchester City",
+    "club": "Fenerbahce",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Super Lig",
     "leagues": [
-      "Premier League"
+      "Premier League",
+      "Super Lig"
     ]
   },
   {
@@ -6901,7 +6952,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "West Ham United",
+    "club": "Crystal Palace",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -6956,7 +7007,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Al-Ahli Saudi Football Club",
+    "club": "Al-Diriyah Club",
     "active": true,
     "currentLeague": "Saudi Pro League",
     "leagues": [
@@ -7071,13 +7122,14 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Girona FC",
+    "club": "OGC Nice",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Ligue 1",
     "leagues": [
       "Belgian Pro League",
       "Bundesliga",
       "La Liga",
+      "Ligue 1",
       "Primeira Liga",
       "Russian Premier League"
     ]
@@ -7370,9 +7422,9 @@ const PLAYERS = [
     "nation": "Serbia",
     "position": "Midfield",
     "specificPosition": "Left Midfield",
-    "club": "Juventus FC",
+    "club": "PSV Eindhoven",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Eredivisie",
     "leagues": [
       "Bundesliga",
       "Eredivisie",
@@ -7403,12 +7455,13 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Cagliari Calcio",
+    "club": "Modena F.C.",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Serie B",
     "leagues": [
       "Primeira Liga",
-      "Serie A"
+      "Serie A",
+      "Serie B"
     ]
   },
   {
@@ -7460,15 +7513,16 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Eintracht Frankfurt",
+    "club": "Abha",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Saudi Pro League",
     "leagues": [
       "Belgian Pro League",
       "Bundesliga",
       "La Liga",
       "Ligue 1",
       "Premier League",
+      "Saudi Pro League",
       "Super Lig"
     ]
   },
@@ -7585,9 +7639,9 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "West Ham United",
+    "club": "Deportivo de La Coruña",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "La Liga",
     "leagues": [
       "La Liga",
       "Premier League"
@@ -7659,9 +7713,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Leicester City",
-    "active": false,
-    "currentLeague": null,
+    "club": "Cagliari Calcio",
+    "active": true,
+    "currentLeague": "Serie A",
     "leagues": [
       "Premier League",
       "Serie A"
@@ -7752,11 +7806,12 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Paris Saint-Germain",
-    "active": false,
-    "currentLeague": null,
+    "club": "Al Kharaitiyat SC",
+    "active": true,
+    "currentLeague": "Qatar Stars League 2",
     "leagues": [
-      "Ligue 1"
+      "Ligue 1",
+      "Qatar Stars League 2"
     ]
   },
   {
@@ -7765,11 +7820,12 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Real Sociedad",
+    "club": "Columbus Crew",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "MLS",
     "leagues": [
-      "La Liga"
+      "La Liga",
+      "MLS"
     ]
   },
   {
@@ -7966,10 +8022,11 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "PSV Eindhoven",
+    "club": "Borussia Dortmund",
     "active": true,
-    "currentLeague": "Eredivisie",
+    "currentLeague": "Bundesliga",
     "leagues": [
+      "Bundesliga",
       "Eredivisie"
     ]
   },
@@ -7993,13 +8050,14 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Sporting CP",
+    "club": "Al-Ahli Saudi Football Club",
     "active": true,
-    "currentLeague": "Primeira Liga",
+    "currentLeague": "Saudi Pro League",
     "leagues": [
       "La Liga",
       "Premier League",
-      "Primeira Liga"
+      "Primeira Liga",
+      "Saudi Pro League"
     ]
   },
   {
@@ -8008,7 +8066,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Aston Villa",
+    "club": "Arsenal FC",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -8107,12 +8165,13 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Chelsea FC",
+    "club": "SSC Napoli",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
       "Ligue 1",
-      "Premier League"
+      "Premier League",
+      "Serie A"
     ]
   },
   {
@@ -8149,7 +8208,7 @@ const PLAYERS = [
     "nation": "DR Congo",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "West Ham United",
+    "club": "Aston Villa",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -8332,7 +8391,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Chelsea FC",
+    "club": "Nottingham Forest",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -8373,12 +8432,13 @@ const PLAYERS = [
     "nation": "Colombia",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Fenerbahce",
+    "club": "SL Benfica",
     "active": true,
-    "currentLeague": "Super Lig",
+    "currentLeague": "Primeira Liga",
     "leagues": [
       "MLS",
       "Premier League",
+      "Primeira Liga",
       "Russian Premier League",
       "Saudi Pro League",
       "Super Lig"
@@ -8457,10 +8517,11 @@ const PLAYERS = [
     "nation": "Morocco",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "PSV Eindhoven",
+    "club": "Bayern Munich",
     "active": true,
-    "currentLeague": "Eredivisie",
+    "currentLeague": "Bundesliga",
     "leagues": [
+      "Bundesliga",
       "Eredivisie"
     ]
   },
@@ -8692,11 +8753,12 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "FC Porto",
+    "club": "Associazione Sportiva Roma",
     "active": true,
-    "currentLeague": "Primeira Liga",
+    "currentLeague": "Serie A",
     "leagues": [
-      "Primeira Liga"
+      "Primeira Liga",
+      "Serie A"
     ]
   },
   {
@@ -8719,12 +8781,13 @@ const PLAYERS = [
     "nation": "Cote d'Ivoire",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "TSG 1899 Hoffenheim",
+    "club": "Newcastle United",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Allsvenskan",
-      "Bundesliga"
+      "Bundesliga",
+      "Premier League"
     ]
   },
   {
@@ -8819,7 +8882,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "West Ham United",
+    "club": "Southampton FC",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -8903,11 +8966,12 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Sporting CP",
+    "club": "ACF Fiorentina",
     "active": true,
-    "currentLeague": "Primeira Liga",
+    "currentLeague": "Serie A",
     "leagues": [
-      "Primeira Liga"
+      "Primeira Liga",
+      "Serie A"
     ]
   },
   {
@@ -9232,13 +9296,14 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "D.C. United",
-    "active": false,
-    "currentLeague": null,
+    "club": "Al-Wahda S.C.C.",
+    "active": true,
+    "currentLeague": "UAE Pro League",
     "leagues": [
       "Belgian Pro League",
       "MLS",
-      "Premier League"
+      "Premier League",
+      "UAE Pro League"
     ]
   },
   {
@@ -9292,7 +9357,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Brentford FC",
+    "club": "Chelsea FC",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -9395,13 +9460,14 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "LOSC Lille",
+    "club": "Sunderland AFC",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
       "Belgian Pro League",
       "Bundesliga",
       "Ligue 1",
+      "Premier League",
       "Super Lig"
     ]
   },
@@ -9411,7 +9477,7 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Aston Villa",
+    "club": "Chelsea FC",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -9438,9 +9504,9 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Aston Villa",
+    "club": "Paris Saint-Germain",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Ligue 1",
     "leagues": [
       "La Liga",
       "Ligue 1",
@@ -9469,7 +9535,7 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Athlitiki Enosi Konstantinoupoleos",
+    "club": "AEK Athens F.C.",
     "active": true,
     "currentLeague": "Super League Greece",
     "leagues": [
@@ -9487,13 +9553,14 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "CFR Cluj",
+    "club": "Palm City FC",
     "active": true,
-    "currentLeague": "Romanian Superliga",
+    "currentLeague": "UAE Pro League",
     "leagues": [
       "Ligue 1",
       "Premier League",
-      "Romanian Superliga"
+      "Romanian Superliga",
+      "UAE Pro League"
     ]
   },
   {
@@ -9575,11 +9642,12 @@ const PLAYERS = [
     "nation": "Switzerland",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Borussia Mönchengladbach",
+    "club": "Leeds United",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Bundesliga",
+      "Premier League",
       "Swiss Super League"
     ]
   },
@@ -9589,11 +9657,12 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "AS Monaco",
+    "club": "Ajax Amsterdam",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Eredivisie",
     "leagues": [
       "Bundesliga",
+      "Eredivisie",
       "Ligue 1",
       "Premier League"
     ]
@@ -9604,13 +9673,14 @@ const PLAYERS = [
     "nation": "Senegal",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "",
+    "club": "Abha",
     "active": true,
-    "currentLeague": null,
+    "currentLeague": "Saudi Pro League",
     "leagues": [
       "Belgian Pro League",
       "Bundesliga",
-      "Ligue 1"
+      "Ligue 1",
+      "Saudi Pro League"
     ]
   },
   {
@@ -9708,9 +9778,9 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "ACF Fiorentina",
+    "club": "FC Schalke 04",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Bundesliga",
     "leagues": [
       "Bundesliga",
       "Eredivisie",
@@ -9723,9 +9793,9 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Associazione Sportiva Roma",
+    "club": "Deportivo de La Coruña",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "La Liga",
     "leagues": [
       "Bundesliga",
       "Eredivisie",
@@ -9772,9 +9842,9 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Tottenham Hotspur",
+    "club": "Juventus FC",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
       "Premier League",
       "Serie A"
@@ -9786,12 +9856,13 @@ const PLAYERS = [
     "nation": "Cote d'Ivoire",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Real Oviedo",
+    "club": "Columbus Crew",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "MLS",
     "leagues": [
       "La Liga",
       "Ligue 1",
+      "MLS",
       "Premier League",
       "Super Lig"
     ]
@@ -9848,11 +9919,12 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Inter Milan",
+    "club": "Real Madrid",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "La Liga",
     "leagues": [
       "Eredivisie",
+      "La Liga",
       "Serie A"
     ]
   },
@@ -9895,9 +9967,9 @@ const PLAYERS = [
     "nation": "Japan",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Ajax Amsterdam",
+    "club": "Crystal Palace",
     "active": true,
-    "currentLeague": "Eredivisie",
+    "currentLeague": "Premier League",
     "leagues": [
       "Belgian Pro League",
       "Eredivisie",
@@ -9953,7 +10025,7 @@ const PLAYERS = [
     "nation": "Türkiye",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Beşiktaş Jimnastik Kulübü",
+    "club": "Çorum FK",
     "active": true,
     "currentLeague": "Super Lig",
     "leagues": [
@@ -9970,7 +10042,7 @@ const PLAYERS = [
     "nation": "Ukraine",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Associazione Sportiva Roma",
+    "club": "Bologna Football Club 1909",
     "active": true,
     "currentLeague": "Serie A",
     "leagues": [
@@ -10114,7 +10186,7 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Inter Milan",
+    "club": "Società Sportiva Lazio S.p.A.",
     "active": true,
     "currentLeague": "Serie A",
     "leagues": [
@@ -10186,10 +10258,11 @@ const PLAYERS = [
     "nation": "Mali",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Tottenham Hotspur",
+    "club": "Ajax Amsterdam",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Eredivisie",
     "leagues": [
+      "Eredivisie",
       "Ligue 1",
       "Premier League"
     ]
@@ -10215,9 +10288,9 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "RB Leipzig",
+    "club": "PSV Eindhoven",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Eredivisie",
     "leagues": [
       "Bundesliga",
       "Eredivisie",
@@ -10230,12 +10303,13 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Olympique Marseille",
+    "club": "Crystal Palace",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
       "Eredivisie",
-      "Ligue 1"
+      "Ligue 1",
+      "Premier League"
     ]
   },
   {
@@ -10385,12 +10459,13 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "West Ham United",
+    "club": "Al-Hilal Saudi Football Club",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Saudi Pro League",
     "leagues": [
       "Eredivisie",
-      "Premier League"
+      "Premier League",
+      "Saudi Pro League"
     ]
   },
   {
@@ -10412,9 +10487,9 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Royal Antwerp FC",
+    "club": "Manchester United",
     "active": true,
-    "currentLeague": "Belgian Pro League",
+    "currentLeague": "Premier League",
     "leagues": [
       "Belgian Pro League",
       "Premier League"
@@ -10468,10 +10543,11 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Liverpool FC",
+    "club": "Valencia CF",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "La Liga",
     "leagues": [
+      "La Liga",
       "Premier League"
     ]
   },
@@ -10508,9 +10584,9 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "West Ham United",
+    "club": "RC Lens",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Ligue 1",
     "leagues": [
       "Bundesliga",
       "La Liga",
@@ -10670,12 +10746,13 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "LOSC Lille",
+    "club": "Newcastle United",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
       "Belgian Pro League",
-      "Ligue 1"
+      "Ligue 1",
+      "Premier League"
     ]
   },
   {
@@ -10698,11 +10775,12 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Nottingham Forest",
+    "club": "AC Milan",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
-      "Premier League"
+      "Premier League",
+      "Serie A"
     ]
   },
   {
@@ -10711,11 +10789,12 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Ajax Amsterdam",
+    "club": "Paris Saint-Germain",
     "active": true,
-    "currentLeague": "Eredivisie",
+    "currentLeague": "Ligue 1",
     "leagues": [
-      "Eredivisie"
+      "Eredivisie",
+      "Ligue 1"
     ]
   },
   {
@@ -10778,7 +10857,7 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Bologna Football Club 1909",
+    "club": "Associazione Sportiva Roma",
     "active": true,
     "currentLeague": "Serie A",
     "leagues": [
@@ -10819,10 +10898,11 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Cagliari Calcio",
+    "club": "Chelsea FC",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Premier League",
     "leagues": [
+      "Premier League",
       "Serie A"
     ]
   },
@@ -11002,8 +11082,8 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Genoa CFC",
-    "active": false,
+    "club": "Al-Ittifaq F. C.",
+    "active": true,
     "currentLeague": null,
     "leagues": [
       "Ligue 1",
@@ -11034,10 +11114,11 @@ const PLAYERS = [
     "nation": "Colombia",
     "position": "Midfield",
     "specificPosition": "Right Midfield",
-    "club": "Pisa Sporting Club",
+    "club": "Millonarios FC",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Categoría Primera A",
     "leagues": [
+      "Categoría Primera A",
       "Premier League",
       "Serie A"
     ]
@@ -11092,11 +11173,12 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Real Oviedo",
+    "club": "HNK Hajduk Split",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Croatian HNL",
     "leagues": [
       "Belgian Pro League",
+      "Croatian HNL",
       "La Liga",
       "Premier League",
       "Serie A"
@@ -11224,11 +11306,12 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Chelsea FC",
+    "club": "Como 1907",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
-      "Premier League"
+      "Premier League",
+      "Serie A"
     ]
   },
   {
@@ -11252,9 +11335,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Tottenham Hotspur",
+    "club": "Inter Milan",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
       "Ligue 1",
       "Premier League",
@@ -11339,12 +11422,13 @@ const PLAYERS = [
     "nation": "Algeria",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "VfL Wolfsburg",
+    "club": "OGC Nice",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Ligue 1",
     "leagues": [
       "Belgian Pro League",
       "Bundesliga",
+      "Ligue 1",
       "Swiss Super League"
     ]
   },
@@ -11735,11 +11819,12 @@ const PLAYERS = [
     "nation": "Montenegro",
     "position": "Attack",
     "specificPosition": "Second Striker",
-    "club": "",
+    "club": "AEL Limassol FC",
     "active": true,
-    "currentLeague": null,
+    "currentLeague": "Cypriot First Division",
     "leagues": [
       "Bundesliga",
+      "Cypriot First Division",
       "La Liga",
       "Ligue 1",
       "Premier League",
@@ -11754,11 +11839,12 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Fortaleza Esporte Clube",
-    "active": false,
-    "currentLeague": null,
+    "club": "Pafos FC",
+    "active": true,
+    "currentLeague": "Cypriot First Division",
     "leagues": [
       "Brasileirao",
+      "Cypriot First Division",
       "Ligue 1",
       "Premier League"
     ]
@@ -11899,12 +11985,13 @@ const PLAYERS = [
     "nation": "France",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Konyaspor",
-    "active": false,
-    "currentLeague": null,
+    "club": "USL Dunkerque",
+    "active": true,
+    "currentLeague": "Ligue 2",
     "leagues": [
       "La Liga",
       "Ligue 1",
+      "Ligue 2",
       "Premier League",
       "Serie A",
       "Super Lig"
@@ -11961,7 +12048,7 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Associazione Sportiva Roma",
+    "club": "Genoa CFC",
     "active": true,
     "currentLeague": "Serie A",
     "leagues": [
@@ -11975,9 +12062,9 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Club Atlético Boca Juniors",
+    "club": "Real Zaragoza",
     "active": true,
-    "currentLeague": "Argentine Primera Division",
+    "currentLeague": "La Liga",
     "leagues": [
       "Argentine Primera Division",
       "La Liga",
@@ -12111,12 +12198,13 @@ const PLAYERS = [
     "nation": "Senegal",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Everton FC",
+    "club": "Al-Diriyah Club",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Saudi Pro League",
     "leagues": [
       "Ligue 1",
-      "Premier League"
+      "Premier League",
+      "Saudi Pro League"
     ]
   },
   {
@@ -12291,9 +12379,9 @@ const PLAYERS = [
     "nation": "Ukraine",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Genoa CFC",
+    "club": "Trabzonspor",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Super Lig",
     "leagues": [
       "Belgian Pro League",
       "Ligue 1",
@@ -12510,10 +12598,11 @@ const PLAYERS = [
     "nation": "Ukraine",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Girona FC",
+    "club": "Ajax Amsterdam",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Eredivisie",
     "leagues": [
+      "Eredivisie",
       "La Liga",
       "Ukrainian Premier League"
     ]
@@ -12606,9 +12695,9 @@ const PLAYERS = [
     "nation": "Morocco",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Fenerbahce",
+    "club": "Ajax Amsterdam",
     "active": true,
-    "currentLeague": "Super Lig",
+    "currentLeague": "Eredivisie",
     "leagues": [
       "Belgian Pro League",
       "Eredivisie",
@@ -12672,7 +12761,7 @@ const PLAYERS = [
     "nation": "Iceland",
     "position": "Attack",
     "specificPosition": "Second Striker",
-    "club": "ACF Fiorentina",
+    "club": "Società Sportiva Lazio S.p.A.",
     "active": true,
     "currentLeague": "Serie A",
     "leagues": [
@@ -13209,9 +13298,9 @@ const PLAYERS = [
     "nation": "Korea, South",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Paris Saint-Germain",
+    "club": "Atlético de Madrid",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "La Liga",
     "leagues": [
       "La Liga",
       "Ligue 1"
@@ -13252,10 +13341,11 @@ const PLAYERS = [
     "nation": "France",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "AC Milan",
+    "club": "Sevilla FC",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "La Liga",
     "leagues": [
+      "La Liga",
       "Ligue 1",
       "Serie A"
     ]
@@ -13354,7 +13444,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Società Sportiva Lazio S.p.A.",
+    "club": "AC Milan",
     "active": true,
     "currentLeague": "Serie A",
     "leagues": [
@@ -13409,7 +13499,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "FC Barcelona",
+    "club": "Deportivo de La Coruña",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -13436,12 +13526,13 @@ const PLAYERS = [
     "nation": "Cote d'Ivoire",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Sunderland AFC",
+    "club": "Ajax Amsterdam",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Eredivisie",
     "leagues": [
       "Belgian Pro League",
       "Danish Superliga",
+      "Eredivisie",
       "Ligue 1",
       "Premier League"
     ]
@@ -13555,12 +13646,13 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Olympique Lyon",
+    "club": "Sunderland AFC",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
       "Belgian Pro League",
-      "Ligue 1"
+      "Ligue 1",
+      "Premier League"
     ]
   },
   {
@@ -13667,11 +13759,12 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "CA Osasuna",
+    "club": "Liverpool FC",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Premier League",
     "leagues": [
-      "La Liga"
+      "La Liga",
+      "Premier League"
     ]
   },
   {
@@ -13767,10 +13860,11 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Atalanta BC",
+    "club": "Crystal Palace",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Premier League",
     "leagues": [
+      "Premier League",
       "Serie A"
     ]
   },
@@ -13806,11 +13900,12 @@ const PLAYERS = [
     "nation": "Senegal",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Paris Saint-Germain",
+    "club": "Aston Villa",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
-      "Ligue 1"
+      "Ligue 1",
+      "Premier League"
     ]
   },
   {
@@ -14044,9 +14139,9 @@ const PLAYERS = [
     "nation": "Switzerland",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Real Betis Balompié",
+    "club": "Torino FC",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Serie A",
     "leagues": [
       "Bundesliga",
       "Eredivisie",
@@ -14168,14 +14263,15 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Fenerbahce",
+    "club": "Al Jazira Club",
     "active": true,
-    "currentLeague": "Super Lig",
+    "currentLeague": "UAE Pro League",
     "leagues": [
       "Brasileirao",
       "Primeira Liga",
       "Saudi Pro League",
-      "Super Lig"
+      "Super Lig",
+      "UAE Pro League"
     ]
   },
   {
@@ -14655,11 +14751,12 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Atlético de Madrid",
+    "club": "Aston Villa",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Premier League",
     "leagues": [
       "La Liga",
+      "Premier League",
       "Serie A"
     ]
   },
@@ -14713,9 +14810,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Olympique Marseille",
+    "club": "Atalanta BC",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Serie A",
     "leagues": [
       "Ligue 1",
       "Premier League",
@@ -14851,11 +14948,12 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "SV Werder Bremen",
+    "club": "RC Strasbourg Alsace",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Ligue 1",
     "leagues": [
-      "Bundesliga"
+      "Bundesliga",
+      "Ligue 1"
     ]
   },
   {
@@ -14864,7 +14962,7 @@ const PLAYERS = [
     "nation": "Senegal",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "West Ham United",
+    "club": "Brentford FC",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -15081,7 +15179,7 @@ const PLAYERS = [
     "nation": "Colombia",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Crystal Palace",
+    "club": "Nottingham Forest",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -15110,9 +15208,9 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Atlético de Madrid",
+    "club": "Club Atlético River Plate",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Argentine Primera Division",
     "leagues": [
       "Argentine Primera Division",
       "Brasileirao",
@@ -15444,9 +15542,9 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Girona FC",
+    "club": "Ajax Amsterdam",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Eredivisie",
     "leagues": [
       "Bundesliga",
       "Eredivisie",
@@ -15528,9 +15626,9 @@ const PLAYERS = [
     "nation": "Serbia",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Fenerbahce",
-    "active": false,
-    "currentLeague": null,
+    "club": "NEC Nijmegen",
+    "active": true,
+    "currentLeague": "Eredivisie",
     "leagues": [
       "Eredivisie",
       "Premier League",
@@ -15586,14 +15684,15 @@ const PLAYERS = [
     "nation": "Mexico",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Deportivo Guadalajara",
+    "club": "Atlético Dallas",
     "active": true,
-    "currentLeague": "Liga MX",
+    "currentLeague": "USL Championship",
     "leagues": [
       "Bundesliga",
       "La Liga",
       "Liga MX",
-      "Premier League"
+      "Premier League",
+      "USL Championship"
     ]
   },
   {
@@ -15615,13 +15714,14 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Asociación Atlética Argentinos Juniors",
+    "club": "Deportivo Maipú",
     "active": true,
-    "currentLeague": "Argentine Primera Division",
+    "currentLeague": "Primera Nacional",
     "leagues": [
       "Argentine Primera Division",
       "La Liga",
-      "Primeira Liga"
+      "Primeira Liga",
+      "Primera Nacional"
     ]
   },
   {
@@ -15674,7 +15774,7 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "FC Nantes",
+    "club": "Angers SCO",
     "active": true,
     "currentLeague": "Ligue 1",
     "leagues": [
@@ -15912,12 +16012,13 @@ const PLAYERS = [
     "nation": "DR Congo",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Real Betis Balompié",
+    "club": "San Diego Football Club",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "MLS",
     "leagues": [
       "La Liga",
       "Ligue 1",
+      "MLS",
       "Super League Greece",
       "Super Lig"
     ]
@@ -16059,12 +16160,13 @@ const PLAYERS = [
     "nation": "Switzerland",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Bologna Football Club 1909",
+    "club": "Olympiakos Syndesmos Filathlon Peiraios",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Super League Greece",
     "leagues": [
       "Premier League",
       "Serie A",
+      "Super League Greece",
       "Swiss Super League"
     ]
   },
@@ -16163,14 +16265,15 @@ const PLAYERS = [
     "nation": "Austria",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "SC Braga",
+    "club": "Frosinone Calcio",
     "active": true,
-    "currentLeague": "Primeira Liga",
+    "currentLeague": "Serie A",
     "leagues": [
       "Bundesliga",
       "Eredivisie",
       "La Liga",
-      "Primeira Liga"
+      "Primeira Liga",
+      "Serie A"
     ]
   },
   {
@@ -16305,15 +16408,16 @@ const PLAYERS = [
     "nation": "Croatia",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Real Sociedad",
+    "club": "US Sassuolo",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Serie A",
     "leagues": [
       "Austrian Bundesliga",
       "Croatian HNL",
       "La Liga",
       "Ligue 1",
-      "Premier League"
+      "Premier League",
+      "Serie A"
     ]
   },
   {
@@ -16388,9 +16492,9 @@ const PLAYERS = [
     "nation": "Türkiye",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "AFC Bournemouth",
+    "club": "Getafe CF",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "La Liga",
     "leagues": [
       "Belgian Pro League",
       "Eredivisie",
@@ -16494,7 +16598,7 @@ const PLAYERS = [
     "nation": "Austria",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Tottenham Hotspur",
+    "club": "Sunderland AFC",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -16582,10 +16686,11 @@ const PLAYERS = [
     "nation": "Uruguay",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Getafe CF",
+    "club": "Club Atlético River Plate",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Argentine Primera Division",
     "leagues": [
+      "Argentine Primera Division",
       "La Liga",
       "Ligue 1"
     ]
@@ -16611,9 +16716,9 @@ const PLAYERS = [
     "nation": "Korea, South",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Wolverhampton Wanderers",
+    "club": "FC Schalke 04",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Bundesliga",
     "leagues": [
       "Austrian Bundesliga",
       "Bundesliga",
@@ -17061,7 +17166,7 @@ const PLAYERS = [
     "nation": "Colombia",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Bologna Football Club 1909",
+    "club": "Juventus FC",
     "active": true,
     "currentLeague": "Serie A",
     "leagues": [
@@ -17175,7 +17280,7 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "AFC Bournemouth",
+    "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -17233,9 +17338,9 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "HNK Hajduk Split",
+    "club": "Sporting Gijón",
     "active": true,
-    "currentLeague": "Croatian HNL",
+    "currentLeague": "La Liga",
     "leagues": [
       "Croatian HNL",
       "La Liga"
@@ -17319,11 +17424,12 @@ const PLAYERS = [
     "nation": "Armenia",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "FK Krasnodar",
+    "club": "Al-Ahli Saudi Football Club",
     "active": true,
-    "currentLeague": "Russian Premier League",
+    "currentLeague": "Saudi Pro League",
     "leagues": [
-      "Russian Premier League"
+      "Russian Premier League",
+      "Saudi Pro League"
     ]
   },
   {
@@ -17348,10 +17454,11 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "SSC Napoli",
+    "club": "Bayer 04 Leverkusen",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Bundesliga",
     "leagues": [
+      "Bundesliga",
       "La Liga",
       "Serie A"
     ]
@@ -17391,11 +17498,12 @@ const PLAYERS = [
     "nation": "Nigeria",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "OGC Nice",
+    "club": "Hamburger SV",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Bundesliga",
     "leagues": [
       "Belgian Pro League",
+      "Bundesliga",
       "Ligue 1",
       "Primeira Liga"
     ]
@@ -17420,11 +17528,12 @@ const PLAYERS = [
     "nation": "Ireland",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "AZ Alkmaar",
+    "club": "Real Betis Balompié",
     "active": true,
-    "currentLeague": "Eredivisie",
+    "currentLeague": "La Liga",
     "leagues": [
       "Eredivisie",
+      "La Liga",
       "Premier League"
     ]
   },
@@ -17434,9 +17543,9 @@ const PLAYERS = [
     "nation": "Romania",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Tottenham Hotspur",
+    "club": "ACF Fiorentina",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
       "Premier League",
       "Serie A"
@@ -17488,9 +17597,9 @@ const PLAYERS = [
     "nation": "Guinea-Bissau",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Everton FC",
+    "club": "ACF Fiorentina",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "Serie A",
     "leagues": [
       "Premier League",
       "Primeira Liga",
@@ -17559,9 +17668,9 @@ const PLAYERS = [
     "nation": "Senegal",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Società Sportiva Lazio S.p.A.",
+    "club": "Stade Rennais FC",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Ligue 1",
     "leagues": [
       "La Liga",
       "Ligue 1",
@@ -17661,12 +17770,13 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Midfield",
     "specificPosition": "Left Midfield",
-    "club": "RC Strasbourg Alsace",
+    "club": "AC Milan",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Serie A",
     "leagues": [
       "Ligue 1",
-      "Premier League"
+      "Premier League",
+      "Serie A"
     ]
   },
   {
@@ -17703,9 +17813,9 @@ const PLAYERS = [
     "nation": "Paraguay",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "RC Strasbourg Alsace",
+    "club": "Ipswich Town",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
       "Ligue 1",
       "Premier League"
@@ -17732,11 +17842,12 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Al-Hilal Saudi Football Club",
+    "club": "Ajax Amsterdam",
     "active": true,
-    "currentLeague": "Saudi Pro League",
+    "currentLeague": "Eredivisie",
     "leagues": [
       "Brasileirao",
+      "Eredivisie",
       "Primeira Liga",
       "Saudi Pro League"
     ]
@@ -17930,13 +18041,14 @@ const PLAYERS = [
     "nation": "Colombia",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "SL Benfica",
+    "club": "Al-Ittihad Football Club",
     "active": true,
-    "currentLeague": "Primeira Liga",
+    "currentLeague": "Saudi Pro League",
     "leagues": [
       "Brasileirao",
       "Liga MX",
-      "Primeira Liga"
+      "Primeira Liga",
+      "Saudi Pro League"
     ]
   },
   {
@@ -18086,11 +18198,12 @@ const PLAYERS = [
     "nation": "Senegal",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Chelsea FC",
+    "club": "Real Sociedad",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": "La Liga",
     "leagues": [
       "Belgian Pro League",
+      "La Liga",
       "Ligue 1",
       "Premier League"
     ]
@@ -18144,12 +18257,13 @@ const PLAYERS = [
     "nation": "France",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Eintracht Frankfurt",
+    "club": "Leeds United",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Bundesliga",
-      "Ligue 1"
+      "Ligue 1",
+      "Premier League"
     ]
   },
   {

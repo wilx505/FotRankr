@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 import { useIsFocused } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   createPlayer,
   findBestOpponent,
@@ -46,10 +46,37 @@ export default function HeadToHead({
 
   const MAX_H2HS = 6;
 
-  const goToRankings = () => {
-    navigation.navigate('MainTabs', {
-      screen: 'MyRanks',
-    });
+  // Closes the ranking screens (Compare or Challenge, then
+  // this one) so the user lands back where they started:
+  // Search, Home, a list, My Ranks...
+  const finishedRef = useRef(false);
+
+  const finishRanking = () => {
+
+    // Effects can call this more than once; popping twice
+    // would close the screen the user came from too.
+    if (finishedRef.current) {
+      return;
+    }
+
+    finishedRef.current = true;
+
+    const { routes, index } = navigation.getState();
+
+    const earlier = routes
+      .slice(0, index)
+      .map(route => route.name);
+
+    const startIndex = Math.max(
+      earlier.lastIndexOf('Compare'),
+      earlier.lastIndexOf('Challenge')
+    );
+
+    if (startIndex > 0) {
+      navigation.pop(index - startIndex + 1);
+    } else {
+      navigation.goBack();
+    }
   };
 
 
@@ -362,7 +389,7 @@ if (!isFocused) {
       MAX_H2HS
     ) {
 
-      goToRankings();
+      finishRanking();
 
       return;
     }
@@ -374,7 +401,7 @@ if (!isFocused) {
 
     if (!nextOpponent) {
 
-      goToRankings();
+      finishRanking();
 
       return;
     }
@@ -489,7 +516,7 @@ if (!isFocused) {
       MAX_H2HS
     ) {
 
-      goToRankings();
+      finishRanking();
 
       return;
     }
@@ -809,12 +836,12 @@ if (!isFocused) {
 
           <TouchableOpacity
             style={styles.backButton}
-            onPress={goToRankings}
+            onPress={finishRanking}
             activeOpacity={0.8}
           >
 
             <Text style={styles.backButtonText}>
-              BACK TO MY RANKINGS
+              DONE
             </Text>
 
           </TouchableOpacity>

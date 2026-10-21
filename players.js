@@ -5587,7 +5587,7 @@ const PLAYERS = [
     "name": "Alex Scott",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "AFC Bournemouth",
     "active": true,
     "currentLeague": "Premier League",
@@ -6675,10 +6675,11 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "SL Benfica",
+    "club": "AFC Bournemouth",
     "active": true,
-    "currentLeague": "Primeira Liga",
+    "currentLeague": "Premier League",
     "leagues": [
+      "Premier League",
       "Primeira Liga"
     ]
   },
@@ -6743,8 +6744,8 @@ const PLAYERS = [
     "id": "tm-890721",
     "name": "Myles Lewis-Skelly",
     "nation": "England",
-    "position": "Defence",
-    "specificPosition": "Left-Back",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Arsenal FC",
     "active": true,
     "currentLeague": "Premier League",
@@ -8128,9 +8129,9 @@ const PLAYERS = [
     "nation": "Greece",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Club Brugge KV",
+    "club": "Arsenal FC",
     "active": true,
-    "currentLeague": "Belgian Pro League",
+    "currentLeague": "Premier League",
     "leagues": [
       "Belgian Pro League",
       "Bundesliga",
@@ -12637,8 +12638,8 @@ const PLAYERS = [
     "id": "tm-277033",
     "name": "David Brooks",
     "nation": "Wales",
-    "position": "Attack",
-    "specificPosition": "Right Winger",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "AFC Bournemouth",
     "active": true,
     "currentLeague": "Premier League",
@@ -18475,6 +18476,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-611793",
+    "name": "James Hill",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
     "id": "tm-128899",
     "name": "Jack Butland",
     "nation": "England",
@@ -18486,6 +18501,76 @@ const PLAYERS = [
     "leagues": [
       "Premier League",
       "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-471690",
+    "name": "Max Aarons",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-542586",
+    "name": "Illan Meslier",
+    "nation": "France",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Arsenal FC",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-249089",
+    "name": "Lewis Cook",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-989112",
+    "name": "Veljko Milosavljevic",
+    "nation": "Serbia",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Serbian SuperLiga"
+    ]
+  },
+  {
+    "id": "tm-301238",
+    "name": "Michele Di Gregorio",
+    "nation": "Italy",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Serie A"
     ]
   },
   {
@@ -18525,6 +18610,19 @@ const PLAYERS = [
     "position": "Midfield",
     "specificPosition": "Central Midfield",
     "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-719673",
+    "name": "Ben Gannon-Doak",
+    "nation": "Scotland",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "AFC Bournemouth",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -18633,6 +18731,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-52570",
+    "name": "Fraser Forster",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
     "id": "tm-271495",
     "name": "Abdülkadir Ömür",
     "nation": "Türkiye",
@@ -18720,6 +18832,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-676042",
+    "name": "Juanlu Sánchez",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-475416",
     "name": "Sorba Thomas",
     "nation": "Wales",
@@ -18747,6 +18873,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-188077",
+    "name": "Ryan Christie",
+    "nation": "Scotland",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
     "id": "tm-620313",
     "name": "Lucas Gourna-Douath",
     "nation": "France",
@@ -18760,6 +18900,19 @@ const PLAYERS = [
       "Ligue 1",
       "Premier League",
       "Serie A"
+    ]
+  },
+  {
+    "id": "tm-998101",
+    "name": "Alex Tóth",
+    "nation": "Hungary",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
     ]
   },
   {
@@ -18792,6 +18945,22 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-513970",
+    "name": "Julián Araujo",
+    "nation": "Mexico",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "MLS",
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
     "id": "tm-635645",
     "name": "Aurèle Amenda",
     "nation": "Switzerland",
@@ -18821,6 +18990,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-948275",
+    "name": "Álvaro Rodríguez",
+    "nation": "Uruguay",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-1240763",
     "name": "Caleb Yirenkyi",
     "nation": "Ghana",
@@ -18831,6 +19014,19 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Danish Superliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-61841",
+    "name": "Adam Smith",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
       "Premier League"
     ]
   },
@@ -18885,6 +19081,20 @@ const PLAYERS = [
     "leagues": [
       "Belgian Pro League",
       "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1009658",
+    "name": "Julio Soler",
+    "nation": "Argentina",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Argentine Primera Division",
       "Premier League"
     ]
   },
@@ -18964,6 +19174,19 @@ const PLAYERS = [
     "position": "Attack",
     "specificPosition": "Centre-Forward",
     "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-746740",
+    "name": "Daniel Jebbison",
+    "nation": "Canada",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "AFC Bournemouth",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -19176,6 +19399,19 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Belgian Pro League",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-854721",
+    "name": "Ben Winterburn",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
       "Premier League"
     ]
   },
@@ -20009,6 +20245,19 @@ const PLAYERS = [
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
     "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-mack-allan",
+    "name": "Mack Allan",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "AFC Bournemouth",
     "active": true,
     "currentLeague": "Premier League"
   }

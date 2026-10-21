@@ -252,7 +252,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -292,7 +292,7 @@ const PLAYERS = [
     "nation": "Sweden",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -350,9 +350,9 @@ const PLAYERS = [
     "id": "tm-598577",
     "name": "Florian Wirtz",
     "nation": "Germany",
-    "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
-    "club": "Liverpool FC",
+    "position": "Attack",
+    "specificPosition": "Second Striker",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -407,9 +407,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Aston Villa",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "Bundesliga",
       "Premier League"
@@ -421,7 +421,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -465,8 +465,8 @@ const PLAYERS = [
     "name": "Declan Rice",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Arsenal FC",
+    "specificPosition": "Defensive Midfield",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -536,8 +536,8 @@ const PLAYERS = [
     "name": "Martin Ødegaard",
     "nation": "Norway",
     "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
-    "club": "Arsenal FC",
+    "specificPosition": "Central Midfield",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -581,7 +581,7 @@ const PLAYERS = [
     "nation": "Ecuador",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -671,7 +671,7 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -701,7 +701,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Everton FC",
+    "club": "Everton",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -745,9 +745,9 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Manchester City",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "Ligue 1",
       "Premier League",
@@ -773,8 +773,8 @@ const PLAYERS = [
     "name": "Dominik Szoboszlai",
     "nation": "Hungary",
     "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
-    "club": "Liverpool FC",
+    "specificPosition": "Defensive Midfield",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -806,7 +806,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -819,8 +819,8 @@ const PLAYERS = [
     "name": "Alexis Mac Allister",
     "nation": "Argentina",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Liverpool FC",
+    "specificPosition": "Defensive Midfield",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -965,7 +965,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1085,7 +1085,7 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1145,7 +1145,7 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1160,7 +1160,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1199,7 +1199,7 @@ const PLAYERS = [
     "name": "Enzo Fernández",
     "nation": "Argentina",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Manchester City",
     "active": true,
     "currentLeague": "Premier League",
@@ -1215,7 +1215,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1272,9 +1272,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "FC Barcelona",
+    "club": "Manchester United",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Premier League",
     "leagues": [
       "La Liga",
       "Premier League"
@@ -1315,7 +1315,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1457,7 +1457,7 @@ const PLAYERS = [
     "nation": "Scotland",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Liverpool FC",
+    "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1554,7 +1554,7 @@ const PLAYERS = [
     "name": "Sandro Tonali",
     "nation": "Italy",
     "position": "Midfield",
-    "specificPosition": "Defensive Midfield",
+    "specificPosition": "Central Midfield",
     "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
@@ -1584,7 +1584,7 @@ const PLAYERS = [
     "name": "Bryan Mbeumo",
     "nation": "Cameroon",
     "position": "Attack",
-    "specificPosition": "Right Winger",
+    "specificPosition": "Centre-Forward",
     "club": "Manchester United",
     "active": true,
     "currentLeague": "Premier League",
@@ -1599,7 +1599,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1673,9 +1673,9 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "RB Leipzig",
+    "club": "Tottenham Hotspur",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Bundesliga",
       "Eredivisie",
@@ -1716,7 +1716,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1785,7 +1785,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -1950,7 +1950,7 @@ const PLAYERS = [
     "nation": "Sweden",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -2012,7 +2012,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -2070,7 +2070,7 @@ const PLAYERS = [
     "name": "Elliot Anderson",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Manchester City",
     "active": true,
     "currentLeague": "Premier League",
@@ -2307,7 +2307,7 @@ const PLAYERS = [
     "name": "Leon Goretzka",
     "nation": "Germany",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Aston Villa",
     "active": true,
     "currentLeague": "Premier League",
@@ -2456,8 +2456,8 @@ const PLAYERS = [
     "name": "Federico Chiesa",
     "nation": "Italy",
     "position": "Attack",
-    "specificPosition": "Right Winger",
-    "club": "Liverpool FC",
+    "specificPosition": "Centre-Forward",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -2542,7 +2542,7 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -2569,7 +2569,7 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -2583,9 +2583,9 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Nottingham Forest",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "Brasileirao",
       "La Liga",
@@ -2628,9 +2628,9 @@ const PLAYERS = [
     "id": "tm-472423",
     "name": "Reece James",
     "nation": "England",
-    "position": "Defence",
-    "specificPosition": "Right-Back",
-    "club": "Chelsea FC",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -2643,7 +2643,7 @@ const PLAYERS = [
     "nation": "Uruguay",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -2673,7 +2673,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -2725,7 +2725,7 @@ const PLAYERS = [
     "name": "Kobbie Mainoo",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Manchester United",
     "active": true,
     "currentLeague": "Premier League",
@@ -2752,8 +2752,8 @@ const PLAYERS = [
     "id": "tm-955357",
     "name": "Junior Kroupi",
     "nation": "France",
-    "position": "Attack",
-    "specificPosition": "Centre-Forward",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "AFC Bournemouth",
     "active": true,
     "currentLeague": "Premier League",
@@ -3027,7 +3027,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -3041,7 +3041,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -3099,9 +3099,9 @@ const PLAYERS = [
     "nation": "Ireland",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Associazione Sportiva Roma",
+    "club": "Brighton & Hove Albion",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Premier League",
     "leagues": [
       "Premier League",
       "Serie A"
@@ -3113,7 +3113,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Brentford FC",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -3234,11 +3234,11 @@ const PLAYERS = [
     "id": "tm-126422",
     "name": "Allan",
     "nation": "Brazil",
-    "position": "Midfield",
-    "specificPosition": "Defensive Midfield",
-    "club": "S. A. F. Botafogo",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Manchester City",
     "active": true,
-    "currentLeague": "Brasileirao",
+    "currentLeague": "Premier League",
     "leagues": [
       "Brasileirao",
       "La Liga",
@@ -3341,7 +3341,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -3507,9 +3507,9 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Liverpool FC",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "Bundesliga",
       "Ligue 1",
@@ -3584,8 +3584,8 @@ const PLAYERS = [
     "id": "tm-431755",
     "name": "Dejan Kulusevski",
     "nation": "Sweden",
-    "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
     "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
@@ -3615,7 +3615,7 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -3940,7 +3940,7 @@ const PLAYERS = [
     "name": "Youri Tielemans",
     "nation": "Belgium",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Manchester United",
     "active": true,
     "currentLeague": "Premier League",
@@ -4017,7 +4017,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -4102,7 +4102,7 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -4188,7 +4188,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -4230,9 +4230,9 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Tottenham Hotspur",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "Brasileirao",
       "Eredivisie",
@@ -4291,7 +4291,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -4558,7 +4558,7 @@ const PLAYERS = [
     "nation": "Switzerland",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Sunderland AFC",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -4737,9 +4737,9 @@ const PLAYERS = [
     "nation": "Mexico",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Fulham FC",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "La Liga",
       "Liga MX",
@@ -4974,7 +4974,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5192,7 +5192,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5272,7 +5272,7 @@ const PLAYERS = [
     "nation": "Wales",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Tottenham Hotspur",
+    "club": "Everton",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5317,7 +5317,7 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5331,7 +5331,7 @@ const PLAYERS = [
     "name": "Conor Gallagher",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
@@ -5346,7 +5346,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5464,7 +5464,7 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5476,8 +5476,8 @@ const PLAYERS = [
     "name": "Piero Hincapié",
     "nation": "Ecuador",
     "position": "Defence",
-    "specificPosition": "Centre-Back",
-    "club": "Arsenal FC",
+    "specificPosition": "Left-Back",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5492,7 +5492,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Everton FC",
+    "club": "Everton",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5506,7 +5506,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -5559,7 +5559,7 @@ const PLAYERS = [
     "name": "Mathys Tel",
     "nation": "France",
     "position": "Attack",
-    "specificPosition": "Centre-Forward",
+    "specificPosition": "Left Winger",
     "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
@@ -5628,7 +5628,7 @@ const PLAYERS = [
     "name": "Johan Manzambi",
     "nation": "Switzerland",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Aston Villa",
     "active": true,
     "currentLeague": "Premier League",
@@ -5671,7 +5671,7 @@ const PLAYERS = [
     "name": "Ayyoub Bouaddi",
     "nation": "Morocco",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Manchester City",
     "active": true,
     "currentLeague": "Premier League",
@@ -5887,7 +5887,7 @@ const PLAYERS = [
     "name": "Mateo Kovacic",
     "nation": "Croatia",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Manchester City",
     "active": true,
     "currentLeague": "Premier League",
@@ -6388,7 +6388,7 @@ const PLAYERS = [
     "name": "Exequiel Palacios",
     "nation": "Argentina",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Ipswich Town",
     "active": true,
     "currentLeague": "Premier League",
@@ -6404,9 +6404,9 @@ const PLAYERS = [
     "nation": "Norway",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Wolverhampton Wanderers",
+    "club": "Crystal Palace",
     "active": true,
-    "currentLeague": "Championship",
+    "currentLeague": "Premier League",
     "leagues": [
       "Championship",
       "Eliteserien",
@@ -6466,7 +6466,7 @@ const PLAYERS = [
     "nation": "Georgia",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -6493,7 +6493,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Everton FC",
+    "club": "Everton",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -6647,7 +6647,7 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Brighton & Hove Albion",
+    "club": "Tottenham Hotspur",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -6704,7 +6704,7 @@ const PLAYERS = [
     "nation": "Hungary",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -6717,8 +6717,8 @@ const PLAYERS = [
     "name": "Andrey Santos",
     "nation": "Brazil",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Chelsea FC",
+    "specificPosition": "Defensive Midfield",
+    "club": "Manchester United",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -6746,7 +6746,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -6814,8 +6814,8 @@ const PLAYERS = [
     "name": "Geovany Quenda",
     "nation": "Portugal",
     "position": "Attack",
-    "specificPosition": "Right Winger",
-    "club": "Chelsea FC",
+    "specificPosition": "Left Winger",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -6930,7 +6930,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -7371,7 +7371,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Everton FC",
+    "club": "Everton",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -7782,7 +7782,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -7898,9 +7898,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Chelsea FC",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "Ligue 1",
       "Premier League"
@@ -7987,7 +7987,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Fulham FC",
+    "club": "Fulham",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -8041,8 +8041,8 @@ const PLAYERS = [
     "id": "tm-410225",
     "name": "Ismaïla Sarr",
     "nation": "Senegal",
-    "position": "Attack",
-    "specificPosition": "Right Winger",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Crystal Palace",
     "active": true,
     "currentLeague": "Premier League",
@@ -8073,7 +8073,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -8101,9 +8101,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Newcastle United",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "Premier League"
     ]
@@ -8129,7 +8129,7 @@ const PLAYERS = [
     "nation": "Greece",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -8337,11 +8337,11 @@ const PLAYERS = [
     "id": "tm-568157",
     "name": "Yéremy Pino",
     "nation": "Spain",
-    "position": "Attack",
-    "specificPosition": "Right Winger",
-    "club": "Villarreal CF",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Crystal Palace",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Premier League",
     "leagues": [
       "La Liga",
       "Premier League"
@@ -8425,7 +8425,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -8565,10 +8565,10 @@ const PLAYERS = [
     "name": "João Gomes",
     "nation": "Brazil",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Wolverhampton Wanderers",
+    "specificPosition": "Defensive Midfield",
+    "club": "Aston Villa",
     "active": true,
-    "currentLeague": "Championship",
+    "currentLeague": "Premier League",
     "leagues": [
       "Brasileirao",
       "Championship",
@@ -8607,14 +8607,15 @@ const PLAYERS = [
     "name": "Mamadou Sangaré",
     "nation": "Mali",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "RC Lens",
+    "specificPosition": "Defensive Midfield",
+    "club": "Brentford",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
       "Austrian Bundesliga",
       "Belgian Pro League",
-      "Ligue 1"
+      "Ligue 1",
+      "Premier League"
     ]
   },
   {
@@ -8636,7 +8637,7 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Brentford FC",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -8649,10 +8650,10 @@ const PLAYERS = [
     "name": "Valentín Barco",
     "nation": "Argentina",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "RC Strasbourg Alsace",
+    "specificPosition": "Defensive Midfield",
+    "club": "Chelsea",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
       "Argentine Primera Division",
       "La Liga",
@@ -8693,7 +8694,7 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -8719,13 +8720,14 @@ const PLAYERS = [
     "name": "Hugo Larsson",
     "nation": "Sweden",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Eintracht Frankfurt",
+    "specificPosition": "Defensive Midfield",
+    "club": "Fulham",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Allsvenskan",
-      "Bundesliga"
+      "Bundesliga",
+      "Premier League"
     ]
   },
   {
@@ -8861,9 +8863,9 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Arsenal FC",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "Belgian Pro League",
       "Premier League"
@@ -8946,7 +8948,7 @@ const PLAYERS = [
     "name": "Joe Willock",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Newcastle United",
     "active": true,
     "currentLeague": "Premier League",
@@ -9367,7 +9369,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -9382,7 +9384,7 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Fulham FC",
+    "club": "Fulham",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -9456,9 +9458,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Newcastle United",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "La Liga",
       "Premier League"
@@ -9470,7 +9472,7 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Sunderland AFC",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -9487,7 +9489,7 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -9730,7 +9732,7 @@ const PLAYERS = [
     "nation": "Denmark",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Fulham FC",
+    "club": "Fulham",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -9759,7 +9761,7 @@ const PLAYERS = [
     "nation": "Morocco",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Fulham FC",
+    "club": "Ipswich Town",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10020,8 +10022,8 @@ const PLAYERS = [
     "id": "tm-340324",
     "name": "Eddie Nketiah",
     "nation": "England",
-    "position": "Attack",
-    "specificPosition": "Centre-Forward",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Crystal Palace",
     "active": true,
     "currentLeague": "Premier League",
@@ -10110,7 +10112,7 @@ const PLAYERS = [
     "nation": "United States",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Fulham FC",
+    "club": "Fulham",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10182,7 +10184,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Fulham FC",
+    "club": "Fulham",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10313,7 +10315,7 @@ const PLAYERS = [
     "name": "Quinten Timber",
     "nation": "Netherlands",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Crystal Palace",
     "active": true,
     "currentLeague": "Premier League",
@@ -10329,9 +10331,9 @@ const PLAYERS = [
     "nation": "Poland",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Arsenal FC",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "Premier League",
       "Primeira Liga",
@@ -10428,7 +10430,7 @@ const PLAYERS = [
     "nation": "Ireland",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Brentford FC",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10441,7 +10443,7 @@ const PLAYERS = [
     "nation": "Germany",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Brentford FC",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10455,7 +10457,7 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Sunderland AFC",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10484,8 +10486,8 @@ const PLAYERS = [
     "name": "Kiernan Dewsbury-Hall",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Everton FC",
+    "specificPosition": "Attacking Midfield",
+    "club": "Everton",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10612,7 +10614,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Chelsea FC",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10700,7 +10702,7 @@ const PLAYERS = [
     "name": "Yasin Ayari",
     "nation": "Sweden",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Brighton & Hove Albion",
     "active": true,
     "currentLeague": "Premier League",
@@ -10771,8 +10773,8 @@ const PLAYERS = [
     "name": "Noah Sadiki",
     "nation": "DR Congo",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Sunderland AFC",
+    "specificPosition": "Defensive Midfield",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10828,7 +10830,7 @@ const PLAYERS = [
     "nation": "Burkina Faso",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Brentford FC",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10882,7 +10884,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Everton FC",
+    "club": "Everton",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10894,8 +10896,8 @@ const PLAYERS = [
     "name": "Habib Diarra",
     "nation": "Senegal",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Sunderland AFC",
+    "specificPosition": "Attacking Midfield",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -10907,9 +10909,9 @@ const PLAYERS = [
     "id": "tm-895937",
     "name": "Marco Palestra",
     "nation": "Italy",
-    "position": "Defence",
-    "specificPosition": "Right-Back",
-    "club": "Chelsea FC",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -11216,8 +11218,8 @@ const PLAYERS = [
     "id": "tm-193116",
     "name": "John McGinn",
     "nation": "Scotland",
-    "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
     "club": "Aston Villa",
     "active": true,
     "currentLeague": "Premier League",
@@ -11244,9 +11246,9 @@ const PLAYERS = [
     "id": "tm-242631",
     "name": "Alex Iwobi",
     "nation": "Nigeria",
-    "position": "Attack",
-    "specificPosition": "Left Winger",
-    "club": "Fulham FC",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Fulham",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -11286,7 +11288,7 @@ const PLAYERS = [
     "name": "Noussair Mazraoui",
     "nation": "Morocco",
     "position": "Defence",
-    "specificPosition": "Right-Back",
+    "specificPosition": "Left-Back",
     "club": "Manchester United",
     "active": true,
     "currentLeague": "Premier League",
@@ -11373,7 +11375,7 @@ const PLAYERS = [
     "name": "Georginio Rutter",
     "nation": "France",
     "position": "Attack",
-    "specificPosition": "Centre-Forward",
+    "specificPosition": "Second Striker",
     "club": "Brighton & Hove Albion",
     "active": true,
     "currentLeague": "Premier League",
@@ -11389,7 +11391,7 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Brentford FC",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -11418,8 +11420,8 @@ const PLAYERS = [
     "name": "Yegor Yarmolyuk",
     "nation": "Ukraine",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Brentford FC",
+    "specificPosition": "Defensive Midfield",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -12136,7 +12138,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Everton FC",
+    "club": "Everton",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -12180,9 +12182,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "West Ham United",
+    "club": "Brentford",
     "active": true,
-    "currentLeague": "Championship",
+    "currentLeague": "Premier League",
     "leagues": [
       "Championship",
       "Premier League"
@@ -12254,7 +12256,7 @@ const PLAYERS = [
     "name": "Ross Barkley",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Aston Villa",
     "active": true,
     "currentLeague": "Premier League",
@@ -12638,8 +12640,8 @@ const PLAYERS = [
     "id": "tm-277033",
     "name": "David Brooks",
     "nation": "Wales",
-    "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
     "club": "AFC Bournemouth",
     "active": true,
     "currentLeague": "Premier League",
@@ -12816,8 +12818,8 @@ const PLAYERS = [
     "name": "Mathias Jensen",
     "nation": "Denmark",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Brentford FC",
+    "specificPosition": "Attacking Midfield",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -12918,7 +12920,7 @@ const PLAYERS = [
     "name": "Daichi Kamada",
     "nation": "Japan",
     "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Crystal Palace",
     "active": true,
     "currentLeague": "Premier League",
@@ -12992,7 +12994,7 @@ const PLAYERS = [
     "name": "Ethan Ampadu",
     "nation": "Wales",
     "position": "Midfield",
-    "specificPosition": "Defensive Midfield",
+    "specificPosition": "Central Midfield",
     "club": "Leeds United",
     "active": true,
     "currentLeague": "Premier League",
@@ -13255,7 +13257,7 @@ const PLAYERS = [
     "nation": "Denmark",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Brentford FC",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -13341,7 +13343,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Manchester City",
+    "club": "Leeds United",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -13413,9 +13415,9 @@ const PLAYERS = [
     "nation": "France",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Eintracht Frankfurt",
+    "club": "Nottingham Forest",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Bundesliga",
       "Ligue 1",
@@ -13428,7 +13430,7 @@ const PLAYERS = [
     "nation": "Scotland",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Brentford FC",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -13485,7 +13487,7 @@ const PLAYERS = [
     "nation": "Northern Ireland",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -13557,7 +13559,7 @@ const PLAYERS = [
     "nation": "Norway",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Manchester City",
+    "club": "Fulham",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -13660,7 +13662,7 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Sunderland AFC",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -13729,9 +13731,9 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "FC Shakhtar Donetsk",
+    "club": "Fulham",
     "active": true,
-    "currentLeague": "Ukrainian Premier League",
+    "currentLeague": "Premier League",
     "leagues": [
       "Brasileirao",
       "Premier League",
@@ -13760,11 +13762,12 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Real Madrid",
+    "club": "Fulham",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Premier League",
     "leagues": [
-      "La Liga"
+      "La Liga",
+      "Premier League"
     ]
   },
   {
@@ -13773,7 +13776,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -13787,7 +13790,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Everton FC",
+    "club": "Everton",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -13832,9 +13835,9 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Girona FC",
+    "club": "Manchester City",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Brasileirao",
       "La Liga",
@@ -13901,7 +13904,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -13926,9 +13929,9 @@ const PLAYERS = [
     "id": "tm-1187629",
     "name": "Max Dowman",
     "nation": "England",
-    "position": "Attack",
-    "specificPosition": "Right Winger",
-    "club": "Arsenal FC",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -14200,7 +14203,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Everton FC",
+    "club": "Everton",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -14262,13 +14265,14 @@ const PLAYERS = [
     "name": "Xaver Schlager",
     "nation": "Austria",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "RB Leipzig",
+    "specificPosition": "Defensive Midfield",
+    "club": "Nottingham Forest",
     "active": true,
-    "currentLeague": "Bundesliga",
+    "currentLeague": "Premier League",
     "leagues": [
       "Austrian Bundesliga",
-      "Bundesliga"
+      "Bundesliga",
+      "Premier League"
     ]
   },
   {
@@ -14307,7 +14311,7 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Fulham FC",
+    "club": "Fulham",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -14408,7 +14412,7 @@ const PLAYERS = [
     "nation": "Jamaica",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Brentford FC",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -14421,7 +14425,7 @@ const PLAYERS = [
     "nation": "Ireland",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Brentford FC",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -14450,7 +14454,7 @@ const PLAYERS = [
     "name": "Anton Stach",
     "nation": "Germany",
     "position": "Midfield",
-    "specificPosition": "Defensive Midfield",
+    "specificPosition": "Central Midfield",
     "club": "Leeds United",
     "active": true,
     "currentLeague": "Premier League",
@@ -14513,7 +14517,7 @@ const PLAYERS = [
     "nation": "Ukraine",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Everton FC",
+    "club": "Everton",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -14527,9 +14531,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Leeds United",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "MLS",
       "Premier League",
@@ -14583,7 +14587,7 @@ const PLAYERS = [
     "nation": "Nigeria",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Fulham FC",
+    "club": "Fulham",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -14707,9 +14711,9 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "RC Strasbourg Alsace",
+    "club": "Chelsea",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
       "Austrian Bundesliga",
       "Belgian Pro League",
@@ -14782,8 +14786,8 @@ const PLAYERS = [
     "name": "Enzo Le Fée",
     "nation": "France",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Sunderland AFC",
+    "specificPosition": "Attacking Midfield",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -14798,7 +14802,7 @@ const PLAYERS = [
     "nation": "Netherlands",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Sunderland AFC",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -14867,8 +14871,8 @@ const PLAYERS = [
     "id": "tm-730893",
     "name": "Tyrick Mitchell",
     "nation": "England",
-    "position": "Defence",
-    "specificPosition": "Left-Back",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
     "club": "Crystal Palace",
     "active": true,
     "currentLeague": "Premier League",
@@ -14926,7 +14930,7 @@ const PLAYERS = [
     "name": "Jack Hinshelwood",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Defensive Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Brighton & Hove Albion",
     "active": true,
     "currentLeague": "Premier League",
@@ -14981,7 +14985,7 @@ const PLAYERS = [
     "nation": "Senegal",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Brentford FC",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -15196,8 +15200,8 @@ const PLAYERS = [
     "id": "tm-493003",
     "name": "Daniel Muñoz",
     "nation": "Colombia",
-    "position": "Defence",
-    "specificPosition": "Right-Back",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
     "club": "Nottingham Forest",
     "active": true,
     "currentLeague": "Premier League",
@@ -16341,9 +16345,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Brighton & Hove Albion",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "Premier League"
     ]
@@ -16465,7 +16469,7 @@ const PLAYERS = [
     "nation": "Mozambique",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Sunderland AFC",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -16617,7 +16621,7 @@ const PLAYERS = [
     "nation": "Austria",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Sunderland AFC",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -16678,7 +16682,7 @@ const PLAYERS = [
     "nation": "Wales",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Fulham FC",
+    "club": "Leeds United",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -16855,7 +16859,7 @@ const PLAYERS = [
     "nation": "Norway",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Fulham FC",
+    "club": "Fulham",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -16944,7 +16948,7 @@ const PLAYERS = [
     "name": "Noah Okafor",
     "nation": "Switzerland",
     "position": "Attack",
-    "specificPosition": "Left Winger",
+    "specificPosition": "Second Striker",
     "club": "Leeds United",
     "active": true,
     "currentLeague": "Premier League",
@@ -16961,7 +16965,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Sunderland AFC",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -17130,8 +17134,8 @@ const PLAYERS = [
     "id": "tm-399434",
     "name": "Marcus Tavernier",
     "nation": "England",
-    "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
     "club": "AFC Bournemouth",
     "active": true,
     "currentLeague": "Premier League",
@@ -17172,7 +17176,7 @@ const PLAYERS = [
     "name": "James Justin",
     "nation": "England",
     "position": "Defence",
-    "specificPosition": "Right-Back",
+    "specificPosition": "Centre-Back",
     "club": "Leeds United",
     "active": true,
     "currentLeague": "Premier League",
@@ -17388,9 +17392,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Southampton FC",
-    "active": false,
-    "currentLeague": null,
+    "club": "Aston Villa",
+    "active": true,
+    "currentLeague": "Premier League",
     "leagues": [
       "Belgian Pro League",
       "Premier League"
@@ -17590,7 +17594,7 @@ const PLAYERS = [
     "name": "James McAtee",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Nottingham Forest",
     "active": true,
     "currentLeague": "Premier League",
@@ -17603,8 +17607,8 @@ const PLAYERS = [
     "name": "Dwight McNeil",
     "nation": "England",
     "position": "Attack",
-    "specificPosition": "Left Winger",
-    "club": "Everton FC",
+    "specificPosition": "Right Winger",
+    "club": "Crystal Palace",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -17633,8 +17637,8 @@ const PLAYERS = [
     "position": "Defence",
     "specificPosition": "Left-Back",
     "club": "Ipswich Town",
-    "active": false,
-    "currentLeague": null,
+    "active": true,
+    "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
     ]
@@ -17748,9 +17752,9 @@ const PLAYERS = [
     "id": "tm-644401",
     "name": "Keane Lewis-Potter",
     "nation": "England",
-    "position": "Midfield",
-    "specificPosition": "Left Midfield",
-    "club": "Brentford FC",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Brentford",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -17892,11 +17896,12 @@ const PLAYERS = [
     "nation": "Bosnia-Herzegovina",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "US Sassuolo",
+    "club": "Leeds United",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "Premier League",
     "leagues": [
       "Austrian Bundesliga",
+      "Premier League",
       "Serie A"
     ]
   },
@@ -18048,7 +18053,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Fulham FC",
+    "club": "Fulham",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -18077,8 +18082,8 @@ const PLAYERS = [
     "name": "Chemsdine Talbi",
     "nation": "Morocco",
     "position": "Attack",
-    "specificPosition": "Right Winger",
-    "club": "Sunderland AFC",
+    "specificPosition": "Left Winger",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -18137,9 +18142,9 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "RC Strasbourg Alsace",
+    "club": "Chelsea",
     "active": true,
-    "currentLeague": "Ligue 1",
+    "currentLeague": "Premier League",
     "leagues": [
       "Belgian Pro League",
       "Ligue 1",
@@ -18250,7 +18255,7 @@ const PLAYERS = [
     "name": "Lewis Miley",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Right Midfield",
     "club": "Newcastle United",
     "active": true,
     "currentLeague": "Premier League",
@@ -18292,8 +18297,8 @@ const PLAYERS = [
     "name": "Chris Rigg",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
-    "club": "Sunderland AFC",
+    "specificPosition": "Right Midfield",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -18305,7 +18310,7 @@ const PLAYERS = [
     "name": "Christos Mouzakitis",
     "nation": "Greece",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
@@ -18331,8 +18336,8 @@ const PLAYERS = [
     "id": "tm-996897",
     "name": "Diego Gómez",
     "nation": "Paraguay",
-    "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
     "club": "Brighton & Hove Albion",
     "active": true,
     "currentLeague": "Premier League",
@@ -18359,8 +18364,8 @@ const PLAYERS = [
     "name": "Josh Acheampong",
     "nation": "England",
     "position": "Defence",
-    "specificPosition": "Right-Back",
-    "club": "Chelsea FC",
+    "specificPosition": "Centre-Back",
+    "club": "Chelsea",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -18387,9 +18392,9 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Fulham FC",
+    "club": "",
     "active": true,
-    "currentLeague": "Premier League",
+    "currentLeague": null,
     "leagues": [
       "Premier League"
     ]
@@ -18440,7 +18445,7 @@ const PLAYERS = [
     "nation": "Italy",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Liverpool FC",
+    "club": "Liverpool",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -18490,6 +18495,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-945021",
+    "name": "Anan Khalaili",
+    "nation": "Israel",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Crystal Palace",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-128899",
     "name": "Jack Butland",
     "nation": "England",
@@ -18501,6 +18520,110 @@ const PLAYERS = [
     "leagues": [
       "Premier League",
       "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-236490",
+    "name": "Ola Aina",
+    "nation": "Nigeria",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Nottingham Forest",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-270171",
+    "name": "Vitaly Janelt",
+    "nation": "Germany",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-338070",
+    "name": "Konstantinos Tsimikas",
+    "nation": "Greece",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Liverpool",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Danish Superliga",
+      "Eredivisie",
+      "Premier League",
+      "Serie A",
+      "Super League Greece"
+    ]
+  },
+  {
+    "id": "tm-357162",
+    "name": "Florentino",
+    "nation": "Portugal",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Championship",
+      "La Liga",
+      "Ligue 1",
+      "Premier League",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-406634",
+    "name": "Matt O'Riley",
+    "nation": "Denmark",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-410708",
+    "name": "Pascal Struijk",
+    "nation": "Netherlands",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-429915",
+    "name": "Maxim De Cuyper",
+    "nation": "Belgium",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Premier League"
     ]
   },
   {
@@ -18519,16 +18642,117 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-515544",
+    "name": "Trai Hume",
+    "nation": "Northern Ireland",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-542586",
     "name": "Illan Meslier",
     "nation": "France",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Arsenal FC",
+    "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
       "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-743498",
+    "name": "Wilson Odobert",
+    "nation": "France",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Tottenham Hotspur",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-936874",
+    "name": "Tyrique George",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Everton",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-950091",
+    "name": "Stefanos Tzimas",
+    "nation": "Greece",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Premier League",
+      "Super League Greece"
+    ]
+  },
+  {
+    "id": "tm-91059",
+    "name": "Joshua King",
+    "nation": "Norway",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Fulham",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Ligue 1",
+      "Premier League",
+      "Saudi Pro League",
+      "Super Lig"
+    ]
+  },
+  {
+    "id": "tm-148367",
+    "name": "Christian Nørgaard",
+    "nation": "Denmark",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Everton",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Danish Superliga",
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-192080",
+    "name": "Nick Pope",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Newcastle United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
       "Premier League"
     ]
   },
@@ -18542,6 +18766,209 @@ const PLAYERS = [
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-258878",
+    "name": "Tosin Adarabioyo",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Tottenham Hotspur",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-331505",
+    "name": "Óscar Mingueza",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Crystal Palace",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-362108",
+    "name": "Gabriel Gudmundsson",
+    "nation": "Sweden",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Leeds United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Allsvenskan",
+      "Eredivisie",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-371851",
+    "name": "Jaka Bijol",
+    "nation": "Slovenia",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Leeds United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Premier League",
+      "Russian Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-432298",
+    "name": "Zion Suzuki",
+    "nation": "Japan",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Aston Villa",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "J1 League",
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-452483",
+    "name": "David Affengruber",
+    "nation": "Austria",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Fulham",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Austrian Bundesliga",
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-503686",
+    "name": "Dan Ballard",
+    "nation": "Northern Ireland",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-519184",
+    "name": "Amar Dedić",
+    "nation": "Bosnia-Herzegovina",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Newcastle United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Austrian Bundesliga",
+      "Ligue 1",
+      "Premier League",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-559263",
+    "name": "Fábio Carvalho",
+    "nation": "Portugal",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-683620",
+    "name": "Antoni Milambo",
+    "nation": "Netherlands",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Eredivisie",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-684210",
+    "name": "Jaidon Anthony",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Championship",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-693095",
+    "name": "Jacob Greaves",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-864121",
+    "name": "Abdul Fatawu",
+    "nation": "Ghana",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-948279",
+    "name": "Chema Andrés",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
       "Premier League"
     ]
   },
@@ -18560,6 +18987,100 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-67063",
+    "name": "Danny Welbeck",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Chelsea",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-108725",
+    "name": "Chris Wood",
+    "nation": "New Zealand",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Nottingham Forest",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-123275",
+    "name": "Tom Cairney",
+    "nation": "Scotland",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Fulham",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-207014",
+    "name": "Will Hughes",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Crystal Palace",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-226973",
+    "name": "Harrison Reed",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Fulham",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-285845",
+    "name": "Ainsley Maitland-Niles",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Everton",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-297212",
+    "name": "Joe Rodon",
+    "nation": "Wales",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Leeds United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-301238",
     "name": "Michele Di Gregorio",
     "nation": "Italy",
@@ -18571,6 +19092,36 @@ const PLAYERS = [
     "leagues": [
       "Premier League",
       "Serie A"
+    ]
+  },
+  {
+    "id": "tm-314288",
+    "name": "Lukas Nmecha",
+    "nation": "Germany",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Leeds United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-328658",
+    "name": "Kristoffer Ajer",
+    "nation": "Norway",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Eliteserien",
+      "Premier League",
+      "Scottish Premiership"
     ]
   },
   {
@@ -18590,6 +19141,36 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-494237",
+    "name": "Wilson Isidor",
+    "nation": "Haiti",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League",
+      "Russian Premier League"
+    ]
+  },
+  {
+    "id": "tm-497291",
+    "name": "Nicolás Domínguez",
+    "nation": "Argentina",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Nottingham Forest",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Argentine Primera Division",
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
     "id": "tm-554389",
     "name": "Konstantinos Tzolakis",
     "nation": "Greece",
@@ -18604,15 +19185,99 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-608832",
+    "name": "Merlin Röhl",
+    "nation": "Germany",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Everton",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-629773",
+    "name": "Lukas Hornicek",
+    "nation": "Czech Republic",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Newcastle United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Czech First League",
+      "Premier League",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-645686",
+    "name": "Lamare Bogarde",
+    "nation": "Netherlands",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Aston Villa",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-665390",
+    "name": "Jaden Philogene",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-696589",
     "name": "Tim Iroegbunam",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-708072",
+    "name": "Nicolò Savona",
+    "nation": "Italy",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Nottingham Forest",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-711544",
+    "name": "Jake O'Brien",
+    "nation": "Ireland",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Everton",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Ligue 1",
       "Premier League"
     ]
   },
@@ -18626,6 +19291,34 @@ const PLAYERS = [
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-915418",
+    "name": "Jannik Schuster",
+    "nation": "Austria",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Austrian Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-975347",
+    "name": "Aladji Bamba",
+    "nation": "France",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Newcastle United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
       "Premier League"
     ]
   },
@@ -18660,12 +19353,113 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-1191444",
+    "name": "Dayann Methalie",
+    "nation": "France",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-127181",
+    "name": "Benjamin Lecomte",
+    "nation": "France",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Fulham",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-250478",
     "name": "Matt Targett",
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Left-Back",
     "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-888785",
+    "name": "Promise David",
+    "nation": "Canada",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-903611",
+    "name": "Nilson Angulo",
+    "nation": "Ecuador",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1178758",
+    "name": "Malick Yalcouyé",
+    "nation": "Cote d'Ivoire",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Allsvenskan",
+      "Austrian Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-135343",
+    "name": "Fabian Schär",
+    "nation": "Switzerland",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Newcastle United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Premier League",
+      "Swiss Super League"
+    ]
+  },
+  {
+    "id": "tm-199527",
+    "name": "Jacob Murphy",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Newcastle United",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -18693,13 +19487,39 @@ const PLAYERS = [
     "id": "tm-322985",
     "name": "Gustavo Hamer",
     "nation": "Netherlands",
-    "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
     "club": "Coventry City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
       "Eredivisie",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-340321",
+    "name": "Josh Dasilva",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-401320",
+    "name": "Dara O'Shea",
+    "nation": "Ireland",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
       "Premier League"
     ]
   },
@@ -18720,14 +19540,30 @@ const PLAYERS = [
     "id": "tm-728733",
     "name": "Brooke Norton-Cuffy",
     "nation": "England",
-    "position": "Defence",
-    "specificPosition": "Right-Back",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League",
       "Serie A"
+    ]
+  },
+  {
+    "id": "tm-1110406",
+    "name": "Ibrahim Osman",
+    "nation": "Ghana",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Danish Superliga",
+      "Eredivisie",
+      "Ligue 1",
+      "Premier League"
     ]
   },
   {
@@ -18745,11 +19581,42 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-206746",
+    "name": "Kenny Tete",
+    "nation": "Netherlands",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Fulham",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Eredivisie",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-245056",
+    "name": "Saša Lukić",
+    "nation": "Serbia",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Premier League",
+      "Serbian SuperLiga",
+      "Serie A"
+    ]
+  },
+  {
     "id": "tm-271495",
     "name": "Abdülkadir Ömür",
     "nation": "Türkiye",
-    "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
@@ -18773,6 +19640,39 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-353032",
+    "name": "Omar Alderete",
+    "nation": "Paraguay",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Argentine Primera Division",
+      "Bundesliga",
+      "La Liga",
+      "Premier League",
+      "Swiss Super League"
+    ]
+  },
+  {
+    "id": "tm-420931",
+    "name": "Daizen Maeda",
+    "nation": "Japan",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "J1 League",
+      "Premier League",
+      "Primeira Liga",
+      "Scottish Premiership"
+    ]
+  },
+  {
     "id": "tm-442248",
     "name": "Ethan Pinnock",
     "nation": "Jamaica",
@@ -18786,11 +19686,24 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-465717",
+    "name": "Jayden Bogle",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Leeds United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-524315",
     "name": "Hidemasa Morita",
     "nation": "Japan",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
@@ -18798,6 +19711,33 @@ const PLAYERS = [
       "J1 League",
       "Premier League",
       "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-532775",
+    "name": "Melvin Bard",
+    "nation": "France",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Leeds United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-559794",
+    "name": "Jack Clarke",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
     ]
   },
   {
@@ -18846,16 +19786,161 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-689637",
+    "name": "Chadi Riad",
+    "nation": "Morocco",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Crystal Palace",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-725912",
+    "name": "Antonín Kinský",
+    "nation": "Czech Republic",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Tottenham Hotspur",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Czech First League",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-747951",
+    "name": "Shea Charles",
+    "nation": "Northern Ireland",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Fulham",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Championship",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-748319",
+    "name": "Carlos Alcaraz",
+    "nation": "Argentina",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Everton",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Argentine Primera Division",
+      "Brasileirao",
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-881116",
+    "name": "Darío Osorio",
+    "nation": "Chile",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Crystal Palace",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Danish Superliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-984096",
+    "name": "Jair Cunha",
+    "nation": "Brazil",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Nottingham Forest",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Brasileirao",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-991487",
+    "name": "Abdoul Ouattara",
+    "nation": "Cote d'Ivoire",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-229604",
+    "name": "Gerónimo Rulli",
+    "nation": "Argentina",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Manchester City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Argentine Primera Division",
+      "Eredivisie",
+      "La Liga",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-296802",
+    "name": "Walter Benítez",
+    "nation": "Argentina",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Crystal Palace",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Eredivisie",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-475416",
     "name": "Sorba Thomas",
     "nation": "Wales",
     "position": "Attack",
-    "specificPosition": "Right Winger",
+    "specificPosition": "Left Winger",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
       "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-715558",
+    "name": "Marcelino Núñez",
+    "nation": "Chile",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
       "Premier League"
     ]
   },
@@ -18866,6 +19951,92 @@ const PLAYERS = [
     "position": "Defence",
     "specificPosition": "Centre-Back",
     "club": "Hull City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-146310",
+    "name": "Wataru Endo",
+    "nation": "Japan",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Liverpool",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Bundesliga",
+      "J1 League",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-315145",
+    "name": "Azor Matusiwa",
+    "nation": "Netherlands",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Eredivisie",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-425902",
+    "name": "Ryan Yates",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Nottingham Forest",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-489359",
+    "name": "Ao Tanaka",
+    "nation": "Japan",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Leeds United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "J1 League",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-82873",
+    "name": "Pascal Groß",
+    "nation": "Germany",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-134270",
+    "name": "Dan Burn",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Newcastle United",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -18887,6 +20058,52 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-197642",
+    "name": "Chuba Akpom",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Eredivisie",
+      "Ligue 1",
+      "Premier League",
+      "Super League Greece"
+    ]
+  },
+  {
+    "id": "tm-381753",
+    "name": "Ilia Gruev",
+    "nation": "Bulgaria",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Leeds United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-411537",
+    "name": "Zian Flemming",
+    "nation": "Netherlands",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Championship",
+      "Eredivisie",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-620313",
     "name": "Lucas Gourna-Douath",
     "nation": "France",
@@ -18900,6 +20117,19 @@ const PLAYERS = [
       "Ligue 1",
       "Premier League",
       "Serie A"
+    ]
+  },
+  {
+    "id": "tm-621193",
+    "name": "Kasey McAteer",
+    "nation": "Ireland",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
     ]
   },
   {
@@ -18920,7 +20150,7 @@ const PLAYERS = [
     "name": "Ilyas Ansah",
     "nation": "Germany",
     "position": "Attack",
-    "specificPosition": "Centre-Forward",
+    "specificPosition": "Second Striker",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
@@ -18930,11 +20160,68 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-1107733",
+    "name": "Harrison Armstrong",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Everton",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1145504",
+    "name": "Aarón Anselmino",
+    "nation": "Argentina",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Chelsea",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Argentine Primera Division",
+      "Bundesliga",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1226357",
+    "name": "Brian Madjo",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Aston Villa",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-226049",
+    "name": "Freddie Woodman",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Liverpool",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
     "id": "tm-421637",
     "name": "Frank Onyeka",
     "nation": "Nigeria",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Coventry City",
     "active": true,
     "currentLeague": "Premier League",
@@ -18958,6 +20245,34 @@ const PLAYERS = [
       "MLS",
       "Premier League",
       "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-524285",
+    "name": "Luca Netz",
+    "nation": "Germany",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Nottingham Forest",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-596122",
+    "name": "Pep Chavarría",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Chelsea",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Premier League"
     ]
   },
   {
@@ -19000,6 +20315,20 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1005583",
+    "name": "Alysson",
+    "nation": "Brazil",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Aston Villa",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Brasileirao",
       "Premier League"
     ]
   },
@@ -19057,6 +20386,96 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-656316",
+    "name": "Gabriel Slonina",
+    "nation": "United States",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Chelsea",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "MLS",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-750903",
+    "name": "Jaouen Hadjam",
+    "nation": "Algeria",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League",
+      "Swiss Super League"
+    ]
+  },
+  {
+    "id": "tm-127202",
+    "name": "Matz Sels",
+    "nation": "Belgium",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Nottingham Forest",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-432914",
+    "name": "John Victor",
+    "nation": "Brazil",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Nottingham Forest",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Brasileirao",
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-463527",
+    "name": "Kjell Scherpen",
+    "nation": "Netherlands",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Austrian Bundesliga",
+      "Belgian Pro League",
+      "Eredivisie",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-494880",
+    "name": "Jorge Cuenca",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Fulham",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-503980",
     "name": "Joe Gelhardt",
     "nation": "England",
@@ -19085,6 +20504,36 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-696181",
+    "name": "Romaine Mundle",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-743599",
+    "name": "Emersonn",
+    "nation": "Brazil",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Brasileirao",
+      "Ligue 1",
+      "Premier League",
+      "Super Lig"
+    ]
+  },
+  {
     "id": "tm-1009658",
     "name": "Julio Soler",
     "nation": "Argentina",
@@ -19095,6 +20544,48 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Argentine Primera Division",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1045123",
+    "name": "Trey Nyoni",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Liverpool",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-74960",
+    "name": "Martin Dúbravka",
+    "nation": "Slovakia",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Tottenham Hotspur",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Czech First League",
+      "Danish Superliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-948272",
+    "name": "César Palacios",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Fulham",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
       "Premier League"
     ]
   },
@@ -19114,16 +20605,47 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-124884",
+    "name": "Marco Bizot",
+    "nation": "Netherlands",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Aston Villa",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Eredivisie",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-265471",
     "name": "Matt Grimes",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Coventry City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-539252",
+    "name": "Costinha",
+    "nation": "Portugal",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Primeira Liga",
+      "Super League Greece"
     ]
   },
   {
@@ -19137,6 +20659,34 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Eredivisie",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1111063",
+    "name": "Sean Steur",
+    "nation": "Netherlands",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Newcastle United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Eredivisie",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-34130",
+    "name": "Tom Heaton",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Manchester United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
       "Premier League"
     ]
   },
@@ -19168,6 +20718,21 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-486604",
+    "name": "Vitezslav Jaros",
+    "nation": "Czech Republic",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Liverpool",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Austrian Bundesliga",
+      "Eredivisie",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-511550",
     "name": "Ellis Simms",
     "nation": "England",
@@ -19194,16 +20759,113 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-1007383",
+    "name": "Zavier Gozo",
+    "nation": "United States",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Crystal Palace",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "MLS",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1282860",
+    "name": "Modou Kéba Cissé",
+    "nation": "Senegal",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Aston Villa",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Austrian Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-351755",
+    "name": "Darnell Furlong",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-646824",
+    "name": "Manuel Ángel",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Fulham",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-687622",
     "name": "Elliot Stroud",
     "nation": "Sweden",
-    "position": "Attack",
-    "specificPosition": "Left Winger",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
       "Allsvenskan",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1011738",
+    "name": "Harry Amass",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Manchester United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-99397",
+    "name": "Karl Darlow",
+    "nation": "Wales",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Manchester United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-196813",
+    "name": "Michael Zetterer",
+    "nation": "Germany",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Leeds United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Austrian Bundesliga",
+      "Bundesliga",
+      "Eredivisie",
       "Premier League"
     ]
   },
@@ -19223,6 +20885,88 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-73564",
+    "name": "Jason Steele",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-116648",
+    "name": "Marcus Bettinelli",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Manchester City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-136401",
+    "name": "Daniel Bentley",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Championship",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-357658",
+    "name": "Mark Travers",
+    "nation": "Ireland",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Everton",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-576121",
+    "name": "Josh Wilson-Esbrand",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Manchester City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ekstraklasa",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-654412",
+    "name": "Abdoullah Ba",
+    "nation": "France",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-857079",
     "name": "Mohamed Belloumi",
     "nation": "Algeria",
@@ -19237,11 +20981,39 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-922462",
+    "name": "Lewis Koumas",
+    "nation": "Wales",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Liverpool",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1069512",
+    "name": "Jonah Kusi-Asare",
+    "nation": "Sweden",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Fulham",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Allsvenskan",
+      "Bundesliga",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-473080",
     "name": "Regan Slater",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
@@ -19250,11 +21022,25 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-834742",
+    "name": "Mateo Joseph",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Leeds United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-258916",
     "name": "Kieran Dowell",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
@@ -19278,11 +21064,38 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-458178",
+    "name": "Jack Taylor",
+    "nation": "Ireland",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-605426",
+    "name": "Melker Ellborg",
+    "nation": "Sweden",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Allsvenskan",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-663264",
     "name": "Darko Gyabi",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
@@ -19291,19 +21104,46 @@ const PLAYERS = [
     ]
   },
   {
-    "id": "tm-353775",
-    "name": "David Akintola",
-    "nation": "Nigeria",
+    "id": "tm-1322090",
+    "name": "Jocelin Ta Bi",
+    "nation": "Cote d'Ivoire",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Hull City",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
-      "Danish Superliga",
-      "Eliteserien",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-488935",
+    "name": "Hákon Valdimarsson",
+    "nation": "Iceland",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Allsvenskan",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-364827",
+    "name": "Cédric Kipré",
+    "nation": "Cote d'Ivoire",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Ligue 1",
       "Premier League",
-      "Super Lig"
+      "Scottish Premiership"
     ]
   },
   {
@@ -19313,6 +21153,19 @@ const PLAYERS = [
     "position": "Defence",
     "specificPosition": "Right-Back",
     "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-61814",
+    "name": "David Button",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Ipswich Town",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -19333,6 +21186,19 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-709767",
+    "name": "Ji-soo Kim",
+    "nation": "Korea, South",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-788283",
     "name": "Bobby Thomas",
     "nation": "England",
@@ -19346,11 +21212,24 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-282939",
+    "name": "Luke O'Nien",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-617408",
     "name": "Tatsuhiro Sakamoto",
     "nation": "Japan",
-    "position": "Midfield",
-    "specificPosition": "Left Midfield",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
     "club": "Coventry City",
     "active": true,
     "currentLeague": "Premier League",
@@ -19364,7 +21243,7 @@ const PLAYERS = [
     "name": "Matt Crooks",
     "nation": "England",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
@@ -19374,17 +21253,43 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-208379",
+    "name": "Christian Walton",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-403692",
     "name": "Victor Torp",
     "nation": "Denmark",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Coventry City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
       "Belgian Pro League",
       "Danish Superliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-502065",
+    "name": "Aji Alese",
+    "nation": "England",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
       "Premier League"
     ]
   },
@@ -19403,12 +21308,272 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-381469",
+    "name": "Steven Benda",
+    "nation": "Germany",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Nottingham Forest",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Eredivisie",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1011140",
+    "name": "Jack Fletcher",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Manchester United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-245625",
+    "name": "Alex Palmer",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-438961",
+    "name": "Michael Svoboda",
+    "nation": "Austria",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-1071138",
+    "name": "Benjamin Fredrick",
+    "nation": "Nigeria",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-428016",
+    "name": "Brandon Austin",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Tottenham Hotspur",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Danish Superliga",
+      "MLS",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-731466",
+    "name": "Teddy Sharman-Lowe",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Chelsea",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-123536",
+    "name": "Simon Moore",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-142389",
+    "name": "Mark Gillespie",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Newcastle United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-196722",
+    "name": "Remi Matthews",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Crystal Palace",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-706815",
+    "name": "Harvey Davies",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Liverpool",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-854721",
     "name": "Ben Winterburn",
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
     "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1421433",
+    "name": "Zadok Yohanna",
+    "nation": "Nigeria",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Allsvenskan",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-456292",
+    "name": "Ellery Balcombe",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Danish Superliga",
+      "Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-607093",
+    "name": "Sávio",
+    "nation": "Brazil",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Tottenham Hotspur",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-1401779",
+    "name": "Jules Ahoka",
+    "nation": "DR Congo",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Sunderland",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Belgian Pro League",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-194386",
+    "name": "Alex Cairns",
+    "nation": "England",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Leeds United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-923504",
+    "name": "Sindre Walle Egeli",
+    "nation": "Norway",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Danish Superliga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-215810",
+    "name": "Tom King",
+    "nation": "Wales",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Everton",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-620362",
+    "name": "Dermot Mee",
+    "nation": "Northern Ireland",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Manchester United",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -19429,12 +21594,90 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-530813",
+    "name": "Anis Mehmeti",
+    "nation": "Albania",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Ipswich Town",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-926309",
+    "name": "Shea Lacey",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Manchester United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1023191",
+    "name": "George Hemmings",
+    "nation": "England",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Aston Villa",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-1049020",
     "name": "Stephen Mfuni",
     "nation": "England",
     "position": "Defence",
     "specificPosition": "Centre-Back",
     "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1049911",
+    "name": "Tyler Fletcher",
+    "nation": "Scotland",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Manchester United",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1086375",
+    "name": "Gustavo Nunes",
+    "nation": "Brazil",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Brentford",
+    "active": true,
+    "currentLeague": "Premier League",
+    "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1187640",
+    "name": "Ryan McAidoo",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Manchester City",
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
@@ -20093,6 +22336,110 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "manual-mack-allan",
+    "name": "Mack Allan",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "AFC Bournemouth",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-femi-azeez",
+    "name": "Femi Azeez",
+    "nation": "Nigeria",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Brighton & Hove Albion",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-ben-wilson",
+    "name": "Ben Wilson",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-jake-bidwell",
+    "name": "Jake Bidwell",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-jack-rudoni",
+    "name": "Jack Rudoni",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-josh-eccles",
+    "name": "Josh Eccles",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-ephron-mason-clark",
+    "name": "Ephron Mason-Clark",
+    "nation": "Jamaica",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Coventry City",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-hayden-hackney",
+    "name": "Hayden Hackney",
+    "nation": "England",
+    "leagues": [
+      "Premier League"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Everton",
+    "active": true,
+    "currentLeague": "Premier League"
+  },
+  {
     "id": "manual-lewie-coyle",
     "name": "Lewie Coyle",
     "nation": "England",
@@ -20132,132 +22479,41 @@ const PLAYERS = [
     "currentLeague": "Premier League"
   },
   {
-    "id": "manual-ben-wilson",
-    "name": "Ben Wilson",
-    "nation": "England",
+    "id": "manual-ewen-jaouen",
+    "name": "Ewen Jaouen",
+    "nation": "France",
     "leagues": [
       "Premier League"
     ],
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Coventry City",
+    "club": "Newcastle United",
     "active": true,
     "currentLeague": "Premier League"
   },
   {
-    "id": "manual-dan-bentley",
-    "name": "Dan Bentley",
-    "nation": "England",
-    "leagues": [
-      "Premier League"
-    ],
-    "position": "Goalkeeper",
-    "specificPosition": "Goalkeeper",
-    "club": "Coventry City",
-    "active": true,
-    "currentLeague": "Premier League"
-  },
-  {
-    "id": "manual-luke-bell",
-    "name": "Luke Bell",
-    "nation": "England",
-    "leagues": [
-      "Premier League"
-    ],
-    "position": "Goalkeeper",
-    "specificPosition": "Goalkeeper",
-    "club": "Coventry City",
-    "active": true,
-    "currentLeague": "Premier League"
-  },
-  {
-    "id": "manual-oscar-varney",
-    "name": "Oscar Varney",
-    "nation": "England",
-    "leagues": [
-      "Premier League"
-    ],
-    "position": "Goalkeeper",
-    "specificPosition": "Goalkeeper",
-    "club": "Coventry City",
-    "active": true,
-    "currentLeague": "Premier League"
-  },
-  {
-    "id": "manual-jake-bidwell",
-    "name": "Jake Bidwell",
-    "nation": "England",
-    "leagues": [
-      "Premier League"
-    ],
-    "position": "Defence",
-    "specificPosition": "Left-Back",
-    "club": "Coventry City",
-    "active": true,
-    "currentLeague": "Premier League"
-  },
-  {
-    "id": "manual-riccardo-di-trolio",
-    "name": "Riccardo Di Trolio",
-    "nation": "Italy",
-    "leagues": [
-      "Premier League"
-    ],
-    "position": "Defence",
-    "specificPosition": "Centre-Back",
-    "club": "Coventry City",
-    "active": true,
-    "currentLeague": "Premier League"
-  },
-  {
-    "id": "manual-jack-rudoni",
-    "name": "Jack Rudoni",
-    "nation": "England",
+    "id": "manual-alan-browne",
+    "name": "Alan Browne",
+    "nation": "Republic of Ireland",
     "leagues": [
       "Premier League"
     ],
     "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
-    "club": "Coventry City",
+    "specificPosition": "Defensive Midfield",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League"
   },
   {
-    "id": "manual-ephron-mason-clark",
-    "name": "Ephron Mason-Clark",
-    "nation": "Jamaica",
+    "id": "manual-juan-riquelme-angulo",
+    "name": "Juan Riquelme Angulo",
+    "nation": "Ecuador",
     "leagues": [
       "Premier League"
     ],
     "position": "Attack",
-    "specificPosition": "Left Winger",
-    "club": "Coventry City",
-    "active": true,
-    "currentLeague": "Premier League"
-  },
-  {
-    "id": "manual-josh-eccles",
-    "name": "Josh Eccles",
-    "nation": "England",
-    "leagues": [
-      "Premier League"
-    ],
-    "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
-    "club": "Coventry City",
-    "active": true,
-    "currentLeague": "Premier League"
-  },
-  {
-    "id": "manual-mack-allan",
-    "name": "Mack Allan",
-    "nation": "England",
-    "leagues": [
-      "Premier League"
-    ],
-    "position": "Goalkeeper",
-    "specificPosition": "Goalkeeper",
-    "club": "AFC Bournemouth",
+    "specificPosition": "Centre-Forward",
+    "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League"
   }

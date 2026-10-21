@@ -1,10 +1,22 @@
+import { useState } from 'react';
+
 import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+
+
+// Lowercase + strip accents, so "mbappe" finds "Mbappé".
+const simplify = (text) =>
+  String(text || '')
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .trim();
 
 export default function ChallengeScreen({
   route,
@@ -16,6 +28,9 @@ export default function ChallengeScreen({
     player,
     opponentIds,
   } = route.params || {};
+
+  const [search, setSearch] =
+    useState('');
 
 
   // --------------------------------------------------
@@ -61,6 +76,28 @@ export default function ChallengeScreen({
     .sort(
       (a, b) =>
         b.rating - a.rating
+    );
+
+
+  // --------------------------------------------------
+  // SEARCH
+  // --------------------------------------------------
+  // Each opponent keeps their rank from the full list,
+  // so searching doesn't renumber them.
+  // --------------------------------------------------
+
+  const searchText = simplify(search);
+
+  const searchResults = opponents
+    .map((opponent, index) => ({
+      opponent,
+      rank: index + 1,
+    }))
+    .filter(
+      ({ opponent }) =>
+        simplify(opponent.name).includes(
+          searchText
+        )
     );
 
 
@@ -139,13 +176,8 @@ export default function ChallengeScreen({
         style={styles.container}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
-
-        <Text style={styles.subtitle}>
-          Who do you want {player?.name}
-          {' '}to challenge?
-        </Text>
-
 
         {/* ALL PLAYERS / LIST PLAYERS */}
 
@@ -176,6 +208,50 @@ export default function ChallengeScreen({
           </Text>
 
         </View>
+
+
+        {/* SEARCH */}
+
+        {opponents.length > 0 && (
+
+          <View style={styles.searchContainer}>
+
+            <Text style={styles.searchIcon}>
+              ⌕
+            </Text>
+
+            <TextInput
+              style={styles.search}
+              placeholder={`Who is ${player?.name} challenging?`}
+              placeholderTextColor="#555555"
+              value={search}
+              onChangeText={setSearch}
+              autoCapitalize="words"
+              autoCorrect={false}
+              returnKeyType="search"
+            />
+
+            {search.length > 0 && (
+
+              <TouchableOpacity
+                style={styles.clearButton}
+                onPress={() =>
+                  setSearch('')
+                }
+                activeOpacity={0.7}
+              >
+
+                <Text style={styles.clearText}>
+                  ×
+                </Text>
+
+              </TouchableOpacity>
+
+            )}
+
+          </View>
+
+        )}
 
 
         {/* OPPONENTS */}
@@ -209,10 +285,25 @@ export default function ChallengeScreen({
 
           </View>
 
+        ) : searchResults.length === 0 ? (
+
+          <View style={styles.emptyBox}>
+
+            <Text style={styles.emptyTitle}>
+              NO MATCHES
+            </Text>
+
+            <Text style={styles.noMatchText}>
+              None of your ranked players match
+              {' '}"{search.trim()}".
+            </Text>
+
+          </View>
+
         ) : (
 
-          opponents.map(
-            (opponent, index) => (
+          searchResults.map(
+            ({ opponent, rank }) => (
 
               <TouchableOpacity
                 key={opponent.id}
@@ -234,7 +325,7 @@ export default function ChallengeScreen({
                   <Text
                     style={styles.rankNumber}
                   >
-                    {index + 1}
+                    {rank}
                   </Text>
 
                 </View>
@@ -387,19 +478,12 @@ const styles = StyleSheet.create({
   },
 
 
-  subtitle: {
-    color: '#777777',
-    fontSize: 15,
-    textAlign: 'center',
-    marginTop: 8,
-    marginBottom: 22,
-  },
-
   positionLabel: {
     color: '#00ff66',
     fontSize: 11,
     fontWeight: '900',
     textAlign: 'center',
+    marginTop: 8,
     marginBottom: 15,
     letterSpacing: 1.4,
   },
@@ -438,6 +522,55 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '800',
     marginTop: 8,
+  },
+
+
+  // ==================================================
+  // SEARCH
+  // ==================================================
+
+  searchContainer: {
+    height: 56,
+    backgroundColor: '#111111',
+    borderWidth: 1,
+    borderColor: '#242424',
+    borderRadius: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    marginBottom: 20,
+  },
+
+  searchIcon: {
+    color: '#00ff66',
+    fontSize: 26,
+    fontWeight: '300',
+    marginRight: 10,
+    marginTop: -3,
+  },
+
+  search: {
+    flex: 1,
+    height: '100%',
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  clearButton: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#222222',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  clearText: {
+    color: '#888888',
+    fontSize: 21,
+    lineHeight: 22,
+    marginTop: -2,
   },
 
 
@@ -547,6 +680,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 12,
     marginBottom: 20,
+  },
+
+  noMatchText: {
+    color: '#777777',
+    fontSize: 14,
+    lineHeight: 21,
+    textAlign: 'center',
+    marginTop: 12,
   },
 
   rankButton: {

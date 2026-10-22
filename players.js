@@ -536,7 +536,7 @@ const PLAYERS = [
     "name": "Martin Ødegaard",
     "nation": "Norway",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Arsenal",
     "active": true,
     "currentLeague": "Premier League",

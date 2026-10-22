@@ -213,7 +213,7 @@ export default function HomeScreen({
             ? `Next unlock: ${UNLOCK_ICONS[nextUnlock.unlocks]} ` +
               `${unlockName(nextUnlock.unlocks)} at Level ${nextUnlock.level}` +
               ` · ${xpToNextUnlock.toLocaleString()} XP to go`
-            : 'Every league is unlocked. Keep climbing to GOAT.'}
+            : 'Every league is unlocked. Keep climbing to The Oracle.'}
         </Text>
 
       </TouchableOpacity>

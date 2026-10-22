@@ -83,6 +83,15 @@ export default function BackupScreen({
       }
 
 
+      // Permanent XP / badge record.
+      const savedProgress =
+        await AsyncStorage.getItem('fotrankrProgress');
+
+      if (savedProgress) {
+        data.fotrankrProgress = JSON.parse(savedProgress);
+      }
+
+
       // Username only: the photo is a file on this phone.
       const savedProfile =
         await AsyncStorage.getItem('fotrankrProfile');
@@ -247,6 +256,9 @@ export default function BackupScreen({
 
       profile:
         backup.data.fotrankrProfile || null,
+
+      earned:
+        backup.data.fotrankrProgress || null,
     };
 
 

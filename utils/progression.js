@@ -3,6 +3,7 @@ import players from '../players';
 import {
   getActiveStatus,
   getCurrentLeague,
+  getSourcePlayer,
 } from './listHelpers';
 
 /*
@@ -15,6 +16,15 @@ XP:
   every club fully ranked   = CLUB_BONUS_XP extra
                               (every current player at that
                               club, e.g. all of Arsenal)
+  every milestone badge     = MILESTONE_BADGE_XP extra
+  The Patriot badge         = MILESTONE_BADGE_XP extra
+  each POSITION_BADGES badge = MILESTONE_BADGE_XP extra
+                              (The Wall, Maestro, Predator,
+                              Buffon)
+                              (PATRIOT_TARGET players from
+                              one nation)
+                              (every MILESTONE_EVERY ranked
+                              players: Centurion, Ducenti...)
 
 Every XP_PER_LEVEL takes you up a level, which changes
 your title + badge and may unlock the next group of
@@ -34,6 +44,74 @@ export const XP_PER_PLAYER = 5;
 export const CLUB_BONUS_XP = 10;
 
 export const XP_PER_LEVEL = 1000;
+
+// Milestone badges (Centurion, Ducenti, ...) come every
+// MILESTONE_EVERY ranked players and are worth
+// MILESTONE_BADGE_XP each. Club badges are worth
+// CLUB_BONUS_XP instead.
+export const MILESTONE_EVERY = 100;
+
+export const MILESTONE_BADGE_XP = 10;
+
+
+export function getMilestonesEarned(playersRanked) {
+  return Math.floor(playersRanked / MILESTONE_EVERY);
+}
+
+
+// The Patriot: PATRIOT_TARGET players from one nation.
+// Also worth MILESTONE_BADGE_XP.
+export const PATRIOT_TARGET = 100;
+
+
+// Position badges: `target` players ranked in a position.
+// Each is worth MILESTONE_BADGE_XP.
+export const POSITION_BADGES = [
+  { id: 'wall', title: 'The Wall', icon: '🧱', position: 'Defence', label: 'defenders', target: 200 },
+  { id: 'maestro', title: 'The Maestro', icon: '🎼', position: 'Midfield', label: 'midfielders', target: 200 },
+  { id: 'predator', title: 'The Predator', icon: '🦈', position: 'Attack', label: 'attackers', target: 200 },
+  { id: 'buffon', title: 'The Buffon', icon: '🧤', position: 'Goalkeeper', label: 'goalkeepers', target: 100 },
+];
+
+
+// How many ranked players in each position: { Defence: 12, ... }.
+function getPositionCounts(rankedIds) {
+
+  const counts = {};
+
+  rankedIds.forEach(id => {
+
+    const position = getSourcePlayer(id)?.position;
+
+    if (position) {
+      counts[position] = (counts[position] || 0) + 1;
+    }
+  });
+
+  return counts;
+}
+
+
+// The nation with the most ranked players: { nation, count }.
+function getTopNation(rankedIds) {
+
+  const counts = {};
+
+  rankedIds.forEach(id => {
+
+    const nation = getSourcePlayer(id)?.nation;
+
+    if (nation) {
+      counts[nation] = (counts[nation] || 0) + 1;
+    }
+  });
+
+  return Object.entries(counts).reduce(
+    (best, [nation, count]) =>
+      count > best.count ? { nation, count } : best,
+    { nation: null, count: 0 }
+  );
+}
 
 
 // "I DO NOT KNOW" players: saved in myRankings with this
@@ -55,74 +133,74 @@ export function isUnknown(player) {
 export const LEVELS = [
   {
     level: 1,
-    title: 'Amateur Baller',
-    badge: '⚽',
+    title: 'Plastic Fan',
+    badge: '🤓',
     unlocks: 'Premier League',
   },
   {
     level: 2,
-    title: 'Sunday League Pro',
-    badge: '🥾',
+    title: 'Casual Viewer',
+    badge: '📺',
     unlocks: 'La Liga',
   },
   {
     level: 3,
-    title: 'Academy Prospect',
-    badge: '🎓',
+    title: 'Clips Merchant',
+    badge: '📱',
     unlocks: 'Ligue 1',
   },
   {
     level: 4,
-    title: 'Benchwarmer',
-    badge: '🪑',
+    title: 'Matchday Regular',
+    badge: '🎟️',
     unlocks: 'Serie A',
   },
   {
     level: 5,
-    title: 'First Team Talent',
-    badge: '👕',
+    title: 'Pub Pundit',
+    badge: '🍺',
     unlocks: 'Bundesliga',
   },
   {
     level: 6,
-    title: 'Captain',
-    badge: '©️',
+    title: 'Tactical Analyst',
+    badge: '📋',
     unlocks: 'REST_OF_WORLD',
   },
   {
     level: 7,
-    title: 'International',
-    badge: '🌍',
+    title: 'Ball Knowledge',
+    badge: '🧠',
     unlocks: 'LEGENDS',
   },
   {
     level: 8,
-    title: 'Club Legend',
-    badge: '🏟️',
+    title: 'Studio Pundit',
+    badge: '🎙️',
     unlocks: null,
   },
   {
     level: 9,
-    title: "Ballon d'Or Winner",
-    badge: '🏆',
+    title: 'Professor of Football',
+    badge: '🎓',
     unlocks: null,
   },
   {
     level: 10,
-    title: 'Icon',
-    badge: '⭐',
+    title: 'Walking Encyclopedia',
+    badge: '📚',
     unlocks: null,
   },
   {
     level: 11,
-    title: 'Legend',
-    badge: '👑',
+    title: 'Cruyff Disciple',
+    badge: '🧡',
     unlocks: null,
   },
   {
     level: 12,
-    title: 'GOAT',
-    badge: '🐐',
+    title: 'The Oracle',
+    badge: '🔮',
     unlocks: null,
   },
 ];
@@ -180,8 +258,47 @@ const CLUBS = (() => {
 })();
 
 
-// Clubs where every current player has been ranked.
-export function getCompletedClubs(myRankings) {
+// ======================================================
+// EARNED HISTORY
+// ======================================================
+// XP and badges, once earned, are permanent: Rank Again
+// briefly removes a player, and a ranked player can later be
+// marked Unknown, but neither may take anything away.
+//
+// App keeps a record of every player ever properly ranked and
+// every club ever completed (saved as 'fotrankrProgress',
+// cleared with the rankings on a DATA_VERSION change) and
+// hands it over with setEarnedHistory. Everything below
+// counts the current rankings PLUS that record.
+
+let earnedHistory = {
+  rankedIds: new Set(),
+  clubKeys: new Set(),
+};
+
+export function setEarnedHistory({
+  rankedIds = [],
+  clubKeys = [],
+} = {}) {
+
+  earnedHistory = {
+    rankedIds: new Set(rankedIds.map(String)),
+    clubKeys: new Set(clubKeys),
+  };
+
+  // The cached answer no longer applies.
+  lastRankings = null;
+}
+
+
+export function clubKey(club) {
+  return `${club.league || ''}|${club.club}`;
+}
+
+
+// Clubs completed by the current rankings alone (used by App
+// to grow the earned record).
+export function getClubsCompletedNow(myRankings) {
 
   const rankedIds = new Set(
     (myRankings || []).map(
@@ -191,6 +308,28 @@ export function getCompletedClubs(myRankings) {
 
   return CLUBS.filter(club =>
     club.playerIds.every(id => rankedIds.has(id))
+  );
+}
+
+
+// Players properly ranked now (not Unknown).
+export function getRankedIdsNow(myRankings) {
+  return (myRankings || [])
+    .filter(player => !isUnknown(player))
+    .map(player => String(player.id));
+}
+
+
+// Every club completed now or at any point before.
+export function getCompletedClubs(myRankings) {
+
+  const now = new Set(
+    getClubsCompletedNow(myRankings).map(clubKey)
+  );
+
+  return CLUBS.filter(club =>
+    now.has(clubKey(club)) ||
+    earnedHistory.clubKeys.has(clubKey(club))
   );
 }
 
@@ -208,20 +347,45 @@ export function getProgress(myRankings) {
   }
 
   // Unknown players earn no XP of their own (but do count
-  // towards completing a club).
-  const playersRanked = (myRankings || []).filter(
-    player => !isUnknown(player)
-  ).length;
+  // towards completing a club). Anyone ever properly ranked
+  // keeps counting.
+  const rankedIds = new Set([
+    ...earnedHistory.rankedIds,
+    ...getRankedIdsNow(myRankings),
+  ]);
 
-  const unknownCount =
-    (myRankings || []).length - playersRanked;
+  const playersRanked = rankedIds.size;
+
+  const unknownCount = (myRankings || []).filter(
+    player =>
+      isUnknown(player) &&
+      !rankedIds.has(String(player.id))
+  ).length;
 
   const clubsCompleted =
     getCompletedClubs(myRankings).length;
 
+  const milestonesEarned =
+    getMilestonesEarned(playersRanked);
+
+  const topNation = getTopNation(rankedIds);
+
+  const patriotEarned =
+    topNation.count >= PATRIOT_TARGET;
+
+  const positionCounts = getPositionCounts(rankedIds);
+
+  const positionBadgesEarned = POSITION_BADGES.filter(
+    badge =>
+      (positionCounts[badge.position] || 0) >= badge.target
+  ).length;
+
   const xp =
     playersRanked * XP_PER_PLAYER +
-    clubsCompleted * CLUB_BONUS_XP;
+    clubsCompleted * CLUB_BONUS_XP +
+    milestonesEarned * MILESTONE_BADGE_XP +
+    (patriotEarned ? MILESTONE_BADGE_XP : 0) +
+    positionBadgesEarned * MILESTONE_BADGE_XP;
 
   const level = Math.min(
     Math.floor(xp / XP_PER_LEVEL) + 1,
@@ -241,6 +405,10 @@ export function getProgress(myRankings) {
     playersRanked,
     unknownCount,
     clubsCompleted,
+    milestonesEarned,
+    topNation,
+    patriotEarned,
+    positionCounts,
     xp,
     level,
     isMaxLevel,

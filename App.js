@@ -14,12 +14,14 @@ import {
 
 import {
   useEffect,
+  useRef,
   useState,
 } from 'react';
 
 import AddPlayersToListScreen from './screens/AddPlayersToListScreen';
 import BackupScreen from './screens/BackupScreen';
 import ChallengeScreen from './screens/ChallengeScreen';
+import ClubRankingsScreen from './screens/ClubRankingsScreen';
 import CompareScreen from './screens/CompareScreen';
 import CreateListScreen from './screens/CreateListScreen';
 import HeadToHead from './screens/HeadToHead';
@@ -32,6 +34,7 @@ import SearchScreen from './screens/SearchScreen';
 
 import {
   Alert,
+  View,
 } from 'react-native';
 
 import {
@@ -40,23 +43,56 @@ import {
 } from './engine/rankingEngine.js';
 
 import {
+  getSourcePlayer,
   normaliseList,
 } from './utils/listHelpers';
 
 import {
-  CLUB_BONUS_XP,
   UNKNOWN_CATEGORY,
-  getCompletedClubs,
+  clubKey,
+  getClubsCompletedNow,
   getProgress,
+  getRankedIdsNow,
   isUnknown,
+  setEarnedHistory,
   unlockName,
 } from './utils/progression';
+
+import { getBadges } from './utils/badges';
+
+import BadgeToast from './components/BadgeToast';
 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const DATA_VERSION = '61';
+// A ranked player with position/club/nation updated from the
+// current players data. Rating, score and category are kept.
+const refreshPlayerDetails = rankedPlayer => {
+
+  const source = getSourcePlayer(rankedPlayer.id);
+
+  if (!source) {
+    return rankedPlayer;
+  }
+
+  return {
+    ...rankedPlayer,
+    nation: source.nation || rankedPlayer.nation,
+    position: source.position || rankedPlayer.position,
+    specificPosition:
+      source.specificPosition ||
+      rankedPlayer.specificPosition,
+    club: source.club ?? rankedPlayer.club,
+  };
+};
+
+const EMPTY_EARNED = {
+  rankedIds: [],
+  clubKeys: [],
+};
+
+const DATA_VERSION = '62';
 
 
 export default function App() {
@@ -82,6 +118,26 @@ export default function App() {
   // Not cleared by a DATA_VERSION change.
   const [profile, setProfile] =
     useState(null);
+
+  // Badges waiting to be shown as notifications.
+  const [badgeQueue, setBadgeQueue] =
+    useState([]);
+
+  // Every player ever properly ranked + every club ever
+  // completed, so XP and badges can't be lost (Rank Again,
+  // marking Unknown). Cleared with the rankings on a
+  // DATA_VERSION change.
+  const [earnedHistory, setEarnedHistoryState] =
+    useState(EMPTY_EARNED);
+
+  // Hand the record to utils/progression before any screen
+  // (or alert) asks for XP in this render.
+  const earnedRef = useRef(null);
+
+  if (earnedRef.current !== earnedHistory) {
+    setEarnedHistory(earnedHistory);
+    earnedRef.current = earnedHistory;
+  }
 
 
   // =====================================================
@@ -128,6 +184,10 @@ export default function App() {
             'fotrankrLists'
           );
 
+          await AsyncStorage.removeItem(
+            'fotrankrProgress'
+          );
+
           await AsyncStorage.setItem(
             'fotrankrDataVersion',
             DATA_VERSION
@@ -147,6 +207,28 @@ export default function App() {
 
 
         // =================================================
+        // LOAD EARNED XP / BADGES RECORD
+        // =================================================
+
+        const savedProgress =
+          await AsyncStorage.getItem(
+            'fotrankrProgress'
+          );
+
+        if (savedProgress) {
+
+          const parsedProgress =
+            JSON.parse(savedProgress);
+
+          setEarnedHistoryState({
+            rankedIds: parsedProgress.rankedIds || [],
+            clubKeys: parsedProgress.clubKeys || [],
+          });
+
+        }
+
+
+        // =================================================
         // LOAD RANKINGS
         // =================================================
 
@@ -162,7 +244,12 @@ export default function App() {
 
           if (Array.isArray(parsed)) {
 
-            setMyRankings(parsed);
+            // Position, club and nation come from the latest
+            // player data (squad updates, position fixes).
+            // Score, category and rating are left alone.
+            setMyRankings(
+              parsed.map(refreshPlayerDetails)
+            );
 
           }
 
@@ -225,15 +312,18 @@ export default function App() {
 
       } catch (error) {
 
+        // dataLoaded stays false, so nothing is saved: an
+        // empty list must never overwrite the stored data.
         console.log(
           'Error loading FotRankr:',
           error
         );
 
-        setMyRankings([]);
-        setLists([]);
-        setComparisonHistory([]);
-        setDataLoaded(true);
+        Alert.alert(
+          'Could not load your rankings',
+          'Your saved data has not been changed. Close and reopen the app. If this keeps happening, take a screenshot of this message.\n\n' +
+            String(error?.message || error)
+        );
 
       }
 
@@ -308,6 +398,57 @@ export default function App() {
 
 
   // =====================================================
+  // GROW THE EARNED RECORD
+  // =====================================================
+  // Adds newly ranked players and newly completed clubs.
+  // Never removes anything.
+
+  useEffect(() => {
+
+    if (!dataLoaded) {
+      return;
+    }
+
+    const rankedIds = new Set(earnedHistory.rankedIds);
+    const clubKeys = new Set(earnedHistory.clubKeys);
+
+    const newIds = getRankedIdsNow(myRankings).filter(
+      id => !rankedIds.has(id)
+    );
+
+    const newClubs = getClubsCompletedNow(myRankings)
+      .map(clubKey)
+      .filter(key => !clubKeys.has(key));
+
+    if (newIds.length === 0 && newClubs.length === 0) {
+      return;
+    }
+
+    const updated = {
+      rankedIds: [...earnedHistory.rankedIds, ...newIds],
+      clubKeys: [...earnedHistory.clubKeys, ...newClubs],
+    };
+
+    setEarnedHistoryState(updated);
+
+    AsyncStorage.setItem(
+      'fotrankrProgress',
+      JSON.stringify(updated)
+    ).catch(error =>
+      console.log(
+        'Error saving FotRankr progress:',
+        error
+      )
+    );
+
+  }, [
+    myRankings,
+    dataLoaded,
+    earnedHistory,
+  ]);
+
+
+  // =====================================================
   // SAVE PROFILE
   // =====================================================
 
@@ -343,47 +484,43 @@ export default function App() {
 
     const after = getProgress(rankingsAfter);
 
-    const clubsBefore = new Set(
-      getCompletedClubs(rankingsBefore).map(
-        club => `${club.league}|${club.club}`
+
+    // New badges slide in as notifications, one at a time.
+    const earnedBefore = new Set(
+      getBadges(rankingsBefore)
+        .filter(badge => badge.earned)
+        .map(badge => badge.id)
+    );
+
+    const newBadges = getBadges(rankingsAfter)
+      .filter(
+        badge =>
+          badge.earned &&
+          !earnedBefore.has(badge.id)
       )
-    );
+      .map(badge => ({
+        ...badge,
+        subtitle: `${badge.description} · ${badge.bonus}`,
+      }));
 
-    const newClubs = getCompletedClubs(
-      rankingsAfter
-    ).filter(
-      club =>
-        !clubsBefore.has(`${club.league}|${club.club}`)
-    );
+    if (newBadges.length > 0) {
+      setBadgeQueue(previousQueue => [
+        ...previousQueue,
+        ...newBadges,
+      ]);
+    }
 
-    const messages = [];
-
-    newClubs.forEach(club => {
-      messages.push(
-        `🏟️ Club complete: you've ranked every ${club.club} player. +${CLUB_BONUS_XP} XP bonus!`
-      );
-    });
 
     if (after.level > before.level) {
 
       const { current } = after;
 
-      messages.push(
+      Alert.alert(
+        'LEVEL UP!',
         `${current.badge} You're now Level ${after.level}: ${current.title}.` +
           (current.unlocks
             ? ` ${unlockName(current.unlocks)} players are now unlocked.`
             : '')
-      );
-
-    }
-
-    if (messages.length > 0) {
-
-      Alert.alert(
-        after.level > before.level
-          ? 'LEVEL UP!'
-          : 'CLUB COMPLETE!',
-        messages.join('\n\n')
       );
 
     }
@@ -1059,7 +1196,22 @@ export default function App() {
     lists: restoredLists,
     comparisonHistory: restoredHistory,
     profile: restoredProfile,
+    earned: restoredEarned,
   }) => {
+
+    // The backup's XP/badge record replaces this phone's
+    // (restored rankings are added to it automatically).
+    const earned = {
+      rankedIds: restoredEarned?.rankedIds || [],
+      clubKeys: restoredEarned?.clubKeys || [],
+    };
+
+    setEarnedHistoryState(earned);
+
+    await AsyncStorage.setItem(
+      'fotrankrProgress',
+      JSON.stringify(earned)
+    );
 
     const normalisedLists =
       restoredLists.map(normaliseList);
@@ -1124,6 +1276,8 @@ export default function App() {
   // =====================================================
 
   return (
+
+    <View style={{ flex: 1 }}>
 
     <NavigationContainer>
 
@@ -1293,9 +1447,10 @@ export default function App() {
                 }}
               >
 
-                {() => (
+                {({ navigation }) => (
 
                   <ProfileScreen
+                    navigation={navigation}
                     profile={profile}
                     onSaveProfile={handleSaveProfile}
                     myRankings={myRankings}
@@ -1383,6 +1538,30 @@ export default function App() {
               myRankings={myRankings}
               onPlayersChanged={handlePlayersAdded}
               onDeleteList={handleDeleteList}
+            />
+
+          )}
+
+        </Stack.Screen>
+
+
+        {/* =================================================
+            CLUB RANKINGS (from a club badge)
+            ================================================= */}
+
+        <Stack.Screen
+          name="ClubRankings"
+          options={{
+            headerShown: false,
+          }}
+        >
+
+          {({ navigation, route }) => (
+
+            <ClubRankingsScreen
+              navigation={navigation}
+              route={route}
+              myRankings={myRankings}
             />
 
           )}
@@ -1549,6 +1728,18 @@ export default function App() {
       </Stack.Navigator>
 
     </NavigationContainer>
+
+    <BadgeToast
+      key={badgeQueue[0]?.id}
+      badge={badgeQueue[0]}
+      onHide={() =>
+        setBadgeQueue(previousQueue =>
+          previousQueue.slice(1)
+        )
+      }
+    />
+
+    </View>
 
   );
 

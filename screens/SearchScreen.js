@@ -12,7 +12,7 @@ import { useState } from 'react';
 
 import players from '../players';
 
-import { getClubBadge } from '../utils/clubBadges';
+import ClubBadge from '../components/ClubBadge';
 
 import {
   getFlag,
@@ -630,20 +630,28 @@ export default function SearchScreen({
                       activeOpacity={0.7}
                     >
 
-                      <View style={styles.playerMarker}>
+                      {group === 'Legends' ? (
 
-                        <Text
-                          style={
-                            getClubBadge(club)
-                              ? styles.clubBadge
-                              : styles.playerMarkerText
-                          }
-                        >
-                          {getClubBadge(club) ||
-                            club.charAt(0).toUpperCase()}
-                        </Text>
+                        <View style={styles.playerMarker}>
 
-                      </View>
+                          <Text style={styles.clubBadge}>
+                            👑
+                          </Text>
+
+                        </View>
+
+                      ) : (
+
+                        <View style={styles.clubBadgeWrap}>
+
+                          <ClubBadge
+                            club={club}
+                            size={48}
+                          />
+
+                        </View>
+
+                      )}
 
                       <View style={styles.playerDetails}>
 
@@ -1071,6 +1079,10 @@ const styles = StyleSheet.create({
 
   clubBadge: {
     fontSize: 24,
+  },
+
+  clubBadgeWrap: {
+    marginRight: 14,
   },
 
   clubComplete: {

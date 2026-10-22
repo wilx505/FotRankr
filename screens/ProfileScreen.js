@@ -24,6 +24,10 @@ import {
   unlockedGroups,
 } from '../utils/progression';
 
+import { getBadges } from '../utils/badges';
+
+import ClubBadge from '../components/ClubBadge';
+
 
 const USERNAME_PATTERN = /^[a-zA-Z0-9_.]{3,20}$/;
 
@@ -55,6 +59,7 @@ const deletePhoto = (uri) => {
 
 
 export default function ProfileScreen({
+  navigation,
   profile,
   onSaveProfile,
   myRankings,
@@ -74,6 +79,12 @@ export default function ProfileScreen({
   const showForm = !hasProfile || editing;
 
   const progress = getProgress(myRankings);
+
+  const badges = getBadges(myRankings);
+
+  const earnedCount = badges.filter(
+    badge => badge.earned
+  ).length;
 
 
   // --------------------------------------------------
@@ -529,6 +540,120 @@ export default function ProfileScreen({
 
       </View>
 
+
+      {/* -------------------------------------------- */}
+      {/* BADGES */}
+      {/* -------------------------------------------- */}
+
+      <Text style={styles.badgeIntro}>
+        Tap a club badge to see how you rate their squad.
+      </Text>
+
+      <View style={styles.card}>
+
+        <View style={styles.xpHeader}>
+
+          <Text style={styles.cardLabel}>
+            BADGES
+          </Text>
+
+          <Text style={styles.badgeCount}>
+            {earnedCount} EARNED
+          </Text>
+
+        </View>
+
+
+        <View style={styles.badgeGrid}>
+
+          {badges.map(badge => (
+
+            // Club badges open that club's ranked players.
+            <TouchableOpacity
+              key={badge.id}
+              style={[
+                styles.badgeTile,
+                !badge.earned && styles.badgeTileLocked,
+              ]}
+              disabled={!badge.club}
+              onPress={() =>
+                navigation.navigate('ClubRankings', {
+                  club: badge.club,
+                  league: badge.league,
+                })
+              }
+              activeOpacity={0.7}
+            >
+
+              {badge.club ? (
+
+                <View style={styles.badgeClubWrap}>
+
+                  <ClubBadge
+                    club={badge.club}
+                    size={60}
+                  />
+
+                </View>
+
+              ) : (
+
+                <View
+                  style={[
+                    styles.badgeCircle,
+                    badge.earned && styles.badgeCircleEarned,
+                  ]}
+                >
+
+                  <Text
+                    style={
+                      badge.icon
+                        ? styles.badgeIcon
+                        : styles.badgeIconText
+                    }
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                  >
+                    {badge.icon || badge.iconText}
+                  </Text>
+
+                </View>
+
+              )}
+
+              <Text
+                style={styles.badgeTitle}
+                numberOfLines={2}
+              >
+                {badge.title}
+              </Text>
+
+              <Text
+                style={styles.badgeDescription}
+                numberOfLines={2}
+              >
+                {badge.earned
+                  ? badge.description
+                  : badge.progress}
+              </Text>
+
+            </TouchableOpacity>
+
+          ))}
+
+        </View>
+
+
+        {!badges.some(badge => badge.id.startsWith('club|')) && (
+
+          <Text style={styles.badgeHint}>
+            Rank every player at a club to earn its badge.
+          </Text>
+
+        )}
+
+      </View>
+
     </ScrollView>
 
   );
@@ -847,6 +972,100 @@ const styles = StyleSheet.create({
     letterSpacing: 0.8,
     marginTop: 4,
     textAlign: 'center',
+  },
+
+
+  // ==================================================
+  // BADGES
+  // ==================================================
+
+  badgeIntro: {
+    color: '#777777',
+    fontSize: 12,
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+
+  badgeCount: {
+    color: '#00ff66',
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+  },
+
+  badgeGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginHorizontal: -4,
+  },
+
+  badgeTile: {
+    width: '33.33%',
+    paddingHorizontal: 4,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+
+  badgeTileLocked: {
+    opacity: 0.45,
+  },
+
+  badgeCircle: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#141414',
+    borderWidth: 2,
+    borderColor: '#2a2a2a',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+
+  badgeClubWrap: {
+    marginBottom: 8,
+  },
+
+  badgeCircleEarned: {
+    borderColor: '#00ff66',
+  },
+
+  badgeIcon: {
+    fontSize: 28,
+  },
+
+  // Roman numerals (CC, DCCC...)
+  badgeIconText: {
+    color: '#00ff66',
+    fontSize: 18,
+    fontWeight: '900',
+    paddingHorizontal: 6,
+  },
+
+  badgeTitle: {
+    color: '#ffffff',
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+  },
+
+  badgeDescription: {
+    color: '#777777',
+    fontSize: 9,
+    fontWeight: '700',
+    letterSpacing: 0.4,
+    marginTop: 2,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+  },
+
+  badgeHint: {
+    color: '#666666',
+    fontSize: 12,
+    textAlign: 'center',
+    marginTop: 2,
   },
 
 });

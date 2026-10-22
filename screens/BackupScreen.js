@@ -9,7 +9,15 @@ import {
   Paths,
 } from 'expo-file-system';
 
-import { useState } from 'react';
+import {
+  useEffect,
+  useState,
+} from 'react';
+
+import {
+  listAutoBackups,
+  readAutoBackup,
+} from '../utils/autoBackup';
 
 import {
   Alert,
@@ -34,11 +42,20 @@ export default function BackupScreen({
   myRankings,
   lists,
   comparisonHistory,
-  dataVersion,
   onRestore,
+  onResetAll,
 }) {
 
   const [busy, setBusy] = useState(false);
+
+  const [autoBackups, setAutoBackups] =
+    useState([]);
+
+  const refreshAutoBackups = () => {
+    listAutoBackups().then(setAutoBackups);
+  };
+
+  useEffect(refreshAutoBackups, []);
 
 
   // --------------------------------------------------
@@ -221,6 +238,42 @@ export default function BackupScreen({
     }
 
 
+    confirmRestore(backup);
+  };
+
+
+  // --------------------------------------------------
+  // RESTORE AN AUTOMATIC BACKUP
+  // --------------------------------------------------
+
+  const handleRestoreAuto = async (uri) => {
+
+    try {
+
+      confirmRestore(await readAutoBackup(uri));
+
+    } catch (error) {
+
+      console.log(
+        'FOTRANKR AUTO RESTORE READ ERROR:',
+        error
+      );
+
+      Alert.alert(
+        'Restore failed',
+        'That automatic backup could not be read.'
+      );
+
+    }
+  };
+
+
+  // --------------------------------------------------
+  // CHECK + CONFIRM (file or automatic backup)
+  // --------------------------------------------------
+
+  const confirmRestore = (backup) => {
+
     // ------------------------------------------------
     // VALIDATE
     // ------------------------------------------------
@@ -262,14 +315,6 @@ export default function BackupScreen({
     };
 
 
-    const versionWarning =
-      backup.data.fotrankrDataVersion &&
-      backup.data.fotrankrDataVersion !==
-        dataVersion
-        ? `\n\nThis backup is from data version ${backup.data.fotrankrDataVersion} (current is ${dataVersion}), so some players may not match.`
-        : '';
-
-
     // ------------------------------------------------
     // CONFIRM
     // ------------------------------------------------
@@ -279,8 +324,7 @@ export default function BackupScreen({
       `This will REPLACE your current rankings and lists with:\n\n` +
         `${restored.myRankings.length} rankings\n` +
         `${restored.lists.length} lists\n` +
-        `${restored.comparisonHistory.length} comparisons` +
-        versionWarning,
+        `${restored.comparisonHistory.length} comparisons`,
       [
         {
           text: 'Cancel',
@@ -305,6 +349,8 @@ export default function BackupScreen({
 
       await onRestore(restored);
 
+      refreshAutoBackups();
+
       Alert.alert(
         'Restore complete',
         'Your rankings and lists have been restored.'
@@ -327,6 +373,64 @@ export default function BackupScreen({
       setBusy(false);
 
     }
+  };
+
+
+  // --------------------------------------------------
+  // RESET ALL DATA
+  // --------------------------------------------------
+  // The only way to wipe rankings. A safety copy is taken
+  // first, so even this can be undone from the list.
+
+  const handleResetAll = () => {
+
+    Alert.alert(
+      'Reset all data?',
+      'This deletes ALL your rankings, lists, head-to-heads, XP and badges, and starts you from Level 1. Your profile is kept.\n\nA safety copy is saved first, so you can restore it from Automatic Backups.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Reset Everything',
+          style: 'destructive',
+          onPress: async () => {
+
+            setBusy(true);
+
+            try {
+
+              await onResetAll();
+
+              refreshAutoBackups();
+
+              Alert.alert(
+                'Data reset',
+                'You are starting fresh from Level 1.'
+              );
+
+            } catch (error) {
+
+              console.log(
+                'FOTRANKR RESET ERROR:',
+                error
+              );
+
+              Alert.alert(
+                'Reset failed',
+                'Your data could not be reset.'
+              );
+
+            } finally {
+
+              setBusy(false);
+
+            }
+          },
+        },
+      ]
+    );
   };
 
 
@@ -466,6 +570,94 @@ export default function BackupScreen({
 
           <Text style={styles.secondaryButtonSubtext}>
             Replaces your current rankings and lists
+          </Text>
+
+        </TouchableOpacity>
+
+
+        {/* AUTOMATIC BACKUPS */}
+
+        <Text style={[styles.sectionLabel, styles.sectionGap]}>
+          AUTOMATIC BACKUPS
+        </Text>
+
+        <Text style={styles.autoIntro}>
+          A copy is saved on this phone every time the app
+          {' '}opens. The last 7 are kept.
+        </Text>
+
+        {autoBackups.length === 0 ? (
+
+          <Text style={styles.autoEmpty}>
+            None yet. One is saved next time the app opens with rankings.
+          </Text>
+
+        ) : (
+
+          autoBackups.map(backup => (
+
+            <View
+              key={backup.uri}
+              style={styles.autoRow}
+            >
+
+              <View style={styles.autoDetails}>
+
+                <Text style={styles.autoDate}>
+                  {new Date(backup.exportedAt).toLocaleString()}
+                </Text>
+
+                <Text style={styles.autoMeta}>
+                  {backup.rankings} rankings
+                  {'  ·  '}
+                  {backup.lists} lists
+                </Text>
+
+              </View>
+
+              <TouchableOpacity
+                style={[
+                  styles.autoButton,
+                  busy && styles.buttonDisabled,
+                ]}
+                onPress={() =>
+                  handleRestoreAuto(backup.uri)
+                }
+                disabled={busy}
+                activeOpacity={0.8}
+              >
+
+                <Text style={styles.autoButtonText}>
+                  RESTORE
+                </Text>
+
+              </TouchableOpacity>
+
+            </View>
+
+          ))
+
+        )}
+
+
+        {/* RESET */}
+
+        <TouchableOpacity
+          style={[
+            styles.resetButton,
+            busy && styles.buttonDisabled,
+          ]}
+          onPress={handleResetAll}
+          disabled={busy}
+          activeOpacity={0.8}
+        >
+
+          <Text style={styles.resetButtonText}>
+            RESET ALL DATA
+          </Text>
+
+          <Text style={styles.resetButtonSubtext}>
+            Start fresh from Level 1 (a safety copy is saved first)
           </Text>
 
         </TouchableOpacity>
@@ -652,6 +844,96 @@ const styles = StyleSheet.create({
 
   buttonDisabled: {
     opacity: 0.5,
+  },
+
+
+  // ==================================================
+  // AUTOMATIC BACKUPS + RESET
+  // ==================================================
+
+  sectionGap: {
+    marginTop: 30,
+  },
+
+  autoIntro: {
+    color: '#666666',
+    fontSize: 12,
+    lineHeight: 17,
+    marginBottom: 12,
+    paddingLeft: 2,
+  },
+
+  autoEmpty: {
+    color: '#555555',
+    fontSize: 12,
+    paddingLeft: 2,
+  },
+
+  autoRow: {
+    backgroundColor: '#0f0f0f',
+    borderWidth: 1,
+    borderColor: '#1b1b1b',
+    borderRadius: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    marginBottom: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  autoDetails: {
+    flex: 1,
+  },
+
+  autoDate: {
+    color: '#ffffff',
+    fontSize: 13,
+    fontWeight: '800',
+  },
+
+  autoMeta: {
+    color: '#777777',
+    fontSize: 11,
+    marginTop: 3,
+  },
+
+  autoButton: {
+    borderWidth: 1,
+    borderColor: '#00ff66',
+    borderRadius: 10,
+    paddingVertical: 7,
+    paddingHorizontal: 12,
+    marginLeft: 10,
+  },
+
+  autoButtonText: {
+    color: '#00ff66',
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 0.8,
+  },
+
+  resetButton: {
+    borderWidth: 1,
+    borderColor: '#E74C3C',
+    borderRadius: 14,
+    minHeight: 64,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+
+  resetButtonText: {
+    color: '#E74C3C',
+    fontSize: 14,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+  },
+
+  resetButtonSubtext: {
+    color: '#666666',
+    fontSize: 11,
+    marginTop: 3,
   },
 
 });

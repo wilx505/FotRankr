@@ -60,6 +60,8 @@ import {
 
 import { getBadges } from './utils/badges';
 
+import { saveAutoBackup } from './utils/autoBackup';
+
 import BadgeToast from './components/BadgeToast';
 
 
@@ -167,42 +169,24 @@ export default function App() {
 
 
         // =================================================
-        // NEW DATA VERSION
+        // DATA VERSION
         // =================================================
+        // A new version NEVER deletes data. (It used to wipe
+        // everything, which is how rankings got lost.) Add
+        // migrations here if the saved format ever changes.
+        // To start fresh, use RESET ALL DATA on the Backup
+        // screen.
 
         if (savedVersion !== DATA_VERSION) {
 
-          await AsyncStorage.removeItem(
-            'myRankings'
-          );
-
-          await AsyncStorage.removeItem(
-            'comparisonHistory'
-          );
-
-          await AsyncStorage.removeItem(
-            'fotrankrLists'
-          );
-
-          await AsyncStorage.removeItem(
-            'fotrankrProgress'
-          );
-
-          await AsyncStorage.setItem(
-            'fotrankrDataVersion',
-            DATA_VERSION
-          );
-
-          setMyRankings([]);
-          setLists([]);
-          setComparisonHistory([]);
-          setDataLoaded(true);
-
           console.log(
-            'FotRankr: Old ranking data cleared.'
+            'FotRankr: data version',
+            savedVersion,
+            '->',
+            DATA_VERSION,
+            '(data kept)'
           );
 
-          return;
         }
 
 
@@ -306,6 +290,35 @@ export default function App() {
           }
 
         }
+
+
+        // =================================================
+        // AUTOMATIC SAFETY BACKUP
+        // =================================================
+
+        const parseOr = (text, fallback) => {
+          try {
+            return text ? JSON.parse(text) : fallback;
+          } catch (error) {
+            return fallback;
+          }
+        };
+
+        const profileForBackup =
+          parseOr(savedProfile, null);
+
+        saveAutoBackup({
+          myRankings: parseOr(savedRankings, []),
+          fotrankrLists: parseOr(savedLists, []),
+          comparisonHistory: parseOr(savedHistory, []),
+          fotrankrProgress: parseOr(savedProgress, null),
+          fotrankrProfile: profileForBackup
+            ? {
+                username: profileForBackup.username,
+                createdAt: profileForBackup.createdAt,
+              }
+            : null,
+        });
 
 
         setDataLoaded(true);
@@ -1188,6 +1201,42 @@ export default function App() {
 
 
   // =====================================================
+  // RESET ALL DATA (Backup screen)
+  // =====================================================
+
+  const handleResetAll = async () => {
+
+    saveAutoBackup({
+      myRankings,
+      fotrankrLists: lists,
+      comparisonHistory,
+      fotrankrProgress: earnedHistory,
+      fotrankrProfile: profile
+        ? {
+            username: profile.username,
+            createdAt: profile.createdAt,
+          }
+        : null,
+    });
+
+    await AsyncStorage.multiRemove([
+      'myRankings',
+      'fotrankrLists',
+      'comparisonHistory',
+      'fotrankrProgress',
+    ]);
+
+    setMyRankings([]);
+    setLists([]);
+    setComparisonHistory([]);
+    setEarnedHistoryState(EMPTY_EARNED);
+
+    console.log('FOTRANKR: all data reset by user');
+
+  };
+
+
+  // =====================================================
   // RESTORE FROM BACKUP
   // =====================================================
 
@@ -1611,8 +1660,8 @@ export default function App() {
               myRankings={myRankings}
               lists={lists}
               comparisonHistory={comparisonHistory}
-              dataVersion={DATA_VERSION}
               onRestore={handleRestoreBackup}
+              onResetAll={handleResetAll}
             />
 
           )}

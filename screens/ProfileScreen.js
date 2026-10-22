@@ -80,11 +80,13 @@ export default function ProfileScreen({
 
   const progress = getProgress(myRankings);
 
-  const badges = getBadges(myRankings);
-
-  const earnedCount = badges.filter(
+  // Only badges you've earned are shown (no faded "next"
+  // ones); the requirements still apply behind the scenes.
+  const badges = getBadges(myRankings).filter(
     badge => badge.earned
-  ).length;
+  );
+
+  const earnedCount = badges.length;
 
 
   // --------------------------------------------------
@@ -546,10 +548,6 @@ export default function ProfileScreen({
       {/* -------------------------------------------- */}
 
       <Text style={styles.badgeIntro}>
-        Club badges unlock the club in My Best XI's.
-      </Text>
-
-      <Text style={styles.badgeIntro}>
         Tap a club badge to see how you rate their squad.
       </Text>
 
@@ -649,13 +647,6 @@ export default function ProfileScreen({
         </View>
 
 
-        {!badges.some(badge => badge.id.startsWith('club|')) && (
-
-          <Text style={styles.badgeHint}>
-            Rank every player at a club to earn its badge.
-          </Text>
-
-        )}
 
       </View>
 

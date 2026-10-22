@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 
-import { isUnknown } from '../utils/progression';
+import {
+  LEVELS,
+  isUnknown,
+} from '../utils/progression';
 
 import {
   ScrollView,
@@ -14,6 +17,8 @@ import {
 import {
   distinctLeagues,
   getActiveStatus,
+  getCurrentLeague,
+  getLeagues,
   hasStatusData,
   matchesFilters,
 } from '../utils/listHelpers';
@@ -22,6 +27,46 @@ import {
   getFlag,
   getMarkerText,
 } from '../utils/flags';
+
+
+// Top five leagues in unlock order (Premier League first);
+// everything else ranks after them.
+const TOP_LEAGUES = LEVELS
+  .map(level => level.unlocks)
+  .filter(
+    unlocks =>
+      unlocks &&
+      unlocks !== 'REST_OF_WORLD' &&
+      unlocks !== 'LEGENDS'
+  );
+
+const leagueRank = name => {
+  const index = TOP_LEAGUES.indexOf(name);
+  return index === -1 ? TOP_LEAGUES.length : index;
+};
+
+
+// Goalkeeper to striker, for ordering the filter.
+const SPECIFIC_ORDER = [
+  'Goalkeeper',
+  'Centre-Back',
+  'Right-Back',
+  'Left-Back',
+  'Defensive Midfield',
+  'Central Midfield',
+  'Right Midfield',
+  'Left Midfield',
+  'Attacking Midfield',
+  'Right Winger',
+  'Left Winger',
+  'Second Striker',
+  'Centre-Forward',
+];
+
+const specificOrder = name => {
+  const index = SPECIFIC_ORDER.indexOf(name);
+  return index === -1 ? SPECIFIC_ORDER.length : index;
+};
 
 
 const CATEGORIES = [
@@ -135,6 +180,8 @@ export default function AddPlayersToListScreen({
   const [league, setLeague] = useState(null);
   const [leagueScope, setLeagueScope] = useState('ALL_TIME');
   const [position, setPosition] = useState(null);
+  const [specificPosition, setSpecificPosition] =
+    useState(null);
   const [category, setCategory] = useState(null);
   const [size, setSize] = useState(10);
 
@@ -156,10 +203,31 @@ export default function AddPlayersToListScreen({
       // Keep the chosen league visible when switching modes.
       if (league && !found.includes(league)) {
         found.push(league);
-        found.sort();
       }
 
-      return found;
+      // Most relevant first: the top five in unlock order,
+      // then the rest by how many of your ranked players
+      // are in them, then A-Z.
+      const playerCounts = {};
+
+      ranked.forEach(player => {
+
+        const playerLeagues =
+          leagueScope === 'CURRENT'
+            ? [getCurrentLeague(player.id)].filter(Boolean)
+            : getLeagues(player.id);
+
+        playerLeagues.forEach(name => {
+          playerCounts[name] = (playerCounts[name] || 0) + 1;
+        });
+      });
+
+      return found.sort(
+        (a, b) =>
+          leagueRank(a) - leagueRank(b) ||
+          (playerCounts[b] || 0) - (playerCounts[a] || 0) ||
+          a.localeCompare(b)
+      );
     },
     [ranked, leagueScope, league]
   );
@@ -176,6 +244,29 @@ export default function AddPlayersToListScreen({
   );
 
 
+  // Specific positions (Centre-Back, Left Winger...) of the
+  // ranked players, within the chosen position if there is one.
+  const specificPositions = useMemo(
+    () =>
+      [
+        ...new Set(
+          ranked
+            .filter(
+              player =>
+                !position || player.position === position
+            )
+            .map(player => player.specificPosition)
+            .filter(Boolean)
+        ),
+      ].sort(
+        (a, b) =>
+          specificOrder(a) - specificOrder(b) ||
+          a.localeCompare(b)
+      ),
+    [ranked, position]
+  );
+
+
   // Players matching the filters (ignores search).
   const filtered = useMemo(
     () =>
@@ -186,11 +277,12 @@ export default function AddPlayersToListScreen({
             league,
             leagueScope,
             position,
+            specificPosition,
             category,
           })
         )
         .sort((a, b) => b.rating - a.rating),
-    [ranked, status, league, leagueScope, position, category]
+    [ranked, status, league, leagueScope, position, specificPosition, category]
   );
 
   // Filters + search, what's shown on screen.
@@ -389,10 +481,28 @@ export default function AddPlayersToListScreen({
             <FilterRow
               label="POSITION"
               value={position}
-              onChange={setPosition}
+              onChange={value => {
+                // A specific position from another group
+                // would match nobody, so clear it.
+                setPosition(value);
+                setSpecificPosition(null);
+              }}
               options={[
                 { label: 'ALL', value: null },
                 ...positions.map(item => ({
+                  label: item,
+                  value: item,
+                })),
+              ]}
+            />
+
+            <FilterRow
+              label="SPECIFIC POSITION"
+              value={specificPosition}
+              onChange={setSpecificPosition}
+              options={[
+                { label: 'ALL', value: null },
+                ...specificPositions.map(item => ({
                   label: item,
                   value: item,
                 })),

@@ -171,6 +171,7 @@ export function matchesFilters(
     league = null,
     leagueScope = 'ALL_TIME',
     position = null,
+    specificPosition = null,
     category = null,
   } = {}
 ) {
@@ -205,6 +206,13 @@ export function matchesFilters(
   }
 
   if (position && player.position !== position) {
+    return false;
+  }
+
+  if (
+    specificPosition &&
+    player.specificPosition !== specificPosition
+  ) {
     return false;
   }
 

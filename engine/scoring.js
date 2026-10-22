@@ -15,6 +15,11 @@ FOTRANKR SCORING (v2)
    "Slightly / clearly / much better" count as 1 / 2 / 3
    wins, so decisive answers spread players further apart.
 
+   Between the same two players, the LATEST answer counts
+   most (older ones fade), and is always respected: the
+   winner ends above the loser by a gap that grows with the
+   margin. So changing your mind visibly moves them apart.
+
 2. PLACEMENT (narrowing down)
    A player's automatic head-to-heads start against the
    middle player of their group and halve the remaining
@@ -73,6 +78,18 @@ const ITERATIONS = 150;
 // of piling up at its top and bottom.
 const SPREAD = 3;
 
+// Between the same two players, each older answer counts
+// this much of the one after it, so the latest answer
+// decides when the user changes their mind.
+const RECENCY_DECAY = 0.25;
+
+// After a decisive latest answer, the winner always ends at
+// least this share of the category's range above the loser
+// (Good spans 2.00, so "clearly" = 0.08; Legendary only spans
+// 0.20, so its gaps are smaller). Never less than 0.01.
+const MIN_GAP_SHARE = { slight: 0.015, clear: 0.04, much: 0.075 };
+const DEFAULT_GAP_SHARE = MIN_GAP_SHARE.clear;
+
 // Within this of each other = "nearly tied" for check-ups.
 const NEAR_TIE = 0.02;
 
@@ -116,11 +133,44 @@ export function readResult(entry) {
 // 1. SCORES FROM THE WHOLE HISTORY
 // ==========================================================
 
+const pairKey = (a, b) => (a < b ? `${a}|${b}` : `${b}|${a}`);
+
+
 export function recomputeScores(myRankings, comparisonHistory) {
 
   const rankings = myRankings || [];
 
   const scoreById = new Map();
+
+  const history = comparisonHistory || [];
+
+  // How many NEWER answers each answer has for its pair, and
+  // the latest decisive answer per pair.
+  const newerCount = new Array(history.length).fill(0);
+  const latestByPair = new Map();
+
+  const seen = new Map();
+
+  for (let index = history.length - 1; index >= 0; index--) {
+
+    const game = readResult(history[index]);
+
+    if (!game || game.a === game.b) {
+      continue;
+    }
+
+    const key = pairKey(game.a, game.b);
+
+    newerCount[index] = seen.get(key) || 0;
+    seen.set(key, newerCount[index] + 1);
+
+    if (!latestByPair.has(key)) {
+      latestByPair.set(key, {
+        game,
+        margin: history[index].margin,
+      });
+    }
+  }
 
   Object.entries(CATEGORY_RANGES).forEach(([category, range]) => {
 
@@ -137,7 +187,7 @@ export function recomputeScores(myRankings, comparisonHistory) {
     // wins[i][j] = games i won against j.
     const wins = new Map(ids.map(id => [id, new Map()]));
 
-    (comparisonHistory || []).forEach(entry => {
+    history.forEach((entry, index) => {
 
       const game = readResult(entry);
 
@@ -150,6 +200,8 @@ export function recomputeScores(myRankings, comparisonHistory) {
         return;
       }
 
+      const fade = Math.pow(RECENCY_DECAY, newerCount[index]);
+
       const addWins = (winner, loser, amount) => {
         if (amount > 0) {
           const row = wins.get(winner);
@@ -157,8 +209,8 @@ export function recomputeScores(myRankings, comparisonHistory) {
         }
       };
 
-      addWins(game.a, game.b, game.aWins);
-      addWins(game.b, game.a, game.bWins);
+      addWins(game.a, game.b, game.aWins * fade);
+      addWins(game.b, game.a, game.bWins * fade);
     });
 
     // Bradley-Terry strengths by minorise-maximise updates.
@@ -200,13 +252,80 @@ export function recomputeScores(myRankings, comparisonHistory) {
 
     // Strength 1 -> middle of the range; the stronger, the
     // closer to the top (never outside it).
+    const categoryScores = new Map();
+
     ids.forEach(id => {
 
       const p = Math.pow(strength.get(id), 1 / SPREAD);
 
-      const score =
-        range.min + (range.max - range.min) * (p / (1 + p));
+      categoryScores.set(
+        id,
+        range.min + (range.max - range.min) * (p / (1 + p))
+      );
+    });
 
+
+    // The latest decisive answer between two players always
+    // shows: winner above loser by a margin-sized gap.
+    // Repeat until settled (one fix can upset another).
+    for (let pass = 0; pass < 60; pass++) {
+
+      let changed = false;
+
+      latestByPair.forEach(({ game, margin }) => {
+
+        if (
+          !inCategory.has(game.a) ||
+          !inCategory.has(game.b) ||
+          game.aWins === game.bWins
+        ) {
+          return;
+        }
+
+        const winner = game.aWins > game.bWins ? game.a : game.b;
+        const loser = winner === game.a ? game.b : game.a;
+
+        const gap = Math.max(
+          0.01,
+          (MIN_GAP_SHARE[margin] || DEFAULT_GAP_SHARE) *
+            (range.max - range.min)
+        );
+
+        const winnerScore = categoryScores.get(winner);
+        const loserScore = categoryScores.get(loser);
+
+        if (winnerScore - loserScore >= gap - 1e-9) {
+          return;
+        }
+
+        changed = true;
+
+        // Split the move between them; at the top or bottom
+        // of the range, move the other player instead so the
+        // gap survives.
+        const middle = Math.min(
+          range.max - gap / 2,
+          Math.max(range.min + gap / 2, (winnerScore + loserScore) / 2)
+        );
+
+        categoryScores.set(
+          winner,
+          Math.max(middle + gap / 2, winnerScore)
+        );
+
+        categoryScores.set(
+          loser,
+          Math.min(middle - gap / 2, loserScore)
+        );
+      });
+
+      if (!changed) {
+        break;
+      }
+    }
+
+
+    categoryScores.forEach((score, id) => {
       scoreById.set(
         id,
         Math.min(

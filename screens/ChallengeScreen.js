@@ -22,6 +22,17 @@ const simplify = (text) =>
     .toLowerCase()
     .trim();
 
+// Category colours, as in My Ranks and lists.
+const CATEGORY_COLOURS = {
+  Legendary: '#9B59B6',
+  Elite: '#00ff66',
+  'Very Good': '#4DA6FF',
+  Good: '#FFD700',
+  OK: '#F39C12',
+  Bad: '#E74C3C',
+};
+
+
 export default function ChallengeScreen({
   route,
   navigation,
@@ -324,7 +335,14 @@ export default function ChallengeScreen({
                 {/* RANK */}
 
                 <View
-                  style={styles.rankCircle}
+                  style={[
+                    styles.rankCircle,
+                    {
+                      backgroundColor:
+                        CATEGORY_COLOURS[opponent.category] ||
+                        '#00ff66',
+                    },
+                  ]}
                 >
 
                   <Text
@@ -358,7 +376,14 @@ export default function ChallengeScreen({
                   </Text>
 
                   <Text
-                    style={styles.category}
+                    style={[
+                      styles.category,
+                      {
+                        color:
+                          CATEGORY_COLOURS[opponent.category] ||
+                        '#00ff66',
+                      },
+                    ]}
                   >
                     {opponent.category}
                   </Text>
@@ -373,7 +398,14 @@ export default function ChallengeScreen({
                 >
 
                   <Text
-                    style={styles.score}
+                    style={[
+                      styles.score,
+                      {
+                        color:
+                          CATEGORY_COLOURS[opponent.category] ||
+                        '#00ff66',
+                      },
+                    ]}
                   >
                     {typeof opponent.score ===
                     'number'

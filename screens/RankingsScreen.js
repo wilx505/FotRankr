@@ -1145,8 +1145,12 @@ const styles = StyleSheet.create({
   },
 
   subtitle: {
-    color: '#777777',
-    fontSize: 14,
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
     marginTop: 7,
   },
 
@@ -1512,19 +1516,16 @@ const styles = StyleSheet.create({
   },
 
   challengeHint: {
-  color: '#555555',
-  fontSize: 10,
-  fontWeight: '800',
-  letterSpacing: 1.2,
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
   textAlign: 'center',
   marginBottom: 14,
 },
-
   emptyButtonText: {
-    color: '#000000',
-    fontSize: 11,
-    fontWeight: '900',
-    letterSpacing: 0.7,
   },
 
 });

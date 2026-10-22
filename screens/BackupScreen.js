@@ -741,8 +741,12 @@ const styles = StyleSheet.create({
   },
 
   subtitle: {
-    color: '#777777',
-    fontSize: 15,
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
     textAlign: 'center',
     marginTop: 8,
     marginBottom: 26,
@@ -856,9 +860,12 @@ const styles = StyleSheet.create({
   },
 
   autoIntro: {
-    color: '#666666',
-    fontSize: 12,
-    lineHeight: 17,
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
     marginBottom: 12,
     paddingLeft: 2,
   },

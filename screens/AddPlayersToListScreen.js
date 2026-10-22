@@ -21,6 +21,7 @@ import {
   getActiveStatus,
   getCurrentLeague,
   getLeagues,
+  getSourcePlayer,
   hasStatusData,
   matchesFilters,
 } from '../utils/listHelpers';
@@ -180,6 +181,7 @@ export default function AddPlayersToListScreen({
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('ALL');
   const [league, setLeague] = useState(null);
+  const [club, setClub] = useState(null);
   const [leagueScope, setLeagueScope] = useState('ALL_TIME');
   const [position, setPosition] = useState(null);
   const [specificPosition, setSpecificPosition] =
@@ -269,6 +271,33 @@ export default function AddPlayersToListScreen({
   );
 
 
+  // Clubs in the chosen league that have ranked players, A-Z.
+  const clubs = useMemo(
+    () => {
+
+      if (!league) {
+        return [];
+      }
+
+      return [
+        ...new Set(
+          ranked
+            .map(player => getSourcePlayer(player.id))
+            .filter(
+              source =>
+                source &&
+                source.active !== false &&
+                source.currentLeague === league &&
+                source.club
+            )
+            .map(source => source.club)
+        ),
+      ].sort((a, b) => a.localeCompare(b));
+    },
+    [ranked, league]
+  );
+
+
   // Players matching the filters (ignores search).
   const filtered = useMemo(
     () =>
@@ -281,10 +310,12 @@ export default function AddPlayersToListScreen({
             position,
             specificPosition,
             category,
-          })
+          }) &&
+          (!club ||
+            getSourcePlayer(player.id)?.club === club)
         )
         .sort((a, b) => b.rating - a.rating),
-    [ranked, status, league, leagueScope, position, specificPosition, category]
+    [ranked, status, league, leagueScope, club, position, specificPosition, category]
   );
 
   // Filters + search, what's shown on screen.
@@ -345,7 +376,22 @@ export default function AddPlayersToListScreen({
       playerIds: selectedIds,
     });
 
-    navigation.goBack();
+    // Creating a new list (Lists -> Create -> here): close
+    // both screens and land on Lists. Editing an existing
+    // list just goes back to it.
+    const { routes, index } = navigation.getState();
+
+    const createIndex = routes
+      .slice(0, index)
+      .map(route => route.name)
+      .lastIndexOf('CreateList');
+
+    if (createIndex > 0) {
+      navigation.pop(index - createIndex + 1);
+      navigation.navigate('MainTabs', { screen: 'Lists' });
+    } else {
+      navigation.goBack();
+    }
 
   };
 
@@ -456,7 +502,10 @@ export default function AddPlayersToListScreen({
             <FilterRow
               label="LEAGUE MODE"
               value={leagueScope}
-              onChange={setLeagueScope}
+              onChange={value => {
+                setLeagueScope(value);
+                setClub(null);
+              }}
               options={[
                 { label: 'ALL TIME', value: 'ALL_TIME' },
                 { label: 'CURRENT', value: 'CURRENT' },
@@ -470,7 +519,10 @@ export default function AddPlayersToListScreen({
                   : 'LEAGUE (EVER PLAYED IN)'
               }
               value={league}
-              onChange={setLeague}
+              onChange={value => {
+                setLeague(value);
+                setClub(null);
+              }}
               options={[
                 { label: 'ALL', value: null },
                 ...leagues.map(item => ({
@@ -479,6 +531,23 @@ export default function AddPlayersToListScreen({
                 })),
               ]}
             />
+
+            {league && (
+
+              <FilterRow
+                label={`CLUB (${league.toUpperCase()})`}
+                value={club}
+                onChange={setClub}
+                options={[
+                  { label: 'ALL', value: null },
+                  ...clubs.map(item => ({
+                    label: item,
+                    value: item,
+                  })),
+                ]}
+              />
+
+            )}
 
             <FilterRow
               label="POSITION"
@@ -794,9 +863,12 @@ const styles = StyleSheet.create({
   },
 
   subtitle: {
-    color: '#777777',
-    fontSize: 16,
-    lineHeight: 23,
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
     marginTop: 11,
     marginBottom: 25,
   },

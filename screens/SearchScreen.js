@@ -874,9 +874,12 @@ const styles = StyleSheet.create({
   },
 
   subtitle: {
-    color: '#777777',
-    fontSize: 16,
-    lineHeight: 23,
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
     marginTop: 11,
     marginBottom: 25,
   },

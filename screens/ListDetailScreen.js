@@ -18,6 +18,18 @@ import {
 } from '../utils/listHelpers';
 
 
+// Score colour per category, as in My Ranks.
+const CATEGORY_COLOURS = {
+  Legendary: '#9B59B6',
+  Elite: '#00ff66',
+  'Very Good': '#4DA6FF',
+  Good: '#FFD700',
+  OK: '#F39C12',
+  Bad: '#E74C3C',
+  Unknown: '#777777',
+};
+
+
 export default function ListDetailScreen({
   navigation,
   route,
@@ -153,6 +165,10 @@ export default function ListDetailScreen({
         your scores.
       </Text>
 
+      <Text style={styles.challengeHint}>
+        DON'T LIKE THE ORDER? TAP A PLAYER TO CHALLENGE
+      </Text>
+
 
       {/* ADD / AUTO-FILL */}
 
@@ -268,7 +284,16 @@ export default function ListDetailScreen({
             style={styles.playerCard}
           >
 
-            <View style={styles.rankCircle}>
+            <View
+              style={[
+                styles.rankCircle,
+                {
+                  backgroundColor:
+                    CATEGORY_COLOURS[player.category] ||
+                    '#00ff66',
+                },
+              ]}
+            >
               <Text style={styles.rankNumber}>
                 {index + 1}
               </Text>
@@ -294,7 +319,16 @@ export default function ListDetailScreen({
                     : ' • RETIRED'}
               </Text>
 
-              <Text style={styles.playerCategory}>
+              <Text
+                style={[
+                  styles.playerCategory,
+                  {
+                    color:
+                      CATEGORY_COLOURS[player.category] ||
+                      '#00ff66',
+                  },
+                ]}
+              >
                 {player.category}
               </Text>
 
@@ -303,7 +337,16 @@ export default function ListDetailScreen({
 
             <View style={styles.scoreBox}>
 
-              <Text style={styles.score}>
+              <Text
+                style={[
+                  styles.score,
+                  {
+                    color:
+                      CATEGORY_COLOURS[player.category] ||
+                      '#ffffff',
+                  },
+                ]}
+              >
                 {typeof player.score === 'number'
                   ? player.score.toFixed(2)
                   : '—'}
@@ -424,10 +467,25 @@ const styles = StyleSheet.create({
     letterSpacing: -1.5,
   },
 
+  // Same style as the challenge hint below it.
   subtitle: {
-    color: '#777777',
-    fontSize: 16,
-    marginTop: 10,
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
+    marginTop: 12,
+    marginBottom: 6,
+  },
+
+  challengeHint: {
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
     marginBottom: 25,
   },
 

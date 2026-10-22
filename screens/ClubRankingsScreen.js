@@ -368,6 +368,8 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: '800',
     letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
     textAlign: 'center',
     marginBottom: 14,
   },

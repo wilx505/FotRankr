@@ -60,6 +60,10 @@ const STEPS = [
     text: 'Tap who is better. FotRankr turns your answers into your rankings.',
   },
   {
+    title: 'Challenge',
+    text: "Don't like where a player landed? Put them in a challenge against any of your ranked players to rise up the rankings.",
+  },
+  {
     title: 'Level up',
     text: `+${XP_PER_PLAYER} XP for every player, +${CLUB_BONUS_XP} XP for every club you complete. Levels unlock new leagues.`,
   },
@@ -402,9 +406,12 @@ const styles = StyleSheet.create({
   },
 
   heroSubtitle: {
-    color: '#8d8d8d',
-    fontSize: 16,
-    lineHeight: 23,
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
     marginTop: 18,
   },
 

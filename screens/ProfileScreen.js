@@ -703,8 +703,12 @@ const styles = StyleSheet.create({
   },
 
   subtitle: {
-    color: '#777777',
-    fontSize: 14,
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
     marginTop: 7,
   },
 
@@ -981,8 +985,12 @@ const styles = StyleSheet.create({
   // ==================================================
 
   badgeIntro: {
-    color: '#777777',
-    fontSize: 12,
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    lineHeight: 15,
+    textTransform: 'uppercase',
     textAlign: 'center',
     marginBottom: 10,
   },

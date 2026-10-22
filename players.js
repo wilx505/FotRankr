@@ -15143,7 +15143,7 @@ const PLAYERS = [
     "name": "Olivier Boscagli",
     "nation": "France",
     "position": "Defence",
-    "specificPosition": "Centre-Back",
+    "specificPosition": "Left-Back",
     "club": "Brighton & Hove Albion",
     "active": true,
     "currentLeague": "Premier League",

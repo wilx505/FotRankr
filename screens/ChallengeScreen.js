@@ -42,6 +42,7 @@ export default function ChallengeScreen({
   const {
     player,
     opponentIds,
+    opponentLabel,
   } = route.params || {};
 
   const [search, setSearch] =
@@ -199,7 +200,7 @@ export default function ChallengeScreen({
 
         <Text style={styles.positionLabel}>
           {opponentIds
-            ? 'PLAYERS IN THIS LIST'
+            ? opponentLabel || 'PLAYERS IN THIS LIST'
             : 'ALL RANKED PLAYERS'}
         </Text>
 

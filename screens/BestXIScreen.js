@@ -9,6 +9,7 @@ import {
 import ClubBadge from '../components/ClubBadge';
 
 import {
+  getClubSquad,
   lastName,
   pickBestXI,
 } from '../utils/bestXI';
@@ -43,6 +44,11 @@ export default function BestXIScreen({
 
   const rows = pickBestXI(club, league, myRankings);
 
+  // Challenges from here are only against this club's
+  // ranked players.
+  const clubIds = getClubSquad(club, league, myRankings)
+    .map(player => String(player.id));
+
 
   const renderSpot = (spot, index) => {
 
@@ -59,7 +65,11 @@ export default function BestXIScreen({
         style={styles.spot}
         disabled={!player}
         onPress={() =>
-          navigation.navigate('Challenge', { player })
+          navigation.navigate('Challenge', {
+            player,
+            opponentIds: clubIds,
+            opponentLabel: `${club.toUpperCase()} PLAYERS`,
+          })
         }
         activeOpacity={0.75}
       >

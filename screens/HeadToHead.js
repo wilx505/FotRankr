@@ -1,6 +1,8 @@
 import { displayPosition } from '../utils/positions';
 
 import {
+  Animated,
+  Easing,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -131,6 +133,113 @@ export default function HeadToHead({
   const [checkups, setCheckups] = useState(null);
 
   const [finished, setFinished] = useState(false);
+
+  // Challenge only: the ball is shot into the winner's net,
+  // then their card is highlighted, then the answer saves.
+  // 'player' | 'comparison' | null
+  const [scorer, setScorer] = useState(null);
+
+  const [rowWidth, setRowWidth] = useState(0);
+
+  const ballX = useRef(new Animated.Value(0)).current;
+  const ballSpin = useRef(new Animated.Value(0)).current;
+
+  // Goal celebration.
+  const netShake = useRef(new Animated.Value(0)).current;
+  const flash = useRef(new Animated.Value(0)).current;
+  const goalPop = useRef(new Animated.Value(0)).current;
+  const burst = useRef(new Animated.Value(0)).current;
+
+  const NET_WIDTH = 24;
+
+  const shootThenSubmit = (result, margin) => {
+
+    if (
+      match?.kind !== 'challenge' ||
+      result === 'equal' ||
+      !rowWidth
+    ) {
+      submit(result, margin);
+      return;
+    }
+
+    // From the middle of the row to the middle of the net.
+    const distance = rowWidth / 2 - NET_WIDTH / 2;
+
+    setPendingWinner(null);
+    setScorer(result);
+
+    ballX.setValue(0);
+    ballSpin.setValue(0);
+    netShake.setValue(0);
+    flash.setValue(0);
+    goalPop.setValue(0);
+    burst.setValue(0);
+
+    const SHOT_MS = 260;
+
+    Animated.parallel([
+      Animated.timing(ballX, {
+        toValue: result === 'player' ? -distance : distance,
+        duration: SHOT_MS,
+        easing: Easing.in(Easing.cubic),
+        useNativeDriver: true,
+      }),
+      Animated.timing(ballSpin, {
+        toValue: 1,
+        duration: SHOT_MS,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+
+      // GOAL: net ripples, screen flashes, GOAL! pops up,
+      // confetti bursts out of the net.
+      Animated.parallel([
+        Animated.sequence(
+          [6, -6, 5, -5, 3, -3, 0].map(offset =>
+            Animated.timing(netShake, {
+              toValue: offset,
+              duration: 45,
+              useNativeDriver: true,
+            })
+          )
+        ),
+        Animated.sequence([
+          Animated.timing(flash, {
+            toValue: 1,
+            duration: 90,
+            useNativeDriver: true,
+          }),
+          Animated.timing(flash, {
+            toValue: 0,
+            duration: 380,
+            useNativeDriver: true,
+          }),
+        ]),
+        Animated.spring(goalPop, {
+          toValue: 1,
+          friction: 4,
+          tension: 120,
+          useNativeDriver: true,
+        }),
+        Animated.timing(burst, {
+          toValue: 1,
+          duration: 750,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: true,
+        }),
+      ]).start();
+
+      // Let the goal sink in, then save.
+      setTimeout(() => {
+        setScorer(null);
+        ballX.setValue(0);
+        goalPop.setValue(0);
+        burst.setValue(0);
+        submit(result, margin);
+      }, 1100);
+    });
+  };
 
 
   // ==================================================
@@ -427,6 +536,116 @@ export default function HeadToHead({
       : null;
 
 
+  // A goal drawn with Views: posts + crossbar, open towards
+  // the pitch, with a mesh of thin lines. Lights up on a goal.
+  const renderNet = (side, scored) => (
+
+    <Animated.View
+      style={[
+        styles.net,
+        side === 'left' ? styles.netLeft : styles.netRight,
+        scored && styles.netScored,
+        scored && { transform: [{ translateX: netShake }] },
+      ]}
+    >
+
+      {[0, 1, 2, 3, 4, 5, 6].map(row => (
+        <View
+          key={`h${row}`}
+          style={[
+            styles.netLineH,
+            { top: `${(row + 1) * 12.5}%` },
+            scored && styles.netLineScored,
+          ]}
+        />
+      ))}
+
+      {[0, 1].map(column => (
+        <View
+          key={`v${column}`}
+          style={[
+            styles.netLineV,
+            { left: `${(column + 1) * 33}%` },
+            scored && styles.netLineScored,
+          ]}
+        />
+      ))}
+
+    </Animated.View>
+
+  );
+
+
+  // Confetti flying out of the scoring net.
+  const CONFETTI = [
+    { icon: '⚽', x: 70, y: -80 },
+    { icon: '🎉', x: 110, y: -20 },
+    { icon: '✨', x: 90, y: 60 },
+    { icon: '⭐', x: 40, y: 100 },
+    { icon: '🎉', x: 50, y: -120 },
+    { icon: '✨', x: 130, y: 30 },
+    { icon: '⭐', x: 100, y: -60 },
+    { icon: '⚽', x: 30, y: 70 },
+  ];
+
+  const renderConfetti = side => (
+
+    <View
+      pointerEvents="none"
+      style={[
+        styles.confettiOrigin,
+        side === 'left' ? { left: 12 } : { right: 12 },
+      ]}
+    >
+
+      {CONFETTI.map((piece, index) => {
+
+        // Out from the net, towards the pitch.
+        const direction = side === 'left' ? 1 : -1;
+
+        return (
+          <Animated.Text
+            key={index}
+            style={[
+              styles.confetti,
+              {
+                opacity: burst.interpolate({
+                  inputRange: [0, 0.15, 0.75, 1],
+                  outputRange: [0, 1, 1, 0],
+                }),
+                transform: [
+                  {
+                    translateX: burst.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, piece.x * direction],
+                    }),
+                  },
+                  {
+                    translateY: burst.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, piece.y],
+                    }),
+                  },
+                  {
+                    scale: burst.interpolate({
+                      inputRange: [0, 0.3, 1],
+                      outputRange: [0.4, 1.3, 0.9],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          >
+            {piece.icon}
+          </Animated.Text>
+        );
+      })}
+
+    </View>
+
+  );
+
+
   const renderCard = (someone, result) => (
 
     <View style={styles.playerColumn}>
@@ -435,10 +654,11 @@ export default function HeadToHead({
         style={[
           styles.playerCard,
           pendingWinner === result && styles.playerCardChosen,
+          scorer === result && styles.playerCardScored,
         ]}
         onPress={() => setPendingWinner(result)}
         activeOpacity={0.8}
-        disabled={waiting}
+        disabled={waiting || !!scorer}
       >
 
         <View style={styles.playerInitial}>
@@ -467,7 +687,11 @@ export default function HeadToHead({
         <View style={styles.chooseBadge}>
 
           <Text style={styles.chooseText}>
-            {pendingWinner === result ? 'CHOSEN' : 'CHOOSE'}
+            {scorer === result
+              ? 'GOAL!'
+              : pendingWinner === result
+                ? 'CHOSEN'
+                : 'CHOOSE'}
           </Text>
 
         </View>
@@ -552,31 +776,83 @@ export default function HeadToHead({
 
           {/* PLAYER CARDS */}
 
-          <View style={styles.playersRow}>
+          <View
+            style={styles.playersRow}
+            onLayout={event =>
+              setRowWidth(event.nativeEvent.layout.width)
+            }
+          >
+
+            {match.kind === 'challenge' &&
+              renderNet('left', scorer === 'player')}
 
             {renderCard(targetPlayer, 'player')}
 
 
-            {/* VS */}
+            {match.kind === 'challenge' ? (
 
-            <View style={styles.vsContainer}>
+              /* BALL */
 
-              <View style={styles.vsLine} />
+              <View style={[styles.vsContainer, styles.ballLayer]}>
 
-              <View style={styles.vsCircle}>
-
-                <Text style={styles.vsText}>
-                  VS
-                </Text>
+                <Animated.Text
+                  style={[
+                    styles.ball,
+                    {
+                      transform: [
+                        { translateX: ballX },
+                        {
+                          rotate: ballSpin.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [
+                              '0deg',
+                              scorer === 'player'
+                                ? '-720deg'
+                                : '720deg',
+                            ],
+                          }),
+                        },
+                      ],
+                    },
+                  ]}
+                >
+                  ⚽
+                </Animated.Text>
 
               </View>
 
-              <View style={styles.vsLine} />
+            ) : (
 
-            </View>
+              /* VS */
+
+              <View style={styles.vsContainer}>
+
+                <View style={styles.vsLine} />
+
+                <View style={styles.vsCircle}>
+
+                  <Text style={styles.vsText}>
+                    VS
+                  </Text>
+
+                </View>
+
+                <View style={styles.vsLine} />
+
+              </View>
+
+            )}
 
 
             {renderCard(opponent, 'comparison')}
+
+            {match.kind === 'challenge' &&
+              renderNet('right', scorer === 'comparison')}
+
+            {scorer &&
+              renderConfetti(
+                scorer === 'player' ? 'left' : 'right'
+              )}
 
           </View>
 
@@ -594,8 +870,8 @@ export default function HeadToHead({
                   <TouchableOpacity
                     key={key}
                     style={styles.marginButton}
-                    onPress={() => submit(pendingWinner, key)}
-                    disabled={waiting}
+                    onPress={() => shootThenSubmit(pendingWinner, key)}
+                    disabled={waiting || !!scorer}
                     activeOpacity={0.8}
                   >
 
@@ -629,7 +905,7 @@ export default function HeadToHead({
             <TouchableOpacity
               style={styles.drawButton}
               onPress={() => submit('equal', null)}
-              disabled={waiting}
+              disabled={waiting || !!scorer}
               activeOpacity={0.8}
             >
 
@@ -714,6 +990,49 @@ export default function HeadToHead({
             </Text>
 
           </TouchableOpacity>
+
+        </View>
+
+      )}
+
+
+      {/* GOAL! (challenge celebration) */}
+
+      {scorer && (
+
+        <View
+          pointerEvents="none"
+          style={styles.goalLayer}
+        >
+
+          <Animated.View
+            style={[
+              styles.goalFlash,
+              { opacity: flash.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 0.35],
+              }) },
+            ]}
+          />
+
+          <Animated.Text
+            style={[
+              styles.goalText,
+              {
+                opacity: goalPop,
+                transform: [
+                  {
+                    scale: goalPop.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0.3, 1],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          >
+            GOAL!
+          </Animated.Text>
 
         </View>
 
@@ -815,8 +1134,12 @@ const styles =
     },
 
     instruction: {
-      color: '#666666',
-      fontSize: 14,
+      color: '#555555',
+      fontSize: 10,
+      fontWeight: '800',
+      letterSpacing: 1.2,
+      lineHeight: 15,
+      textTransform: 'uppercase',
       textAlign: 'center',
       marginTop: 7,
       marginBottom: 25,
@@ -968,9 +1291,12 @@ const styles =
     // ==================================================
 
     footerHint: {
-      color: '#444444',
-      fontSize: 11,
-      lineHeight: 17,
+      color: '#555555',
+      fontSize: 10,
+      fontWeight: '800',
+      letterSpacing: 1.2,
+      lineHeight: 15,
+      textTransform: 'uppercase',
       textAlign: 'center',
       marginTop: 15,
       paddingHorizontal: 20,
@@ -1038,6 +1364,114 @@ const styles =
     // ==================================================
     // V2: CHOSEN CARD, MARGIN, BANNERS
     // ==================================================
+
+    playerCardScored: {
+      borderColor: '#FFD700',
+      backgroundColor: '#1f1a08',
+    },
+
+    ball: {
+      fontSize: 30,
+    },
+
+    confettiOrigin: {
+      position: 'absolute',
+      top: '50%',
+      width: 1,
+      height: 1,
+      zIndex: 20,
+      elevation: 20,
+    },
+
+    confetti: {
+      position: 'absolute',
+      fontSize: 22,
+      left: -11,
+      top: -14,
+    },
+
+    goalLayer: {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 30,
+      elevation: 30,
+    },
+
+    goalFlash: {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: -20,
+      right: -20,
+      backgroundColor: '#00ff66',
+    },
+
+    goalText: {
+      color: '#FFD700',
+      fontSize: 64,
+      fontWeight: '900',
+      letterSpacing: 2,
+      textShadowColor: '#000000',
+      textShadowRadius: 12,
+      textShadowOffset: { width: 0, height: 3 },
+    },
+
+    ballLayer: {
+      zIndex: 10,
+      elevation: 10,
+    },
+
+    net: {
+      width: 24,
+      height: 120,
+      borderColor: '#dddddd',
+      borderTopWidth: 3,
+      borderBottomWidth: 1,
+      backgroundColor: '#0b0b0b',
+      overflow: 'hidden',
+    },
+
+    netLeft: {
+      borderLeftWidth: 3,
+      borderTopLeftRadius: 3,
+      marginRight: 4,
+    },
+
+    netRight: {
+      borderRightWidth: 3,
+      borderTopRightRadius: 3,
+      marginLeft: 4,
+    },
+
+    netScored: {
+      borderColor: '#00ff66',
+      backgroundColor: '#0d2b18',
+    },
+
+    netLineH: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      height: 1,
+      backgroundColor: '#333333',
+    },
+
+    netLineV: {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      width: 1,
+      backgroundColor: '#333333',
+    },
+
+    netLineScored: {
+      backgroundColor: '#00ff66',
+    },
 
     playerCardChosen: {
       borderColor: '#00ff66',

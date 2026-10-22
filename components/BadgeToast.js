@@ -97,6 +97,7 @@ export default function BadgeToast({
           <ClubBadge
             club={badge.club}
             size={46}
+            gold={badge.gold}
           />
 
         ) : (

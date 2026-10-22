@@ -4,16 +4,23 @@ import {
   View,
 } from 'react-native';
 
-import { getClubStyle } from '../utils/clubBadges';
+import {
+  GOLD_STYLE,
+  getClubStyle,
+} from '../utils/clubBadges';
 
 
 // A club shown as a circle in its colours with a short code.
+// gold = the all-gold "TRUE ..." version.
 export default function ClubBadge({
   club,
   size = 48,
+  gold = false,
 }) {
 
   const clubStyle = getClubStyle(club);
+
+  const colours = gold ? GOLD_STYLE : clubStyle;
 
   return (
 
@@ -25,9 +32,10 @@ export default function ClubBadge({
           height: size,
           borderRadius: size / 2,
           borderWidth: Math.max(2, size / 18),
-          backgroundColor: clubStyle.fill,
-          borderColor: clubStyle.ring,
+          backgroundColor: colours.fill,
+          borderColor: colours.ring,
         },
+        gold && styles.goldGlow,
       ]}
     >
 
@@ -35,7 +43,7 @@ export default function ClubBadge({
         style={[
           styles.code,
           {
-            color: clubStyle.text,
+            color: colours.text,
             fontSize: size * 0.3,
           },
         ]}
@@ -61,6 +69,13 @@ const styles = StyleSheet.create({
   code: {
     fontWeight: '900',
     letterSpacing: 0.5,
+  },
+
+  goldGlow: {
+    shadowColor: '#FFD700',
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 0 },
   },
 
 });

@@ -1,5 +1,7 @@
 import players from '../players';
 
+import { getGoldTitle } from './clubBadges';
+
 import {
   getActiveStatus,
   getCurrentLeague,
@@ -19,6 +21,13 @@ XP:
   every milestone badge     = MILESTONE_BADGE_XP extra
   The Patriot badge         = MILESTONE_BADGE_XP extra
   each POSITION_BADGES badge = MILESTONE_BADGE_XP extra
+  every gold "TRUE ..." badge = GOLD_BADGE_XP extra
+  every league Expert badge = MILESTONE_BADGE_XP extra
+                              (every player in a league with
+                              LEAGUE_EXPERT_MIN+ players)
+  every level badge         = MILESTONE_BADGE_XP extra
+                              (Plastic Fan for finishing
+                              Level 1 ... The Oracle)
                               (The Wall, Maestro, Predator,
                               Buffon)
                               (PATRIOT_TARGET players from
@@ -52,6 +61,9 @@ export const XP_PER_LEVEL = 1000;
 export const MILESTONE_EVERY = 100;
 
 export const MILESTONE_BADGE_XP = 10;
+
+// Each gold "TRUE ..." club badge.
+export const GOLD_BADGE_XP = 10;
 
 
 export function getMilestonesEarned(playersRanked) {
@@ -274,16 +286,22 @@ const CLUBS = (() => {
 let earnedHistory = {
   rankedIds: new Set(),
   clubKeys: new Set(),
+  goldClubKeys: new Set(),
+  leagueKeys: new Set(),
 };
 
 export function setEarnedHistory({
   rankedIds = [],
   clubKeys = [],
+  goldClubKeys = [],
+  leagueKeys = [],
 } = {}) {
 
   earnedHistory = {
     rankedIds: new Set(rankedIds.map(String)),
     clubKeys: new Set(clubKeys),
+    goldClubKeys: new Set(goldClubKeys),
+    leagueKeys: new Set(leagueKeys),
   };
 
   // The cached answer no longer applies.
@@ -334,6 +352,117 @@ export function getCompletedClubs(myRankings) {
 }
 
 
+// Gold ("TRUE ...") clubs: Premier League clubs where every
+// current player has been PROPERLY ranked (not Unknown), now
+// or before. Used by App to grow the earned record.
+export function getGoldClubsNow(myRankings) {
+
+  const rankedIds = new Set([
+    ...earnedHistory.rankedIds,
+    ...getRankedIdsNow(myRankings),
+  ]);
+
+  return CLUBS.filter(club =>
+    getGoldTitle(club.club) &&
+    club.playerIds.every(id => rankedIds.has(id))
+  );
+}
+
+
+// Every gold club earned now or at any point before.
+export function getGoldClubs(myRankings) {
+
+  const now = new Set(
+    getGoldClubsNow(myRankings).map(clubKey)
+  );
+
+  return CLUBS.filter(club =>
+    now.has(clubKey(club)) ||
+    earnedHistory.goldClubKeys.has(clubKey(club))
+  );
+}
+
+
+// ======================================================
+// LEAGUE EXPERT BADGES
+// ======================================================
+// "<League> Expert" for ranking every current player in a
+// league ("I DO NOT KNOW" counts, like club badges). Only
+// leagues with at least LEAGUE_EXPERT_MIN players have one.
+// Worth MILESTONE_BADGE_XP each.
+
+export const LEAGUE_EXPERT_MIN = 10;
+
+let leagueCache = null;
+
+// [{ league, playerIds }] for leagues with a badge.
+export function getExpertLeagues() {
+
+  if (!leagueCache) {
+
+    const byLeague = new Map();
+
+    CLUBS.forEach(club => {
+
+      if (!club.league) {
+        return;
+      }
+
+      if (!byLeague.has(club.league)) {
+        byLeague.set(club.league, []);
+      }
+
+      byLeague.get(club.league).push(...club.playerIds);
+    });
+
+    leagueCache = [...byLeague.entries()]
+      .filter(([, ids]) => ids.length >= LEAGUE_EXPERT_MIN)
+      .map(([league, playerIds]) => ({ league, playerIds }));
+  }
+
+  return leagueCache;
+}
+
+
+// Leagues fully ranked by the current rankings alone (used
+// by App to grow the earned record).
+export function getLeaguesCompletedNow(myRankings) {
+
+  const rankedIds = new Set(
+    (myRankings || []).map(
+      ranking => String(ranking.id)
+    )
+  );
+
+  return getExpertLeagues().filter(entry =>
+    entry.playerIds.every(id => rankedIds.has(id))
+  );
+}
+
+
+// Every league completed now or at any point before.
+export function getCompletedLeagues(myRankings) {
+
+  const now = new Set(
+    getLeaguesCompletedNow(myRankings).map(
+      entry => entry.league
+    )
+  );
+
+  return getExpertLeagues().filter(entry =>
+    now.has(entry.league) ||
+    earnedHistory.leagueKeys.has(entry.league)
+  );
+}
+
+
+// Level badges held at a level: one for each level finished,
+// and The Oracle's on reaching the top level.
+export function levelBadgeCount(level) {
+  return level >= MAX_LEVEL ? MAX_LEVEL : level - 1;
+}
+
+
 // Everything the profile screen needs, from the rankings.
 // Remembers the last answer, because Search asks once per
 // player in a list.
@@ -375,22 +504,52 @@ export function getProgress(myRankings) {
 
   const positionCounts = getPositionCounts(rankedIds);
 
+  const goldClubsEarned =
+    getGoldClubs(myRankings).length;
+
+  const leaguesCompleted =
+    getCompletedLeagues(myRankings).length;
+
   const positionBadgesEarned = POSITION_BADGES.filter(
     badge =>
       (positionCounts[badge.position] || 0) >= badge.target
   ).length;
 
-  const xp =
+  const xpBeforeLevelBadges =
     playersRanked * XP_PER_PLAYER +
     clubsCompleted * CLUB_BONUS_XP +
     milestonesEarned * MILESTONE_BADGE_XP +
     (patriotEarned ? MILESTONE_BADGE_XP : 0) +
-    positionBadgesEarned * MILESTONE_BADGE_XP;
+    positionBadgesEarned * MILESTONE_BADGE_XP +
+    goldClubsEarned * GOLD_BADGE_XP +
+    leaguesCompleted * MILESTONE_BADGE_XP;
 
-  const level = Math.min(
-    Math.floor(xp / XP_PER_LEVEL) + 1,
-    MAX_LEVEL
-  );
+  // Level badges (one per level finished, plus The Oracle on
+  // reaching the top) are worth MILESTONE_BADGE_XP each, and
+  // that XP can itself finish a level, so settle it in a loop.
+  let level = 1;
+  let levelBadgesEarned = 0;
+  let xp = xpBeforeLevelBadges;
+
+  for (let pass = 0; pass <= MAX_LEVEL; pass++) {
+
+    level = Math.min(
+      Math.floor(xp / XP_PER_LEVEL) + 1,
+      MAX_LEVEL
+    );
+
+    const badges = levelBadgeCount(level);
+
+    if (badges === levelBadgesEarned) {
+      break;
+    }
+
+    levelBadgesEarned = badges;
+
+    xp =
+      xpBeforeLevelBadges +
+      levelBadgesEarned * MILESTONE_BADGE_XP;
+  }
 
   const isMaxLevel = level === MAX_LEVEL;
 
@@ -409,6 +568,8 @@ export function getProgress(myRankings) {
     topNation,
     patriotEarned,
     positionCounts,
+    levelBadgesEarned,
+    leaguesCompleted,
     xp,
     level,
     isMaxLevel,

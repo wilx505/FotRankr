@@ -41,6 +41,47 @@ const CLUB_STYLES = {
   'Tottenham Hotspur': { code: 'TOT', fill: '#FFFFFF', ring: '#132257', text: '#132257' },
 };
 
+// Gold "TRUE ..." badges: Premier League clubs only, for
+// properly ranking every player (no "I DO NOT KNOW").
+const CLUB_NICKNAMES = {
+  'AFC Bournemouth': 'Cherry',
+  Arsenal: 'Gunner',
+  'Aston Villa': 'Villan',
+  Brentford: 'Bee',
+  'Brighton & Hove Albion': 'Seagull',
+  Chelsea: 'Blue',
+  'Coventry City': 'Sky Blue',
+  'Crystal Palace': 'Eagle',
+  Everton: 'Toffee',
+  Fulham: 'Cottager',
+  'Hull City': 'Tiger',
+  'Ipswich Town': 'Tractor Boy',
+  'Leeds United': 'White',
+  Liverpool: 'Red',
+  'Manchester City': 'Citizen',
+  'Manchester United': 'Red Devil',
+  'Newcastle United': 'Magpie',
+  'Nottingham Forest': 'Tricky Tree',
+  Sunderland: 'Black Cat',
+  'Tottenham Hotspur': 'Spur',
+};
+
+
+// "True Red" for Liverpool, or null if the club has no
+// gold badge.
+export function getGoldTitle(club) {
+  const nickname = CLUB_NICKNAMES[club];
+  return nickname ? `True ${nickname}` : null;
+}
+
+
+export const GOLD_STYLE = {
+  fill: '#D4AF37',
+  ring: '#FFE58A',
+  text: '#3B2A00',
+};
+
+
 // Words skipped when making a code from a club name.
 const SKIP_WORDS = new Set([
   'fc', 'afc', 'cf', 'sc', 'ac', 'as', 'ssc', 'club', 'de',

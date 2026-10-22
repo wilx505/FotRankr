@@ -592,6 +592,7 @@ export default function ProfileScreen({
                   <ClubBadge
                     club={badge.club}
                     size={60}
+                    gold={badge.gold}
                   />
 
                 </View>

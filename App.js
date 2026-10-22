@@ -51,6 +51,8 @@ import {
   UNKNOWN_CATEGORY,
   clubKey,
   getClubsCompletedNow,
+  getGoldClubsNow,
+  getLeaguesCompletedNow,
   getProgress,
   getRankedIdsNow,
   isUnknown,
@@ -92,6 +94,8 @@ const refreshPlayerDetails = rankedPlayer => {
 const EMPTY_EARNED = {
   rankedIds: [],
   clubKeys: [],
+  goldClubKeys: [],
+  leagueKeys: [],
 };
 
 const DATA_VERSION = '62';
@@ -207,6 +211,8 @@ export default function App() {
           setEarnedHistoryState({
             rankedIds: parsedProgress.rankedIds || [],
             clubKeys: parsedProgress.clubKeys || [],
+            goldClubKeys: parsedProgress.goldClubKeys || [],
+            leagueKeys: parsedProgress.leagueKeys || [],
           });
 
         }
@@ -424,6 +430,8 @@ export default function App() {
 
     const rankedIds = new Set(earnedHistory.rankedIds);
     const clubKeys = new Set(earnedHistory.clubKeys);
+    const goldClubKeys = new Set(earnedHistory.goldClubKeys || []);
+    const leagueKeys = new Set(earnedHistory.leagueKeys || []);
 
     const newIds = getRankedIdsNow(myRankings).filter(
       id => !rankedIds.has(id)
@@ -433,13 +441,34 @@ export default function App() {
       .map(clubKey)
       .filter(key => !clubKeys.has(key));
 
-    if (newIds.length === 0 && newClubs.length === 0) {
+    const newGold = getGoldClubsNow(myRankings)
+      .map(clubKey)
+      .filter(key => !goldClubKeys.has(key));
+
+    const newLeagues = getLeaguesCompletedNow(myRankings)
+      .map(entry => entry.league)
+      .filter(key => !leagueKeys.has(key));
+
+    if (
+      newIds.length === 0 &&
+      newClubs.length === 0 &&
+      newGold.length === 0 &&
+      newLeagues.length === 0
+    ) {
       return;
     }
 
     const updated = {
       rankedIds: [...earnedHistory.rankedIds, ...newIds],
       clubKeys: [...earnedHistory.clubKeys, ...newClubs],
+      goldClubKeys: [
+        ...(earnedHistory.goldClubKeys || []),
+        ...newGold,
+      ],
+      leagueKeys: [
+        ...(earnedHistory.leagueKeys || []),
+        ...newLeagues,
+      ],
     };
 
     setEarnedHistoryState(updated);
@@ -1253,6 +1282,8 @@ export default function App() {
     const earned = {
       rankedIds: restoredEarned?.rankedIds || [],
       clubKeys: restoredEarned?.clubKeys || [],
+      goldClubKeys: restoredEarned?.goldClubKeys || [],
+      leagueKeys: restoredEarned?.leagueKeys || [],
     };
 
     setEarnedHistoryState(earned);

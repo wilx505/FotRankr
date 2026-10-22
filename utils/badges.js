@@ -1,12 +1,20 @@
 import { getFlag } from './flags';
 
+import { getGoldTitle } from './clubBadges';
+
 import {
   CLUB_BONUS_XP,
+  GOLD_BADGE_XP,
+  LEVELS,
+  MAX_LEVEL,
+  XP_PER_LEVEL,
   MILESTONE_BADGE_XP,
   MILESTONE_EVERY,
   PATRIOT_TARGET,
   POSITION_BADGES,
   getCompletedClubs,
+  getCompletedLeagues,
+  getGoldClubs,
   getMilestonesEarned,
   getProgress,
 } from './progression';
@@ -33,10 +41,39 @@ Worked out live from myRankings, like XP.
                MILESTONE_BADGE_XP.
   Club badge = one for every club where every current
                player is ranked. Worth CLUB_BONUS_XP.
+  Level      = one for every level finished, named after it
+               (Plastic Fan for finishing Level 1 ... The
+               Oracle for reaching Level 12). Worth
+               MILESTONE_BADGE_XP.
+  League     = "<League> Expert" for ranking every player in
+               a league with LEAGUE_EXPERT_MIN+ players
+               ("I DO NOT KNOW" counts). Worth
+               MILESTONE_BADGE_XP.
+  Gold badge = "TRUE ..." (e.g. TRUE RED), Premier League
+               clubs only, for ranking every player properly
+               (no "I DO NOT KNOW"). Worth GOLD_BADGE_XP.
 
 TO ADD A BADGE, ADD IT TO getBadges BELOW.
 ============================================================
 */
+
+// League -> country, for the Expert badge's flag.
+const LEAGUE_COUNTRIES = {
+  'Premier League': 'England',
+  Championship: 'England',
+  'La Liga': 'Spain',
+  'Ligue 1': 'France',
+  'Serie A': 'Italy',
+  Bundesliga: 'Germany',
+  'Saudi Pro League': 'Saudi Arabia',
+  Brasileirao: 'Brazil',
+  'Super Lig': 'Turkey',
+  'Primeira Liga': 'Portugal',
+  Eredivisie: 'Netherlands',
+  MLS: 'United States',
+  'Super League Greece': 'Greece',
+};
+
 
 const LATIN_HUNDREDS = [
   '',
@@ -135,12 +172,46 @@ export function getBadges(myRankings) {
     topNation,
     patriotEarned,
     positionCounts,
+    level,
+    isMaxLevel,
+    xpIntoLevel,
   } = getProgress(myRankings);
 
   const milestonesEarned =
     getMilestonesEarned(playersRanked);
 
   const badges = [];
+
+
+  // Level badges: one for every level finished (Plastic Fan
+  // for finishing Level 1...), The Oracle for reaching the
+  // top. Plus the current level as the next one to aim for.
+  LEVELS.forEach(info => {
+
+    const finished =
+      info.level < level ||
+      (info.level === MAX_LEVEL && isMaxLevel);
+
+    const isNext = info.level === level && !isMaxLevel;
+
+    if (!finished && !isNext) {
+      return;
+    }
+
+    badges.push({
+      id: `level|${info.level}`,
+      icon: info.badge,
+      iconText: null,
+      title: info.title,
+      description:
+        info.level === MAX_LEVEL
+          ? `Reached Level ${MAX_LEVEL}`
+          : `Level ${info.level} complete`,
+      bonus: `+${MILESTONE_BADGE_XP} XP badge bonus`,
+      earned: finished,
+      progress: `${xpIntoLevel.toLocaleString()} / ${XP_PER_LEVEL.toLocaleString()} XP`,
+    });
+  });
 
   for (let step = 1; step <= milestonesEarned + 1; step++) {
     badges.push(
@@ -186,6 +257,34 @@ export function getBadges(myRankings) {
       title: club.club,
       description: 'Every player ranked',
       bonus: `+${CLUB_BONUS_XP} XP club bonus`,
+      earned: true,
+      progress: null,
+    });
+  });
+
+  getGoldClubs(myRankings).forEach(club => {
+    badges.push({
+      id: `gold|${club.league}|${club.club}`,
+      icon: null,
+      club: club.club,
+      league: club.league,
+      gold: true,
+      title: getGoldTitle(club.club),
+      description: 'Every player properly ranked',
+      bonus: `+${GOLD_BADGE_XP} XP gold badge bonus`,
+      earned: true,
+      progress: null,
+    });
+  });
+
+  getCompletedLeagues(myRankings).forEach(entry => {
+    badges.push({
+      id: `league|${entry.league}`,
+      icon: getFlag(LEAGUE_COUNTRIES[entry.league]) || '🏆',
+      iconText: null,
+      title: `${entry.league} Expert`,
+      description: 'Every player ranked',
+      bonus: `+${MILESTONE_BADGE_XP} XP badge bonus`,
       earned: true,
       progress: null,
     });

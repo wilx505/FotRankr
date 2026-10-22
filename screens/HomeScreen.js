@@ -63,6 +63,10 @@ const STEPS = [
     title: 'Level up',
     text: `+${XP_PER_PLAYER} XP for every player, +${CLUB_BONUS_XP} XP for every club you complete. Levels unlock new leagues.`,
   },
+  {
+    title: 'Make your lists',
+    text: 'Group your ranked players into lists like "Top 10 Premier League players". They stay in your ranking order and update as your rankings change.',
+  },
 ];
 
 

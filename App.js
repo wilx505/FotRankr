@@ -14,6 +14,7 @@ import {
 
 import {
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -38,9 +39,13 @@ import {
 } from 'react-native';
 
 import {
-  comparePlayers,
   createPlayer,
 } from './engine/rankingEngine.js';
+
+import {
+  CATEGORY_ORDER,
+  recomputeScores,
+} from './engine/scoring';
 
 import {
   getSourcePlayer,
@@ -107,12 +112,23 @@ export default function App() {
   // STATE
   // =====================================================
 
-  const [myRankings, setMyRankings] = useState([]);
+  // Saved rankings (category, counts...). Scores are NOT
+  // trusted from here: see myRankings below.
+  const [rankingsState, setMyRankings] = useState([]);
 
   const [lists, setLists] = useState([]);
 
   const [comparisonHistory, setComparisonHistory] =
     useState([]);
+
+  // Every score is worked out from the categories + the
+  // WHOLE head-to-head history (engine/scoring.js), so any
+  // change to either (an answer, a category move, Rank Again,
+  // "I do not know") rescores everyone automatically.
+  const myRankings = useMemo(
+    () => recomputeScores(rankingsState, comparisonHistory),
+    [rankingsState, comparisonHistory]
+  );
 
   const [smartH2HSession, setSmartH2HSession] =
     useState(null);
@@ -907,236 +923,191 @@ export default function App() {
   // =====================================================
   // HEAD-TO-HEAD RESULT
   // =====================================================
+  // Saves the answer (winner + margin) to the history and
+  // updates the win/loss counts. Scores follow automatically
+  // (see myRankings).
+  //
+  // kind: 'placement' | 'special' | 'checkup' | 'challenge'
+  // result: 'player' (target better) | 'comparison' | 'equal'
 
   const handleHeadToHeadResult = ({
     player,
     comparisonPlayer,
     category,
     result,
-    opponentIsRanked,
+    margin = null,
+    kind = 'placement',
     manualChallenge,
   }) => {
 
+    const resultKind =
+      manualChallenge === true ? 'challenge' : kind;
+
     console.log(
-      'FOTRANKR COMPARISON:',
+      'FOTRANKR H2H:',
       player.name,
       'vs',
       comparisonPlayer.name,
-      result
+      result,
+      margin || '',
+      resultKind
     );
 
-
-    console.log(
-      'FOTRANKR OPPONENT STATUS:',
-      comparisonPlayer.name,
-      'already ranked =',
-      opponentIsRanked
-    );
-
-
-    setMyRankings(
-      previousRankings => {
-
-        const findExistingPlayer = (
-          sourcePlayer
-        ) => {
-
-          return previousRankings.find(
-            rankedPlayer =>
-              String(rankedPlayer.id) ===
-              String(sourcePlayer.id)
-          );
-
-        };
-
-
-        // ---------------------------------------------
-        // TARGET PLAYER
-        // ---------------------------------------------
-
-        let playerA =
-          findExistingPlayer(player);
-
-
-        if (!playerA) {
-
-          playerA =
-            createPlayer(
-              player,
-              category
-            );
-
-        }
-
-
-        // ---------------------------------------------
-        // OPPONENT
-        // ---------------------------------------------
-
-        let playerB =
-          findExistingPlayer(
-            comparisonPlayer
-          );
-
-
-        if (!playerB) {
-
-          playerB =
-            createPlayer(
-              comparisonPlayer,
-              category
-            );
-
-        }
-
-
-        // ---------------------------------------------
-        // RUN RANKING ENGINE
-        // ---------------------------------------------
-
-        const resultData =
-          comparePlayers(
-            playerA,
-            playerB,
-            result,
-            manualChallenge !== true
-          );
-
-
-        const updatedA =
-          resultData.playerA;
-
-        const updatedB =
-          resultData.playerB;
-
-
-        console.log(
-          'FOTRANKR UPDATED:',
-          {
-            player:
-              updatedA.name,
-
-            rating:
-              updatedA.rating,
-
-            score:
-              updatedA.score,
-
-            category:
-              updatedA.category,
-          }
-        );
-
-
-        console.log(
-          'FOTRANKR OPPONENT UPDATED:',
-          {
-            player:
-              updatedB.name,
-
-            rating:
-              updatedB.rating,
-
-            score:
-              updatedB.score,
-
-            category:
-              updatedB.category,
-
-            wasAlreadyRanked:
-              opponentIsRanked,
-          }
-        );
-
-
-        // ---------------------------------------------
-        // REMOVE OLD TARGET + OPPONENT
-        // ---------------------------------------------
-
-        const otherPlayers =
-          previousRankings.filter(
-            rankedPlayer =>
-              String(rankedPlayer.id) !==
-                String(player.id) &&
-              String(rankedPlayer.id) !==
-                String(comparisonPlayer.id)
-          );
-
-
-        // ---------------------------------------------
-        // TARGET ALWAYS STAYS
-        // ---------------------------------------------
-
-        const updatedRankings = [
-          ...otherPlayers,
-          updatedA,
-        ];
-
-
-        // ---------------------------------------------
-        // SAVE EXISTING RANKED OPPONENT
-        // ---------------------------------------------
-
-        if (
-          opponentIsRanked === true
-        ) {
-
-          console.log(
-            'FOTRANKR: Saving existing ranked opponent:',
-            updatedB.name
-          );
-
-
-          return [
-            ...updatedRankings,
-            updatedB,
-          ];
-
-        }
-
-
-        // ---------------------------------------------
-        // TEMPORARY OPPONENT
-        // ---------------------------------------------
-
-        console.log(
-          'FOTRANKR: NOT saving temporary H2H opponent:',
-          updatedB.name
-        );
-
-
-        return updatedRankings;
-
-      }
-    );
-
-
-    // -----------------------------------------------
-    // SAVE HISTORY
-    // -----------------------------------------------
 
     setComparisonHistory(
       previousHistory => [
-
         ...previousHistory,
-
         {
-          playerA:
-            player.id,
-
-          playerB:
-            comparisonPlayer.id,
-
-          category:
-            category,
-
+          playerA: player.id,
+          playerB: comparisonPlayer.id,
+          category,
           result,
-
-          date:
-            new Date().toISOString(),
+          margin,
+          kind: resultKind,
+          date: new Date().toISOString(),
         },
-
       ]
+    );
+
+
+    const targetWon = result === 'player';
+    const opponentWon = result === 'comparison';
+
+    const tally = (rankedPlayer, won, lost) => ({
+      ...rankedPlayer,
+      comparisons: (rankedPlayer.comparisons || 0) + 1,
+      wins: (rankedPlayer.wins || 0) + (won ? 1 : 0),
+      losses: (rankedPlayer.losses || 0) + (lost ? 1 : 0),
+      draws:
+        (rankedPlayer.draws || 0) + (!won && !lost ? 1 : 0),
+    });
+
+    setMyRankings(
+      previousRankings =>
+        previousRankings.map(rankedPlayer => {
+
+          const id = String(rankedPlayer.id);
+
+          if (id === String(player.id)) {
+
+            const counted = tally(
+              rankedPlayer,
+              targetWon,
+              opponentWon
+            );
+
+            // Placement head-to-heads count towards the
+            // per-category limit.
+            if (resultKind !== 'placement') {
+              return counted;
+            }
+
+            return {
+              ...counted,
+              h2hCategory: category,
+              h2hCount:
+                (rankedPlayer.h2hCategory === category
+                  ? rankedPlayer.h2hCount || 0
+                  : 0) + 1,
+            };
+          }
+
+          if (id === String(comparisonPlayer.id)) {
+            return tally(
+              rankedPlayer,
+              opponentWon,
+              targetWon
+            );
+          }
+
+          return rankedPlayer;
+        })
+    );
+
+
+    // A challenge win/loss against another category: ask
+    // before moving anyone (never automatic).
+    if (resultKind === 'challenge') {
+
+      const mine = myRankings.find(
+        ranked => String(ranked.id) === String(player.id)
+      );
+
+      const theirs = myRankings.find(
+        ranked =>
+          String(ranked.id) === String(comparisonPlayer.id)
+      );
+
+      const myLevel = CATEGORY_ORDER.indexOf(mine?.category);
+      const theirLevel = CATEGORY_ORDER.indexOf(theirs?.category);
+
+      const moveTo =
+        targetWon && theirLevel > myLevel
+          ? CATEGORY_ORDER[myLevel + 1]
+          : opponentWon && theirLevel < myLevel && myLevel > 0
+            ? CATEGORY_ORDER[myLevel - 1]
+            : null;
+
+      if (mine && theirs && myLevel >= 0 && moveTo) {
+
+        Alert.alert(
+          targetWon
+            ? `Move ${player.name} up?`
+            : `Move ${player.name} down?`,
+          `${player.name} (${mine.category}) ${
+            targetWon ? 'beat' : 'lost to'
+          } ${comparisonPlayer.name} (${theirs.category}).\n\nMove ${player.name} to ${moveTo}?`,
+          [
+            {
+              text: `Keep ${mine.category}`,
+              style: 'cancel',
+            },
+            {
+              text: `Move to ${moveTo}`,
+              onPress: () =>
+                handleMoveCategory({
+                  player,
+                  toCategory: moveTo,
+                }),
+            },
+          ]
+        );
+      }
+    }
+
+  };
+
+
+  // =====================================================
+  // MOVE CATEGORY (promotion / relegation)
+  // =====================================================
+  // Keeps all head-to-head history; placement starts again
+  // in the new category.
+
+  const handleMoveCategory = ({
+    player,
+    toCategory,
+  }) => {
+
+    console.log(
+      'FOTRANKR CATEGORY MOVE:',
+      player.name,
+      '->',
+      toCategory
+    );
+
+    setMyRankings(
+      previousRankings =>
+        previousRankings.map(rankedPlayer =>
+          String(rankedPlayer.id) === String(player.id)
+            ? {
+                ...rankedPlayer,
+                category: toCategory,
+                h2hCategory: toCategory,
+                h2hCount: 0,
+              }
+            : rankedPlayer
+        )
     );
 
   };
@@ -1788,6 +1759,10 @@ export default function App() {
 
               onResult={
                 handleHeadToHeadResult
+              }
+
+              onMoveCategory={
+                handleMoveCategory
               }
 
               myRankings={

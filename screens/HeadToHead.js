@@ -1,3 +1,5 @@
+import { displayPosition } from '../utils/positions';
+
 import {
   StyleSheet,
   Text,
@@ -7,17 +9,13 @@ import {
 
 import { useIsFocused } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
-import {
-  createPlayer,
-  findBestOpponent,
-} from '../engine/rankingEngine';
-
-import players from '../players';
 
 import {
-  getLock,
-  isUnknown,
-} from '../utils/progression';
+  MARGINS,
+  findCheckups,
+  nextPlacementOpponent,
+  promotionMatch,
+} from '../engine/scoring';
 
 import {
   getFlag,
@@ -28,11 +26,26 @@ import {
 // ======================================================
 // HEAD TO HEAD
 // ======================================================
+//
+// Automatic ranking (from Compare):
+//   1. PLACEMENT  - narrowing-down head-to-heads inside the
+//                   player's category (engine/scoring.js)
+//   2. PROMOTION / RELEGATION match if they beat (or lost
+//                   to) everyone in the category
+//   3. CHECK-UPS  - re-ask contradictions / near-ties
+//                   (skippable)
+//
+// Manual challenge (from Challenge): one head-to-head.
+//
+// Every answer is a winner + margin (slightly / clearly /
+// much) or "equal". App saves it and recalculates scores.
+// ======================================================
 
 export default function HeadToHead({
   route,
   navigation,
   onResult,
+  onMoveCategory,
   myRankings,
   comparisonHistory,
 }) {
@@ -40,11 +53,9 @@ export default function HeadToHead({
 
   const {
     player,
-    category,
+    category: startCategory,
     comparisonPlayer: manualOpponent,
     manualChallenge,
-    smartH2H,
-    startSmartH2H,
   } = route.params || {};
 
 
@@ -52,6 +63,7 @@ export default function HeadToHead({
   // CONSTANTS
   // ==================================================
 
+  // Automatic placement head-to-heads per category.
   const MAX_H2HS = 6;
 
   // Closes the ranking screens (Compare or Challenge, then
@@ -92,480 +104,379 @@ export default function HeadToHead({
   // STATE
   // ==================================================
 
-  const [resultSubmitted, setResultSubmitted] =
-    useState(false);
+  // Category being ranked in (changes on promotion).
+  const [category, setCategory] =
+    useState(startCategory);
 
-  const [comparisonPlayer, setComparisonPlayer] =
+  // This session's placement answers in `category`:
+  // [{ opponentId, outcome: 'win' | 'loss' | 'draw' }]
+  const [sessionResults, setSessionResults] =
+    useState([]);
+
+  // What's on screen:
+  // { kind: 'placement' | 'special' | 'checkup' | 'challenge',
+  //   opponent, special?, reason? }
+  const [match, setMatch] = useState(null);
+
+  // Winner tapped, waiting for "how much better".
+  const [pendingWinner, setPendingWinner] =
     useState(null);
 
-  const [sessionFinished, setSessionFinished] =
-    useState(false);
+  // Answer sent; wait for App's updated rankings.
+  const [waiting, setWaiting] = useState(false);
+
+  const [specialDone, setSpecialDone] = useState(false);
+
+  // null = not worked out yet.
+  const [checkups, setCheckups] = useState(null);
+
+  const [finished, setFinished] = useState(false);
 
 
   // ==================================================
-  // FIND EXISTING TARGET
-  // ==================================================
-
-  const existingTarget =
-    (myRankings || []).find(
-      ranking =>
-        String(ranking.id) ===
-          String(player?.id) ||
-        String(ranking.playerId) ===
-          String(player?.id)
-    );
-
-
-  // ==================================================
-  // BUILD TARGET
+  // TARGET (always the saved ranking)
   // ==================================================
 
   const targetPlayer =
-    existingTarget
-      ? {
-          ...player,
-          ...existingTarget,
+    (myRankings || []).find(
+      ranking =>
+        String(ranking.id) === String(player?.id)
+    ) || player;
 
-          category,
-
-          rating:
-            existingTarget.rating ??
-            500,
-
-          comparisons:
-            existingTarget.comparisons ??
-            0,
-
-          wins:
-            existingTarget.wins ??
-            0,
-
-          losses:
-            existingTarget.losses ??
-            0,
-
-          draws:
-            existingTarget.draws ??
-            0,
-
-          h2hCount:
-            existingTarget.h2hCount ??
-            0,
-
-          h2hCategory:
-            existingTarget.h2hCategory ??
-            category,
-
-          isRanked: true,
-        }
-      : {
-          ...createPlayer(
-            player,
-            category
-          ),
-
-          category,
-
-          isRanked: true,
-        };
-
-
-  // ==================================================
-  // CURRENT AUTOMATIC H2H COUNT
-  // ==================================================
-
-  const automaticComparisonCount =
-    targetPlayer.h2hCategory === category
-      ? (
-          targetPlayer.h2hCount ??
-          0
-        )
+  const placementCount =
+    targetPlayer?.h2hCategory === category
+      ? targetPlayer?.h2hCount ?? 0
       : 0;
 
 
   // ==================================================
-  // BUILD OPPONENT POOL
+  // WHAT'S NEXT
   // ==================================================
 
-  const buildOpponentPool = () => {
+  const decideNext = () => {
 
-    // "I DO NOT KNOW" players have no real rating, so they
-    // are never used as opponents.
-    const unknownIds = new Set(
-      (myRankings || [])
-        .filter(isUnknown)
-        .map(ranking => String(ranking.id))
-    );
+    // ---- Manual challenge: one match only.
+    if (manualChallenge === true) {
 
-    return players
-      .filter(
-        databasePlayer =>
-          String(databasePlayer.id) !==
-            String(targetPlayer.id) &&
-          !unknownIds.has(String(databasePlayer.id))
-      )
-      .map(
-        databasePlayer => {
-
-          const existingRanking =
-            (myRankings || []).find(
-              ranking =>
-                String(ranking.id) ===
-                  String(databasePlayer.id) ||
-                String(ranking.playerId) ===
-                  String(databasePlayer.id)
-            );
-
-
-          if (existingRanking) {
-
-            return {
-              ...databasePlayer,
-              ...existingRanking,
-
-              category:
-                existingRanking.category ??
-                existingRanking.initialCategory,
-
-              rating:
-                existingRanking.rating ??
-                500,
-
-              comparisons:
-                existingRanking.comparisons ??
-                0,
-
-              wins:
-                existingRanking.wins ??
-                0,
-
-              losses:
-                existingRanking.losses ??
-                0,
-
-              draws:
-                existingRanking.draws ??
-                0,
-
-              isRanked: true,
-            };
-
-          }
-
-
-          return {
-            ...databasePlayer,
-
-            category: null,
-
-            rating: 500,
-
-            comparisons: 0,
-
-            wins: 0,
-
-            losses: 0,
-
-            draws: 0,
-
-            isRanked: false,
-          };
-
-        }
-      )
-      // Unranked opponents must be from leagues the
-      // user has unlocked.
-      .filter(
-        opponent =>
-          opponent.isRanked ||
-          !getLock(opponent, myRankings)
+      const opponent = (myRankings || []).find(
+        ranking =>
+          String(ranking.id) === String(manualOpponent?.id)
       );
 
-  };
-
-
-  // ==================================================
-  // FIND AUTOMATIC OPPONENT
-  // ==================================================
-
-  const getNextAutomaticOpponent = () => {
-
-    if (
-      automaticComparisonCount >=
-      MAX_H2HS
-    ) {
-      return null;
-    }
-
-
-    const opponentPool =
-      buildOpponentPool();
-
-
-    const opponent =
-      findBestOpponent(
-        targetPlayer,
-        opponentPool,
-        comparisonHistory || []
-      );
-
-
-    if (!opponent) {
-      return null;
-    }
-
-
-    return opponent;
-
-  };
-
-
-  // ==================================================
-  // START H2H SESSION
-  // ==================================================
-
-  useEffect(() => {
-
-    // --------------------------------------------------
-    // MANUAL CHALLENGE
-    // --------------------------------------------------
-
-    if (
-      manualChallenge === true
-    ) {
-
-      if (!manualOpponent) {
-
-        setComparisonPlayer(null);
-        setSessionFinished(true);
-
+      if (!opponent || match) {
+        setFinished(true);
         return;
       }
 
-
-      const manualRankedPlayer =
-        (myRankings || []).find(
-          ranking =>
-            String(ranking.id) ===
-              String(manualOpponent.id) ||
-            String(ranking.playerId) ===
-              String(manualOpponent.id)
-        );
+      setMatch({ kind: 'challenge', opponent });
+      return;
+    }
 
 
-      if (manualRankedPlayer) {
+    // ---- 1. Placement
+    if (placementCount < MAX_H2HS) {
 
-        setComparisonPlayer({
-          ...manualOpponent,
-          ...manualRankedPlayer,
+      const opponent = nextPlacementOpponent({
+        target: targetPlayer,
+        category,
+        rankings: myRankings,
+        sessionResults,
+      });
 
-          category,
+      if (opponent) {
+        setMatch({ kind: 'placement', opponent });
+        return;
+      }
+    }
 
-          isRanked: true,
+
+    // ---- 2. Promotion / relegation
+    if (!specialDone) {
+
+      const special = promotionMatch({
+        target: targetPlayer,
+        category,
+        rankings: myRankings,
+        sessionResults,
+      });
+
+      if (special) {
+        setMatch({
+          kind: 'special',
+          opponent: special.opponent,
+          special,
+        });
+        return;
+      }
+
+      setSpecialDone(true);
+    }
+
+
+    // ---- 3. Check-ups
+    const queue = checkups ?? findCheckups({
+      target: targetPlayer,
+      category,
+      rankings: myRankings,
+      comparisonHistory,
+    });
+
+    if (checkups === null) {
+      setCheckups(queue);
+    }
+
+    if (queue.length > 0) {
+      setMatch({
+        kind: 'checkup',
+        opponent: queue[0].opponent,
+        reason: queue[0].reason,
+      });
+      return;
+    }
+
+
+    // ---- Done
+    setMatch(null);
+    setFinished(true);
+  };
+
+
+  // Pick the next match whenever we're free to.
+  useEffect(() => {
+
+    if (!isFocused || waiting || match || finished) {
+      return;
+    }
+
+    decideNext();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    isFocused,
+    waiting,
+    match,
+    finished,
+    category,
+    specialDone,
+    checkups,
+  ]);
+
+
+  // App has saved the answer and recalculated scores.
+  useEffect(() => {
+
+    if (waiting) {
+      setWaiting(false);
+    }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [myRankings]);
+
+
+  // Automatic ranking closes itself when finished.
+  useEffect(() => {
+
+    if (finished && manualChallenge !== true) {
+      finishRanking();
+    }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [finished]);
+
+
+  // ==================================================
+  // ANSWER
+  // ==================================================
+
+  // result: 'player' (target better) | 'comparison' |
+  // 'equal'. margin: 'slight' | 'clear' | 'much' | null.
+  const submit = (result, margin) => {
+
+    if (!match || waiting) {
+      return;
+    }
+
+    const current = match;
+
+    setPendingWinner(null);
+    setWaiting(true);
+    setMatch(null);
+
+    onResult({
+      player: targetPlayer,
+      comparisonPlayer: current.opponent,
+      category,
+      result,
+      margin,
+      kind: current.kind,
+    });
+
+    const outcome =
+      result === 'player'
+        ? 'win'
+        : result === 'comparison'
+          ? 'loss'
+          : 'draw';
+
+
+    if (current.kind === 'placement') {
+
+      setSessionResults(previous => [
+        ...previous,
+        {
+          opponentId: current.opponent.id,
+          outcome,
+        },
+      ]);
+
+    } else if (current.kind === 'special') {
+
+      const { type, toCategory } = current.special;
+
+      const moves =
+        (type === 'promotion' && outcome === 'win') ||
+        (type === 'relegation' && outcome === 'loss');
+
+      if (moves) {
+
+        // Start again in the new category.
+        onMoveCategory({
+          player: targetPlayer,
+          toCategory,
         });
 
-        setSessionFinished(false);
+        setCategory(toCategory);
+
+        // The promotion/relegation match already says where
+        // they sit against that player: count it.
+        setSessionResults([
+          {
+            opponentId: current.opponent.id,
+            outcome,
+          },
+        ]);
+        setCheckups(null);
+        setSpecialDone(false);
 
       } else {
 
-        setComparisonPlayer(null);
-        setSessionFinished(true);
+        setSpecialDone(true);
 
       }
 
-      return;
+    } else if (current.kind === 'checkup') {
+
+      setCheckups(previous => (previous || []).slice(1));
+
+    } else if (current.kind === 'challenge') {
+
+      setFinished(true);
+
     }
+  };
 
 
-    // --------------------------------------------------
-    // SMART H2H
-    // --------------------------------------------------
-if (!isFocused) {
-  return;
-}
-    if (
-      smartH2H !== true &&
-      startSmartH2H !== true
-    ) {
-      return;
-    }
-
-
-    if (resultSubmitted) {
-      return;
-    }
-
-
-    if (sessionFinished) {
-      return;
-    }
-
-
-    if (
-      automaticComparisonCount >=
-      MAX_H2HS
-    ) {
-
-      finishRanking();
-
-      return;
-    }
-
-
-    const nextOpponent =
-      getNextAutomaticOpponent();
-
-
-    if (!nextOpponent) {
-
-      finishRanking();
-
-      return;
-    }
-
-
-    setComparisonPlayer(
-      nextOpponent
-    );
-
-
-  }, [
-    isFocused,
-    targetPlayer.id,
-    targetPlayer.h2hCount,
-    targetPlayer.h2hCategory,
-    category,
-    comparisonHistory,
-    myRankings,
-    resultSubmitted,
-    sessionFinished,
-    manualChallenge,
-    manualOpponent,
-    smartH2H,
-    startSmartH2H,
-  ]);
-
-
-  // ==================================================
-  // HANDLE RESULT
-  // ==================================================
-
-  const updateScores =
-    result => {
-
-      if (resultSubmitted) {
-        return;
-      }
-
-
-      if (!comparisonPlayer) {
-        return;
-      }
-
-
-      setResultSubmitted(true);
-
-
-      onResult({
-
-        player:
-          targetPlayer,
-
-        comparisonPlayer,
-
-        category,
-
-        result,
-
-        opponentIsRanked:
-          comparisonPlayer.isRanked === true,
-
-        manualChallenge:
-          manualChallenge === true,
-      });
-
-    };
-
-
-  // ==================================================
-  // AFTER RESULT
-  // ==================================================
-
-  useEffect(() => {
-
-    if (!resultSubmitted) {
-      return;
-    }
-
-
-    // Manual challenge ends immediately
-    if (
-      manualChallenge === true
-    ) {
-      return;
-    }
-
-
-    const updatedPlayer =
-      (myRankings || []).find(
-        ranking =>
-          String(ranking.id) ===
-          String(player?.id)
-      );
-
-
-    if (!updatedPlayer) {
-      return;
-    }
-
-
-    const updatedCount =
-      updatedPlayer.h2hCategory === category
-        ? (
-            updatedPlayer.h2hCount ??
-            0
-          )
-        : 0;
-
-
-    if (
-      updatedCount >=
-      MAX_H2HS
-    ) {
-
-      finishRanking();
-
-      return;
-    }
-
-
-    setComparisonPlayer(null);
-
-    setResultSubmitted(false);
-
-  }, [
-    myRankings,
-    resultSubmitted,
-    category,
-    manualChallenge,
-    player?.id,
-  ]);
+  const skipCheckups = () => {
+    setMatch(null);
+    setCheckups([]);
+  };
 
 
   // ==================================================
   // DISPLAY DATA
   // ==================================================
 
-  const targetPosition =
-    targetPlayer.specificPosition ||
-    targetPlayer.position ||
-    'Footballer';
+  const opponent = match?.opponent;
+
+  // Shown under the name. "Centre-Forward" reads as Striker.
+  const positionOf = someone => {
+
+    const position =
+      someone?.specificPosition ||
+      someone?.position ||
+      'Footballer';
+
+    return displayPosition(position);
+  };
+
+  const winnerName =
+    pendingWinner === 'player'
+      ? targetPlayer?.name
+      : opponent?.name;
 
 
-  const opponentPosition =
-    comparisonPlayer?.specificPosition ||
-    comparisonPlayer?.position ||
-    'Footballer';
+  const banner =
+    match?.kind === 'special'
+      ? match.special.type === 'promotion'
+        ? {
+            title: 'PROMOTION MATCH',
+            text: `${targetPlayer?.name} beat everyone above them. Win this to move up to ${match.special.toCategory}.`,
+          }
+        : {
+            title: 'RELEGATION MATCH',
+            text: `${targetPlayer?.name} lost to everyone below them. Lose this and they drop to ${match.special.toCategory}.`,
+          }
+    : match?.kind === 'checkup'
+      ? {
+          title: 'QUICK CHECK',
+          text:
+            match.reason === 'contradiction'
+              ? 'Your answers disagree here. Who is better?'
+              : 'These two are almost tied. Who is better?',
+        }
+      : null;
+
+
+  const renderCard = (someone, result) => (
+
+    <View style={styles.playerColumn}>
+
+      <TouchableOpacity
+        style={[
+          styles.playerCard,
+          pendingWinner === result && styles.playerCardChosen,
+        ]}
+        onPress={() => setPendingWinner(result)}
+        activeOpacity={0.8}
+        disabled={waiting}
+      >
+
+        <View style={styles.playerInitial}>
+
+          <Text
+            style={
+              getFlag(someone.nation)
+                ? styles.initialFlag
+                : styles.initialText
+            }
+          >
+            {getFlag(someone.nation) ||
+              getMarkerText(someone)}
+          </Text>
+
+        </View>
+
+        <Text style={styles.playerName}>
+          {someone.name}
+        </Text>
+
+        <Text style={styles.playerPosition}>
+          {positionOf(someone)}
+        </Text>
+
+        <View style={styles.chooseBadge}>
+
+          <Text style={styles.chooseText}>
+            {pendingWinner === result ? 'CHOSEN' : 'CHOOSE'}
+          </Text>
+
+        </View>
+
+      </TouchableOpacity>
+
+    </View>
+
+  );
 
 
   // ==================================================
@@ -605,20 +516,37 @@ if (!isFocused) {
       </View>
 
 
-      {/* COMPARISON */}
-
-      {comparisonPlayer &&
-      !resultSubmitted &&
-      !sessionFinished ? (
+      {opponent && targetPlayer ? (
 
         <View style={styles.mainContent}>
 
+          {banner && (
+
+            <View style={styles.banner}>
+
+              <Text style={styles.bannerTitle}>
+                {banner.title}
+              </Text>
+
+              <Text style={styles.bannerText}>
+                {banner.text}
+              </Text>
+
+            </View>
+
+          )}
+
+
           <Text style={styles.question}>
-            WHO IS BETTER?
+            {pendingWinner
+              ? `HOW MUCH BETTER IS ${winnerName?.toUpperCase()}?`
+              : 'WHO IS BETTER?'}
           </Text>
 
           <Text style={styles.instruction}>
-            Tap the player you rate higher
+            {pendingWinner
+              ? 'Pick how decisive it is'
+              : 'Tap the player you rate higher'}
           </Text>
 
 
@@ -626,53 +554,7 @@ if (!isFocused) {
 
           <View style={styles.playersRow}>
 
-            {/* TARGET */}
-
-            <View style={styles.playerColumn}>
-
-              <TouchableOpacity
-                style={styles.playerCard}
-                onPress={() =>
-                  updateScores('player')
-                }
-                activeOpacity={0.8}
-                disabled={resultSubmitted}
-              >
-
-                <View style={styles.playerInitial}>
-
-                  <Text
-                    style={
-                      getFlag(targetPlayer.nation)
-                        ? styles.initialFlag
-                        : styles.initialText
-                    }
-                  >
-                    {getFlag(targetPlayer.nation) ||
-                      getMarkerText(targetPlayer)}
-                  </Text>
-
-                </View>
-
-                <Text style={styles.playerName}>
-                  {targetPlayer.name}
-                </Text>
-
-                <Text style={styles.playerPosition}>
-                  {targetPosition}
-                </Text>
-
-                <View style={styles.chooseBadge}>
-
-                  <Text style={styles.chooseText}>
-                    CHOOSE
-                  </Text>
-
-                </View>
-
-              </TouchableOpacity>
-
-            </View>
+            {renderCard(targetPlayer, 'player')}
 
 
             {/* VS */}
@@ -694,83 +576,97 @@ if (!isFocused) {
             </View>
 
 
-            {/* OPPONENT */}
+            {renderCard(opponent, 'comparison')}
 
-            <View style={styles.playerColumn}>
+          </View>
+
+
+          {pendingWinner ? (
+
+            /* HOW MUCH BETTER */
+
+            <View>
+
+              <View style={styles.marginRow}>
+
+                {Object.entries(MARGINS).map(([key, info]) => (
+
+                  <TouchableOpacity
+                    key={key}
+                    style={styles.marginButton}
+                    onPress={() => submit(pendingWinner, key)}
+                    disabled={waiting}
+                    activeOpacity={0.8}
+                  >
+
+                    <Text style={styles.marginText}>
+                      {info.label}
+                    </Text>
+
+                  </TouchableOpacity>
+
+                ))}
+
+              </View>
 
               <TouchableOpacity
-                style={styles.playerCard}
-                onPress={() =>
-                  updateScores('comparison')
-                }
-                activeOpacity={0.8}
-                disabled={resultSubmitted}
+                onPress={() => setPendingWinner(null)}
+                activeOpacity={0.7}
               >
 
-                <View style={styles.playerInitial}>
-
-                  <Text
-                    style={
-                      getFlag(comparisonPlayer.nation)
-                        ? styles.initialFlag
-                        : styles.initialText
-                    }
-                  >
-                    {getFlag(comparisonPlayer.nation) ||
-                      getMarkerText(comparisonPlayer)}
-                  </Text>
-
-                </View>
-
-                <Text style={styles.playerName}>
-                  {comparisonPlayer.name}
+                <Text style={styles.changePick}>
+                  ‹ CHANGE PICK
                 </Text>
-
-                <Text style={styles.playerPosition}>
-                  {opponentPosition}
-                </Text>
-
-                <View style={styles.chooseBadge}>
-
-                  <Text style={styles.chooseText}>
-                    CHOOSE
-                  </Text>
-
-                </View>
 
               </TouchableOpacity>
 
             </View>
 
-          </View>
+          ) : (
+
+            /* DRAW */
+
+            <TouchableOpacity
+              style={styles.drawButton}
+              onPress={() => submit('equal', null)}
+              disabled={waiting}
+              activeOpacity={0.8}
+            >
+
+              <Text style={styles.drawTitle}>
+                THEY'RE EQUAL
+              </Text>
+
+              <Text style={styles.drawSubtitle}>
+                I can't separate them
+              </Text>
+
+            </TouchableOpacity>
+
+          )}
 
 
-          {/* DRAW */}
+          {match.kind === 'checkup' ? (
 
-          <TouchableOpacity
-            style={styles.drawButton}
-            onPress={() =>
-              updateScores('equal')
-            }
-            disabled={resultSubmitted}
-            activeOpacity={0.8}
-          >
+            <TouchableOpacity
+              onPress={skipCheckups}
+              activeOpacity={0.7}
+            >
 
-            <Text style={styles.drawTitle}>
-              THEY'RE EQUAL
+              <Text style={styles.skipText}>
+                SKIP CHECK
+              </Text>
+
+            </TouchableOpacity>
+
+          ) : (
+
+            <Text style={styles.footerHint}>
+              Your choice helps determine their position
+              within the {category} category.
             </Text>
 
-            <Text style={styles.drawSubtitle}>
-              I can't separate them
-            </Text>
-
-          </TouchableOpacity>
-
-
-          <Text style={styles.footerHint}>
-            Your choice helps determine their position
-            within the {category} category.
-          </Text>
+          )}
 
         </View>
 
@@ -790,34 +686,20 @@ if (!isFocused) {
 
 
           <Text style={styles.statusTitle}>
-
-            {resultSubmitted
-              ? 'PROCESSING'
-              : sessionFinished
-                ? (
-                    automaticComparisonCount >=
-                    MAX_H2HS
-                      ? 'H2H COMPLETE'
-                      : 'NO MORE COMPARISONS'
-                  )
-                : 'FINDING MATCH'}
-
+            {finished
+              ? manualChallenge === true
+                ? 'RESULT SAVED'
+                : 'H2H COMPLETE'
+              : 'FINDING MATCH'}
           </Text>
 
 
           <Text style={styles.statusText}>
-
-            {resultSubmitted
-              ? 'Updating your rankings and finding the next comparison...'
-              : sessionFinished
-                ? (
-                    automaticComparisonCount >=
-                    MAX_H2HS
-                      ? `FotRankr has completed ${MAX_H2HS} intelligent comparisons for ${targetPlayer.name}.`
-                      : 'There are no more eligible opponents available.'
-                  )
-                : 'Finding the most useful comparison for you...'}
-
+            {finished
+              ? manualChallenge === true
+                ? 'Your rankings have been updated.'
+                : `${targetPlayer?.name} has been placed.`
+              : 'Finding the most useful comparison for you...'}
           </Text>
 
 
@@ -1153,6 +1035,79 @@ const styles =
       letterSpacing: 0.4,
     },
 
+    // ==================================================
+    // V2: CHOSEN CARD, MARGIN, BANNERS
+    // ==================================================
+
+    playerCardChosen: {
+      borderColor: '#00ff66',
+      backgroundColor: '#0d1f14',
+    },
+
+    marginRow: {
+      flexDirection: 'row',
+      marginTop: 16,
+      marginHorizontal: -4,
+    },
+
+    marginButton: {
+      flex: 1,
+      backgroundColor: '#00ff66',
+      borderRadius: 12,
+      paddingVertical: 15,
+      alignItems: 'center',
+      marginHorizontal: 4,
+    },
+
+    marginText: {
+      color: '#000000',
+      fontSize: 12,
+      fontWeight: '900',
+      letterSpacing: 0.8,
+    },
+
+    changePick: {
+      color: '#777777',
+      fontSize: 11,
+      fontWeight: '900',
+      letterSpacing: 1,
+      textAlign: 'center',
+      marginTop: 14,
+    },
+
+    banner: {
+      backgroundColor: '#14110a',
+      borderWidth: 1,
+      borderColor: '#D4AF37',
+      borderRadius: 12,
+      paddingVertical: 10,
+      paddingHorizontal: 14,
+      marginBottom: 18,
+    },
+
+    bannerTitle: {
+      color: '#FFE58A',
+      fontSize: 11,
+      fontWeight: '900',
+      letterSpacing: 1.3,
+      textAlign: 'center',
+    },
+
+    bannerText: {
+      color: '#cccccc',
+      fontSize: 12,
+      lineHeight: 17,
+      textAlign: 'center',
+      marginTop: 4,
+    },
+
+    skipText: {
+      color: '#777777',
+      fontSize: 11,
+      fontWeight: '900',
+      letterSpacing: 1,
+      textAlign: 'center',
+      marginTop: 16,
+    },
+
   });
-
-

@@ -1,3 +1,5 @@
+import { displayPosition } from '../utils/positions';
+
 import { useMemo, useState } from 'react';
 
 import {
@@ -503,7 +505,7 @@ export default function AddPlayersToListScreen({
               options={[
                 { label: 'ALL', value: null },
                 ...specificPositions.map(item => ({
-                  label: item,
+                  label: displayPosition(item),
                   value: item,
                 })),
               ]}
@@ -661,7 +663,7 @@ export default function AddPlayersToListScreen({
                     <Text style={styles.playerInfo}>
                       {player.nation}
                       {' • '}
-                      {player.specificPosition ||
+                      {displayPosition(player.specificPosition) ||
                         player.position}
                       {active === null
                         ? ''

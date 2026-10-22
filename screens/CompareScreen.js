@@ -1,3 +1,5 @@
+import { displayPosition } from '../utils/positions';
+
 import {
   useState,
 } from 'react';
@@ -373,7 +375,7 @@ const rankAgain = () => {
             <Text
               style={styles.info}
             >
-              {player.specificPosition ||
+              {displayPosition(player.specificPosition) ||
                 player.position}
             </Text>
 

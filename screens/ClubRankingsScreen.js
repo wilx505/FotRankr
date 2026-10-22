@@ -1,3 +1,5 @@
+import { displayPosition } from '../utils/positions';
+
 import {
   ScrollView,
   StyleSheet,
@@ -212,7 +214,7 @@ export default function ClubRankingsScreen({
                   </Text>
 
                   <Text style={styles.info}>
-                    {player.specificPosition ||
+                    {displayPosition(player.specificPosition) ||
                       player.position}
                   </Text>
 

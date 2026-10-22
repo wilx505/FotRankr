@@ -1,3 +1,5 @@
+import { displayPosition } from '../utils/positions';
+
 import { useState } from 'react';
 
 import { isUnknown } from '../utils/progression';
@@ -351,7 +353,7 @@ export default function ChallengeScreen({
                   >
                     {opponent.nation}
                     {' '}•{' '}
-                    {opponent.specificPosition ||
+                    {displayPosition(opponent.specificPosition) ||
                       opponent.position}
                   </Text>
 

@@ -1,3 +1,5 @@
+import { displayPosition } from '../utils/positions';
+
 import { useState } from 'react';
 
 import {
@@ -282,7 +284,7 @@ export default function ListDetailScreen({
               <Text style={styles.playerInfo}>
                 {player.nation}
                 {' • '}
-                {player.specificPosition ||
+                {displayPosition(player.specificPosition) ||
                   player.position ||
                   'Footballer'}
                 {active === null

@@ -1,3 +1,5 @@
+import { displayPosition } from '../utils/positions';
+
 import { useState } from 'react';
 
 import {
@@ -348,7 +350,7 @@ export default function RankingsScreen({
                   <Text
                     style={styles.specificPosition}
                   >
-                    {player.specificPosition}
+                    {displayPosition(player.specificPosition)}
                   </Text>
 
                 )}

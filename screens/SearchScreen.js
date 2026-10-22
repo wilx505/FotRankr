@@ -1,3 +1,5 @@
+import { displayPosition } from '../utils/positions';
+
 import {
   Alert,
   ScrollView,
@@ -196,7 +198,7 @@ export default function SearchScreen({
     if (
       player.specificPosition
     ) {
-      return `${player.specificPosition} • ${player.position}`;
+      return `${displayPosition(player.specificPosition)} • ${player.position}`;
     }
 
     return player.position || 'Footballer';

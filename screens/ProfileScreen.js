@@ -546,6 +546,10 @@ export default function ProfileScreen({
       {/* -------------------------------------------- */}
 
       <Text style={styles.badgeIntro}>
+        Club badges unlock the club in My Best XI's.
+      </Text>
+
+      <Text style={styles.badgeIntro}>
         Tap a club badge to see how you rate their squad.
       </Text>
 

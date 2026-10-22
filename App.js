@@ -21,6 +21,8 @@ import {
 
 import AddPlayersToListScreen from './screens/AddPlayersToListScreen';
 import BackupScreen from './screens/BackupScreen';
+import BestXIScreen from './screens/BestXIScreen';
+import BestXIsScreen from './screens/BestXIsScreen';
 import ChallengeScreen from './screens/ChallengeScreen';
 import ClubRankingsScreen from './screens/ClubRankingsScreen';
 import CompareScreen from './screens/CompareScreen';
@@ -1589,6 +1591,48 @@ export default function App() {
               myRankings={myRankings}
               onPlayersChanged={handlePlayersAdded}
               onDeleteList={handleDeleteList}
+            />
+
+          )}
+
+        </Stack.Screen>
+
+
+        {/* =================================================
+            MY BEST XI'S (from My Ranks)
+            ================================================= */}
+
+        <Stack.Screen
+          name="BestXIs"
+          options={{
+            headerShown: false,
+          }}
+        >
+
+          {({ navigation }) => (
+
+            <BestXIsScreen
+              navigation={navigation}
+              myRankings={myRankings}
+            />
+
+          )}
+
+        </Stack.Screen>
+
+        <Stack.Screen
+          name="BestXI"
+          options={{
+            headerShown: false,
+          }}
+        >
+
+          {({ navigation, route }) => (
+
+            <BestXIScreen
+              navigation={navigation}
+              route={route}
+              myRankings={myRankings}
             />
 
           )}

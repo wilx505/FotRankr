@@ -466,51 +466,46 @@ export default function RankingsScreen({
       </View>
 
 
-      {/* RANK MORE PLAYERS */}
+      {/* MY BEST XI'S */}
 
       <TouchableOpacity
-        style={styles.rankMoreButton}
+        style={styles.bestXIButton}
         onPress={() =>
-          navigation.navigate(
-            'MainTabs',
-            {
-              screen: 'Search',
-            }
-          )
+          navigation.navigate('BestXIs')
         }
         activeOpacity={0.8}
       >
 
         <View
-          style={styles.rankMoreIcon}
+          style={styles.bestXIIcon}
         >
           <Text
-            style={styles.rankMoreIconText}
+            style={styles.bestXIIconText}
           >
-            +
+            ⚽
           </Text>
         </View>
 
         <View
-          style={styles.rankMoreDetails}
+          style={styles.bestXIDetails}
         >
 
           <Text
-            style={styles.rankMoreButtonText}
+            style={styles.bestXIButtonText}
           >
-            RANK MORE PLAYERS
+            MY BEST XI'S
           </Text>
 
           <Text
-            style={styles.rankMoreSubtext}
+            style={styles.bestXISubtext}
           >
-            Add another footballer to your rankings
+            Your top-rated 4-3-3 for every club you complete
           </Text>
 
         </View>
 
         <Text
-          style={styles.rankMoreArrow}
+          style={styles.bestXIArrow}
         >
           ›
         </Text>
@@ -1156,10 +1151,10 @@ const styles = StyleSheet.create({
 
 
   // ==================================================
-  // RANK MORE
+  // MY BEST XI'S
   // ==================================================
 
-  rankMoreButton: {
+  bestXIButton: {
     backgroundColor: '#00ff66',
     borderRadius: 14,
     minHeight: 70,
@@ -1169,7 +1164,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
 
-  rankMoreIcon: {
+  bestXIIcon: {
     width: 38,
     height: 38,
     borderRadius: 19,
@@ -1179,31 +1174,28 @@ const styles = StyleSheet.create({
     marginRight: 13,
   },
 
-  rankMoreIconText: {
-    color: '#00ff66',
-    fontSize: 25,
-    fontWeight: '500',
-    lineHeight: 28,
+  bestXIIconText: {
+    fontSize: 20,
   },
 
-  rankMoreDetails: {
+  bestXIDetails: {
     flex: 1,
   },
 
-  rankMoreButtonText: {
+  bestXIButtonText: {
     color: '#000000',
     fontSize: 14,
     fontWeight: '900',
     letterSpacing: 0.5,
   },
 
-  rankMoreSubtext: {
+  bestXISubtext: {
     color: '#174d2d',
     fontSize: 11,
     marginTop: 3,
   },
 
-  rankMoreArrow: {
+  bestXIArrow: {
     color: '#000000',
     fontSize: 28,
     fontWeight: '300',

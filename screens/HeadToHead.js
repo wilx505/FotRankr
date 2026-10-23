@@ -716,12 +716,12 @@ export default function HeadToHead({
       <View style={styles.header}>
 
         <TouchableOpacity
-          style={styles.backButton}
+          style={styles.topBackButton}
           onPress={() => navigation.goBack()}
           activeOpacity={0.7}
         >
 
-          <Text style={styles.backArrow}>
+          <Text style={styles.topBackArrow}>
             ‹
           </Text>
 
@@ -1086,7 +1086,7 @@ const styles =
       alignItems: 'center',
     },
 
-    backButton: {
+    topBackButton: {
       width: 42,
       height: 42,
       borderRadius: 21,
@@ -1098,7 +1098,7 @@ const styles =
       marginRight: 14,
     },
 
-    backArrow: {
+    topBackArrow: {
       color: '#00ff66',
       fontSize: 32,
       fontWeight: '300',

@@ -1,4 +1,14 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+
+import {
+  Animated,
+  PanResponder,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,6 +19,7 @@ import {
 import ClubBadge from '../components/ClubBadge';
 
 import {
+  FORMATION_433,
   getClubSquad,
   lastName,
   pickBestXI,
@@ -29,8 +40,125 @@ const CATEGORY_COLOURS = {
   Bad: '#E74C3C',
 };
 
+// The user's own lineups: { "League|Club": [11 player ids] }.
+// Separate from rankings, so it never changes any score.
+const LINEUPS_KEY = 'fotrankrBestXILineups';
 
-// One club's Best XI on a pitch, in a 4-3-3.
+const SLOT_COUNT = FORMATION_433.flat().length;
+
+const HOLD_MS = 200;
+
+// Subs grouped by general position, attackers first (same
+// order as the pitch, top to bottom).
+const SUB_GROUPS = [
+  { position: 'Attack', label: 'ATTACKERS' },
+  { position: 'Midfield', label: 'MIDFIELDERS' },
+  { position: 'Defence', label: 'DEFENDERS' },
+  { position: 'Goalkeeper', label: 'GOALKEEPERS' },
+];
+
+// Drag near the top/bottom of the screen to scroll.
+const EDGE_SIZE = 110;
+const MAX_SCROLL_SPEED = 14;
+
+
+// ======================================================
+// DRAGGABLE
+// ======================================================
+// Hold briefly to pick up, then drag. A quick tap (no hold,
+// no movement) is a normal tap. Moving before the hold
+// lets the page scroll instead.
+
+function Draggable({
+  onTap,
+  onDragStart,
+  onDragMove,
+  onDragEnd,
+  style,
+  children,
+}) {
+
+  // Latest callbacks (the responder is created once).
+  const callbacks = useRef({});
+  callbacks.current = { onTap, onDragStart, onDragMove, onDragEnd };
+
+  const touch = useRef({ active: false, moved: false, timer: null });
+
+  const responder = useRef(
+    PanResponder.create({
+
+      onStartShouldSetPanResponder: () => true,
+
+      onPanResponderGrant: (event, gesture) => {
+
+        touch.current.active = false;
+        touch.current.moved = false;
+
+        touch.current.timer = setTimeout(() => {
+          touch.current.active = true;
+          callbacks.current.onDragStart?.(gesture.x0, gesture.y0);
+        }, HOLD_MS);
+      },
+
+      onPanResponderMove: (event, gesture) => {
+
+        if (!touch.current.active) {
+
+          if (Math.abs(gesture.dx) + Math.abs(gesture.dy) > 8) {
+            touch.current.moved = true;
+            clearTimeout(touch.current.timer);
+          }
+
+          return;
+        }
+
+        callbacks.current.onDragMove?.(gesture.moveX, gesture.moveY);
+      },
+
+      // Let the page scroll unless a player is picked up.
+      onPanResponderTerminationRequest: () => !touch.current.active,
+
+      onPanResponderRelease: (event, gesture) => {
+
+        clearTimeout(touch.current.timer);
+
+        if (touch.current.active) {
+          touch.current.active = false;
+          callbacks.current.onDragEnd?.(gesture.moveX, gesture.moveY);
+        } else if (!touch.current.moved) {
+          callbacks.current.onTap?.();
+        }
+      },
+
+      onPanResponderTerminate: () => {
+
+        clearTimeout(touch.current.timer);
+
+        if (touch.current.active) {
+          touch.current.active = false;
+          callbacks.current.onDragEnd?.(null, null);
+        }
+      },
+    })
+  ).current;
+
+  return (
+    <View
+      {...responder.panHandlers}
+      style={style}
+    >
+      {children}
+    </View>
+  );
+}
+
+
+// ======================================================
+// SCREEN
+// ======================================================
+
+// One club's Best XI on a pitch, in a 4-3-3, with the rest
+// of the squad as subs. Players can be dragged around.
 export default function BestXIScreen({
   route,
   navigation,
@@ -42,17 +170,288 @@ export default function BestXIScreen({
     league,
   } = route.params || {};
 
-  const rows = pickBestXI(club, league, myRankings);
+  const lineupKey = `${league || ''}|${club}`;
+
+  const squad = getClubSquad(club, league, myRankings);
+
+  const byId = new Map(
+    squad.map(player => [String(player.id), player])
+  );
 
   // Challenges from here are only against this club's
   // ranked players.
-  const clubIds = getClubSquad(club, league, myRankings)
-    .map(player => String(player.id));
+  const clubIds = squad.map(player => String(player.id));
 
 
-  const renderSpot = (spot, index) => {
+  // ---- The top-rated XI (by score), as 11 ids.
+  const bestRows = pickBestXI(club, league, myRankings);
 
-    const player = spot.player;
+  const bestIds = bestRows
+    .flat()
+    .map(spot => (spot.player ? String(spot.player.id) : null));
+
+
+  // ---- The user's saved lineup for this club, if any.
+  const [savedLineups, setSavedLineups] = useState({});
+
+  useEffect(() => {
+
+    AsyncStorage.getItem(LINEUPS_KEY)
+      .then(saved => {
+        if (saved) {
+          setSavedLineups(JSON.parse(saved));
+        }
+      })
+      .catch(error =>
+        console.log('FOTRANKR BEST XI LOAD ERROR:', error)
+      );
+
+  }, []);
+
+
+  // Use the saved lineup only if it still fits the squad.
+  const customIds = (() => {
+
+    const saved = savedLineups[lineupKey];
+
+    if (!Array.isArray(saved) || saved.length !== SLOT_COUNT) {
+      return null;
+    }
+
+    const seen = new Set();
+
+    const valid = saved.every(id => {
+
+      if (id === null) {
+        return true;
+      }
+
+      if (!byId.has(String(id)) || seen.has(String(id))) {
+        return false;
+      }
+
+      seen.add(String(id));
+      return true;
+    });
+
+    return valid ? saved.map(id => (id === null ? null : String(id))) : null;
+  })();
+
+  const lineupIds = customIds || bestIds;
+
+  const isCustom =
+    !!customIds &&
+    customIds.some((id, index) => id !== bestIds[index]);
+
+
+  const saveLineup = ids => {
+
+    const updated = { ...savedLineups, [lineupKey]: ids };
+
+    setSavedLineups(updated);
+
+    AsyncStorage.setItem(LINEUPS_KEY, JSON.stringify(updated))
+      .catch(error =>
+        console.log('FOTRANKR BEST XI SAVE ERROR:', error)
+      );
+  };
+
+  const resetLineup = () => {
+
+    const updated = { ...savedLineups };
+    delete updated[lineupKey];
+
+    setSavedLineups(updated);
+
+    AsyncStorage.setItem(LINEUPS_KEY, JSON.stringify(updated))
+      .catch(error =>
+        console.log('FOTRANKR BEST XI SAVE ERROR:', error)
+      );
+  };
+
+
+  // ---- Subs: everyone not in the XI, best first.
+  const inTeam = new Set(lineupIds.filter(Boolean));
+
+  const subs = squad.filter(
+    player => !inTeam.has(String(player.id))
+  );
+
+
+  // ==================================================
+  // DRAG AND DROP
+  // ==================================================
+
+  const rootRef = useRef(null);
+  const rootOffset = useRef({ x: 0, y: 0 });
+
+  const slotRefs = useRef([]);
+  const slotRects = useRef([]);
+
+  const ghost = useRef(new Animated.ValueXY()).current;
+
+  // { id, from: { slot: index } | { bench: true } }
+  const [dragging, setDragging] = useState(null);
+
+  const GHOST_SIZE = 64;
+
+  const scrollRef = useRef(null);
+  const scrollY = useRef(0);
+  const scrollMax = useRef(0);
+  const contentHeight = useRef(0);
+  const viewRect = useRef({ y: 0, height: 0 });
+  const finger = useRef(null);
+  const scrollLoop = useRef(null);
+
+  const placeGhost = (x, y) => {
+
+    finger.current = { x, y };
+
+    ghost.setValue({
+      x: x - rootOffset.current.x - GHOST_SIZE / 2,
+      y: y - rootOffset.current.y - GHOST_SIZE / 2,
+    });
+  };
+
+  // While a player is held near the top or bottom edge,
+  // scroll that way (faster nearer the edge).
+  const runAutoScroll = () => {
+
+    const point = finger.current;
+    const view = viewRect.current;
+
+    if (point && view.height) {
+
+      const fromTop = point.y - view.y;
+      const fromBottom = view.y + view.height - point.y;
+
+      let speed = 0;
+
+      if (fromTop < EDGE_SIZE) {
+        speed = -MAX_SCROLL_SPEED * (1 - Math.max(0, fromTop) / EDGE_SIZE);
+      } else if (fromBottom < EDGE_SIZE) {
+        speed = MAX_SCROLL_SPEED * (1 - Math.max(0, fromBottom) / EDGE_SIZE);
+      }
+
+      const next = Math.min(
+        scrollMax.current,
+        Math.max(0, scrollY.current + speed)
+      );
+
+      if (Math.abs(next - scrollY.current) >= 0.5) {
+        scrollY.current = next;
+        scrollRef.current?.scrollTo({ y: next, animated: false });
+      }
+    }
+
+    scrollLoop.current = requestAnimationFrame(runAutoScroll);
+  };
+
+  const stopAutoScroll = () => {
+    if (scrollLoop.current) {
+      cancelAnimationFrame(scrollLoop.current);
+      scrollLoop.current = null;
+    }
+    finger.current = null;
+  };
+
+  // Stop scrolling if the screen closes mid-drag.
+  useEffect(() => stopAutoScroll, []);
+
+  // Where everything is on screen right now.
+  const measureAll = () => {
+
+    rootRef.current?.measureInWindow((x, y) => {
+      rootOffset.current = { x, y };
+    });
+
+    slotRefs.current.forEach((ref, index) => {
+      ref?.measureInWindow((x, y, width, height) => {
+        slotRects.current[index] = { x, y, width, height };
+      });
+    });
+  };
+
+  const startDrag = (id, from) => (x, y) => {
+
+    measureAll();
+
+    scrollRef.current?.measureInWindow((vx, vy, width, height) => {
+      viewRect.current = { y: vy, height };
+      scrollMax.current = Math.max(0, contentHeight.current - height);
+    });
+
+    setDragging({ id, from });
+    placeGhost(x, y);
+
+    stopAutoScroll();
+    scrollLoop.current = requestAnimationFrame(runAutoScroll);
+  };
+
+  const endDrag = (x, y) => {
+
+    const drag = dragging;
+
+    stopAutoScroll();
+    setDragging(null);
+
+    if (!drag || x === null) {
+      return;
+    }
+
+    // Which pitch spot was it dropped on?
+    const PADDING = 14;
+
+    const target = slotRects.current.findIndex(
+      rect =>
+        rect &&
+        x >= rect.x - PADDING &&
+        x <= rect.x + rect.width + PADDING &&
+        y >= rect.y - PADDING &&
+        y <= rect.y + rect.height + PADDING
+    );
+
+    if (target === -1) {
+      return;
+    }
+
+    const ids = [...lineupIds];
+
+    if (drag.from.slot !== undefined) {
+
+      // Pitch -> pitch: swap.
+      if (drag.from.slot === target) {
+        return;
+      }
+
+      [ids[drag.from.slot], ids[target]] =
+        [ids[target], ids[drag.from.slot]];
+
+    } else {
+
+      // Sub -> pitch: they come in, the old player goes to
+      // the subs.
+      ids[target] = drag.id;
+    }
+
+    saveLineup(ids);
+  };
+
+
+  const openChallenge = player => {
+    navigation.navigate('Challenge', {
+      player,
+      opponentIds: clubIds,
+      opponentLabel: `${club.toUpperCase()} PLAYERS`,
+    });
+  };
+
+
+  // ==================================================
+  // RENDER
+  // ==================================================
+
+  const renderFlag = (player, size) => {
 
     const ring = player
       ? CATEGORY_COLOURS[player.category] || '#00ff66'
@@ -60,57 +459,124 @@ export default function BestXIScreen({
 
     return (
 
-      <TouchableOpacity
-        key={`${spot.slot}-${index}`}
-        style={styles.spot}
-        disabled={!player}
-        onPress={() =>
-          navigation.navigate('Challenge', {
-            player,
-            opponentIds: clubIds,
-            opponentLabel: `${club.toUpperCase()} PLAYERS`,
-          })
-        }
-        activeOpacity={0.75}
+      <View
+        style={[
+          styles.flagCircle,
+          {
+            width: size,
+            height: size,
+            borderRadius: size / 2,
+            borderColor: ring,
+          },
+        ]}
       >
 
-        <View
-          style={[
-            styles.flagCircle,
-            { borderColor: ring },
-          ]}
-        >
-
-          <Text
-            style={
-              player && getFlag(player.nation)
-                ? styles.flag
-                : styles.flagText
-            }
-          >
-            {player
-              ? getFlag(player.nation) || getMarkerText(player)
-              : '?'}
-          </Text>
-
-        </View>
-
         <Text
-          style={styles.name}
-          numberOfLines={1}
+          style={
+            player && getFlag(player.nation)
+              ? [styles.flag, { fontSize: size / 2 }]
+              : styles.flagText
+          }
         >
-          {player ? lastName(player.name) : spot.slot}
+          {player
+            ? getFlag(player.nation) || getMarkerText(player)
+            : '?'}
         </Text>
 
-      </TouchableOpacity>
+      </View>
 
     );
   };
 
 
+  // Flat slot index for each row/spot.
+  let slotIndex = 0;
+
+  const pitchRows = FORMATION_433.map(row =>
+    row.map(spot => ({ ...spot, index: slotIndex++ }))
+  );
+
+
+  const renderSpot = spot => {
+
+    const id = lineupIds[spot.index];
+    const player = id ? byId.get(id) : null;
+
+    const isSource =
+      dragging?.from.slot === spot.index;
+
+    return (
+
+      <View
+        key={spot.index}
+        ref={ref => {
+          slotRefs.current[spot.index] = ref;
+        }}
+        style={styles.spot}
+      >
+
+        {player ? (
+
+          <Draggable
+            style={[styles.spotInner, isSource && styles.lifted]}
+            onTap={() => openChallenge(player)}
+            onDragStart={startDrag(id, { slot: spot.index })}
+            onDragMove={placeGhost}
+            onDragEnd={endDrag}
+          >
+            {renderFlag(player, 48)}
+
+            <Text
+              style={styles.name}
+              numberOfLines={1}
+            >
+              {lastName(player.name)}
+            </Text>
+
+            <Text
+              style={[
+                styles.pitchScore,
+                {
+                  color:
+                    CATEGORY_COLOURS[player.category] ||
+                    '#ffffff',
+                },
+              ]}
+            >
+              {typeof player.score === 'number'
+                ? player.score.toFixed(2)
+                : '—'}
+            </Text>
+          </Draggable>
+
+        ) : (
+
+          <View style={styles.spotInner}>
+            {renderFlag(null, 48)}
+
+            <Text style={styles.name}>
+              {spot.slot}
+            </Text>
+          </View>
+
+        )}
+
+      </View>
+
+    );
+  };
+
+
+  const draggedPlayer = dragging ? byId.get(dragging.id) : null;
+
+
   return (
 
-    <View style={styles.screen}>
+    <View
+      ref={rootRef}
+      style={styles.screen}
+      onLayout={measureAll}
+    >
 
       {/* TOP BAR */}
 
@@ -140,9 +606,23 @@ export default function BestXIScreen({
 
 
       <ScrollView
+        ref={scrollRef}
         style={styles.container}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
+        scrollEnabled={!dragging}
+        onScroll={event => {
+          scrollY.current = event.nativeEvent.contentOffset.y;
+          measureAll();
+        }}
+        scrollEventThrottle={16}
+        onLayout={event => {
+          const height = event.nativeEvent.layout.height;
+          viewRect.current = { ...viewRect.current, height };
+        }}
+        onContentSizeChange={(width, height) => {
+          contentHeight.current = height;
+        }}
       >
 
         {/* CLUB */}
@@ -161,7 +641,7 @@ export default function BestXIScreen({
             </Text>
 
             <Text style={styles.formation}>
-              4-3-3  ·  YOUR HIGHEST-RATED XI
+              4-3-3  ·  {isCustom ? 'YOUR LINEUP' : 'YOUR HIGHEST-RATED XI'}
             </Text>
 
           </View>
@@ -180,7 +660,7 @@ export default function BestXIScreen({
           <View style={styles.sixYardBox} />
 
 
-          {rows.map((row, rowIndex) => (
+          {pitchRows.map((row, rowIndex) => (
 
             <View
               key={rowIndex}
@@ -195,10 +675,141 @@ export default function BestXIScreen({
 
 
         <Text style={styles.hint}>
-          Tap a player to challenge for a higher rank
+          Hold a player and drag to move them. Tap to challenge.
+          {'\n'}
+          Your lineup never changes any scores.
         </Text>
 
+
+        {isCustom && (
+
+          <TouchableOpacity
+            style={styles.resetButton}
+            onPress={resetLineup}
+            activeOpacity={0.8}
+          >
+
+            <Text style={styles.resetText}>
+              RESET TO MY BEST XI
+            </Text>
+
+          </TouchableOpacity>
+
+        )}
+
+
+        {/* SUBS */}
+
+        <Text style={styles.sectionLabel}>
+          SUBSTITUTES  ·  {subs.length}
+        </Text>
+
+        {subs.length === 0 ? (
+
+          <Text style={styles.noSubs}>
+            Everyone you've ranked at {club} is in the XI.
+          </Text>
+
+        ) : (
+
+          SUB_GROUPS.map(group => {
+
+            const groupSubs = subs.filter(
+              player => player.position === group.position
+            );
+
+            if (groupSubs.length === 0) {
+              return null;
+            }
+
+            return (
+
+              <View key={group.position}>
+
+                <Text style={styles.subGroupLabel}>
+                  {group.label}  ·  {groupSubs.length}
+                </Text>
+
+                <View style={styles.subsGrid}>
+
+                  {groupSubs.map(player => (
+
+                    <Draggable
+                      key={player.id}
+                      style={[
+                        styles.subCard,
+                        dragging?.id === String(player.id) && styles.lifted,
+                      ]}
+                      onTap={() => openChallenge(player)}
+                      onDragStart={startDrag(String(player.id), { bench: true })}
+                      onDragMove={placeGhost}
+                      onDragEnd={endDrag}
+                    >
+
+                      {renderFlag(player, 38)}
+
+                      <Text
+                        style={styles.subName}
+                        numberOfLines={1}
+                      >
+                        {lastName(player.name)}
+                      </Text>
+
+                      <Text
+                        style={[
+                          styles.subScore,
+                          {
+                            color:
+                              CATEGORY_COLOURS[player.category] ||
+                              '#ffffff',
+                          },
+                        ]}
+                      >
+                        {typeof player.score === 'number'
+                          ? player.score.toFixed(2)
+                          : '—'}
+                      </Text>
+
+                    </Draggable>
+
+                  ))}
+
+                </View>
+
+              </View>
+
+            );
+          })
+
+        )}
+
       </ScrollView>
+
+
+      {/* The player being dragged follows the finger. */}
+
+      {draggedPlayer && (
+
+        <Animated.View
+          pointerEvents="none"
+          style={[
+            styles.ghost,
+            { transform: ghost.getTranslateTransform() },
+          ]}
+        >
+
+          {renderFlag(draggedPlayer, 52)}
+
+          <Text
+            style={styles.ghostName}
+            numberOfLines={1}
+          >
+            {lastName(draggedPlayer.name)}
+          </Text>
+
+        </Animated.View>
+
+      )}
 
     </View>
 
@@ -363,10 +974,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  spotInner: {
+    alignItems: 'center',
+  },
+
+  lifted: {
+    opacity: 0.3,
+  },
+
   flagCircle: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
     borderWidth: 3,
     backgroundColor: '#050505',
     alignItems: 'center',
@@ -393,6 +1009,14 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
   },
 
+  pitchScore: {
+    fontSize: 11,
+    fontWeight: '900',
+    marginTop: 1,
+    textShadowColor: '#000000',
+    textShadowRadius: 4,
+  },
+
   hint: {
     color: '#555555',
     fontSize: 10,
@@ -402,6 +1026,101 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     textAlign: 'center',
     marginTop: 16,
+  },
+
+  resetButton: {
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: '#00ff66',
+    borderRadius: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    marginTop: 14,
+  },
+
+  resetText: {
+    color: '#00ff66',
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+
+  // SUBS
+
+  sectionLabel: {
+    color: '#00ff66',
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 1.5,
+    marginTop: 26,
+    marginBottom: 12,
+    paddingLeft: 4,
+  },
+
+  noSubs: {
+    color: '#666666',
+    fontSize: 13,
+    paddingLeft: 4,
+  },
+
+  subGroupLabel: {
+    color: '#555555',
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 1.3,
+    marginTop: 4,
+    marginBottom: 10,
+    paddingLeft: 4,
+  },
+
+  subsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginHorizontal: -4,
+  },
+
+  subCard: {
+    width: '25%',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+    marginBottom: 14,
+  },
+
+  subName: {
+    color: '#ffffff',
+    fontSize: 11,
+    fontWeight: '800',
+    marginTop: 5,
+    textAlign: 'center',
+  },
+
+  subScore: {
+    fontSize: 11,
+    fontWeight: '900',
+    marginTop: 2,
+  },
+
+
+  // DRAGGED PLAYER
+
+  ghost: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: 64,
+    alignItems: 'center',
+    zIndex: 100,
+    elevation: 100,
+  },
+
+  ghostName: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '900',
+    marginTop: 4,
+    textShadowColor: '#000000',
+    textShadowRadius: 4,
   },
 
 });

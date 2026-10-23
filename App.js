@@ -63,6 +63,7 @@ import {
   getProgress,
   getRankedIdsNow,
   isUnknown,
+  setAllLeaguesUnlocked,
   setEarnedHistory,
   unlockName,
 } from './utils/progression';
@@ -154,6 +155,13 @@ export default function App() {
   const [earnedHistory, setEarnedHistoryState] =
     useState(EMPTY_EARNED);
 
+  // "Unlock all leagues" (pay to win; TEST MODE for now).
+  // Kept even by RESET ALL DATA, like a real purchase.
+  const [allLeaguesUnlocked, setAllLeaguesUnlockedState] =
+    useState(false);
+
+  setAllLeaguesUnlocked(allLeaguesUnlocked);
+
   // Hand the record to utils/progression before any screen
   // (or alert) asks for XP in this render.
   const earnedRef = useRef(null);
@@ -173,6 +181,16 @@ export default function App() {
     const loadData = async () => {
 
       try {
+
+        const savedUnlockAll =
+          await AsyncStorage.getItem(
+            'fotrankrAllLeaguesUnlocked'
+          );
+
+        if (savedUnlockAll === 'true') {
+          setAllLeaguesUnlockedState(true);
+        }
+
 
         const savedProfile =
           await AsyncStorage.getItem(
@@ -506,6 +524,27 @@ export default function App() {
     dataLoaded,
     earnedHistory,
   ]);
+
+
+  // =====================================================
+  // UNLOCK ALL LEAGUES (Home screen, TEST MODE)
+  // =====================================================
+
+  const handleUnlockAll = () => {
+
+    setAllLeaguesUnlockedState(true);
+
+    AsyncStorage.setItem(
+      'fotrankrAllLeaguesUnlocked',
+      'true'
+    ).catch(error =>
+      console.log(
+        'Error saving FotRankr unlock:',
+        error
+      )
+    );
+
+  };
 
 
   // =====================================================
@@ -1409,6 +1448,7 @@ export default function App() {
                       myRankings.length === 0
                     }
                     myRankings={myRankings}
+                    onUnlockAll={handleUnlockAll}
                   />
 
                 )}

@@ -28,6 +28,7 @@ import {
   getProgress,
   getUnlockLevel,
   isUnknown,
+  isUnlocked,
   lockMessage,
   unlockedGroups,
 } from '../utils/progression';
@@ -96,8 +97,7 @@ export default function SearchScreen({
     players
       .filter(
         player =>
-          getUnlockLevel(player.id) <=
-          progress.level
+          isUnlocked(player.id, progress.level)
       )
       .forEach(player => {
 

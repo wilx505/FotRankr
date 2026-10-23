@@ -621,10 +621,36 @@ function findUnlockLevel(unlocks) {
 // null if the player can be ranked, otherwise what's
 // needed: { level, title, badge, groupName }.
 // Players already ranked are never locked.
+// ======================================================
+// UNLOCK ALL LEAGUES (the "pay to win" option)
+// ======================================================
+// When on, no player is ever locked. Levels, XP and badges
+// are unaffected. App sets it from storage.
+
+let allLeaguesUnlocked = false;
+
+export function setAllLeaguesUnlocked(value) {
+  allLeaguesUnlocked = !!value;
+}
+
+export function hasAllLeagues() {
+  return allLeaguesUnlocked;
+}
+
+// Can this player be ranked at this level?
+export function isUnlocked(playerId, level) {
+  return allLeaguesUnlocked || getUnlockLevel(playerId) <= level;
+}
+
+
 export function getLock(
   player,
   myRankings
 ) {
+
+  if (allLeaguesUnlocked) {
+    return null;
+  }
 
   const alreadyRanked = (myRankings || []).some(
     ranking =>
@@ -674,7 +700,8 @@ export function unlockedGroups(level) {
   return LEVELS
     .filter(
       info =>
-        info.level <= level && info.unlocks
+        (allLeaguesUnlocked || info.level <= level) &&
+        info.unlocks
     )
     .map(info => unlockName(info.unlocks));
 }

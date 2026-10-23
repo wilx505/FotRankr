@@ -1,4 +1,8 @@
+import { useState } from 'react';
+
 import {
+  Alert,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,8 +19,15 @@ import {
   XP_PER_PLAYER,
   getProgress,
   getUnlockLevel,
+  hasAllLeagues,
   unlockName,
 } from '../utils/progression';
+
+
+// Price shown for unlocking every league. TEST MODE: no
+// payment is taken yet; real in-app purchase (Apple/Google)
+// must be added before publishing.
+const UNLOCK_PRICE = '£4.99';
 
 
 // Flag / icon for each unlock on the league ladder.
@@ -77,13 +88,48 @@ const STEPS = [
 export default function HomeScreen({
   navigation,
   myRankings,
+  onUnlockAll,
 }) {
 
   const progress = getProgress(myRankings);
 
-  const nextUnlock = UNLOCK_LEVELS.find(
-    info => info.level > progress.level
-  );
+  const allUnlocked = hasAllLeagues();
+
+  const [showPayToWin, setShowPayToWin] =
+    useState(false);
+
+
+  // TEST MODE: no money is taken.
+  const buyUnlockAll = () => {
+
+    Alert.alert(
+      'Test mode',
+      `No payment will be taken. In the real app this would cost ${UNLOCK_PRICE}.\n\nUnlock every league now?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Unlock all leagues',
+          onPress: () => {
+            onUnlockAll();
+            setShowPayToWin(false);
+            Alert.alert(
+              'All leagues unlocked',
+              'Every player in the app can now be ranked.'
+            );
+          },
+        },
+      ]
+    );
+  };
+
+  const nextUnlock = allUnlocked
+    ? undefined
+    : UNLOCK_LEVELS.find(
+        info => info.level > progress.level
+      );
 
   const xpToNextUnlock = nextUnlock
     ? (nextUnlock.level - 1) * XP_PER_LEVEL -
@@ -109,15 +155,104 @@ export default function HomeScreen({
 
       <View style={styles.header}>
 
-        <Text style={styles.brand}>
-          FotRankr
-        </Text>
+        <View>
 
-        <View
-          style={styles.brandLine}
-        />
+          <Text style={styles.brand}>
+            FotRankr
+          </Text>
+
+          <View
+            style={styles.brandLine}
+          />
+
+        </View>
+
+
+        {/* Pay to win */}
+
+        <TouchableOpacity
+          style={styles.cheekyButton}
+          onPress={() => setShowPayToWin(true)}
+          activeOpacity={0.7}
+        >
+
+          <Text style={styles.cheekyEmoji}>
+            😏
+          </Text>
+
+        </TouchableOpacity>
 
       </View>
+
+
+      <Modal
+        visible={showPayToWin}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowPayToWin(false)}
+      >
+
+        <View style={styles.modalBackdrop}>
+
+          <View style={styles.modalCard}>
+
+            <Text style={styles.modalEmoji}>
+              😏
+            </Text>
+
+            <Text style={styles.modalTitle}>
+              This is football.
+            </Text>
+
+            <Text style={styles.modalText}>
+              You can always pay to win.
+            </Text>
+
+
+            {allUnlocked ? (
+
+              <Text style={styles.modalDone}>
+                ✓ ALL LEAGUES UNLOCKED
+              </Text>
+
+            ) : (
+
+              <TouchableOpacity
+                style={styles.payButton}
+                onPress={buyUnlockAll}
+                activeOpacity={0.85}
+              >
+
+                <Text style={styles.payButtonText}>
+                  UNLOCK ALL LEAGUES  ·  {UNLOCK_PRICE}
+                </Text>
+
+                <Text style={styles.payButtonSubtext}>
+                  La Liga, Ligue 1, Serie A, Bundesliga, the rest of the world and Legends
+                </Text>
+
+              </TouchableOpacity>
+
+            )}
+
+
+            <TouchableOpacity
+              style={styles.laterButton}
+              onPress={() => setShowPayToWin(false)}
+              activeOpacity={0.7}
+            >
+
+              <Text style={styles.laterText}>
+                {allUnlocked ? 'CLOSE' : 'MAYBE LATER'}
+              </Text>
+
+            </TouchableOpacity>
+
+          </View>
+
+        </View>
+
+      </Modal>
 
 
       {/* HERO */}
@@ -280,7 +415,7 @@ export default function HomeScreen({
         {UNLOCK_LEVELS.map(info => {
 
           const unlocked =
-            info.level <= progress.level;
+            allUnlocked || info.level <= progress.level;
 
           const isNext =
             info === nextUnlock;
@@ -373,6 +508,106 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: 55,
     marginBottom: 45,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  cheekyButton: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    backgroundColor: '#111111',
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  cheekyEmoji: {
+    fontSize: 24,
+  },
+
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 26,
+  },
+
+  modalCard: {
+    width: '100%',
+    backgroundColor: '#0f0f0f',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#00ff66',
+    paddingVertical: 26,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+  },
+
+  modalEmoji: {
+    fontSize: 54,
+  },
+
+  modalTitle: {
+    color: '#ffffff',
+    fontSize: 24,
+    fontWeight: '900',
+    marginTop: 12,
+    textAlign: 'center',
+  },
+
+  modalText: {
+    color: '#00ff66',
+    fontSize: 16,
+    fontWeight: '800',
+    marginTop: 4,
+    marginBottom: 22,
+    textAlign: 'center',
+  },
+
+  payButton: {
+    width: '100%',
+    backgroundColor: '#00ff66',
+    borderRadius: 14,
+    paddingVertical: 15,
+    paddingHorizontal: 14,
+    alignItems: 'center',
+  },
+
+  payButtonText: {
+    color: '#000000',
+    fontSize: 15,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+  },
+
+  payButtonSubtext: {
+    color: '#174d2d',
+    fontSize: 11,
+    marginTop: 4,
+    textAlign: 'center',
+  },
+
+  modalDone: {
+    color: '#00ff66',
+    fontSize: 13,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+  laterButton: {
+    paddingVertical: 14,
+    marginTop: 4,
+  },
+
+  laterText: {
+    color: '#777777',
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 1,
   },
 
   brand: {

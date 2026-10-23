@@ -61,7 +61,7 @@ export default function BestXIsScreen({
 
         <Text style={styles.subtitle}>
           Complete a club to unlock its Best XI, picked from your
-          {' '}highest-rated players in a 4-3-3.
+          {' '}highest-rated players in any formation.
         </Text>
 
 

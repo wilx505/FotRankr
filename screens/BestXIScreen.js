@@ -19,7 +19,11 @@ import {
 import ClubBadge from '../components/ClubBadge';
 
 import {
-  FORMATION_433,
+  DEFAULT_FORMATION,
+  FORMATIONS,
+  FORMATION_NAMES,
+  SLOT_COUNT,
+  rearrange,
   getClubSquad,
   lastName,
   pickBestXI,
@@ -44,7 +48,6 @@ const CATEGORY_COLOURS = {
 // Separate from rankings, so it never changes any score.
 const LINEUPS_KEY = 'fotrankrBestXILineups';
 
-const SLOT_COUNT = FORMATION_433.flat().length;
 
 const HOLD_MS = 200;
 
@@ -183,14 +186,6 @@ export default function BestXIScreen({
   const clubIds = squad.map(player => String(player.id));
 
 
-  // ---- The top-rated XI (by score), as 11 ids.
-  const bestRows = pickBestXI(club, league, myRankings);
-
-  const bestIds = bestRows
-    .flat()
-    .map(spot => (spot.player ? String(spot.player.id) : null));
-
-
   // ---- The user's saved lineup for this club, if any.
   const [savedLineups, setSavedLineups] = useState({});
 
@@ -213,10 +208,34 @@ export default function BestXIScreen({
   }, []);
 
 
+  // Saved per club as { formation, ids } (ids = the user's own
+  // 11, or missing for the top-rated XI). Older saves were a
+  // plain 4-3-3 array.
+  const entry = (() => {
+    const saved = savedLineups[lineupKey];
+    if (Array.isArray(saved)) {
+      return { formation: DEFAULT_FORMATION, ids: saved };
+    }
+    return saved || {};
+  })();
+
+  const formation = FORMATIONS[entry.formation]
+    ? entry.formation
+    : DEFAULT_FORMATION;
+
+
+  // ---- The top-rated XI for this formation, as 11 ids.
+  const bestRows = pickBestXI(club, league, myRankings, formation);
+
+  const bestIds = bestRows
+    .flat()
+    .map(spot => (spot.player ? String(spot.player.id) : null));
+
+
   // Use the saved lineup only if it still fits the squad.
   const customIds = (() => {
 
-    const saved = savedLineups[lineupKey];
+    const saved = entry.ids;
 
     if (!Array.isArray(saved) || saved.length !== SLOT_COUNT) {
       return null;
@@ -269,15 +288,39 @@ export default function BestXIScreen({
   };
 
   const saveLineup = ids => {
-    updateLineups(lineups => ({ ...lineups, [lineupKey]: ids }));
+    updateLineups(lineups => ({
+      ...lineups,
+      [lineupKey]: { formation, ids },
+    }));
   };
 
+  // Back to the top-rated XI, keeping the formation.
   const resetLineup = () => {
-    updateLineups(lineups => {
-      const updated = { ...lineups };
-      delete updated[lineupKey];
-      return updated;
-    });
+    updateLineups(lineups => ({
+      ...lineups,
+      [lineupKey]: { formation },
+    }));
+  };
+
+  // New shape: the same 11 move to the closest slots (the
+  // top-rated XI just gets picked for the new shape).
+  const changeFormation = name => {
+
+    if (name === formation) {
+      return;
+    }
+
+    const ids = customIds
+      ? rearrange(
+          customIds.map(id => (id ? byId.get(id) : null)),
+          name
+        )
+      : undefined;
+
+    updateLineups(lineups => ({
+      ...lineups,
+      [lineupKey]: ids ? { formation: name, ids } : { formation: name },
+    }));
   };
 
 
@@ -503,8 +546,12 @@ export default function BestXIScreen({
   // Flat slot index for each row/spot.
   let slotIndex = 0;
 
-  const pitchRows = FORMATION_433.map(row =>
-    row.map(spot => ({ ...spot, index: slotIndex++ }))
+  const pitchRows = FORMATIONS[formation].map(row =>
+    row.map(slot => ({
+      slot,
+      index: slotIndex++,
+      rowSize: row.length,
+    }))
   );
 
 
@@ -523,7 +570,10 @@ export default function BestXIScreen({
         ref={ref => {
           slotRefs.current[spot.index] = ref;
         }}
-        style={styles.spot}
+        style={[
+          styles.spot,
+          spot.rowSize >= 5 && styles.spotNarrow,
+        ]}
       >
 
         {player ? (
@@ -652,12 +702,49 @@ export default function BestXIScreen({
             </Text>
 
             <Text style={styles.formation}>
-              4-3-3  ·  {isCustom ? 'YOUR LINEUP' : 'YOUR HIGHEST-RATED XI'}
+              {formation}  ·  {isCustom ? 'YOUR LINEUP' : 'YOUR HIGHEST-RATED XI'}
             </Text>
 
           </View>
 
         </View>
+
+
+        {/* FORMATION */}
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.formationBar}
+          contentContainerStyle={styles.formationBarContent}
+        >
+
+          {FORMATION_NAMES.map(name => (
+
+            <TouchableOpacity
+              key={name}
+              style={[
+                styles.formationChip,
+                name === formation && styles.formationChipActive,
+              ]}
+              onPress={() => changeFormation(name)}
+              activeOpacity={0.8}
+            >
+
+              <Text
+                style={[
+                  styles.formationChipText,
+                  name === formation && styles.formationChipTextActive,
+                ]}
+              >
+                {name}
+              </Text>
+
+            </TouchableOpacity>
+
+          ))}
+
+        </ScrollView>
 
 
         {/* PITCH */}
@@ -983,6 +1070,45 @@ const styles = StyleSheet.create({
   spot: {
     width: 78,
     alignItems: 'center',
+  },
+
+  spotNarrow: {
+    width: 66,
+  },
+
+  formationBar: {
+    marginBottom: 14,
+    marginHorizontal: -16,
+  },
+
+  formationBarContent: {
+    paddingHorizontal: 16,
+  },
+
+  formationChip: {
+    backgroundColor: '#0e0e0e',
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
+    borderRadius: 18,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    marginRight: 8,
+  },
+
+  formationChipActive: {
+    backgroundColor: '#00ff66',
+    borderColor: '#00ff66',
+  },
+
+  formationChipText: {
+    color: '#888888',
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+  },
+
+  formationChipTextActive: {
+    color: '#000000',
   },
 
   spotInner: {

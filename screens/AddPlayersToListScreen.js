@@ -62,7 +62,6 @@ const SPECIFIC_ORDER = [
   'Attacking Midfield',
   'Right Winger',
   'Left Winger',
-  'Second Striker',
   'Centre-Forward',
 ];
 

@@ -59,7 +59,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -176,11 +176,11 @@ const PLAYERS = [
     "id": "tm-125781",
     "name": "Antoine Griezmann",
     "nation": "France",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
-    "club": "Atlético de Madrid",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": null,
     "leagues": [
       "La Liga",
       "MLS"
@@ -279,7 +279,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -380,7 +380,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -507,8 +507,8 @@ const PLAYERS = [
     "id": "tm-206050",
     "name": "Paulo Dybala",
     "nation": "Argentina",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Associazione Sportiva Roma",
     "active": true,
     "currentLeague": "Serie A",
@@ -642,7 +642,7 @@ const PLAYERS = [
     "nation": "Slovenia",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -744,11 +744,12 @@ const PLAYERS = [
     "name": "Bernardo Silva",
     "nation": "Portugal",
     "position": "Midfield",
-    "specificPosition": "Attacking Midfield",
-    "club": "",
+    "specificPosition": "Defensive Midfield",
+    "club": "Real Madrid",
     "active": true,
-    "currentLeague": null,
+    "currentLeague": "La Liga",
     "leagues": [
+      "La Liga",
       "Ligue 1",
       "Premier League",
       "Primeira Liga"
@@ -759,7 +760,7 @@ const PLAYERS = [
     "name": "Aurélien Tchouaméni",
     "nation": "France",
     "position": "Midfield",
-    "specificPosition": "Defensive Midfield",
+    "specificPosition": "Central Midfield",
     "club": "Real Madrid",
     "active": true,
     "currentLeague": "La Liga",
@@ -787,8 +788,8 @@ const PLAYERS = [
     "id": "tm-462250",
     "name": "João Félix",
     "nation": "Portugal",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Al-Nassr Football Club",
     "active": true,
     "currentLeague": "Saudi Pro League",
@@ -834,7 +835,7 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -849,7 +850,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -861,7 +862,7 @@ const PLAYERS = [
     "name": "Eduardo Camavinga",
     "nation": "France",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Defensive Midfield",
     "club": "Real Madrid",
     "active": true,
     "currentLeague": "La Liga",
@@ -876,9 +877,9 @@ const PLAYERS = [
     "nation": "Poland",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "FC Barcelona",
+    "club": "",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": null,
     "leagues": [
       "Bundesliga",
       "Ekstraklasa",
@@ -937,7 +938,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Real Betis Balompié",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -1010,7 +1011,7 @@ const PLAYERS = [
     "name": "Serge Gnabry",
     "nation": "Germany",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Right Winger",
     "club": "Bayern Munich",
     "active": true,
     "currentLeague": "Bundesliga",
@@ -1098,8 +1099,8 @@ const PLAYERS = [
     "name": "Frenkie de Jong",
     "nation": "Netherlands",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "FC Barcelona",
+    "specificPosition": "Defensive Midfield",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -1129,7 +1130,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -1187,7 +1188,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -1257,7 +1258,7 @@ const PLAYERS = [
     "name": "Yan Diomande",
     "nation": "Cote d'Ivoire",
     "position": "Attack",
-    "specificPosition": "Left Winger",
+    "specificPosition": "Right Winger",
     "club": "Real Madrid",
     "active": true,
     "currentLeague": "La Liga",
@@ -1498,7 +1499,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -1540,7 +1541,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -1772,7 +1773,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -1812,8 +1813,8 @@ const PLAYERS = [
     "id": "tm-58358",
     "name": "Thomas Müller",
     "nation": "Germany",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Vancouver Whitecaps FC",
     "active": true,
     "currentLeague": "MLS",
@@ -1828,7 +1829,7 @@ const PLAYERS = [
     "nation": "Gabon",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Deportivo de La Coruña",
+    "club": "Deportivo A Coruña",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -1905,7 +1906,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Athletic Bilbao",
+    "club": "Athletic Club",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -1980,9 +1981,9 @@ const PLAYERS = [
     "id": "tm-343052",
     "name": "Nicolas Pépé",
     "nation": "Cote d'Ivoire",
-    "position": "Attack",
-    "specificPosition": "Right Winger",
-    "club": "Villarreal CF",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Villarreal",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -2084,7 +2085,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Real Betis Balompié",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -2171,7 +2172,7 @@ const PLAYERS = [
     "name": "Alexis Sánchez",
     "nation": "Chile",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Left Winger",
     "club": "Club de Foot Montréal",
     "active": true,
     "currentLeague": "MLS",
@@ -2265,7 +2266,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -2334,8 +2335,8 @@ const PLAYERS = [
     "name": "João Cancelo",
     "nation": "Portugal",
     "position": "Defence",
-    "specificPosition": "Right-Back",
-    "club": "FC Barcelona",
+    "specificPosition": "Left-Back",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -2368,7 +2369,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Elche CF",
+    "club": "Elche",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -2415,7 +2416,7 @@ const PLAYERS = [
     "nation": "Uruguay",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Deportivo de La Coruña",
+    "club": "Deportivo A Coruña",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -2687,7 +2688,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Athletic Bilbao",
+    "club": "Athletic Club",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -2844,10 +2845,11 @@ const PLAYERS = [
     "specificPosition": "Centre-Forward",
     "club": "CD Leganés",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Segunda División",
     "leagues": [
       "La Liga",
       "Premier League",
+      "Segunda División",
       "Serie A",
       "Super Lig"
     ]
@@ -2950,7 +2952,7 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -2980,7 +2982,7 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -3054,7 +3056,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -3252,7 +3254,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Getafe CF",
+    "club": "Getafe",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -3417,7 +3419,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -3507,11 +3509,12 @@ const PLAYERS = [
     "nation": "France",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "",
+    "club": "Real Madrid",
     "active": true,
-    "currentLeague": null,
+    "currentLeague": "La Liga",
     "leagues": [
       "Bundesliga",
+      "La Liga",
       "Ligue 1",
       "Premier League"
     ]
@@ -3570,9 +3573,9 @@ const PLAYERS = [
     "nation": "Nigeria",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Atalanta BC",
+    "club": "Atlético Madrid",
     "active": true,
-    "currentLeague": "Serie A",
+    "currentLeague": "La Liga",
     "leagues": [
       "Bundesliga",
       "La Liga",
@@ -3628,9 +3631,9 @@ const PLAYERS = [
     "id": "tm-496094",
     "name": "Karim Adeyemi",
     "nation": "Germany",
-    "position": "Attack",
-    "specificPosition": "Right Winger",
-    "club": "FC Barcelona",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -3675,7 +3678,7 @@ const PLAYERS = [
     "nation": "Canada",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -3705,7 +3708,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Athletic Bilbao",
+    "club": "Athletic Club",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -3718,7 +3721,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -3731,7 +3734,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -3775,7 +3778,7 @@ const PLAYERS = [
     "name": "Endrick",
     "nation": "Brazil",
     "position": "Attack",
-    "specificPosition": "Centre-Forward",
+    "specificPosition": "Right Winger",
     "club": "Real Madrid",
     "active": true,
     "currentLeague": "La Liga",
@@ -3972,12 +3975,13 @@ const PLAYERS = [
     "specificPosition": "Central Midfield",
     "club": "Girona FC",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Segunda División",
     "leagues": [
       "Bundesliga",
       "Eredivisie",
       "La Liga",
-      "Premier League"
+      "Premier League",
+      "Segunda División"
     ]
   },
   {
@@ -4055,8 +4059,8 @@ const PLAYERS = [
     "id": "tm-392085",
     "name": "Nicolò Zaniolo",
     "nation": "Italy",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Udinese Calcio",
     "active": true,
     "currentLeague": "Serie A",
@@ -4146,9 +4150,9 @@ const PLAYERS = [
     "id": "tm-548111",
     "name": "Álex Baena",
     "nation": "Spain",
-    "position": "Attack",
-    "specificPosition": "Left Winger",
-    "club": "Atlético de Madrid",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -4769,7 +4773,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Valencia CF",
+    "club": "Valencia",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -4858,7 +4862,7 @@ const PLAYERS = [
     "nation": "Ghana",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Athletic Bilbao",
+    "club": "Athletic Club",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -4989,7 +4993,7 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Real Betis Balompié",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -5047,9 +5051,9 @@ const PLAYERS = [
     "id": "tm-355861",
     "name": "Arnaut Danjuma",
     "nation": "Netherlands",
-    "position": "Attack",
-    "specificPosition": "Left Winger",
-    "club": "Valencia CF",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Valencia",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -5240,7 +5244,7 @@ const PLAYERS = [
     "nation": "Denmark",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -5518,9 +5522,9 @@ const PLAYERS = [
     "id": "tm-733576",
     "name": "Alberto Moleiro",
     "nation": "Spain",
-    "position": "Attack",
-    "specificPosition": "Left Winger",
-    "club": "Villarreal CF",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Villarreal",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -5949,7 +5953,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Celta de Vigo",
+    "club": "Celta Vigo",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -6069,9 +6073,9 @@ const PLAYERS = [
     "id": "tm-193082",
     "name": "Alejandro Grimaldo",
     "nation": "Spain",
-    "position": "Defence",
-    "specificPosition": "Left-Back",
-    "club": "Atlético de Madrid",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -6100,9 +6104,9 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Elche CF",
+    "club": "",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": null,
     "leagues": [
       "Bundesliga",
       "La Liga",
@@ -6145,7 +6149,7 @@ const PLAYERS = [
     "name": "Ángel Correa",
     "nation": "Argentina",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "Club Atlético River Plate",
     "active": true,
     "currentLeague": "Argentine Primera Division",
@@ -6262,8 +6266,8 @@ const PLAYERS = [
     "name": "Dani Ceballos",
     "nation": "Spain",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Real Betis Balompié",
+    "specificPosition": "Defensive Midfield",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -6578,7 +6582,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -7069,7 +7073,7 @@ const PLAYERS = [
     "name": "Carlos Tevez",
     "nation": "Argentina",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Left Winger",
     "club": "Juventus FC",
     "active": false,
     "currentLeague": null,
@@ -7096,8 +7100,8 @@ const PLAYERS = [
     "id": "tm-5958",
     "name": "Francesco Totti",
     "nation": "Italy",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Associazione Sportiva Roma",
     "active": false,
     "currentLeague": null,
@@ -7190,7 +7194,7 @@ const PLAYERS = [
     "nation": "Poland",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -7233,9 +7237,9 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Sevilla FC",
+    "club": "",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": null,
     "leagues": [
       "La Liga",
       "Ligue 1",
@@ -7507,7 +7511,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Villarreal CF",
+    "club": "Villarreal",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -7571,7 +7575,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Right-Back",
-    "club": "Real Betis Balompié",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -7631,7 +7635,7 @@ const PLAYERS = [
     "nation": "Denmark",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -7646,7 +7650,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Deportivo de La Coruña",
+    "club": "Deportivo A Coruña",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -7912,7 +7916,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -8201,7 +8205,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -8255,7 +8259,7 @@ const PLAYERS = [
     "nation": "Senegal",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Villarreal CF",
+    "club": "Villarreal",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -8312,7 +8316,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Athletic Bilbao",
+    "club": "Athletic Club",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -8553,7 +8557,7 @@ const PLAYERS = [
     "nation": "Morocco",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Real Betis Balompié",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -8579,9 +8583,9 @@ const PLAYERS = [
     "id": "tm-742201",
     "name": "Giuliano Simeone",
     "nation": "Argentina",
-    "position": "Attack",
-    "specificPosition": "Right Winger",
-    "club": "Atlético de Madrid",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -8847,7 +8851,7 @@ const PLAYERS = [
     "name": "Andrej Kramaric",
     "nation": "Croatia",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "TSG 1899 Hoffenheim",
     "active": true,
     "currentLeague": "Bundesliga",
@@ -8918,7 +8922,7 @@ const PLAYERS = [
     "name": "Joaquín Correa",
     "nation": "Argentina",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "S. A. F. Botafogo",
     "active": true,
     "currentLeague": "Brasileirao",
@@ -9355,9 +9359,9 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Villarreal CF",
+    "club": "",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": null,
     "leagues": [
       "La Liga",
       "Premier League"
@@ -9805,7 +9809,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Deportivo de La Coruña",
+    "club": "Deportivo A Coruña",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -10241,7 +10245,7 @@ const PLAYERS = [
     "nation": "Slovakia",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -10256,7 +10260,7 @@ const PLAYERS = [
     "name": "Giacomo Raspadori",
     "nation": "Italy",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "Atalanta BC",
     "active": true,
     "currentLeague": "Serie A",
@@ -10556,7 +10560,7 @@ const PLAYERS = [
     "nation": "England",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Valencia CF",
+    "club": "Valencia",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -10746,7 +10750,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -10857,7 +10861,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -10951,8 +10955,8 @@ const PLAYERS = [
     "name": "Mikel Jauregizar",
     "nation": "Spain",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Athletic Bilbao",
+    "specificPosition": "Defensive Midfield",
+    "club": "Athletic Club",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -11111,7 +11115,7 @@ const PLAYERS = [
     "name": "Dries Mertens",
     "nation": "Belgium",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "Galatasaray",
     "active": false,
     "currentLeague": null,
@@ -11375,7 +11379,7 @@ const PLAYERS = [
     "name": "Georginio Rutter",
     "nation": "France",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "Brighton & Hove Albion",
     "active": true,
     "currentLeague": "Premier League",
@@ -11660,10 +11664,11 @@ const PLAYERS = [
     "specificPosition": "Central Midfield",
     "club": "Real Oviedo",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Segunda División",
     "leagues": [
       "La Liga",
-      "Premier League"
+      "Premier League",
+      "Segunda División"
     ]
   },
   {
@@ -11831,7 +11836,7 @@ const PLAYERS = [
     "name": "Stevan Jovetić",
     "nation": "Montenegro",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "AEL Limassol FC",
     "active": true,
     "currentLeague": "Cypriot First Division",
@@ -12077,12 +12082,13 @@ const PLAYERS = [
     "specificPosition": "Central Midfield",
     "club": "Real Zaragoza",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Segunda División",
     "leagues": [
       "Argentine Primera Division",
       "La Liga",
       "Ligue 1",
-      "Premier League"
+      "Premier League",
+      "Segunda División"
     ]
   },
   {
@@ -12440,7 +12446,7 @@ const PLAYERS = [
     "nation": "Togo",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Getafe CF",
+    "club": "Getafe",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -12468,8 +12474,8 @@ const PLAYERS = [
     "id": "tm-238055",
     "name": "Rafa Silva",
     "nation": "Portugal",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Beşiktaş Jimnastik Kulübü",
     "active": true,
     "currentLeague": "Super Lig",
@@ -12501,7 +12507,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Villarreal CF",
+    "club": "Villarreal",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -12515,7 +12521,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Athletic Bilbao",
+    "club": "Athletic Club",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -12572,7 +12578,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Goalkeeper",
     "specificPosition": "Goalkeeper",
-    "club": "Athletic Bilbao",
+    "club": "Athletic Club",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -12585,9 +12591,9 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Sevilla FC",
+    "club": "",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": null,
     "leagues": [
       "La Liga"
     ]
@@ -12695,7 +12701,7 @@ const PLAYERS = [
     "name": "Carles Aleñá",
     "nation": "Spain",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
+    "specificPosition": "Left Midfield",
     "club": "Deportivo Alavés",
     "active": true,
     "currentLeague": "La Liga",
@@ -12773,8 +12779,8 @@ const PLAYERS = [
     "id": "tm-305947",
     "name": "Albert Gudmundsson",
     "nation": "Iceland",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Società Sportiva Lazio S.p.A.",
     "active": true,
     "currentLeague": "Serie A",
@@ -12849,7 +12855,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Real Betis Balompié",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -12880,7 +12886,7 @@ const PLAYERS = [
     "nation": "Guinea",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Valencia CF",
+    "club": "Valencia",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -12936,8 +12942,8 @@ const PLAYERS = [
     "name": "Pablo Fornals",
     "nation": "Spain",
     "position": "Midfield",
-    "specificPosition": "Central Midfield",
-    "club": "Real Betis Balompié",
+    "specificPosition": "Attacking Midfield",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -13230,10 +13236,11 @@ const PLAYERS = [
     "specificPosition": "Left Winger",
     "club": "Girona FC",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Segunda División",
     "leagues": [
       "La Liga",
-      "Premier League"
+      "Premier League",
+      "Segunda División"
     ]
   },
   {
@@ -13313,7 +13320,7 @@ const PLAYERS = [
     "nation": "Korea, South",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -13355,8 +13362,8 @@ const PLAYERS = [
     "name": "Youssouf Fofana",
     "nation": "France",
     "position": "Midfield",
-    "specificPosition": "Defensive Midfield",
-    "club": "Sevilla FC",
+    "specificPosition": "Central Midfield",
+    "club": "Sevilla",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -13515,7 +13522,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "Deportivo de La Coruña",
+    "club": "Deportivo A Coruña",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -13630,7 +13637,7 @@ const PLAYERS = [
     "nation": "Georgia",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Villarreal CF",
+    "club": "Villarreal",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -13841,7 +13848,8 @@ const PLAYERS = [
     "leagues": [
       "Brasileirao",
       "La Liga",
-      "Premier League"
+      "Premier League",
+      "Segunda División"
     ]
   },
   {
@@ -13850,7 +13858,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Defensive Midfield",
-    "club": "FC Barcelona",
+    "club": "Barcelona",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -14339,7 +14347,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Celta de Vigo",
+    "club": "Celta Vigo",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -14437,10 +14445,10 @@ const PLAYERS = [
     "name": "Guido Rodríguez",
     "nation": "Argentina",
     "position": "Midfield",
-    "specificPosition": "Defensive Midfield",
-    "club": "West Ham United",
+    "specificPosition": "Central Midfield",
+    "club": "Valencia",
     "active": true,
-    "currentLeague": "Championship",
+    "currentLeague": "La Liga",
     "leagues": [
       "Argentine Primera Division",
       "Championship",
@@ -15159,11 +15167,12 @@ const PLAYERS = [
     "nation": "Albania",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "RCD Mallorca",
+    "club": "Rayo Vallecano",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
       "La Liga",
+      "Segunda División",
       "Serie A"
     ]
   },
@@ -15511,7 +15520,7 @@ const PLAYERS = [
     "name": "Antonio Cassano",
     "nation": "Italy",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "UC Sampdoria",
     "active": false,
     "currentLeague": null,
@@ -15824,9 +15833,9 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Attacking Midfield",
-    "club": "CF Monterrey",
+    "club": "Racing Santander",
     "active": true,
-    "currentLeague": "Liga MX",
+    "currentLeague": "La Liga",
     "leagues": [
       "La Liga",
       "Liga MX"
@@ -15866,8 +15875,8 @@ const PLAYERS = [
     "name": "Iago Aspas",
     "nation": "Spain",
     "position": "Attack",
-    "specificPosition": "Centre-Forward",
-    "club": "Celta de Vigo",
+    "specificPosition": "Right Winger",
+    "club": "Celta Vigo",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -16200,8 +16209,8 @@ const PLAYERS = [
     "position": "Attack",
     "specificPosition": "Centre-Forward",
     "club": "Rayo Vallecano",
-    "active": false,
-    "currentLeague": null,
+    "active": true,
+    "currentLeague": "La Liga",
     "leagues": [
       "La Liga",
       "Primeira Liga"
@@ -16449,7 +16458,7 @@ const PLAYERS = [
     "nation": "Norway",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -16500,7 +16509,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Real Betis Balompié",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -16515,7 +16524,7 @@ const PLAYERS = [
     "nation": "Türkiye",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Getafe CF",
+    "club": "Getafe",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -16783,9 +16792,9 @@ const PLAYERS = [
     "nation": "Belgium",
     "position": "Attack",
     "specificPosition": "Right Winger",
-    "club": "Sevilla FC",
+    "club": "",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": null,
     "leagues": [
       "Belgian Pro League",
       "Bundesliga",
@@ -16947,8 +16956,8 @@ const PLAYERS = [
     "id": "tm-346890",
     "name": "Noah Okafor",
     "nation": "Switzerland",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Leeds United",
     "active": true,
     "currentLeague": "Premier League",
@@ -17051,7 +17060,7 @@ const PLAYERS = [
     "nation": "Dominican Republic",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "Real Betis Balompié",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -17065,13 +17074,14 @@ const PLAYERS = [
     "nation": "Venezuela",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Girona FC",
+    "club": "Real Sociedad",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
       "La Liga",
       "MLS",
-      "Premier League"
+      "Premier League",
+      "Segunda División"
     ]
   },
   {
@@ -17247,7 +17257,7 @@ const PLAYERS = [
     "name": "Paulinho",
     "nation": "Brazil",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Left Winger",
     "club": "Sociedade Esportiva Palmeiras",
     "active": true,
     "currentLeague": "Brasileirao",
@@ -17290,7 +17300,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Attack",
     "specificPosition": "Left Winger",
-    "club": "Real Betis Balompié",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -17333,7 +17343,7 @@ const PLAYERS = [
     "nation": "Argentina",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Villarreal CF",
+    "club": "Villarreal",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -17364,10 +17374,11 @@ const PLAYERS = [
     "specificPosition": "Defensive Midfield",
     "club": "Sporting Gijón",
     "active": true,
-    "currentLeague": "La Liga",
+    "currentLeague": "Segunda División",
     "leagues": [
       "Croatian HNL",
-      "La Liga"
+      "La Liga",
+      "Segunda División"
     ]
   },
   {
@@ -17552,7 +17563,7 @@ const PLAYERS = [
     "nation": "Ireland",
     "position": "Attack",
     "specificPosition": "Centre-Forward",
-    "club": "Real Betis Balompié",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -17678,7 +17689,7 @@ const PLAYERS = [
     "nation": "Guinea",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Celta de Vigo",
+    "club": "Celta Vigo",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -17927,7 +17938,7 @@ const PLAYERS = [
     "nation": "United States",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Atlético de Madrid",
+    "club": "Atlético Madrid",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -17969,7 +17980,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Defence",
     "specificPosition": "Left-Back",
-    "club": "RCD Espanyol Barcelona",
+    "club": "Villarreal",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -18038,7 +18049,7 @@ const PLAYERS = [
     "nation": "Brazil",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Real Betis Balompié",
+    "club": "Real Betis",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -18125,7 +18136,7 @@ const PLAYERS = [
     "nation": "Portugal",
     "position": "Defence",
     "specificPosition": "Centre-Back",
-    "club": "Villarreal CF",
+    "club": "Villarreal",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -18157,7 +18168,7 @@ const PLAYERS = [
     "nation": "Spain",
     "position": "Midfield",
     "specificPosition": "Central Midfield",
-    "club": "Valencia CF",
+    "club": "Valencia",
     "active": true,
     "currentLeague": "La Liga",
     "leagues": [
@@ -18481,6 +18492,21 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-514285",
+    "name": "Quilindschy Hartman",
+    "nation": "Netherlands",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-611793",
     "name": "James Hill",
     "nation": "England",
@@ -18509,6 +18535,21 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-99922",
+    "name": "Marc Bartra",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Super Lig"
+    ]
+  },
+  {
     "id": "tm-128899",
     "name": "Jack Butland",
     "nation": "England",
@@ -18520,6 +18561,20 @@ const PLAYERS = [
     "leagues": [
       "Premier League",
       "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-225020",
+    "name": "Mariano Díaz",
+    "nation": "Dominican Republic",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1"
     ]
   },
   {
@@ -18548,6 +18603,36 @@ const PLAYERS = [
     "leagues": [
       "Bundesliga",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-289592",
+    "name": "Orel Mangala",
+    "nation": "Belgium",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-328480",
+    "name": "Pepelu",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Primeira Liga"
     ]
   },
   {
@@ -18627,6 +18712,22 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-457931",
+    "name": "Luiz Felipe",
+    "nation": "Italy",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Saudi Pro League",
+      "Serie A"
+    ]
+  },
+  {
     "id": "tm-471690",
     "name": "Max Aarons",
     "nation": "England",
@@ -18666,6 +18767,19 @@ const PLAYERS = [
     "leagues": [
       "Ligue 1",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-591916",
+    "name": "Aitor Paredes",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -18711,6 +18825,49 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-983989",
+    "name": "Facundo Buonanotte",
+    "nation": "Argentina",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-61812",
+    "name": "Yuri Berchiche",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1"
+    ]
+  },
+  {
+    "id": "tm-80293",
+    "name": "Aïssa Mandi",
+    "nation": "Algeria",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1"
+    ]
+  },
+  {
     "id": "tm-91059",
     "name": "Joshua King",
     "nation": "Norway",
@@ -18744,6 +18901,21 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-175446",
+    "name": "Jonny Otto",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League",
+      "Super League Greece"
+    ]
+  },
+  {
     "id": "tm-192080",
     "name": "Nick Pope",
     "nation": "England",
@@ -18757,6 +18929,21 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-242359",
+    "name": "Juan Musso",
+    "nation": "Argentina",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Atlético Madrid",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
     "id": "tm-249089",
     "name": "Lewis Cook",
     "nation": "England",
@@ -18767,6 +18954,21 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-251878",
+    "name": "Aarón Martín",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Serie A"
     ]
   },
   {
@@ -18797,6 +18999,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-338285",
+    "name": "Unai Núñez",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
     "id": "tm-362108",
     "name": "Gabriel Gudmundsson",
     "nation": "Sweden",
@@ -18809,6 +19025,22 @@ const PLAYERS = [
       "Allsvenskan",
       "Eredivisie",
       "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-366930",
+    "name": "Sergio Gómez",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Belgian Pro League",
+      "Bundesliga",
+      "La Liga",
       "Premier League"
     ]
   },
@@ -18826,6 +19058,20 @@ const PLAYERS = [
       "Premier League",
       "Russian Premier League",
       "Serie A"
+    ]
+  },
+  {
+    "id": "tm-375382",
+    "name": "André Almeida",
+    "nation": "Portugal",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Primeira Liga"
     ]
   },
   {
@@ -18857,6 +19103,20 @@ const PLAYERS = [
       "Austrian Bundesliga",
       "La Liga",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-502722",
+    "name": "Luka Sucic",
+    "nation": "Croatia",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Austrian Bundesliga",
+      "La Liga"
     ]
   },
   {
@@ -18903,6 +19163,59 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-616369",
+    "name": "Ander Barrenetxea",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-625047",
+    "name": "Beñat Prados",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-634431",
+    "name": "Beñat Turrientes",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-660438",
+    "name": "Orri Óskarsson",
+    "nation": "Iceland",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Danish Superliga",
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-683620",
     "name": "Antoni Milambo",
     "nation": "Netherlands",
@@ -18944,6 +19257,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-764859",
+    "name": "Williot Swedberg",
+    "nation": "Sweden",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Allsvenskan",
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-864121",
     "name": "Abdul Fatawu",
     "nation": "Ghana",
@@ -18955,6 +19282,21 @@ const PLAYERS = [
     "leagues": [
       "Premier League",
       "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-919515",
+    "name": "Jeanuël Belocian",
+    "nation": "France",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Ligue 1"
     ]
   },
   {
@@ -18973,6 +19315,32 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-953901",
+    "name": "Santiago Mouriño",
+    "nation": "Uruguay",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-961297",
+    "name": "Rodrigo Mendoza",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Atlético Madrid",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-989112",
     "name": "Veljko Milosavljevic",
     "nation": "Serbia",
@@ -18984,6 +19352,32 @@ const PLAYERS = [
     "leagues": [
       "Premier League",
       "Serbian SuperLiga"
+    ]
+  },
+  {
+    "id": "tm-1063338",
+    "name": "Carlos Espí",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Real Madrid",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1375227",
+    "name": "Thiago Pitarch",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Real Madrid",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -19026,6 +19420,37 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-124419",
+    "name": "Odysseas Vlachodimos",
+    "nation": "Greece",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Premier League",
+      "Primeira Liga",
+      "Super League Greece"
+    ]
+  },
+  {
+    "id": "tm-165007",
+    "name": "Denis Suárez",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-207014",
     "name": "Will Hughes",
     "nation": "England",
@@ -19036,6 +19461,19 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-226012",
+    "name": "David Soria",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -19125,6 +19563,64 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-337715",
+    "name": "Umar Sadiq",
+    "nation": "Nigeria",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga",
+      "Scottish Premiership",
+      "Serbian SuperLiga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-340205",
+    "name": "Gorka Guruzeta",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-341264",
+    "name": "Fran García",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-459463",
+    "name": "Cucho Hernández",
+    "nation": "Colombia",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "MLS",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-463613",
     "name": "Yann Gboho",
     "nation": "France",
@@ -19138,6 +19634,20 @@ const PLAYERS = [
       "Eredivisie",
       "Ligue 1",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-484988",
+    "name": "Logan Costa",
+    "nation": "Cape Verde",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1"
     ]
   },
   {
@@ -19171,6 +19681,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-527966",
+    "name": "Andrei Rațiu",
+    "nation": "Romania",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-554389",
     "name": "Konstantinos Tzolakis",
     "nation": "Greece",
@@ -19182,6 +19706,20 @@ const PLAYERS = [
     "leagues": [
       "Premier League",
       "Super League Greece"
+    ]
+  },
+  {
+    "id": "tm-555143",
+    "name": "Arsen Zakharyan",
+    "nation": "Russia",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Russian Premier League"
     ]
   },
   {
@@ -19227,6 +19765,21 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-655012",
+    "name": "Lucas Stassin",
+    "nation": "Belgium",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Belgian Pro League",
+      "La Liga",
+      "Ligue 1"
+    ]
+  },
+  {
     "id": "tm-665390",
     "name": "Jaden Philogene",
     "nation": "England",
@@ -19237,6 +19790,19 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-687609",
+    "name": "Isaac Romero",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -19335,6 +19901,19 @@ const PLAYERS = [
       "Ligue 1",
       "Premier League",
       "Super Lig"
+    ]
+  },
+  {
+    "id": "tm-1076815",
+    "name": "Javi Rodríguez",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -19498,6 +20077,21 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-336077",
+    "name": "Altay Bayındır",
+    "nation": "Türkiye",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League",
+      "Super Lig"
+    ]
+  },
+  {
     "id": "tm-340321",
     "name": "Josh Dasilva",
     "nation": "England",
@@ -19521,6 +20115,19 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-573775",
+    "name": "Hugo Duro",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -19567,6 +20174,23 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-46413",
+    "name": "Ante Budimir",
+    "nation": "Croatia",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Austrian Bundesliga",
+      "Bundesliga",
+      "Croatian HNL",
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
     "id": "tm-52570",
     "name": "Fraser Forster",
     "nation": "England",
@@ -19578,6 +20202,36 @@ const PLAYERS = [
     "leagues": [
       "Premier League",
       "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-126737",
+    "name": "Juanmi",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League",
+      "Saudi Pro League"
+    ]
+  },
+  {
+    "id": "tm-205927",
+    "name": "Dominik Livakovic",
+    "nation": "Croatia",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Barcelona",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Croatian HNL",
+      "La Liga",
+      "Super Lig"
     ]
   },
   {
@@ -19612,6 +20266,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-256339",
+    "name": "Emil Audero",
+    "nation": "Indonesia",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
     "id": "tm-271495",
     "name": "Abdülkadir Ömür",
     "nation": "Türkiye",
@@ -19640,6 +20308,81 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-298976",
+    "name": "Borja Mayoral",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-303657",
+    "name": "Ionuț Radu",
+    "nation": "Romania",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-334222",
+    "name": "Lucas Boyé",
+    "nation": "Argentina",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga",
+      "Premier League",
+      "Serie A",
+      "Super League Greece"
+    ]
+  },
+  {
+    "id": "tm-338425",
+    "name": "Álex Berenguer",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-341278",
+    "name": "Iván Martín",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-353032",
     "name": "Omar Alderete",
     "nation": "Paraguay",
@@ -19654,6 +20397,34 @@ const PLAYERS = [
       "La Liga",
       "Premier League",
       "Swiss Super League"
+    ]
+  },
+  {
+    "id": "tm-398163",
+    "name": "Gonzalo Villar",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Croatian HNL",
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-417913",
+    "name": "Álvaro Valles",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -19673,6 +20444,22 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-439022",
+    "name": "Marcão",
+    "nation": "Brazil",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Brasileirao",
+      "La Liga",
+      "Primeira Liga",
+      "Super Lig"
+    ]
+  },
+  {
     "id": "tm-442248",
     "name": "Ethan Pinnock",
     "nation": "Jamaica",
@@ -19683,6 +20470,19 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-455181",
+    "name": "Jorge de Frutos",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -19741,6 +20541,34 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-569384",
+    "name": "Lucien Agoumé",
+    "nation": "France",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-580560",
+    "name": "Jon Pacheco",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-607226",
     "name": "Loum Tchaouna",
     "nation": "France",
@@ -19757,6 +20585,58 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-617081",
+    "name": "Diego López",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-625014",
+    "name": "Julen Agirrezabala",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-634131",
+    "name": "Aimar Oroz",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-661145",
+    "name": "Jon Aramburu",
+    "nation": "Venezuela",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-670847",
     "name": "Mohamed-Ali Cho",
     "nation": "France",
@@ -19769,6 +20649,20 @@ const PLAYERS = [
       "La Liga",
       "Ligue 1",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-671649",
+    "name": "Álvaro Djaló",
+    "nation": "Guinea-Bissau",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Primeira Liga"
     ]
   },
   {
@@ -19797,6 +20691,32 @@ const PLAYERS = [
     "leagues": [
       "La Liga",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-707274",
+    "name": "César Tárrega",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-709969",
+    "name": "Ilias Akhomach",
+    "nation": "Morocco",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -19844,6 +20764,47 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-792331",
+    "name": "Roony Bardghji",
+    "nation": "Sweden",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Barcelona",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Danish Superliga",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-822331",
+    "name": "Omar El Hilali",
+    "nation": "Morocco",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-826224",
+    "name": "Arnau Martínez",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Segunda División"
+    ]
+  },
+  {
     "id": "tm-881116",
     "name": "Darío Osorio",
     "nation": "Chile",
@@ -19855,6 +20816,19 @@ const PLAYERS = [
     "leagues": [
       "Danish Superliga",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-892932",
+    "name": "Miguel Román",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -19886,6 +20860,49 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-1061336",
+    "name": "Pau Navarro",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1086636",
+    "name": "Gabriel Moscardo",
+    "nation": "Brazil",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Brasileirao",
+      "La Liga",
+      "Ligue 1",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-1124005",
+    "name": "Christantus Uche",
+    "nation": "Nigeria",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-229604",
     "name": "Gerónimo Rulli",
     "nation": "Argentina",
@@ -19900,6 +20917,21 @@ const PLAYERS = [
       "La Liga",
       "Ligue 1",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-251845",
+    "name": "Sergi Canós",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League",
+      "Super League Greece"
     ]
   },
   {
@@ -19932,6 +20964,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-599231",
+    "name": "Ferran Jutglà",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Belgian Pro League",
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-715558",
     "name": "Marcelino Núñez",
     "nation": "Chile",
@@ -19941,6 +20987,35 @@ const PLAYERS = [
     "active": true,
     "currentLeague": "Premier League",
     "leagues": [
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-766583",
+    "name": "Kike Salas",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-57071",
+    "name": "Péter Gulácsi",
+    "nation": "Hungary",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Austrian Bundesliga",
+      "Bundesliga",
+      "La Liga",
       "Premier League"
     ]
   },
@@ -19989,6 +21064,21 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-345886",
+    "name": "Rubén Vargas",
+    "nation": "Switzerland",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Swiss Super League"
+    ]
+  },
+  {
     "id": "tm-425902",
     "name": "Ryan Yates",
     "nation": "England",
@@ -20031,6 +21121,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-94308",
+    "name": "Marko Dmitrovic",
+    "nation": "Serbia",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serbian SuperLiga"
+    ]
+  },
+  {
     "id": "tm-134270",
     "name": "Dan Burn",
     "nation": "England",
@@ -20058,6 +21162,19 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-192009",
+    "name": "Unai López",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-197642",
     "name": "Chuba Akpom",
     "nation": "England",
@@ -20072,6 +21189,33 @@ const PLAYERS = [
       "Ligue 1",
       "Premier League",
       "Super League Greece"
+    ]
+  },
+  {
+    "id": "tm-342048",
+    "name": "Grady Diangana",
+    "nation": "DR Congo",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-362086",
+    "name": "Isi Palazón",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20104,6 +21248,58 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-448628",
+    "name": "Javi Galán",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-488626",
+    "name": "Jesús Areso",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-545647",
+    "name": "Sergio Carreira",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-552425",
+    "name": "Jon Moncayola",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-620313",
     "name": "Lucas Gourna-Douath",
     "nation": "France",
@@ -20133,6 +21329,120 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-638793",
+    "name": "Tajon Buchanan",
+    "nation": "Canada",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Belgian Pro League",
+      "La Liga",
+      "MLS",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-661136",
+    "name": "Kevin Lomónaco",
+    "nation": "Argentina",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "Brasileirao",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-711625",
+    "name": "José Ángel Carmona",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-712107",
+    "name": "Luiz Júnior",
+    "nation": "Brazil",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Brasileirao",
+      "La Liga",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-713644",
+    "name": "Bryan Zaragoza",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-892221",
+    "name": "Hugo Sotelo",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-937955",
+    "name": "Héctor Fort",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-985383",
+    "name": "Valentín Gómez",
+    "nation": "Argentina",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-998101",
     "name": "Alex Tóth",
     "nation": "Hungary",
@@ -20149,8 +21459,8 @@ const PLAYERS = [
     "id": "tm-1035765",
     "name": "Ilyas Ansah",
     "nation": "Germany",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "Hull City",
     "active": true,
     "currentLeague": "Premier League",
@@ -20203,6 +21513,79 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-102423",
+    "name": "Leandro Cabrera",
+    "nation": "Uruguay",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-118997",
+    "name": "Aitor Fernández",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-128969",
+    "name": "Mathew Ryan",
+    "nation": "Australia",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "A-League",
+      "Belgian Pro League",
+      "Danish Superliga",
+      "Eredivisie",
+      "La Liga",
+      "Ligue 1",
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-175449",
+    "name": "Moi Gómez",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-213260",
+    "name": "Rubén García",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-226049",
     "name": "Freddie Woodman",
     "nation": "England",
@@ -20214,6 +21597,116 @@ const PLAYERS = [
     "leagues": [
       "Premier League",
       "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-249513",
+    "name": "Diego Rico",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-251876",
+    "name": "Pablo Maffeo",
+    "nation": "Argentina",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Premier League",
+      "Segunda División"
+    ]
+  },
+  {
+    "id": "tm-261503",
+    "name": "Álvaro Fidalgo",
+    "nation": "Mexico",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Liga MX"
+    ]
+  },
+  {
+    "id": "tm-289255",
+    "name": "Andoni Gorosabel",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-341713",
+    "name": "Diego Conde",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-353399",
+    "name": "Romain Del Castillo",
+    "nation": "France",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1"
+    ]
+  },
+  {
+    "id": "tm-357884",
+    "name": "Fernando Calero",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-408471",
+    "name": "Javi Puado",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20229,6 +21722,61 @@ const PLAYERS = [
       "Bundesliga",
       "Danish Superliga",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-479648",
+    "name": "Félix Correia",
+    "nation": "Portugal",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Primeira Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-495621",
+    "name": "Antonio Blanco",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-501418",
+    "name": "Adrià Pedrosa",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-505674",
+    "name": "Sergio Camello",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20276,6 +21824,19 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-618809",
+    "name": "Manu Sánchez",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-635645",
     "name": "Aurèle Amenda",
     "nation": "Switzerland",
@@ -20288,6 +21849,147 @@ const PLAYERS = [
       "Bundesliga",
       "Premier League",
       "Swiss Super League"
+    ]
+  },
+  {
+    "id": "tm-640109",
+    "name": "Martín Satriano",
+    "nation": "Uruguay",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-647435",
+    "name": "Tyrhys Dolan",
+    "nation": "England",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-678406",
+    "name": "Sergi Cardona",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-720518",
+    "name": "Roberto Fernández",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-768380",
+    "name": "Arouna Sangante",
+    "nation": "Senegal",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1"
+    ]
+  },
+  {
+    "id": "tm-846254",
+    "name": "Petar Ratkov",
+    "nation": "Serbia",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Austrian Bundesliga",
+      "La Liga",
+      "Serbian SuperLiga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-876298",
+    "name": "Matteo Prati",
+    "nation": "Italy",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-889435",
+    "name": "Obed Vargas",
+    "nation": "Mexico",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Atlético Madrid",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "MLS"
+    ]
+  },
+  {
+    "id": "tm-892929",
+    "name": "Hugo Álvarez",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-907559",
+    "name": "Nelson Deossa",
+    "nation": "Colombia",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga",
+      "Liga MX"
     ]
   },
   {
@@ -20305,6 +22007,19 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-948273",
+    "name": "Mario Martín",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-948275",
     "name": "Álvaro Rodríguez",
     "nation": "Uruguay",
@@ -20319,6 +22034,19 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-961087",
+    "name": "Pablo García",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-1005583",
     "name": "Alysson",
     "nation": "Brazil",
@@ -20330,6 +22058,19 @@ const PLAYERS = [
     "leagues": [
       "Brasileirao",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1054934",
+    "name": "Maroan Sannadi",
+    "nation": "Morocco",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20370,6 +22111,24 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-500067",
+    "name": "Chidera Ejuke",
+    "nation": "Nigeria",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Belgian Pro League",
+      "Bundesliga",
+      "Eliteserien",
+      "Eredivisie",
+      "La Liga",
+      "Russian Premier League"
     ]
   },
   {
@@ -20416,6 +22175,51 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-909758",
+    "name": "Federico Redondo",
+    "nation": "Argentina",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga",
+      "MLS"
+    ]
+  },
+  {
+    "id": "tm-1153105",
+    "name": "Yassir Zabiri",
+    "nation": "Morocco",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-127108",
+    "name": "Florian Lejeune",
+    "nation": "France",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-127202",
     "name": "Matz Sels",
     "nation": "Belgium",
@@ -20431,6 +22235,46 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-213670",
+    "name": "Lucas Torró",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-248738",
+    "name": "Sergio Herrera",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-380598",
+    "name": "Santi Comesaña",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-432914",
     "name": "John Victor",
     "nation": "Brazil",
@@ -20443,6 +22287,35 @@ const PLAYERS = [
       "Brasileirao",
       "La Liga",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-441170",
+    "name": "Valentin Rosier",
+    "nation": "France",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Primeira Liga",
+      "Super Lig"
+    ]
+  },
+  {
+    "id": "tm-449796",
+    "name": "Alejandro Catena",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20476,6 +22349,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-497663",
+    "name": "Mujaid Sadick",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Belgian Pro League",
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-503980",
     "name": "Joe Gelhardt",
     "nation": "England",
@@ -20486,6 +22373,19 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-517842",
+    "name": "Aihen Muñoz",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20501,6 +22401,32 @@ const PLAYERS = [
       "Belgian Pro League",
       "Ligue 1",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-622988",
+    "name": "Fran Pérez",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-628886",
+    "name": "Iván Romero",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20534,6 +22460,47 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-907813",
+    "name": "Pablo Marín",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-960571",
+    "name": "Jones El-Abdellaoui",
+    "nation": "Morocco",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eliteserien",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-972465",
+    "name": "Tani Oluwaseyi",
+    "nation": "Canada",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "MLS"
+    ]
+  },
+  {
     "id": "tm-1009658",
     "name": "Julio Soler",
     "nation": "Argentina",
@@ -20561,6 +22528,21 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-1077670",
+    "name": "Axel Tape",
+    "nation": "France",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Ligue 1"
+    ]
+  },
+  {
     "id": "tm-74960",
     "name": "Martin Dúbravka",
     "nation": "Slovakia",
@@ -20573,6 +22555,62 @@ const PLAYERS = [
       "Czech First League",
       "Danish Superliga",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-302371",
+    "name": "Toni Martínez",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-465967",
+    "name": "Ander Guevara",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-593837",
+    "name": "Couhaib Driouech",
+    "nation": "Morocco",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-624942",
+    "name": "Raúl Moro",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga",
+      "Serie A"
     ]
   },
   {
@@ -20605,6 +22643,21 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-74294",
+    "name": "Nemanja Gudelj",
+    "nation": "Serbia",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga",
+      "Primeira Liga"
+    ]
+  },
+  {
     "id": "tm-124884",
     "name": "Marco Bizot",
     "nation": "Netherlands",
@@ -20631,6 +22684,83 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-296783",
+    "name": "Ezequiel Ponce",
+    "nation": "Argentina",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga",
+      "Ligue 1",
+      "MLS",
+      "Russian Premier League",
+      "Serie A",
+      "Super League Greece"
+    ]
+  },
+  {
+    "id": "tm-385105",
+    "name": "Gabriel Suazo",
+    "nation": "Chile",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1"
+    ]
+  },
+  {
+    "id": "tm-394236",
+    "name": "Filip Ugrinic",
+    "nation": "Switzerland",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga",
+      "Swiss Super League"
+    ]
+  },
+  {
+    "id": "tm-420196",
+    "name": "Justin de Haas",
+    "nation": "Netherlands",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Croatian HNL",
+      "La Liga",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-532389",
+    "name": "Sebastián Cáceres",
+    "nation": "Uruguay",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Liga MX"
     ]
   },
   {
@@ -20663,6 +22793,35 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-938146",
+    "name": "Adam Aznou",
+    "nation": "Morocco",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1063329",
+    "name": "Andrés García",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
     "id": "tm-1111063",
     "name": "Sean Steur",
     "nation": "Netherlands",
@@ -20677,6 +22836,51 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-1127730",
+    "name": "Thiago Fernández",
+    "nation": "Argentina",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga",
+      "Segunda División"
+    ]
+  },
+  {
+    "id": "tm-258987",
+    "name": "Carl Starfelt",
+    "nation": "Sweden",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Allsvenskan",
+      "La Liga",
+      "Russian Premier League",
+      "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-634427",
+    "name": "Miguel Rodríguez",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-34130",
     "name": "Tom Heaton",
     "nation": "England",
@@ -20688,6 +22892,36 @@ const PLAYERS = [
     "leagues": [
       "Belgian Pro League",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-76467",
+    "name": "Kiko Femenía",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-129674",
+    "name": "Jeremy Toljan",
+    "nation": "Germany",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga",
+      "Scottish Premiership",
+      "Serie A"
     ]
   },
   {
@@ -20718,6 +22952,73 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-257062",
+    "name": "Álvaro García",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-275218",
+    "name": "Augusto Batalla",
+    "nation": "Argentina",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-298197",
+    "name": "Antonio Sivera",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-405564",
+    "name": "Giorgi Kochorashvili",
+    "nation": "Georgia",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-412045",
+    "name": "Pol Lozano",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-486604",
     "name": "Vitezslav Jaros",
     "nation": "Czech Republic",
@@ -20730,6 +23031,19 @@ const PLAYERS = [
       "Austrian Bundesliga",
       "Eredivisie",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-506248",
+    "name": "Edu Expósito",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20746,6 +23060,84 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-548188",
+    "name": "Germán Valera",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-555500",
+    "name": "Jorge Herrando",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-562742",
+    "name": "Leo Román",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-563137",
+    "name": "Robert Navarro",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-626953",
+    "name": "Álvaro Núñez",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-652331",
+    "name": "Javi Rueda",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-746740",
     "name": "Daniel Jebbison",
     "nation": "Canada",
@@ -20756,6 +23148,35 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-860992",
+    "name": "Nicolás Valentini",
+    "nation": "Argentina",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-898350",
+    "name": "Facundo Bernal",
+    "nation": "Uruguay",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Brasileirao",
+      "La Liga"
     ]
   },
   {
@@ -20787,6 +23208,87 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-533568",
+    "name": "Nahuel Tenaglia",
+    "nation": "Argentina",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-126751",
+    "name": "Iñigo Ruiz de Galarreta",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-203043",
+    "name": "Pedro Bigas",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-217144",
+    "name": "Aleix Febas",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-262939",
+    "name": "Johan Mojica",
+    "nation": "Colombia",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Segunda División",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-289257",
+    "name": "Jon Guridi",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-351755",
     "name": "Darnell Furlong",
     "nation": "England",
@@ -20797,6 +23299,167 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-357628",
+    "name": "Alfon González",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-371856",
+    "name": "Vanja Drkusic",
+    "nation": "Slovenia",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga",
+      "Russian Premier League",
+      "Serbian SuperLiga"
+    ]
+  },
+  {
+    "id": "tm-378139",
+    "name": "Aitor Ruibal",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-390688",
+    "name": "Juan Iglesias",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-413262",
+    "name": "Dani Raba",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-517753",
+    "name": "Óscar Valentín",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-520840",
+    "name": "José Copete",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-549027",
+    "name": "Martim Neto",
+    "nation": "Portugal",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-623024",
+    "name": "Jesús Vázquez",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-625654",
+    "name": "Julen Lobete",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-627294",
+    "name": "Fer Niño",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-639733",
+    "name": "Peque Fernández",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20814,6 +23477,22 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-668276",
+    "name": "Hugo Novoa",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "Eredivisie",
+      "La Liga",
+      "Swiss Super League"
+    ]
+  },
+  {
     "id": "tm-687622",
     "name": "Elliot Stroud",
     "nation": "Sweden",
@@ -20828,6 +23507,59 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-692070",
+    "name": "Clemens Riedel",
+    "nation": "Germany",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Bundesliga",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-710677",
+    "name": "Iker Muñoz",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-741289",
+    "name": "Youssef Enríquez",
+    "nation": "Morocco",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-834491",
+    "name": "Alejandro Rego",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-1011738",
     "name": "Harry Amass",
     "nation": "England",
@@ -20838,6 +23570,19 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1018912",
+    "name": "Xavi Espart",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Barcelona",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20870,6 +23615,88 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-251897",
+    "name": "Asier Villalibre",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-533354",
+    "name": "Facundo Garcés",
+    "nation": "Malaysia",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-658115",
+    "name": "Abel Bretones",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-919538",
+    "name": "Roy Revivo",
+    "nation": "Israel",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-962125",
+    "name": "Buba Sangaré",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-1182738",
+    "name": "Abdoulaye Faye",
+    "nation": "Senegal",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Allsvenskan",
+      "Bundesliga",
+      "La Liga",
+      "Ligue 1"
+    ]
+  },
+  {
     "id": "tm-1279984",
     "name": "Lucas Herrington",
     "nation": "Australia",
@@ -20895,6 +23722,21 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-85295",
+    "name": "Iván Balliu",
+    "nation": "Albania",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Primeira Liga"
     ]
   },
   {
@@ -20925,6 +23767,62 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-155025",
+    "name": "Fábio Cardoso",
+    "nation": "Portugal",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Primeira Liga",
+      "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-165467",
+    "name": "Stole Dimitrievski",
+    "nation": "North Macedonia",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-170472",
+    "name": "Dimitri Foulquier",
+    "nation": "Guadeloupe",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-278837",
+    "name": "Luis Rioja",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-357658",
     "name": "Mark Travers",
     "nation": "Ireland",
@@ -20935,6 +23833,76 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-453704",
+    "name": "Álvaro Fernández",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League"
+    ]
+  },
+  {
+    "id": "tm-495625",
+    "name": "Víctor Chust",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-525578",
+    "name": "Pathé Ciss",
+    "nation": "Senegal",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-560417",
+    "name": "Alemão",
+    "nation": "Brazil",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Brasileirao",
+      "J1 League",
+      "La Liga",
+      "Liga MX"
+    ]
+  },
+  {
+    "id": "tm-560483",
+    "name": "Randy Nteka",
+    "nation": "Angola",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20953,6 +23921,32 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-628498",
+    "name": "Jofre Carreras",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-631002",
+    "name": "Raúl García",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-654412",
     "name": "Abdoullah Ba",
     "nation": "France",
@@ -20964,6 +23958,32 @@ const PLAYERS = [
     "leagues": [
       "Ligue 1",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-783396",
+    "name": "Ramón Terrats",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-785353",
+    "name": "Pablo Ibáñez",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -20981,6 +24001,33 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-898352",
+    "name": "Sebastián Boselli",
+    "nation": "Uruguay",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-905997",
+    "name": "Pablo Durán",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-922462",
     "name": "Lewis Koumas",
     "nation": "Wales",
@@ -20991,6 +24038,32 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-933908",
+    "name": "Ángel Ortiz",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-939374",
+    "name": "Yoel Lago",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21022,6 +24095,33 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-531404",
+    "name": "Marc Aguado",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-834487",
+    "name": "Hugo Rincón",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Segunda División"
+    ]
+  },
+  {
     "id": "tm-834742",
     "name": "Mateo Joseph",
     "nation": "Spain",
@@ -21032,7 +24132,76 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "La Liga",
+      "Premier League",
+      "Segunda División"
+    ]
+  },
+  {
+    "id": "tm-912392",
+    "name": "Lucas Cepeda",
+    "nation": "Chile",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-985806",
+    "name": "Alex Freeman",
+    "nation": "United States",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "MLS"
+    ]
+  },
+  {
+    "id": "tm-93936",
+    "name": "Kike García",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-184767",
+    "name": "Ximo Navarro",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-225593",
+    "name": "Pere Milla",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21050,6 +24219,34 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-339816",
+    "name": "Tete Morente",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-363057",
+    "name": "Pedro Díaz",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1"
+    ]
+  },
+  {
     "id": "tm-412823",
     "name": "Joel Latibeaudiere",
     "nation": "Jamaica",
@@ -21064,6 +24261,36 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-419067",
+    "name": "Giorgi Tsitaishvili",
+    "nation": "Georgia",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Ekstraklasa",
+      "La Liga",
+      "Ligue 1",
+      "Ukrainian Premier League"
+    ]
+  },
+  {
+    "id": "tm-422466",
+    "name": "Javi Hernández",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Super League Greece"
+    ]
+  },
+  {
     "id": "tm-458178",
     "name": "Jack Taylor",
     "nation": "Ireland",
@@ -21074,6 +24301,19 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-568835",
+    "name": "Pablo Martínez",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21091,6 +24331,49 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-623524",
+    "name": "Carlos Dotor",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-633306",
+    "name": "Iván Azón",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Premier League",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-655456",
+    "name": "Saba Sazonov",
+    "nation": "Georgia",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Russian Premier League",
+      "Serie A"
+    ]
+  },
+  {
     "id": "tm-663264",
     "name": "Darko Gyabi",
     "nation": "England",
@@ -21101,6 +24384,100 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-743379",
+    "name": "Lucas Noubi",
+    "nation": "Belgium",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Belgian Pro League",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-765467",
+    "name": "Jozhua Vertrouwd",
+    "nation": "Netherlands",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-819590",
+    "name": "José Salinas",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-834483",
+    "name": "Álex Padilla",
+    "nation": "Mexico",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Liga MX"
+    ]
+  },
+  {
+    "id": "tm-1055220",
+    "name": "Fran González",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1124136",
+    "name": "Ángel Pérez",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1167696",
+    "name": "Ifeanyi Ndukwe",
+    "nation": "Austria",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Austrian Bundesliga",
+      "La Liga"
     ]
   },
   {
@@ -21117,6 +24494,46 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-1453066",
+    "name": "Carlos Macià",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-169497",
+    "name": "Juan Cruz",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-297194",
+    "name": "Iván Villar",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-488935",
     "name": "Hákon Valdimarsson",
     "nation": "Iceland",
@@ -21128,6 +24545,60 @@ const PLAYERS = [
     "leagues": [
       "Allsvenskan",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-502682",
+    "name": "Giorgi Guliashvili",
+    "nation": "Georgia",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-531277",
+    "name": "Andrés Martín",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-668183",
+    "name": "Nico Serrano",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-991773",
+    "name": "Abiel Osorio",
+    "nation": "Argentina",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga"
     ]
   },
   {
@@ -21147,6 +24618,20 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-461843",
+    "name": "Juan Berrocal",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "MLS"
+    ]
+  },
+  {
     "id": "tm-626888",
     "name": "Kaine Kesler-Hayden",
     "nation": "England",
@@ -21157,6 +24642,21 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-783373",
+    "name": "Robbie Ure",
+    "nation": "Scotland",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Allsvenskan",
+      "La Liga",
+      "Scottish Premiership"
     ]
   },
   {
@@ -21173,6 +24673,89 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-293388",
+    "name": "Oriol Rey",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-339079",
+    "name": "Jiri Letacek",
+    "nation": "Czech Republic",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Czech First League",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-397676",
+    "name": "Dani Cárdenas",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-431190",
+    "name": "Carlos Protesoni",
+    "nation": "Uruguay",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Argentine Primera Division",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-458777",
+    "name": "Giacomo Quagliata",
+    "nation": "Italy",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-466807",
+    "name": "Adrià Altimira",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Croatian HNL",
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-527425",
     "name": "Luke Woolfenden",
     "nation": "England",
@@ -21183,6 +24766,32 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-557057",
+    "name": "Roger Brugué",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-618801",
+    "name": "Alejandro Iturbe",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21212,6 +24821,48 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-790669",
+    "name": "Kayne van Oevelen",
+    "nation": "Netherlands",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-948169",
+    "name": "Ryunosuke Sato",
+    "nation": "Japan",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "J1 League",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1177033",
+    "name": "Bright Ede",
+    "nation": "Poland",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Ekstraklasa",
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-282939",
     "name": "Luke O'Nien",
     "nation": "England",
@@ -21222,6 +24873,19 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-335216",
+    "name": "Iñigo Vicente",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21239,6 +24903,32 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-632741",
+    "name": "Iker Losada",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-705813",
+    "name": "Rubén Sánchez",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-169416",
     "name": "Matt Crooks",
     "nation": "England",
@@ -21250,6 +24940,100 @@ const PLAYERS = [
     "leagues": [
       "Premier League",
       "Scottish Premiership"
+    ]
+  },
+  {
+    "id": "tm-388542",
+    "name": "Arnau Comas",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Swiss Super League"
+    ]
+  },
+  {
+    "id": "tm-581326",
+    "name": "Ville Koski",
+    "nation": "Finland",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Croatian HNL",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-590690",
+    "name": "Víctor García",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-617059",
+    "name": "Pablo Campos",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-766723",
+    "name": "Manu Bueno",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1082581",
+    "name": "Pedro Felipe",
+    "nation": "Brazil",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-1232057",
+    "name": "Paco Cortés",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21294,6 +25078,33 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-144128",
+    "name": "Matías Dituro",
+    "nation": "Argentina",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Super Lig"
+    ]
+  },
+  {
+    "id": "tm-277533",
+    "name": "Josan",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-308431",
     "name": "Dillon Phillips",
     "nation": "England",
@@ -21322,6 +25133,59 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-396334",
+    "name": "Joaquín Muñoz",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-625657",
+    "name": "Unai Marrero",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-706947",
+    "name": "Yago Santiago",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-707450",
+    "name": "Lorenzo Amatucci",
+    "nation": "Italy",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
     "id": "tm-1011140",
     "name": "Jack Fletcher",
     "nation": "England",
@@ -21332,6 +25196,32 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1038512",
+    "name": "Asier Osambela",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1268764",
+    "name": "Davinchi",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21362,6 +25252,71 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-461631",
+    "name": "Juan Carlos Arana",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-568148",
+    "name": "Mario Soriano",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-961948",
+    "name": "Marcos Fernández",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1064506",
+    "name": "Adam Boayar",
+    "nation": "Morocco",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1065442",
+    "name": "Iñigo Arguibide",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-1071138",
     "name": "Benjamin Fredrick",
     "nation": "Nigeria",
@@ -21373,6 +25328,33 @@ const PLAYERS = [
     "leagues": [
       "Belgian Pro League",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1201530",
+    "name": "Alex Marchal",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-396161",
+    "name": "Manu Hernando",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Primeira Liga"
     ]
   },
   {
@@ -21388,6 +25370,59 @@ const PLAYERS = [
       "Danish Superliga",
       "MLS",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-435493",
+    "name": "Bambo Diaby",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Belgian Pro League",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-610461",
+    "name": "Luismi Cruz",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-935232",
+    "name": "Aitor Mañas",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-945500",
+    "name": "Rayane Belaid",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21445,6 +25480,34 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-376589",
+    "name": "Eneko Jauregi",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Super League Greece"
+    ]
+  },
+  {
+    "id": "tm-646734",
+    "name": "Tomás Mendes",
+    "nation": "Guinea-Bissau",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Primeira Liga"
+    ]
+  },
+  {
     "id": "tm-706815",
     "name": "Harvey Davies",
     "nation": "England",
@@ -21455,6 +25518,32 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-721660",
+    "name": "Mikel Rodriguez",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-834463",
+    "name": "Iker Córdoba",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21471,6 +25560,32 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-926849",
+    "name": "Adrián Niño",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1009766",
+    "name": "David Otorbi",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-1421433",
     "name": "Zadok Yohanna",
     "nation": "Nigeria",
@@ -21482,6 +25597,19 @@ const PLAYERS = [
     "leagues": [
       "Allsvenskan",
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-251046",
+    "name": "Einar Galilea",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21511,6 +25639,178 @@ const PLAYERS = [
     "leagues": [
       "Premier League",
       "Primeira Liga"
+    ]
+  },
+  {
+    "id": "tm-628487",
+    "name": "Ángel Fortuño",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-629511",
+    "name": "Pablo Ramón",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-926766",
+    "name": "Johaneko Louis-Jean",
+    "nation": "France",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Ligue 1"
+    ]
+  },
+  {
+    "id": "tm-945709",
+    "name": "Dani Requena",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-126746",
+    "name": "Germán Parreño",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-398056",
+    "name": "Álex Pastor",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Serie A"
+    ]
+  },
+  {
+    "id": "tm-398131",
+    "name": "Cristian Rivero",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-707279",
+    "name": "Hugo González",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Celta Vigo",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-964190",
+    "name": "Luken Beitia",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1064105",
+    "name": "Miguel Sierra",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1149188",
+    "name": "Rockson Yeboah",
+    "nation": "Ghana",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Allsvenskan",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1305564",
+    "name": "Jean Ives Valou",
+    "nation": "Cote d'Ivoire",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1371830",
+    "name": "Nacho Pérez",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21568,6 +25868,33 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-519651",
+    "name": "Zakaria Eddahchouri",
+    "nation": "Netherlands",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-608382",
+    "name": "Adrián Rodríguez",
+    "nation": "Argentina",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-620362",
     "name": "Dermot Mee",
     "nation": "Northern Ireland",
@@ -21578,6 +25905,72 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-633111",
+    "name": "Álex Calatrava",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1054931",
+    "name": "Selu Diallo",
+    "nation": "Guinea",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1255616",
+    "name": "Alberto Risco",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1063990",
+    "name": "Grégoire Swiderski",
+    "nation": "Canada",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-410427",
+    "name": "Aliou Dieng",
+    "nation": "Mali",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "Saudi Pro League"
     ]
   },
   {
@@ -21607,6 +26000,60 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-692208",
+    "name": "Pelayo Fernández",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-802046",
+    "name": "Arnau Ortiz",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Atlético Madrid",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Ekstraklasa",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-825199",
+    "name": "Facundo González",
+    "nation": "Uruguay",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Eredivisie",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-895330",
+    "name": "Salvi Esquivel",
+    "nation": "Spain",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Atlético Madrid",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-926309",
     "name": "Shea Lacey",
     "nation": "England",
@@ -21617,6 +26064,45 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-945753",
+    "name": "Julio Díaz",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-945760",
+    "name": "Carlos Ballestero",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-945763",
+    "name": "Dani Martinez",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Atlético Madrid",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21659,6 +26145,58 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-1056966",
+    "name": "Peio Canales",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1063333",
+    "name": "Jorge Cabello",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1064538",
+    "name": "Ali Houary",
+    "nation": "Morocco",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1065454",
+    "name": "Unai Santos",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-1086375",
     "name": "Gustavo Nunes",
     "nation": "Brazil",
@@ -21672,6 +26210,72 @@ const PLAYERS = [
     ]
   },
   {
+    "id": "tm-1088712",
+    "name": "Simon Eriksson",
+    "nation": "Sweden",
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "Allsvenskan",
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1105810",
+    "name": "Job Ochieng",
+    "nation": "Kenya",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Real Sociedad",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1176512",
+    "name": "Joselillo Gaitán",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1178721",
+    "name": "Rafel Bauzà",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1179482",
+    "name": "Iker Luque",
+    "nation": "Spain",
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
     "id": "tm-1187640",
     "name": "Ryan McAidoo",
     "nation": "England",
@@ -21682,6 +26286,85 @@ const PLAYERS = [
     "currentLeague": "Premier League",
     "leagues": [
       "Premier League"
+    ]
+  },
+  {
+    "id": "tm-1204959",
+    "name": "Roger Hinojo",
+    "nation": "Spain",
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1236856",
+    "name": "Nico Guillén",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1249340",
+    "name": "Alassane Diatta",
+    "nation": "Senegal",
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1250522",
+    "name": "Javi Morcillo",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
+    ]
+  },
+  {
+    "id": "tm-1259085",
+    "name": "Hamza Abdelkarim",
+    "nation": "Egypt",
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Barcelona",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga",
+      "LaLiga 2"
+    ]
+  },
+  {
+    "id": "tm-1515724",
+    "name": "Aaron Mayol",
+    "nation": "Spain",
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Valencia",
+    "active": true,
+    "currentLeague": "La Liga",
+    "leagues": [
+      "La Liga"
     ]
   },
   {
@@ -21732,8 +26415,8 @@ const PLAYERS = [
     "id": "manual-dennis-bergkamp",
     "name": "Dennis Bergkamp",
     "nation": "Netherlands",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "",
     "active": false,
     "currentLeague": null,
@@ -21747,8 +26430,8 @@ const PLAYERS = [
     "id": "manual-gianfranco-zola",
     "name": "Gianfranco Zola",
     "nation": "Italy",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "",
     "active": false,
     "currentLeague": null,
@@ -21834,8 +26517,8 @@ const PLAYERS = [
     "id": "manual-diego-maradona",
     "name": "Diego Maradona",
     "nation": "Argentina",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "",
     "active": false,
     "currentLeague": null,
@@ -21849,7 +26532,7 @@ const PLAYERS = [
     "name": "Pele",
     "nation": "Brazil",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "",
     "active": false,
     "currentLeague": null,
@@ -21860,7 +26543,7 @@ const PLAYERS = [
     "name": "Johan Cruyff",
     "nation": "Netherlands",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "",
     "active": false,
     "currentLeague": null,
@@ -22147,8 +26830,8 @@ const PLAYERS = [
     "id": "manual-roberto-baggio",
     "name": "Roberto Baggio",
     "nation": "Italy",
-    "position": "Attack",
-    "specificPosition": "Second Striker",
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
     "club": "",
     "active": false,
     "currentLeague": null,
@@ -22187,7 +26870,7 @@ const PLAYERS = [
     "name": "Ferenc Puskas",
     "nation": "Hungary",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "",
     "active": false,
     "currentLeague": null,
@@ -22270,7 +26953,7 @@ const PLAYERS = [
     "name": "Kenny Dalglish",
     "nation": "Scotland",
     "position": "Attack",
-    "specificPosition": "Second Striker",
+    "specificPosition": "Centre-Forward",
     "club": "",
     "active": false,
     "currentLeague": null,
@@ -22516,6 +27199,656 @@ const PLAYERS = [
     "club": "Sunderland",
     "active": true,
     "currentLeague": "Premier League"
+  },
+  {
+    "id": "manual-abderrahman-rebbach",
+    "name": "Abderrahman Rebbach",
+    "nation": "Algeria",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Deportivo Alavés",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-unai-eguiluz",
+    "name": "Unai Eguiluz",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-benat-gerenabarrena",
+    "name": "Beñat Gerenabarrena",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Athletic Club",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-brian-farinas",
+    "name": "Brian Fariñas",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Barcelona",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-jesse-bisiwu",
+    "name": "Jesse Bisiwu",
+    "nation": "Belgium",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Barcelona",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-dani-barcia",
+    "name": "Dani Barcia",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-miguel-loureiro",
+    "name": "Miguel Loureiro",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-diego-villares",
+    "name": "Diego Villares",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-riki-rodriguez",
+    "name": "Riki Rodríguez",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-yayo",
+    "name": "Yayo",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-noe",
+    "name": "Noé",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-yeremay-hernandez",
+    "name": "Yeremay Hernández",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-david-mella",
+    "name": "David Mella",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-jonathan-asp",
+    "name": "Jonathan Asp",
+    "nation": "Denmark",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-bil-nsongo",
+    "name": "Bil Nsongo",
+    "nation": "Cameroon",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Deportivo A Coruña",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-matia-barzic",
+    "name": "Matia Barzić",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Elche",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-urko-gonzalez",
+    "name": "Urko González",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Espanyol",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-abdelkabir-abqar",
+    "name": "Abdelkabir Abqar",
+    "nation": "Morocco",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-zaid-abner-romero",
+    "name": "Zaid Abner Romero",
+    "nation": "Argentina",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-francho-serrano",
+    "name": "Francho Serrano",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Getafe",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-adrian-de-la-fuente",
+    "name": "Adrián de la Fuente",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-jon-olasagasti",
+    "name": "Jon Olasagasti",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-enzo-bardeli",
+    "name": "Enzo Bardeli",
+    "nation": "France",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-yanis-musuayi",
+    "name": "Yanis Musuayi",
+    "nation": "Belgium",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-etta-eyong",
+    "name": "Etta Eyong",
+    "nation": "Cameroon",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Levante",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-alfonso-herrero",
+    "name": "Alfonso Herrero",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-carlos-lopez",
+    "name": "Carlos López",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Goalkeeper",
+    "specificPosition": "Goalkeeper",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-carlos-puga",
+    "name": "Carlos Puga",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-diego-murillo",
+    "name": "Diego Murillo",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-rafita",
+    "name": "Rafita",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-jens-lys-cajuste",
+    "name": "Jens-Lys Cajuste",
+    "nation": "Sweden",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-ramon-enriquez",
+    "name": "Ramón Enríquez",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-rafa-rodriguez",
+    "name": "Rafa Rodríguez",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-dani-lorenzo",
+    "name": "Dani Lorenzo",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-izan-merino",
+    "name": "Izan Merino",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Central Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-haitam-abaida",
+    "name": "Haitam Abaida",
+    "nation": "Morocco",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-david-larrubia",
+    "name": "David Larrubia",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Right Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-aaron-ochoa",
+    "name": "Aarón Ochoa",
+    "nation": "Republic of Ireland",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Left Midfield",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-chupe",
+    "name": "Chupe",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Attack",
+    "specificPosition": "Centre-Forward",
+    "club": "Málaga",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-flavien-boyomo",
+    "name": "Flavien Boyomo",
+    "nation": "Cameroon",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-jonathan-dubasin",
+    "name": "Jonathan Dubasin",
+    "nation": "Belgium",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Attack",
+    "specificPosition": "Right Winger",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-enrique-barja",
+    "name": "Enrique Barja",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Attack",
+    "specificPosition": "Left Winger",
+    "club": "Osasuna",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-alvaro-mantilla",
+    "name": "Álvaro Mantilla",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Right-Back",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-jorge-salinas",
+    "name": "Jorge Salinas",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Left-Back",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-inigo-sainz-maza",
+    "name": "Íñigo Sainz-Maza",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-maguette-gueye",
+    "name": "Maguette Gueye",
+    "nation": "Senegal",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Racing Santander",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-gnangoro-bouare",
+    "name": "Gnangoro Bouare",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Rayo Vallecano",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-dylan-vanney",
+    "name": "Dylan Vanney",
+    "nation": "United States",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Attacking Midfield",
+    "club": "Real Betis",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-andres-lopez",
+    "name": "Andrés López",
+    "nation": "Spain",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Defence",
+    "specificPosition": "Centre-Back",
+    "club": "Sevilla",
+    "active": true,
+    "currentLeague": "La Liga"
+  },
+  {
+    "id": "manual-nathan-saliba",
+    "name": "Nathan Saliba",
+    "nation": "Canada",
+    "leagues": [
+      "La Liga"
+    ],
+    "position": "Midfield",
+    "specificPosition": "Defensive Midfield",
+    "club": "Villarreal",
+    "active": true,
+    "currentLeague": "La Liga"
   }
 ];
 

@@ -38,10 +38,7 @@ export default function RankingsScreen({
   const positionFilters = {
     Attack: { position: 'Attack' },
     Striker: {
-      specificPosition: [
-        'Centre-Forward',
-        'Second Striker',
-      ],
+      specificPosition: ['Centre-Forward'],
     },
     // Wide midfielders show with the winger on their flank
     // too, as well as in their own midfield section.

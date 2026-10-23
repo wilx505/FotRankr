@@ -70,6 +70,7 @@ const LEAGUE_COUNTRIES = {
   'Premier League': 'England',
   Championship: 'England',
   'La Liga': 'Spain',
+  'Segunda División': 'Spain',
   'Ligue 1': 'France',
   'Serie A': 'Italy',
   Bundesliga: 'Germany',

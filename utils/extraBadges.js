@@ -45,7 +45,7 @@ const CATEGORY_BADGES = [
 // Specific positions (wide midfielders count as wingers).
 const POSITION_BADGES = [
   { id: 'wingmen', title: 'Wingmen', target: 100, label: 'wingers', icon: '🪽', positions: ['Left Winger', 'Right Winger', 'Left Midfield', 'Right Midfield'] },
-  { id: 'strike-force', title: 'Strike Force', target: 100, label: 'strikers', icon: '🎯', positions: ['Centre-Forward', 'Second Striker'] },
+  { id: 'strike-force', title: 'Strike Force', target: 100, label: 'strikers', icon: '🎯', positions: ['Centre-Forward'] },
   { id: 'bullet-men', title: 'Bullet-Men', target: 100, label: 'full-backs', icon: '🚀', positions: ['Left-Back', 'Right-Back'] },
   { id: 'sentinels', title: 'Sentinels', target: 100, label: 'centre-backs', icon: '🛡️', positions: ['Centre-Back'] },
   { id: 'anchors', title: 'Anchors', target: 100, label: 'defensive midfielders', icon: '⚓', positions: ['Defensive Midfield'] },

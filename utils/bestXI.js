@@ -37,14 +37,14 @@ const SLOT_POSITIONS = {
   RWB: ['Right-Back', 'Right Midfield', 'Right Winger', 'Centre-Back'],
   LWB: ['Left-Back', 'Left Midfield', 'Left Winger', 'Centre-Back'],
   DM: [CENTRAL_MIDFIELD, 'Centre-Back', 'Left Midfield', 'Right Midfield'],
-  CM: [CENTRAL_MIDFIELD, 'Left Midfield', 'Right Midfield', 'Second Striker'],
-  AM: [CENTRAL_MIDFIELD, 'Second Striker', 'Left Midfield', 'Right Midfield'],
+  CM: [CENTRAL_MIDFIELD, 'Left Midfield', 'Right Midfield'],
+  AM: [CENTRAL_MIDFIELD, 'Left Midfield', 'Right Midfield'],
   LM: ['Left Midfield', 'Left Winger', 'Left-Back', 'Central Midfield', 'Attacking Midfield'],
   RM: ['Right Midfield', 'Right Winger', 'Right-Back', 'Central Midfield', 'Attacking Midfield'],
-  LW: ['Left Winger', 'Left Midfield', 'Right Winger', 'Second Striker', 'Attacking Midfield'],
-  RW: ['Right Winger', 'Right Midfield', 'Left Winger', 'Second Striker', 'Attacking Midfield'],
-  SS: ['Second Striker', 'Attacking Midfield', 'Centre-Forward', 'Central Midfield'],
-  ST: ['Centre-Forward', 'Second Striker', 'Right Winger', 'Left Winger', 'Attacking Midfield'],
+  LW: ['Left Winger', 'Left Midfield', 'Right Winger', 'Attacking Midfield'],
+  RW: ['Right Winger', 'Right Midfield', 'Left Winger', 'Attacking Midfield'],
+  SS: ['Attacking Midfield', 'Centre-Forward', 'Central Midfield'],
+  ST: ['Centre-Forward', 'Right Winger', 'Left Winger', 'Attacking Midfield'],
 };
 
 // Rows from the attack down to the keeper, left to right.

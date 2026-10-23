@@ -43,11 +43,13 @@ export default function RankingsScreen({
         'Second Striker',
       ],
     },
+    // Wide midfielders show with the winger on their flank
+    // too, as well as in their own midfield section.
     'Left Winger': {
-      specificPosition: ['Left Winger'],
+      specificPosition: ['Left Winger', 'Left Midfield'],
     },
     'Right Winger': {
-      specificPosition: ['Right Winger'],
+      specificPosition: ['Right Winger', 'Right Midfield'],
     },
 
     Midfielder: { position: 'Midfield' },
@@ -59,6 +61,12 @@ export default function RankingsScreen({
     },
     'Attacking Midfielder': {
       specificPosition: ['Attacking Midfield'],
+    },
+    'Left Midfielder': {
+      specificPosition: ['Left Midfield'],
+    },
+    'Right Midfielder': {
+      specificPosition: ['Right Midfield'],
     },
 
     Defender: { position: 'Defence' },
@@ -499,7 +507,7 @@ export default function RankingsScreen({
           <Text
             style={styles.bestXISubtext}
           >
-            Your top-rated 4-3-3 for every club you complete
+            Your top-rated XI's for every club you complete
           </Text>
 
         </View>
@@ -744,6 +752,36 @@ export default function RankingsScreen({
                 style={styles.subFilterText}
               >
                 ATTACKING MIDFIELDERS
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition(
+                  'Left Midfielder'
+                )
+              }
+            >
+              <Text
+                style={styles.subFilterText}
+              >
+                LEFT MIDFIELDERS
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.subFilterButton}
+              onPress={() =>
+                goToPosition(
+                  'Right Midfielder'
+                )
+              }
+            >
+              <Text
+                style={styles.subFilterText}
+              >
+                RIGHT MIDFIELDERS
               </Text>
             </TouchableOpacity>
 

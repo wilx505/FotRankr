@@ -1,5 +1,7 @@
 import players from '../players';
 
+import { matchesSpecificFilter } from './positions';
+
 /*
 ============================================================
 FOTRANKR LIST HELPERS
@@ -211,7 +213,10 @@ export function matchesFilters(
 
   if (
     specificPosition &&
-    player.specificPosition !== specificPosition
+    !matchesSpecificFilter(
+      specificPosition,
+      player.specificPosition
+    )
   ) {
     return false;
   }

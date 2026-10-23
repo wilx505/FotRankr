@@ -39,6 +39,9 @@ FOTRANKR SCORING (v2)
 ============================================================
 */
 
+import { headToHeadGroup } from '../utils/positions';
+
+
 export const CATEGORY_RANGES = {
   Legendary: { min: 9.80, max: 10.00 },
   Elite: { min: 9.00, max: 9.79 },
@@ -373,13 +376,15 @@ function categoryPlayers(category, rankings, excludeId) {
 // Automatic head-to-heads are ONLY ever between players in
 // the same specific position (e.g. Centre-Back vs
 // Centre-Back), for placement and promotion/relegation.
+// Exception: a wide midfielder and the winger on the same
+// flank share a group (utils/positions.js).
 function tiersFor(target, pool) {
+
+  const group = headToHeadGroup(target.specificPosition);
 
   return [
     pool.filter(
-      player =>
-        player.position === target.position &&
-        player.specificPosition === target.specificPosition
+      player => group.includes(player.specificPosition)
     ),
   ];
 }
@@ -611,7 +616,9 @@ export function findCheckups({
   others
     .filter(
       player =>
-        player.specificPosition === me.specificPosition &&
+        headToHeadGroup(me.specificPosition).includes(
+          player.specificPosition
+        ) &&
         !compared.has(String(player.id)) &&
         !used.has(String(player.id)) &&
         Math.abs(player.score - me.score) <= NEAR_TIE

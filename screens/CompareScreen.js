@@ -290,21 +290,37 @@ const rankAgain = () => {
 
       <View style={styles.header}>
 
-        <View style={styles.brandRow}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+          activeOpacity={0.7}
+        >
 
-          <Text style={styles.brand}>
-            FotRankr
+          <Text style={styles.backArrow}>
+            ‹
           </Text>
 
+        </TouchableOpacity>
+
+        <View>
+
+          <View style={styles.brandRow}>
+
+            <Text style={styles.brand}>
+              FotRankr
+            </Text>
+
+            <View
+              style={styles.brandDot}
+            />
+
+          </View>
+
           <View
-            style={styles.brandDot}
+            style={styles.brandLine}
           />
 
         </View>
-
-        <View
-          style={styles.brandLine}
-        />
 
       </View>
 
@@ -670,6 +686,28 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: 55,
     marginBottom: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  backButton: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: '#111111',
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+
+  backArrow: {
+    color: '#00ff66',
+    fontSize: 32,
+    fontWeight: '300',
+    lineHeight: 34,
+    marginTop: -2,
   },
 
   brandRow: {

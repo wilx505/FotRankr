@@ -1722,7 +1722,7 @@ export default function App() {
         <Stack.Screen
           name="Compare"
           options={{
-            title: 'Rank Player',
+            headerShown: false,
           }}
         >
 
@@ -1791,6 +1791,9 @@ export default function App() {
 
         <Stack.Screen
           name="HeadToHead"
+          options={{
+            headerShown: false,
+          }}
         >
 
           {({ navigation, route }) => (

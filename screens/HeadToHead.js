@@ -715,11 +715,27 @@ export default function HeadToHead({
 
       <View style={styles.header}>
 
-        <Text style={styles.brand}>
-          FotRankr
-        </Text>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+          activeOpacity={0.7}
+        >
 
-        <View style={styles.brandLine} />
+          <Text style={styles.backArrow}>
+            ‹
+          </Text>
+
+        </TouchableOpacity>
+
+        <View>
+
+          <Text style={styles.brand}>
+            FotRankr
+          </Text>
+
+          <View style={styles.brandLine} />
+
+        </View>
 
       </View>
 
@@ -1066,6 +1082,28 @@ const styles =
     header: {
       paddingTop: 45,
       marginBottom: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+
+    backButton: {
+      width: 42,
+      height: 42,
+      borderRadius: 21,
+      backgroundColor: '#111111',
+      borderWidth: 1,
+      borderColor: '#1d1d1d',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: 14,
+    },
+
+    backArrow: {
+      color: '#00ff66',
+      fontSize: 32,
+      fontWeight: '300',
+      lineHeight: 34,
+      marginTop: -2,
     },
 
     brand: {

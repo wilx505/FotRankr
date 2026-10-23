@@ -28,9 +28,12 @@ import {
   rearrange,
   getCombinedSquad,
   getLeagueSquad,
+  getWorldSquad,
   lastName,
   pickBestXIFromSquad,
 } from '../utils/bestXI';
+
+import { getSourcePlayer } from '../utils/listHelpers';
 
 import {
   getFlag,
@@ -177,7 +180,11 @@ export default function BestXIScreen({
     clubs: chosenClubs,
     leagueXI,
     leagueXIs,
+    world,
   } = route.params || {};
+
+  // World's Best XI: every active player you've ranked.
+  const isWorld = !!world;
 
   // A League Best XI: the whole league's ranked players. With
   // several leagues (Combine Leagues), all of theirs.
@@ -202,13 +209,17 @@ export default function BestXIScreen({
   const teamKey = team => `${team.league || ''}|${team.club}`;
 
   // Each club / combination / league remembers its own lineup.
-  const lineupKey = isLeague
+  const lineupKey = isWorld
+    ? 'world'
+    : isLeague
     ? `league|${[...leagues].sort().join('+')}`
     : isCombined
       ? `combined|${teams.map(teamKey).sort().join('+')}`
       : teamKey(teams[0]);
 
-  const displayName = isLeague
+  const displayName = isWorld
+    ? "World's Best XI"
+    : isLeague
     ? isMultiLeague
       ? 'Combined League XI'
       : `${leagues[0]} XI`
@@ -216,7 +227,9 @@ export default function BestXIScreen({
       ? 'Combined XI'
       : teams[0].club;
 
-  const squad = isLeague
+  const squad = isWorld
+    ? getWorldSquad(myRankings)
+    : isLeague
     ? leagues
         .flatMap(name => getLeagueSquad(name, myRankings))
         .sort((a, b) => b.score - a.score)
@@ -377,16 +390,24 @@ export default function BestXIScreen({
   );
 
   // League XI: too many subs to list, so pick a club first.
+  // World XI: pick a league.
+  const pickSubs = isLeague || isWorld;
+
+  const subGroupOf = player =>
+    isWorld
+      ? getSourcePlayer(player.id)?.currentLeague || 'Free agents'
+      : player.club;
+
   const [subsClub, setSubsClub] = useState(null);
 
-  const subClubs = isLeague
-    ? [...new Set(allSubs.map(player => player.club).filter(Boolean))]
+  const subClubs = pickSubs
+    ? [...new Set(allSubs.map(subGroupOf).filter(Boolean))]
         .sort((a, b) => a.localeCompare(b))
     : [];
 
-  const subs = isLeague
+  const subs = pickSubs
     ? subsClub
-      ? allSubs.filter(player => player.club === subsClub)
+      ? allSubs.filter(player => subGroupOf(player) === subsClub)
       : []
     : allSubs;
 
@@ -716,7 +737,7 @@ export default function BestXIScreen({
 
 
         <Text style={styles.topBarTitle}>
-          {isLeague ? 'LEAGUE XI' : isCombined ? 'COMBINED XI' : 'BEST XI'}
+          {isWorld ? 'WORLD XI' : isLeague ? 'LEAGUE XI' : isCombined ? 'COMBINED XI' : 'BEST XI'}
         </Text>
 
 
@@ -749,7 +770,15 @@ export default function BestXIScreen({
 
         <View style={styles.clubHeader}>
 
-          {isLeague ? (
+          {isWorld ? (
+
+            <View style={styles.leagueFlag}>
+              <Text style={styles.leagueFlagText}>
+                🌍
+              </Text>
+            </View>
+
+          ) : isLeague ? (
 
             <View style={styles.badgeStack}>
               {leagues.slice(0, 4).map((name, index) => (
@@ -803,6 +832,15 @@ export default function BestXIScreen({
             <Text style={styles.clubName}>
               {displayName}
             </Text>
+
+            {isWorld && (
+              <Text
+                style={styles.combinedClubs}
+                numberOfLines={2}
+              >
+                Your best active players from every league
+              </Text>
+            )}
 
             {isLeague && (
               <Text
@@ -922,10 +960,10 @@ export default function BestXIScreen({
         {/* SUBS */}
 
         <Text style={styles.sectionLabel}>
-          SUBSTITUTES  ·  {isLeague ? allSubs.length : subs.length}
+          SUBSTITUTES  ·  {pickSubs ? allSubs.length : subs.length}
         </Text>
 
-        {isLeague && (
+        {pickSubs && (
 
           <ScrollView
             horizontal
@@ -965,19 +1003,23 @@ export default function BestXIScreen({
 
         )}
 
-        {isLeague && !subsClub ? (
+        {pickSubs && !subsClub ? (
 
           <Text style={styles.noSubs}>
             {allSubs.length === 0
-              ? `Everyone you've ranked in ${isMultiLeague ? 'these leagues' : `the ${leagues[0]}`} is in the XI.`
-              : 'Pick a club to see its players.'}
+              ? isWorld
+                ? "Everyone you've ranked is in the XI."
+                : `Everyone you've ranked in ${isMultiLeague ? 'these leagues' : `the ${leagues[0]}`} is in the XI.`
+              : isWorld
+                ? 'Pick a league to see its players.'
+                : 'Pick a club to see its players.'}
           </Text>
 
         ) : subs.length === 0 ? (
 
           <Text style={styles.noSubs}>
-            {isLeague
-              ? `Everyone you've ranked at ${subsClub} is in the XI.`
+            {pickSubs
+              ? `Everyone you've ranked ${isWorld ? 'in' : 'at'} ${subsClub} is in the XI.`
               : `Everyone you've ranked at ${isCombined ? 'these clubs' : teams[0].club} is in the XI.`}
           </Text>
 

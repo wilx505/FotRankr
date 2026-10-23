@@ -59,10 +59,45 @@ export default function BestXIsScreen({
         showsVerticalScrollIndicator={false}
       >
 
-        {/* COMBINED XI'S */}
+        {/* WORLD'S BEST XI */}
 
         <TouchableOpacity
           style={styles.combinedButton}
+          onPress={() =>
+            navigation.navigate('BestXI', { world: true })
+          }
+          activeOpacity={0.8}
+        >
+
+          <View style={styles.combinedIcon}>
+            <Text style={styles.combinedIconText}>
+              🌍
+            </Text>
+          </View>
+
+          <View style={styles.combinedDetails}>
+
+            <Text style={styles.combinedText}>
+              WORLD'S BEST XI
+            </Text>
+
+            <Text style={styles.combinedSubtext}>
+              Your best active player in every position, from every league
+            </Text>
+
+          </View>
+
+          <Text style={styles.combinedArrow}>
+            ›
+          </Text>
+
+        </TouchableOpacity>
+
+
+        {/* COMBINED XI'S */}
+
+        <TouchableOpacity
+          style={[styles.combinedButton, styles.leagueButton]}
           onPress={() =>
             navigation.navigate('CombinedXIPicker')
           }

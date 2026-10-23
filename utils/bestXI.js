@@ -190,6 +190,25 @@ export function getLeagueSquad(league, myRankings) {
 }
 
 
+// Every ranked active player, from any league or none (the
+// World's Best XI), best first.
+export function getWorldSquad(myRankings) {
+
+  return (myRankings || [])
+    .filter(player => {
+
+      const source = getSourcePlayer(player.id);
+
+      return (
+        !isUnknown(player) &&
+        source &&
+        source.active !== false
+      );
+    })
+    .sort((a, b) => b.score - a.score);
+}
+
+
 // Ranked players from several clubs together (a Combined XI),
 // best first. clubs: [{ club, league }].
 export function getCombinedSquad(clubs, myRankings) {

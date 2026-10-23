@@ -16,6 +16,8 @@ import players from '../players';
 
 import ClubBadge from '../components/ClubBadge';
 
+import { leagueFlag } from '../utils/badges';
+
 import {
   getFlag,
   getMarkerText,
@@ -52,6 +54,19 @@ export default function SearchScreen({
   // { group, club } or null.
   const [openClub, setOpenClub] =
     useState(null);
+
+  // Leagues opened in the browse list (each drops down its
+  // clubs).
+  const [openLeagues, setOpenLeagues] =
+    useState([]);
+
+  const toggleLeague = group => {
+    setOpenLeagues(previous =>
+      previous.includes(group)
+        ? previous.filter(item => item !== group)
+        : [...previous, group]
+    );
+  };
 
   const scrollRef = useRef(null);
 
@@ -459,6 +474,7 @@ export default function SearchScreen({
           setSearch('');
           clubListY.current = 0;
           setOpenClub(null);
+          setOpenLeagues([]);
           setShowAvailable(!browsing);
         }}
         activeOpacity={0.8}
@@ -626,29 +642,61 @@ export default function SearchScreen({
                 ([a], [b]) => a.localeCompare(b)
               );
 
+              const leaguePlayers = clubs.flatMap(
+                ([, squad]) => squad
+              );
+
+              const isOpen = openLeagues.includes(group);
+
               return (
 
                 <View
                   key={group}
-                  style={styles.positionSection}
+                  style={styles.leagueSection}
                 >
 
-                  <View style={styles.resultsHeader}>
+                  {/* LEAGUE BUTTON */}
 
-                    <Text style={styles.resultsLabel}>
-                      {group.toUpperCase()}
+                  <TouchableOpacity
+                    style={[
+                      styles.leagueButton,
+                      isOpen && styles.leagueButtonOpen,
+                    ]}
+                    onPress={() => toggleLeague(group)}
+                    activeOpacity={0.75}
+                  >
+
+                    <View style={styles.leagueFlagCircle}>
+                      <Text style={styles.leagueFlag}>
+                        {group === 'Legends'
+                          ? '👑'
+                          : leagueFlag(group)}
+                      </Text>
+                    </View>
+
+                    <View style={styles.playerDetails}>
+
+                      <Text style={styles.leagueName}>
+                        {group}
+                      </Text>
+
+                      <Text style={styles.leagueMeta}>
+                        {group === 'Legends'
+                          ? `${leaguePlayers.length} PLAYERS`
+                          : `${clubs.length} ${clubs.length === 1 ? 'CLUB' : 'CLUBS'}`}
+                        {'  ·  '}
+                        {countRanked(leaguePlayers)}/{leaguePlayers.length} RANKED
+                      </Text>
+
+                    </View>
+
+                    <Text style={styles.leagueArrow}>
+                      {isOpen ? '▴' : '▾'}
                     </Text>
 
-                    <Text style={styles.resultCount}>
-                      {clubs.length}
-                      {clubs.length === 1
-                        ? ' CLUB'
-                        : ' CLUBS'}
-                    </Text>
+                  </TouchableOpacity>
 
-                  </View>
-
-                  {clubs.map(([club, squad]) => (
+                  {isOpen && clubs.map(([club, squad]) => (
 
                     <TouchableOpacity
                       key={club}
@@ -1087,6 +1135,64 @@ const styles = StyleSheet.create({
 
   positionSection: {
     marginBottom: 18,
+  },
+
+  leagueSection: {
+    marginBottom: 10,
+  },
+
+  leagueButton: {
+    backgroundColor: '#111111',
+    borderRadius: 15,
+    minHeight: 72,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
+  },
+
+  leagueButtonOpen: {
+    borderColor: '#00ff66',
+    marginBottom: 8,
+  },
+
+  leagueFlagCircle: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#141414',
+    borderWidth: 2,
+    borderColor: '#00ff66',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+
+  leagueFlag: {
+    fontSize: 22,
+  },
+
+  leagueName: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '900',
+    marginBottom: 4,
+  },
+
+  leagueMeta: {
+    color: '#777777',
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 1.1,
+  },
+
+  leagueArrow: {
+    color: '#00ff66',
+    fontSize: 18,
+    fontWeight: '900',
+    marginLeft: 8,
   },
 
   clubCard: {

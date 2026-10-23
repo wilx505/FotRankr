@@ -18,15 +18,18 @@ import {
 
 import ClubBadge from '../components/ClubBadge';
 
+import { leagueFlag } from '../utils/badges';
+
 import {
   DEFAULT_FORMATION,
   FORMATIONS,
   FORMATION_NAMES,
   SLOT_COUNT,
   rearrange,
-  getClubSquad,
+  getCombinedSquad,
+  getLeagueSquad,
   lastName,
-  pickBestXI,
+  pickBestXIFromSquad,
 } from '../utils/bestXI';
 
 import {
@@ -171,11 +174,39 @@ export default function BestXIScreen({
   const {
     club,
     league,
+    clubs: chosenClubs,
+    leagueXI,
   } = route.params || {};
 
-  const lineupKey = `${league || ''}|${club}`;
+  // A League Best XI: the whole league's ranked players.
+  const isLeague = !!leagueXI;
 
-  const squad = getClubSquad(club, league, myRankings);
+  // One club, or a Combined XI of several (same mechanics,
+  // players from all of them).
+  const teams = chosenClubs?.length
+    ? chosenClubs
+    : [{ club, league }];
+
+  const isCombined = teams.length > 1;
+
+  const teamKey = team => `${team.league || ''}|${team.club}`;
+
+  // Each club / combination / league remembers its own lineup.
+  const lineupKey = isLeague
+    ? `league|${leagueXI}`
+    : isCombined
+      ? `combined|${teams.map(teamKey).sort().join('+')}`
+      : teamKey(teams[0]);
+
+  const displayName = isLeague
+    ? `${leagueXI} XI`
+    : isCombined
+      ? 'Combined XI'
+      : teams[0].club;
+
+  const squad = isLeague
+    ? getLeagueSquad(leagueXI, myRankings)
+    : getCombinedSquad(teams, myRankings);
 
   const byId = new Map(
     squad.map(player => [String(player.id), player])
@@ -225,7 +256,7 @@ export default function BestXIScreen({
 
 
   // ---- The top-rated XI for this formation, as 11 ids.
-  const bestRows = pickBestXI(club, league, myRankings, formation);
+  const bestRows = pickBestXIFromSquad(squad, formation);
 
   const bestIds = bestRows
     .flat()
@@ -327,9 +358,23 @@ export default function BestXIScreen({
   // ---- Subs: everyone not in the XI, best first.
   const inTeam = new Set(lineupIds.filter(Boolean));
 
-  const subs = squad.filter(
+  const allSubs = squad.filter(
     player => !inTeam.has(String(player.id))
   );
+
+  // League XI: too many subs to list, so pick a club first.
+  const [subsClub, setSubsClub] = useState(null);
+
+  const subClubs = isLeague
+    ? [...new Set(allSubs.map(player => player.club).filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b))
+    : [];
+
+  const subs = isLeague
+    ? subsClub
+      ? allSubs.filter(player => player.club === subsClub)
+      : []
+    : allSubs;
 
 
   // ==================================================
@@ -496,7 +541,7 @@ export default function BestXIScreen({
     navigation.navigate('Challenge', {
       player,
       opponentIds: clubIds,
-      opponentLabel: `${club.toUpperCase()} PLAYERS`,
+      opponentLabel: `${displayName.toUpperCase()} PLAYERS`,
     });
   };
 
@@ -657,7 +702,7 @@ export default function BestXIScreen({
 
 
         <Text style={styles.topBarTitle}>
-          BEST XI
+          {isLeague ? 'LEAGUE XI' : isCombined ? 'COMBINED XI' : 'BEST XI'}
         </Text>
 
 
@@ -690,16 +735,59 @@ export default function BestXIScreen({
 
         <View style={styles.clubHeader}>
 
-          <ClubBadge
-            club={club}
-            size={56}
-          />
+          {isLeague ? (
+
+            <View style={styles.leagueFlag}>
+              <Text style={styles.leagueFlagText}>
+                {leagueFlag(leagueXI)}
+              </Text>
+            </View>
+
+          ) : isCombined ? (
+
+            <View style={styles.badgeStack}>
+              {teams.slice(0, 4).map((team, index) => (
+                <View
+                  key={teamKey(team)}
+                  style={index > 0 && styles.badgeOverlap}
+                >
+                  <ClubBadge
+                    club={team.club}
+                    size={36}
+                  />
+                </View>
+              ))}
+            </View>
+
+          ) : (
+
+            <ClubBadge
+              club={teams[0].club}
+              size={56}
+            />
+
+          )}
 
           <View style={styles.clubDetails}>
 
             <Text style={styles.clubName}>
-              {club}
+              {displayName}
             </Text>
+
+            {isLeague && (
+              <Text style={styles.combinedClubs}>
+                Your best from the whole league
+              </Text>
+            )}
+
+            {isCombined && (
+              <Text
+                style={styles.combinedClubs}
+                numberOfLines={2}
+              >
+                {teams.map(team => team.club).join('  +  ')}
+              </Text>
+            )}
 
             <Text style={styles.formation}>
               {formation}  ·  {isCustom ? 'YOUR LINEUP' : 'YOUR HIGHEST-RATED XI'}
@@ -799,13 +887,63 @@ export default function BestXIScreen({
         {/* SUBS */}
 
         <Text style={styles.sectionLabel}>
-          SUBSTITUTES  ·  {subs.length}
+          SUBSTITUTES  ·  {isLeague ? allSubs.length : subs.length}
         </Text>
 
-        {subs.length === 0 ? (
+        {isLeague && (
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.formationBar}
+            contentContainerStyle={styles.formationBarContent}
+          >
+
+            {subClubs.map(name => (
+
+              <TouchableOpacity
+                key={name}
+                style={[
+                  styles.formationChip,
+                  name === subsClub && styles.formationChipActive,
+                ]}
+                onPress={() =>
+                  setSubsClub(name === subsClub ? null : name)
+                }
+                activeOpacity={0.8}
+              >
+
+                <Text
+                  style={[
+                    styles.formationChipText,
+                    name === subsClub && styles.formationChipTextActive,
+                  ]}
+                >
+                  {name}
+                </Text>
+
+              </TouchableOpacity>
+
+            ))}
+
+          </ScrollView>
+
+        )}
+
+        {isLeague && !subsClub ? (
 
           <Text style={styles.noSubs}>
-            Everyone you've ranked at {club} is in the XI.
+            {allSubs.length === 0
+              ? `Everyone you've ranked in the ${leagueXI} is in the XI.`
+              : 'Pick a club to see its players.'}
+          </Text>
+
+        ) : subs.length === 0 ? (
+
+          <Text style={styles.noSubs}>
+            {isLeague
+              ? `Everyone you've ranked at ${subsClub} is in the XI.`
+              : `Everyone you've ranked at ${isCombined ? 'these clubs' : teams[0].club} is in the XI.`}
           </Text>
 
         ) : (
@@ -980,6 +1118,37 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 16,
     paddingHorizontal: 4,
+  },
+
+  leagueFlag: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#141414',
+    borderWidth: 2,
+    borderColor: '#00ff66',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  leagueFlagText: {
+    fontSize: 28,
+  },
+
+  badgeStack: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  badgeOverlap: {
+    marginLeft: -12,
+  },
+
+  combinedClubs: {
+    color: '#999999',
+    fontSize: 11,
+    fontWeight: '700',
+    marginTop: 3,
   },
 
   clubDetails: {

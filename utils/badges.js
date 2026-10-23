@@ -83,6 +83,12 @@ const LEAGUE_COUNTRIES = {
 };
 
 
+// "Premier League" -> 🏴󠁧󠁢󠁥󠁮󠁧󠁿 (🏆 if unknown).
+export function leagueFlag(league) {
+  return getFlag(LEAGUE_COUNTRIES[league]) || '🏆';
+}
+
+
 const LATIN_HUNDREDS = [
   '',
   'Centum',

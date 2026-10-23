@@ -170,12 +170,60 @@ function assign(pool, formationName, fillRest) {
 }
 
 
-// The top-rated XI as rows of { slot, player | null, exact }.
+// Every ranked player currently in a league (a League Best
+// XI), best first.
+export function getLeagueSquad(league, myRankings) {
+
+  return (myRankings || [])
+    .filter(player => {
+
+      const source = getSourcePlayer(player.id);
+
+      return (
+        !isUnknown(player) &&
+        source &&
+        source.active !== false &&
+        source.currentLeague === league
+      );
+    })
+    .sort((a, b) => b.score - a.score);
+}
+
+
+// Ranked players from several clubs together (a Combined XI),
+// best first. clubs: [{ club, league }].
+export function getCombinedSquad(clubs, myRankings) {
+
+  const seen = new Set();
+
+  return (clubs || [])
+    .flatMap(entry =>
+      getClubSquad(entry.club, entry.league, myRankings)
+    )
+    .filter(player => {
+      const id = String(player.id);
+      if (seen.has(id)) {
+        return false;
+      }
+      seen.add(id);
+      return true;
+    })
+    .sort((a, b) => b.score - a.score);
+}
+
+
+// The top-rated XI from any squad, as rows of
+// { slot, player | null, exact }.
+export function pickBestXIFromSquad(squad, formationName) {
+  return assign(squad, formationName, false);
+}
+
+
+// The top-rated XI for one club.
 export function pickBestXI(club, league, myRankings, formationName) {
-  return assign(
+  return pickBestXIFromSquad(
     getClubSquad(club, league, myRankings),
-    formationName,
-    false
+    formationName
   );
 }
 

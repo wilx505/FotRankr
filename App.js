@@ -25,6 +25,8 @@ import BestXIScreen from './screens/BestXIScreen';
 import BestXIsScreen from './screens/BestXIsScreen';
 import ChallengeScreen from './screens/ChallengeScreen';
 import ClubRankingsScreen from './screens/ClubRankingsScreen';
+import CombinedXIPickerScreen from './screens/CombinedXIPickerScreen';
+import LeagueXIPickerScreen from './screens/LeagueXIPickerScreen';
 import CompareScreen from './screens/CompareScreen';
 import CreateListScreen from './screens/CreateListScreen';
 import HeadToHead from './screens/HeadToHead';
@@ -1719,6 +1721,42 @@ export default function App() {
           {({ navigation }) => (
 
             <BestXIsScreen
+              navigation={navigation}
+              myRankings={myRankings}
+            />
+
+          )}
+
+        </Stack.Screen>
+
+        <Stack.Screen
+          name="CombinedXIPicker"
+          options={{
+            headerShown: false,
+          }}
+        >
+
+          {({ navigation }) => (
+
+            <CombinedXIPickerScreen
+              navigation={navigation}
+              myRankings={myRankings}
+            />
+
+          )}
+
+        </Stack.Screen>
+
+        <Stack.Screen
+          name="LeagueXIPicker"
+          options={{
+            headerShown: false,
+          }}
+        >
+
+          {({ navigation }) => (
+
+            <LeagueXIPickerScreen
               navigation={navigation}
               myRankings={myRankings}
             />

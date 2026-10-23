@@ -59,6 +59,76 @@ export default function BestXIsScreen({
         showsVerticalScrollIndicator={false}
       >
 
+        {/* COMBINED XI'S */}
+
+        <TouchableOpacity
+          style={styles.combinedButton}
+          onPress={() =>
+            navigation.navigate('CombinedXIPicker')
+          }
+          activeOpacity={0.8}
+        >
+
+          <View style={styles.combinedIcon}>
+            <Text style={styles.combinedIconText}>
+              🤝
+            </Text>
+          </View>
+
+          <View style={styles.combinedDetails}>
+
+            <Text style={styles.combinedText}>
+              COMBINED XI'S
+            </Text>
+
+            <Text style={styles.combinedSubtext}>
+              Your best players from two or more clubs in one XI
+            </Text>
+
+          </View>
+
+          <Text style={styles.combinedArrow}>
+            ›
+          </Text>
+
+        </TouchableOpacity>
+
+
+        {/* LEAGUE BEST XI'S */}
+
+        <TouchableOpacity
+          style={[styles.combinedButton, styles.leagueButton]}
+          onPress={() =>
+            navigation.navigate('LeagueXIPicker')
+          }
+          activeOpacity={0.8}
+        >
+
+          <View style={styles.combinedIcon}>
+            <Text style={styles.combinedIconText}>
+              🏆
+            </Text>
+          </View>
+
+          <View style={styles.combinedDetails}>
+
+            <Text style={styles.combinedText}>
+              LEAGUE BEST XI'S
+            </Text>
+
+            <Text style={styles.combinedSubtext}>
+              Your best player in every position from a whole league
+            </Text>
+
+          </View>
+
+          <Text style={styles.combinedArrow}>
+            ›
+          </Text>
+
+        </TouchableOpacity>
+
+
         <Text style={styles.subtitle}>
           Complete a club to unlock its Best XI, picked from your
           {' '}highest-rated players in any formation.
@@ -184,6 +254,58 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 20,
     paddingBottom: 40,
+  },
+
+  combinedButton: {
+    backgroundColor: '#00ff66',
+    borderRadius: 14,
+    minHeight: 70,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 6,
+  },
+
+  leagueButton: {
+    marginTop: 10,
+  },
+
+  combinedIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: '#000000',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 13,
+  },
+
+  combinedIconText: {
+    fontSize: 20,
+  },
+
+  combinedDetails: {
+    flex: 1,
+  },
+
+  combinedText: {
+    color: '#000000',
+    fontSize: 14,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+  },
+
+  combinedSubtext: {
+    color: '#174d2d',
+    fontSize: 11,
+    marginTop: 3,
+  },
+
+  combinedArrow: {
+    color: '#000000',
+    fontSize: 28,
+    fontWeight: '300',
+    marginLeft: 8,
   },
 
   subtitle: {

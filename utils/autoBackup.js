@@ -75,7 +75,9 @@ export function saveAutoBackup(data) {
 
     file.create();
 
-    file.write(
+    // SDK 58: write() is async; writeSync keeps the old
+    // finish-before-continuing behaviour.
+    file.writeSync(
       JSON.stringify({
         app: 'FotRankr',
         version: 1,

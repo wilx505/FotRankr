@@ -148,7 +148,9 @@ export default function BackupScreen({
 
       file.create();
 
-      file.write(
+      // SDK 58: write() is async; writeSync finishes before
+      // the share sheet opens.
+      file.writeSync(
         JSON.stringify(backup, null, 2)
       );
 

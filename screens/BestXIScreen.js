@@ -176,10 +176,20 @@ export default function BestXIScreen({
     league,
     clubs: chosenClubs,
     leagueXI,
+    leagueXIs,
   } = route.params || {};
 
-  // A League Best XI: the whole league's ranked players.
-  const isLeague = !!leagueXI;
+  // A League Best XI: the whole league's ranked players. With
+  // several leagues (Combine Leagues), all of theirs.
+  const leagues = leagueXIs?.length
+    ? leagueXIs
+    : leagueXI
+      ? [leagueXI]
+      : null;
+
+  const isLeague = !!leagues;
+
+  const isMultiLeague = isLeague && leagues.length > 1;
 
   // One club, or a Combined XI of several (same mechanics,
   // players from all of them).
@@ -193,19 +203,23 @@ export default function BestXIScreen({
 
   // Each club / combination / league remembers its own lineup.
   const lineupKey = isLeague
-    ? `league|${leagueXI}`
+    ? `league|${[...leagues].sort().join('+')}`
     : isCombined
       ? `combined|${teams.map(teamKey).sort().join('+')}`
       : teamKey(teams[0]);
 
   const displayName = isLeague
-    ? `${leagueXI} XI`
+    ? isMultiLeague
+      ? 'Combined League XI'
+      : `${leagues[0]} XI`
     : isCombined
       ? 'Combined XI'
       : teams[0].club;
 
   const squad = isLeague
-    ? getLeagueSquad(leagueXI, myRankings)
+    ? leagues
+        .flatMap(name => getLeagueSquad(name, myRankings))
+        .sort((a, b) => b.score - a.score)
     : getCombinedSquad(teams, myRankings);
 
   const byId = new Map(
@@ -737,10 +751,26 @@ export default function BestXIScreen({
 
           {isLeague ? (
 
-            <View style={styles.leagueFlag}>
-              <Text style={styles.leagueFlagText}>
-                {leagueFlag(leagueXI)}
-              </Text>
+            <View style={styles.badgeStack}>
+              {leagues.slice(0, 4).map((name, index) => (
+                <View
+                  key={name}
+                  style={[
+                    styles.leagueFlag,
+                    isMultiLeague && styles.leagueFlagSmall,
+                    index > 0 && styles.badgeOverlap,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.leagueFlagText,
+                      isMultiLeague && styles.leagueFlagTextSmall,
+                    ]}
+                  >
+                    {leagueFlag(name)}
+                  </Text>
+                </View>
+              ))}
             </View>
 
           ) : isCombined ? (
@@ -775,8 +805,13 @@ export default function BestXIScreen({
             </Text>
 
             {isLeague && (
-              <Text style={styles.combinedClubs}>
-                Your best from the whole league
+              <Text
+                style={styles.combinedClubs}
+                numberOfLines={2}
+              >
+                {isMultiLeague
+                  ? leagues.join('  +  ')
+                  : 'Your best from the whole league'}
               </Text>
             )}
 
@@ -934,7 +969,7 @@ export default function BestXIScreen({
 
           <Text style={styles.noSubs}>
             {allSubs.length === 0
-              ? `Everyone you've ranked in the ${leagueXI} is in the XI.`
+              ? `Everyone you've ranked in ${isMultiLeague ? 'these leagues' : `the ${leagues[0]}`} is in the XI.`
               : 'Pick a club to see its players.'}
           </Text>
 
@@ -1133,6 +1168,16 @@ const styles = StyleSheet.create({
 
   leagueFlagText: {
     fontSize: 28,
+  },
+
+  leagueFlagSmall: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+  },
+
+  leagueFlagTextSmall: {
+    fontSize: 18,
   },
 
   badgeStack: {

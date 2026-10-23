@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   ScrollView,
   StyleSheet,
@@ -27,11 +29,29 @@ const TOP_LEAGUES = LEVELS
 
 
 // Every league you've ranked players in, each opening its
-// League Best XI.
+// League Best XI. COMBINE LEAGUES switches to picking two or
+// more leagues for one XI.
 export default function LeagueXIPickerScreen({
   navigation,
   myRankings,
 }) {
+
+  const [combining, setCombining] = useState(false);
+
+  const [chosen, setChosen] = useState([]);
+
+  const toggleCombining = () => {
+    setCombining(!combining);
+    setChosen([]);
+  };
+
+  const toggleLeague = name => {
+    setChosen(previous =>
+      previous.includes(name)
+        ? previous.filter(item => item !== name)
+        : [...previous, name]
+    );
+  };
 
   const leagueNames = [
     ...new Set(
@@ -101,9 +121,33 @@ export default function LeagueXIPickerScreen({
         showsVerticalScrollIndicator={false}
       >
 
+        {/* COMBINE LEAGUES */}
+
+        <TouchableOpacity
+          style={[
+            styles.combineButton,
+            combining && styles.combineButtonActive,
+          ]}
+          onPress={toggleCombining}
+          activeOpacity={0.8}
+        >
+
+          <Text
+            style={[
+              styles.combineText,
+              combining && styles.combineTextActive,
+            ]}
+          >
+            {combining ? '✕  CANCEL COMBINING' : 'COMBINE LEAGUES'}
+          </Text>
+
+        </TouchableOpacity>
+
+
         <Text style={styles.subtitle}>
-          Your highest-rated player in every position,
-          {' '}from the whole league.
+          {combining
+            ? 'Pick two or more leagues. Each spot goes to your highest-rated player from any of them.'
+            : 'Your highest-rated player in every position, from the whole league.'}
         </Text>
 
 
@@ -127,11 +171,18 @@ export default function LeagueXIPickerScreen({
 
             <TouchableOpacity
               key={entry.name}
-              style={styles.leagueCard}
+              style={[
+                styles.leagueCard,
+                combining &&
+                  chosen.includes(entry.name) &&
+                  styles.leagueCardChosen,
+              ]}
               onPress={() =>
-                navigation.navigate('BestXI', {
-                  leagueXI: entry.name,
-                })
+                combining
+                  ? toggleLeague(entry.name)
+                  : navigation.navigate('BestXI', {
+                      leagueXI: entry.name,
+                    })
               }
               activeOpacity={0.75}
             >
@@ -157,9 +208,26 @@ export default function LeagueXIPickerScreen({
 
               </View>
 
-              <Text style={styles.arrow}>
-                ›
-              </Text>
+              {combining ? (
+
+                <View
+                  style={[
+                    styles.tick,
+                    chosen.includes(entry.name) && styles.tickChosen,
+                  ]}
+                >
+                  <Text style={styles.tickText}>
+                    {chosen.includes(entry.name) ? '✓' : ''}
+                  </Text>
+                </View>
+
+              ) : (
+
+                <Text style={styles.arrow}>
+                  ›
+                </Text>
+
+              )}
 
             </TouchableOpacity>
 
@@ -168,6 +236,39 @@ export default function LeagueXIPickerScreen({
         )}
 
       </ScrollView>
+
+
+      {/* BUILD (combining) */}
+
+      {combining && (
+
+        <View style={styles.footer}>
+
+          <TouchableOpacity
+            style={[
+              styles.buildButton,
+              chosen.length < 2 && styles.buildButtonDisabled,
+            ]}
+            disabled={chosen.length < 2}
+            onPress={() =>
+              navigation.navigate('BestXI', {
+                leagueXIs: chosen,
+              })
+            }
+            activeOpacity={0.85}
+          >
+
+            <Text style={styles.buildText}>
+              {chosen.length >= 2
+                ? `BUILD COMBINED XI  ·  ${chosen.length} LEAGUES`
+                : 'PICK AT LEAST 2 LEAGUES'}
+            </Text>
+
+          </TouchableOpacity>
+
+        </View>
+
+      )}
 
     </View>
 
@@ -241,6 +342,85 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 8,
     marginBottom: 22,
+  },
+
+  combineButton: {
+    borderWidth: 1,
+    borderColor: '#00ff66',
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginTop: 6,
+  },
+
+  combineButtonActive: {
+    borderColor: '#555555',
+  },
+
+  combineText: {
+    textAlign: 'center',
+    color: '#00ff66',
+    fontSize: 13,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+  combineTextActive: {
+    color: '#999999',
+  },
+
+  leagueCardChosen: {
+    borderColor: '#00ff66',
+    backgroundColor: '#0d1f14',
+  },
+
+  tick: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 2,
+    borderColor: '#333333',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 8,
+  },
+
+  tickChosen: {
+    backgroundColor: '#00ff66',
+    borderColor: '#00ff66',
+  },
+
+  tickText: {
+    color: '#000000',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+
+  footer: {
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 30,
+    backgroundColor: '#050505',
+    borderTopWidth: 1,
+    borderTopColor: '#141414',
+  },
+
+  buildButton: {
+    backgroundColor: '#00ff66',
+    borderRadius: 14,
+    paddingVertical: 17,
+    alignItems: 'center',
+  },
+
+  buildButtonDisabled: {
+    backgroundColor: '#1d1d1d',
+  },
+
+  buildText: {
+    color: '#000000',
+    fontSize: 14,
+    fontWeight: '900',
+    letterSpacing: 0.6,
   },
 
   leagueCard: {

@@ -98,6 +98,9 @@ export default function HomeScreen({
   const [showPayToWin, setShowPayToWin] =
     useState(false);
 
+  const [showHowItWorks, setShowHowItWorks] =
+    useState(false);
+
 
   // TEST MODE: no money is taken.
   const buyUnlockAll = () => {
@@ -386,11 +389,26 @@ export default function HomeScreen({
 
       <View style={styles.section}>
 
-        <Text style={styles.sectionLabel}>
-          HOW IT WORKS
-        </Text>
+        <TouchableOpacity
+          style={[
+            styles.howButton,
+            showHowItWorks && styles.howButtonOpen,
+          ]}
+          onPress={() => setShowHowItWorks(!showHowItWorks)}
+          activeOpacity={0.8}
+        >
 
-        {STEPS.map((step, index) => (
+          <Text style={styles.howButtonText}>
+            HOW IT WORKS
+          </Text>
+
+          <Text style={styles.howButtonArrow}>
+            {showHowItWorks ? '▴' : '▾'}
+          </Text>
+
+        </TouchableOpacity>
+
+        {showHowItWorks && STEPS.map((step, index) => (
 
           <View
             key={step.title}
@@ -820,6 +838,36 @@ const styles = StyleSheet.create({
 
 
   // HOW IT WORKS
+
+  howButton: {
+    backgroundColor: '#111111',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#1d1d1d',
+    paddingVertical: 16,
+    paddingHorizontal: 18,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  howButtonOpen: {
+    borderColor: '#00ff66',
+    marginBottom: 4,
+  },
+
+  howButtonText: {
+    color: '#00ff66',
+    fontSize: 13,
+    fontWeight: '900',
+    letterSpacing: 1.5,
+  },
+
+  howButtonArrow: {
+    color: '#00ff66',
+    fontSize: 16,
+    fontWeight: '900',
+  },
 
   stepRow: {
     flexDirection: 'row',

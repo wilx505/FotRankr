@@ -198,8 +198,12 @@ export default function BestXIScreen({
 
     AsyncStorage.getItem(LINEUPS_KEY)
       .then(saved => {
+        // Changes made before this finished win.
         if (saved) {
-          setSavedLineups(JSON.parse(saved));
+          setSavedLineups(previous => ({
+            ...JSON.parse(saved),
+            ...previous,
+          }));
         }
       })
       .catch(error =>
@@ -244,29 +248,36 @@ export default function BestXIScreen({
     customIds.some((id, index) => id !== bestIds[index]);
 
 
-  const saveLineup = ids => {
+  // Every change saves straight away. It merges into what's
+  // already stored, so other clubs' lineups are never lost
+  // (even if this one changes before they've loaded).
+  const updateLineups = change => {
 
-    const updated = { ...savedLineups, [lineupKey]: ids };
+    setSavedLineups(previous => change({ ...previous }));
 
-    setSavedLineups(updated);
-
-    AsyncStorage.setItem(LINEUPS_KEY, JSON.stringify(updated))
+    AsyncStorage.getItem(LINEUPS_KEY)
+      .then(stored => {
+        const updated = change(stored ? JSON.parse(stored) : {});
+        return AsyncStorage.setItem(
+          LINEUPS_KEY,
+          JSON.stringify(updated)
+        );
+      })
       .catch(error =>
         console.log('FOTRANKR BEST XI SAVE ERROR:', error)
       );
   };
 
+  const saveLineup = ids => {
+    updateLineups(lineups => ({ ...lineups, [lineupKey]: ids }));
+  };
+
   const resetLineup = () => {
-
-    const updated = { ...savedLineups };
-    delete updated[lineupKey];
-
-    setSavedLineups(updated);
-
-    AsyncStorage.setItem(LINEUPS_KEY, JSON.stringify(updated))
-      .catch(error =>
-        console.log('FOTRANKR BEST XI SAVE ERROR:', error)
-      );
+    updateLineups(lineups => {
+      const updated = { ...lineups };
+      delete updated[lineupKey];
+      return updated;
+    });
   };
 
 

@@ -3,6 +3,11 @@ import players from '../players';
 import { getGoldTitle } from './clubBadges';
 
 import {
+  RECORD_ONLY_IDS,
+  getExtraBadges,
+} from './extraBadges';
+
+import {
   getActiveStatus,
   getCurrentLeague,
   getSourcePlayer,
@@ -288,6 +293,9 @@ let earnedHistory = {
   clubKeys: new Set(),
   goldClubKeys: new Set(),
   leagueKeys: new Set(),
+  badgeIds: new Set(),
+  challengeCount: 0,
+  rerankedIds: new Set(),
 };
 
 export function setEarnedHistory({
@@ -295,6 +303,9 @@ export function setEarnedHistory({
   clubKeys = [],
   goldClubKeys = [],
   leagueKeys = [],
+  badgeIds = [],
+  challengeCount = 0,
+  rerankedIds = [],
 } = {}) {
 
   earnedHistory = {
@@ -302,6 +313,10 @@ export function setEarnedHistory({
     clubKeys: new Set(clubKeys),
     goldClubKeys: new Set(goldClubKeys),
     leagueKeys: new Set(leagueKeys),
+    // Every badge id ever earned (so nothing can be lost).
+    badgeIds: new Set(badgeIds),
+    challengeCount,
+    rerankedIds: new Set(rerankedIds.map(String)),
   };
 
   // The cached answer no longer applies.
@@ -456,6 +471,33 @@ export function getCompletedLeagues(myRankings) {
 }
 
 
+// Badge ids already earned at some point.
+export function getRecordedBadgeIds() {
+  return earnedHistory.badgeIds;
+}
+
+
+// Everyone ever properly ranked (record + now).
+export function getRankedIdsEver(myRankings) {
+  return new Set([
+    ...earnedHistory.rankedIds,
+    ...getRankedIdsNow(myRankings),
+  ]);
+}
+
+
+// The extra badges (Big Five, nations, positions...).
+export function getExtraBadgeList(myRankings) {
+  return getExtraBadges({
+    rankings: myRankings,
+    rankedIds: getRankedIdsEver(myRankings),
+    challengeCount: earnedHistory.challengeCount,
+    rerankCount: earnedHistory.rerankedIds.size,
+    recorded: earnedHistory.badgeIds,
+  });
+}
+
+
 // Level badges held at a level: one for each level finished,
 // and The Oracle's on reaching the top level.
 export function levelBadgeCount(level) {
@@ -510,6 +552,15 @@ export function getProgress(myRankings) {
   const leaguesCompleted =
     getCompletedLeagues(myRankings).length;
 
+  // Extra badges (+ United Nations / Scouts Honor once the
+  // record has them).
+  const extraBadgesEarned = new Set([
+    ...getExtraBadgeList(myRankings)
+      .filter(badge => badge.earned)
+      .map(badge => badge.id),
+    ...RECORD_ONLY_IDS.filter(id => earnedHistory.badgeIds.has(id)),
+  ]).size;
+
   const positionBadgesEarned = POSITION_BADGES.filter(
     badge =>
       (positionCounts[badge.position] || 0) >= badge.target
@@ -522,7 +573,8 @@ export function getProgress(myRankings) {
     (patriotEarned ? MILESTONE_BADGE_XP : 0) +
     positionBadgesEarned * MILESTONE_BADGE_XP +
     goldClubsEarned * GOLD_BADGE_XP +
-    leaguesCompleted * MILESTONE_BADGE_XP;
+    leaguesCompleted * MILESTONE_BADGE_XP +
+    extraBadgesEarned * MILESTONE_BADGE_XP;
 
   // Level badges (one per level finished, plus The Oracle on
   // reaching the top) are worth MILESTONE_BADGE_XP each, and

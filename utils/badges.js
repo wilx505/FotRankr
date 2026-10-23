@@ -1,4 +1,8 @@
+import players from '../players';
+
 import { getFlag } from './flags';
+
+import { getSourcePlayer } from './listHelpers';
 
 import { getGoldTitle } from './clubBadges';
 
@@ -14,9 +18,13 @@ import {
   POSITION_BADGES,
   getCompletedClubs,
   getCompletedLeagues,
+  getExtraBadgeList,
   getGoldClubs,
   getMilestonesEarned,
   getProgress,
+  getRankedIdsEver,
+  getRecordedBadgeIds,
+  isUnlocked,
 } from './progression';
 
 /*
@@ -289,6 +297,68 @@ export function getBadges(myRankings) {
       progress: null,
     });
   });
+
+  // Big Five, categories, positions, nations... (extraBadges.js)
+  badges.push(...getExtraBadgeList(myRankings));
+
+
+  const recorded = getRecordedBadgeIds();
+
+
+  // UNITED NATIONS: a player from every nation you can rank
+  // at your level.
+  const rankedNations = new Set(
+    [...getRankedIdsEver(myRankings)]
+      .map(id => getSourcePlayer(id)?.nation)
+      .filter(Boolean)
+  );
+
+  const availableNations = [
+    ...new Set(
+      players
+        .filter(player => isUnlocked(player.id, level))
+        .map(player => player.nation)
+        .filter(Boolean)
+    ),
+  ];
+
+  const nationsCovered = availableNations.filter(
+    nation => rankedNations.has(nation)
+  ).length;
+
+  badges.push({
+    id: 'united-nations',
+    icon: '🇺🇳',
+    iconText: null,
+    title: 'United Nations',
+    description: 'A player from every available nation',
+    bonus: `+${MILESTONE_BADGE_XP} XP badge bonus`,
+    earned:
+      recorded.has('united-nations') ||
+      (availableNations.length > 0 &&
+        nationsCovered === availableNations.length),
+    progress: `${nationsCovered} / ${availableNations.length}`,
+  });
+
+
+  // SCOUTS HONOR: 50 other badges.
+  const SCOUTS_TARGET = 50;
+
+  const othersEarned = badges.filter(badge => badge.earned).length;
+
+  badges.push({
+    id: 'scouts-honor',
+    icon: '🎖️',
+    iconText: null,
+    title: 'Scouts Honor',
+    description: `${SCOUTS_TARGET} badges collected`,
+    bonus: `+${MILESTONE_BADGE_XP} XP badge bonus`,
+    earned:
+      recorded.has('scouts-honor') ||
+      othersEarned >= SCOUTS_TARGET,
+    progress: `${Math.min(othersEarned, SCOUTS_TARGET)} / ${SCOUTS_TARGET}`,
+  });
+
 
   return [
     ...badges.filter(badge => badge.earned),

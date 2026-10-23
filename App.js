@@ -104,6 +104,9 @@ const EMPTY_EARNED = {
   clubKeys: [],
   goldClubKeys: [],
   leagueKeys: [],
+  badgeIds: [],
+  challengeCount: 0,
+  rerankedIds: [],
 };
 
 const DATA_VERSION = '62';
@@ -249,6 +252,9 @@ export default function App() {
             clubKeys: parsedProgress.clubKeys || [],
             goldClubKeys: parsedProgress.goldClubKeys || [],
             leagueKeys: parsedProgress.leagueKeys || [],
+            badgeIds: parsedProgress.badgeIds || [],
+            challengeCount: parsedProgress.challengeCount || 0,
+            rerankedIds: parsedProgress.rerankedIds || [],
           });
 
         }
@@ -485,16 +491,29 @@ export default function App() {
       .map(entry => entry.league)
       .filter(key => !leagueKeys.has(key));
 
+    // Any badge earned now is kept for good.
+    const badgeIds = new Set(earnedHistory.badgeIds || []);
+
+    const newBadges = getBadges(myRankings)
+      .filter(badge => badge.earned && !badgeIds.has(badge.id))
+      .map(badge => badge.id);
+
     if (
       newIds.length === 0 &&
       newClubs.length === 0 &&
       newGold.length === 0 &&
-      newLeagues.length === 0
+      newLeagues.length === 0 &&
+      newBadges.length === 0
     ) {
       return;
     }
 
     const updated = {
+      ...earnedHistory,
+      badgeIds: [
+        ...(earnedHistory.badgeIds || []),
+        ...newBadges,
+      ],
       rankedIds: [...earnedHistory.rankedIds, ...newIds],
       clubKeys: [...earnedHistory.clubKeys, ...newClubs],
       goldClubKeys: [
@@ -524,6 +543,32 @@ export default function App() {
     dataLoaded,
     earnedHistory,
   ]);
+
+
+  // =====================================================
+  // RECORD COUNTERS (re-ranks, challenges)
+  // =====================================================
+
+  const bumpRecord = change => {
+
+    setEarnedHistoryState(previous => {
+
+      const next = change(previous);
+
+      AsyncStorage.setItem(
+        'fotrankrProgress',
+        JSON.stringify(next)
+      ).catch(error =>
+        console.log(
+          'Error saving FotRankr progress:',
+          error
+        )
+      );
+
+      return next;
+    });
+
+  };
 
 
   // =====================================================
@@ -925,6 +970,17 @@ export default function App() {
     player,
   }) => {
 
+    // Counts towards SECOND THOUGHTS (different players).
+    bumpRecord(previous => ({
+      ...previous,
+      rerankedIds: [
+        ...new Set([
+          ...(previous.rerankedIds || []),
+          String(player.id),
+        ]),
+      ],
+    }));
+
     console.log(
       'FOTRANKR RANK AGAIN:',
       player.name
@@ -983,6 +1039,14 @@ export default function App() {
 
     const resultKind =
       manualChallenge === true ? 'challenge' : kind;
+
+    // Counts towards CHALLENGER.
+    if (resultKind === 'challenge') {
+      bumpRecord(previous => ({
+        ...previous,
+        challengeCount: (previous.challengeCount || 0) + 1,
+      }));
+    }
 
     console.log(
       'FOTRANKR H2H:',
@@ -1296,6 +1360,9 @@ export default function App() {
       clubKeys: restoredEarned?.clubKeys || [],
       goldClubKeys: restoredEarned?.goldClubKeys || [],
       leagueKeys: restoredEarned?.leagueKeys || [],
+      badgeIds: restoredEarned?.badgeIds || [],
+      challengeCount: restoredEarned?.challengeCount || 0,
+      rerankedIds: restoredEarned?.rerankedIds || [],
     };
 
     setEarnedHistoryState(earned);

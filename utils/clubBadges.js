@@ -39,6 +39,28 @@ const CLUB_STYLES = {
   'Nottingham Forest': { code: 'NFO', fill: '#DD0000', ring: '#FFFFFF', text: '#FFFFFF' },
   Sunderland: { code: 'SUN', fill: '#EB172B', ring: '#FFFFFF', text: '#FFFFFF' },
   'Tottenham Hotspur': { code: 'TOT', fill: '#FFFFFF', ring: '#132257', text: '#132257' },
+
+  // La Liga
+  'Athletic Club': { code: 'ATH', fill: '#EE2523', ring: '#FFFFFF', text: '#FFFFFF' },
+  'Atlético Madrid': { code: 'ATM', fill: '#CB3524', ring: '#272E61', text: '#FFFFFF' },
+  Barcelona: { code: 'BAR', fill: '#A50044', ring: '#004D98', text: '#EDBB00' },
+  'Celta Vigo': { code: 'CEL', fill: '#8AC3EE', ring: '#FFFFFF', text: '#002B5C' },
+  'Deportivo A Coruña': { code: 'DEP', fill: '#0055A4', ring: '#FFFFFF', text: '#FFFFFF' },
+  'Deportivo Alavés': { code: 'ALA', fill: '#0761AF', ring: '#FFFFFF', text: '#FFFFFF' },
+  Elche: { code: 'ELC', fill: '#FFFFFF', ring: '#05642C', text: '#05642C' },
+  Espanyol: { code: 'ESP', fill: '#007FC8', ring: '#FFFFFF', text: '#FFFFFF' },
+  Getafe: { code: 'GET', fill: '#005999', ring: '#FFFFFF', text: '#FFFFFF' },
+  Levante: { code: 'LEV', fill: '#B4053F', ring: '#004D98', text: '#FFFFFF' },
+  'Málaga': { code: 'MAL', fill: '#64B5E8', ring: '#FFFFFF', text: '#0E2B5C' },
+  Osasuna: { code: 'OSA', fill: '#D91A21', ring: '#0A346F', text: '#FFFFFF' },
+  'Racing Santander': { code: 'RAC', fill: '#FFFFFF', ring: '#00843D', text: '#00843D' },
+  'Rayo Vallecano': { code: 'RAY', fill: '#FFFFFF', ring: '#E53027', text: '#E53027' },
+  'Real Betis': { code: 'BET', fill: '#00954C', ring: '#FFFFFF', text: '#FFFFFF' },
+  'Real Madrid': { code: 'RMA', fill: '#FFFFFF', ring: '#FEBE10', text: '#00529F' },
+  'Real Sociedad': { code: 'RSO', fill: '#0067B1', ring: '#FFFFFF', text: '#FFFFFF' },
+  Sevilla: { code: 'SEV', fill: '#FFFFFF', ring: '#D81E05', text: '#D81E05' },
+  Valencia: { code: 'VAL', fill: '#FFFFFF', ring: '#EE8707', text: '#111111' },
+  Villarreal: { code: 'VIL', fill: '#FFE667', ring: '#005187', text: '#005187' },
 };
 
 // Gold "TRUE ..." badges: Premier League clubs only, for

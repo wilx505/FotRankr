@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import players from '../players';
 
@@ -52,6 +52,27 @@ export default function SearchScreen({
   // { group, club } or null.
   const [openClub, setOpenClub] =
     useState(null);
+
+  const scrollRef = useRef(null);
+
+  const scrollY = useRef(0);
+
+  // Where the club list was scrolled to, for coming back.
+  const clubListY = useRef(0);
+
+  // A squad always opens at the top (goalkeepers first);
+  // ALL CLUBS goes back to where the club list was.
+  useEffect(() => {
+    scrollRef.current?.scrollTo({
+      y: openClub ? 0 : clubListY.current,
+      animated: false,
+    });
+  }, [openClub]);
+
+  const openSquadOf = (group, club) => {
+    clubListY.current = scrollY.current;
+    setOpenClub({ group, club });
+  };
 
   const browsing =
     showAvailable &&
@@ -378,6 +399,11 @@ export default function SearchScreen({
   return (
 
     <ScrollView
+      ref={scrollRef}
+      onScroll={event => {
+        scrollY.current = event.nativeEvent.contentOffset.y;
+      }}
+      scrollEventThrottle={32}
       style={styles.container}
       contentContainerStyle={
         styles.content
@@ -431,6 +457,7 @@ export default function SearchScreen({
         ]}
         onPress={() => {
           setSearch('');
+          clubListY.current = 0;
           setOpenClub(null);
           setShowAvailable(!browsing);
         }}
@@ -627,7 +654,7 @@ export default function SearchScreen({
                       key={club}
                       style={styles.clubCard}
                       onPress={() =>
-                        setOpenClub({ group, club })
+                        openSquadOf(group, club)
                       }
                       activeOpacity={0.7}
                     >

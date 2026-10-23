@@ -629,6 +629,11 @@ export function getProgress(myRankings) {
     xpToNextLevel: isMaxLevel
       ? 0
       : XP_PER_LEVEL - xpIntoLevel,
+    // Total XP the next level starts at (2,000 for Level 3),
+    // so progress reads "1,050 / 2,000 XP".
+    nextLevelXp: isMaxLevel
+      ? xp
+      : level * XP_PER_LEVEL,
     current: getLevelInfo(level),
     next: isMaxLevel
       ? null

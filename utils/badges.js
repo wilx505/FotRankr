@@ -189,7 +189,7 @@ export function getBadges(myRankings) {
     positionCounts,
     level,
     isMaxLevel,
-    xpIntoLevel,
+    xp,
   } = getProgress(myRankings);
 
   const milestonesEarned =
@@ -224,7 +224,7 @@ export function getBadges(myRankings) {
           : `Level ${info.level} complete`,
       bonus: `+${MILESTONE_BADGE_XP} XP badge bonus`,
       earned: finished,
-      progress: `${xpIntoLevel.toLocaleString()} / ${XP_PER_LEVEL.toLocaleString()} XP`,
+      progress: `${Math.min(xp, info.level * XP_PER_LEVEL).toLocaleString()} / ${(info.level * XP_PER_LEVEL).toLocaleString()} XP`,
     });
   });
 

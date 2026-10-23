@@ -263,8 +263,11 @@ export default function ProfileScreen({
 
   const { current } = progress;
 
-  const progressPercent =
-    (progress.xpIntoLevel / XP_PER_LEVEL) * 100;
+  // The bar starts empty at every level; the numbers show
+  // total XP ("1,050 / 2,000 XP").
+  const progressPercent = progress.isMaxLevel
+    ? 100
+    : (progress.xpIntoLevel / XP_PER_LEVEL) * 100;
 
 
   return (
@@ -485,7 +488,7 @@ export default function ProfileScreen({
           <Text style={styles.xpNumbers}>
             {progress.isMaxLevel
               ? `${progress.xp.toLocaleString()} XP`
-              : `${progress.xpIntoLevel.toLocaleString()} / ${XP_PER_LEVEL.toLocaleString()} XP`}
+              : `${progress.xp.toLocaleString()} / ${progress.nextLevelXp.toLocaleString()} XP`}
           </Text>
 
         </View>

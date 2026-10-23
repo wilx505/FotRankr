@@ -139,6 +139,8 @@ export default function HomeScreen({
       progress.xp
     : 0;
 
+  // The bar starts empty at every level; the numbers show
+  // total XP ("1,050 / 2,000 XP").
   const progressPercent = progress.isMaxLevel
     ? 100
     : (progress.xpIntoLevel / XP_PER_LEVEL) * 100;
@@ -356,7 +358,9 @@ export default function HomeScreen({
           </View>
 
           <Text style={styles.progressXp}>
-            {progress.xp.toLocaleString()} XP
+            {progress.isMaxLevel
+              ? `${progress.xp.toLocaleString()} XP`
+              : `${progress.xp.toLocaleString()} / ${progress.nextLevelXp.toLocaleString()} XP`}
           </Text>
 
         </View>

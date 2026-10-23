@@ -474,53 +474,6 @@ export default function RankingsScreen({
       </View>
 
 
-      {/* MY BEST XI'S */}
-
-      <TouchableOpacity
-        style={styles.bestXIButton}
-        onPress={() =>
-          navigation.navigate('BestXIs')
-        }
-        activeOpacity={0.8}
-      >
-
-        <View
-          style={styles.bestXIIcon}
-        >
-          <Text
-            style={styles.bestXIIconText}
-          >
-            ⚽
-          </Text>
-        </View>
-
-        <View
-          style={styles.bestXIDetails}
-        >
-
-          <Text
-            style={styles.bestXIButtonText}
-          >
-            MY BEST XI'S
-          </Text>
-
-          <Text
-            style={styles.bestXISubtext}
-          >
-            Your top-rated XI's for every club you complete
-          </Text>
-
-        </View>
-
-        <Text
-          style={styles.bestXIArrow}
-        >
-          ›
-        </Text>
-
-      </TouchableOpacity>
-
-
       {/* POSITION FILTERS */}
 
       <View
@@ -1185,59 +1138,6 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     textTransform: 'uppercase',
     marginTop: 7,
-  },
-
-
-  // ==================================================
-  // MY BEST XI'S
-  // ==================================================
-
-  bestXIButton: {
-    backgroundColor: '#00ff66',
-    borderRadius: 14,
-    minHeight: 70,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 25,
-  },
-
-  bestXIIcon: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: '#000000',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 13,
-  },
-
-  bestXIIconText: {
-    fontSize: 20,
-  },
-
-  bestXIDetails: {
-    flex: 1,
-  },
-
-  bestXIButtonText: {
-    color: '#000000',
-    fontSize: 14,
-    fontWeight: '900',
-    letterSpacing: 0.5,
-  },
-
-  bestXISubtext: {
-    color: '#174d2d',
-    fontSize: 11,
-    marginTop: 3,
-  },
-
-  bestXIArrow: {
-    color: '#000000',
-    fontSize: 28,
-    fontWeight: '300',
-    marginLeft: 8,
   },
 
 

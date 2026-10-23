@@ -275,24 +275,48 @@ export default function HomeScreen({
           head-to-head at a time.
         </Text>
 
+        {/* MY BEST XI'S */}
+
         <TouchableOpacity
-          style={styles.startButton}
+          style={styles.bestXIButton}
           onPress={() =>
-            navigation.navigate('Search')
+            navigation.navigate('BestXIs')
           }
           activeOpacity={0.8}
         >
 
-          <Text
-            style={styles.startButtonText}
+          <View
+            style={styles.bestXIIcon}
           >
-            START RANKING
-          </Text>
+            <Text
+              style={styles.bestXIIconText}
+            >
+              ⚽
+            </Text>
+          </View>
+
+          <View
+            style={styles.bestXIDetails}
+          >
+
+            <Text
+              style={styles.bestXIButtonText}
+            >
+              MY BEST XI'S
+            </Text>
+
+            <Text
+              style={styles.bestXISubtext}
+            >
+              Your top-rated XI's for every club you complete
+            </Text>
+
+          </View>
 
           <Text
-            style={styles.arrow}
+            style={styles.bestXIArrow}
           >
-            →
+            ›
           </Text>
 
         </TouchableOpacity>
@@ -650,29 +674,59 @@ const styles = StyleSheet.create({
     marginTop: 18,
   },
 
-  startButton: {
+
+  // ==================================================
+  // MY BEST XI'S
+  // ==================================================
+
+  bestXIButton: {
     backgroundColor: '#00ff66',
     borderRadius: 14,
-    minHeight: 62,
-    paddingHorizontal: 22,
-    marginTop: 26,
+    minHeight: 70,
+    paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    marginTop: 26,
   },
 
-  startButtonText: {
+  bestXIIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: '#000000',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 13,
+  },
+
+  bestXIIconText: {
+    fontSize: 20,
+  },
+
+  bestXIDetails: {
+    flex: 1,
+  },
+
+  bestXIButtonText: {
     color: '#000000',
-    fontSize: 17,
+    fontSize: 14,
     fontWeight: '900',
     letterSpacing: 0.5,
   },
 
-  arrow: {
-    color: '#000000',
-    fontSize: 27,
-    fontWeight: 'bold',
+  bestXISubtext: {
+    color: '#174d2d',
+    fontSize: 11,
+    marginTop: 3,
   },
+
+  bestXIArrow: {
+    color: '#000000',
+    fontSize: 28,
+    fontWeight: '300',
+    marginLeft: 8,
+  },
+
 
 
   // PROGRESS
